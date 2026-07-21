@@ -436,6 +436,26 @@ body{margin:0;font-family:Arial,sans-serif;color:#181818;background:#fff;padding
   }
 }
 
+
+.alerta-overlay{position:fixed;inset:0;background:rgba(0,0,0,.82);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;padding:20px;z-index:99999;opacity:0;visibility:hidden;transition:.3s}
+.alerta-overlay.activa{opacity:1;visibility:visible}
+.alerta{width:100%;max-width:590px;padding:55px 55px 48px;background:radial-gradient(circle at top,rgba(38,255,105,.07),transparent 38%),rgba(17,20,22,.96);border:2px solid rgba(255,255,255,.14);border-radius:30px;box-shadow:0 30px 80px rgba(0,0,0,.7);text-align:center;transform:scale(.75) translateY(30px);opacity:0;transition:.38s}
+.alerta-overlay.activa .alerta{transform:scale(1);opacity:1}
+.icono-contenedor{position:relative;width:150px;height:150px;margin:0 auto 25px;display:flex;align-items:center;justify-content:center}
+.circulo-check{width:130px;height:130px;border:6px solid #5df15f;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 22px rgba(93,241,95,.8);animation:pulso 1.8s infinite}
+.check{width:64px;height:35px;border-left:14px solid #6bf367;border-bottom:14px solid #6bf367;transform:rotate(-45deg) translate(5px,-5px);border-radius:5px}
+@keyframes pulso{50%{box-shadow:0 0 60px rgba(93,241,95,.35)}}
+.particula{position:absolute;background:#59e85c;box-shadow:0 0 10px rgba(89,232,92,.7)}
+.p1{width:11px;height:11px;border-radius:50%;top:30px;left:-16px}.p2{width:12px;height:12px;border-radius:50%;top:75px;left:-42px}.p3{width:11px;height:11px;border-radius:50%;top:5px;right:-24px}.p4{width:12px;height:12px;border-radius:50%;top:48px;right:-50px}
+.cruz1,.cruz2{width:26px;height:8px;border-radius:10px}.cruz1{top:-5px;left:5px}.cruz2{top:87px;right:-22px}.cruz1:after,.cruz2:after{content:"";position:absolute;width:8px;height:26px;background:inherit;border-radius:10px;left:9px;top:-9px}
+.alerta-titulo{color:#fff;font-size:clamp(34px,6vw,53px);line-height:1.08;font-weight:800}
+.separador{display:flex;align-items:center;gap:18px;margin:30px 0}.separador:before,.separador:after{content:"";flex:1;height:2px;background:rgba(255,255,255,.11)}.separador span{width:12px;height:12px;background:#20bf55;border-radius:50%}
+.alerta-mensaje{color:#bcbcbc;font-size:clamp(17px,3vw,23px);line-height:1.5;margin-bottom:34px}
+.btn-aceptar{width:100%;border:2px solid rgba(57,255,112,.45);border-radius:15px;padding:19px 25px;background:linear-gradient(#19c45c,#08a944);color:#fff;font-size:25px;font-weight:800;cursor:pointer}
+.check-boton{display:inline-block;width:24px;height:13px;margin-right:14px;border-left:5px solid #fff;border-bottom:5px solid #fff;transform:rotate(-45deg) translateY(-3px)}
+.alerta-overlay.cerrando{opacity:0}.alerta-overlay.cerrando .alerta{transform:scale(.8) translateY(30px);opacity:0}
+@media(max-width:600px){.alerta{padding:38px 22px 28px;border-radius:24px}.icono-contenedor{width:125px;height:125px}.circulo-check{width:105px;height:105px}.check{width:52px;height:29px;border-left-width:11px;border-bottom-width:11px}.alerta-titulo{font-size:36px}.btn-aceptar{font-size:21px}}
+
 </style>
 
 </head>
@@ -544,6 +564,22 @@ body{margin:0;font-family:Arial,sans-serif;color:#181818;background:#fff;padding
  <button id="mCart"><i class="fa-solid fa-cart-shopping"></i><span class="cart-badge" id="mCartCount">0</span></button>
  <button class="add-mobile" id="mAdd">Agregar al carrito</button>
 </nav>
+
+
+<div class="alerta-overlay" id="alertaOverlay">
+  <div class="alerta">
+    <div class="icono-contenedor">
+      <span class="particula p1"></span><span class="particula p2"></span>
+      <span class="particula p3"></span><span class="particula p4"></span>
+      <span class="particula cruz1"></span><span class="particula cruz2"></span>
+      <div class="circulo-check"><div class="check"></div></div>
+    </div>
+    <h2 class="alerta-titulo">¡Agregado<br>satisfactoriamente!</h2>
+    <div class="separador"><span></span></div>
+    <p class="alerta-mensaje" id="mensajeAlerta">El producto se ha agregado al carrito.</p>
+    <button class="btn-aceptar" id="btnAceptar"><span class="check-boton"></span>Aceptar</button>
+  </div>
+</div>
 
 <div class="toast" id="toast"></div>
 <script>
@@ -1106,7 +1142,7 @@ function render(){
  if(typeof renderDetailPhotos==='function' && document.querySelector('#detailPhotoList'))renderDetailPhotos();
  renderSimilar();
 }
-$('#minus').onclick=()=>{quantity=Math.max(1,quantity-1);$('#quantity').value=quantity};$('#plus').onclick=()=>{quantity++;$('#quantity').value=quantity};$('#addCart').onclick=()=>{const cart=JSON.parse(localStorage.getItem(CARRITO_KEY)||'[]'),id=product.id+(selectedVariant?.code?'-'+selectedVariant.code:'')+(selectedSize?.name?'-'+selectedSize.name:'')+(selectedSize?.name?'-'+selectedSize.name:''),f=cart.find(x=>x.id===id),unit=Number(selectedVariant?.offer||selectedVariant?.price||product.offerPrice||product.price||0);if(f)f.cantidad+=quantity;else cart.push({id,name:product.name,price:unit,currency:(product.currency||'USD').split(' ')[0],image:selectedVariant?.image||productImages(product)[0],cantidad:quantity,variant:selectedVariant?.variantName||'',size:selectedSize?.name||'',size:selectedSize?.name||''});localStorage.setItem(CARRITO_KEY,JSON.stringify(cart));toast('Producto agregado al carrito')};$('#buyNow').onclick=()=>{$('#addCart').click();location.href='carrito.html'};const indexSearchInput=document.querySelector('.search-box input');
+$('#minus').onclick=()=>{quantity=Math.max(1,quantity-1);$('#quantity').value=quantity};$('#plus').onclick=()=>{quantity++;$('#quantity').value=quantity};$('#addCart').onclick=()=>{const cart=JSON.parse(localStorage.getItem(CARRITO_KEY)||'[]'),id=product.id+(selectedVariant?.code?'-'+selectedVariant.code:'')+(selectedSize?.name?'-'+selectedSize.name:'')+(selectedSize?.name?'-'+selectedSize.name:''),f=cart.find(x=>x.id===id),unit=Number(selectedVariant?.offer||selectedVariant?.price||product.offerPrice||product.price||0);if(f)f.cantidad+=quantity;else cart.push({id,name:product.name,price:unit,currency:(product.currency||'USD').split(' ')[0],image:selectedVariant?.image||productImages(product)[0],cantidad:quantity,variant:selectedVariant?.variantName||'',size:selectedSize?.name||'',size:selectedSize?.name||''});localStorage.setItem(CARRITO_KEY,JSON.stringify(cart));mostrarAlerta('El producto se ha agregado al carrito.')};$('#buyNow').onclick=()=>{$('#addCart').click();location.href='carrito.html'};const indexSearchInput=document.querySelector('.search-box input');
 const indexSearchIcon=document.querySelector('.search-box .fa-magnifying-glass');
 function searchFromHeader(){
   const query=(indexSearchInput?.value||'').trim().toLowerCase();
@@ -1160,6 +1196,24 @@ document.getElementById('mobileImageClose')?.addEventListener('click',()=>{
   if(history.length>1) history.back();
   else location.href='index.html';
 });
+
+
+const alertaOverlay=document.getElementById('alertaOverlay');
+const btnAceptar=document.getElementById('btnAceptar');
+const mensajeAlerta=document.getElementById('mensajeAlerta');
+function mostrarAlerta(mensaje='El producto se ha agregado al carrito.'){
+  mensajeAlerta.textContent=mensaje;
+  alertaOverlay.classList.remove('cerrando');
+  alertaOverlay.classList.add('activa');
+  document.body.style.overflow='hidden';
+}
+function cerrarAlerta(){
+  alertaOverlay.classList.add('cerrando');
+  setTimeout(()=>{alertaOverlay.classList.remove('activa','cerrando');document.body.style.overflow='';},300);
+}
+btnAceptar.addEventListener('click',cerrarAlerta);
+alertaOverlay.addEventListener('click',e=>{if(e.target===alertaOverlay)cerrarAlerta()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&alertaOverlay.classList.contains('activa'))cerrarAlerta()});
 
 </script>
 </body>
