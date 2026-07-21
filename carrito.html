@@ -181,6 +181,27 @@ body{background:#f4f4f4;color:#181818;padding-top:155px;padding-bottom:40px}
   .cart-toolbar{align-items:flex-start;flex-direction:column}
 }
 
+
+.mobile-cart-title{display:none}
+
+@media(max-width:700px){
+  .header{
+    display:none!important;
+  }
+
+  body{
+    padding-top:0!important;
+  }
+
+  .desktop-cart-title{
+    display:none!important;
+  }
+
+  .mobile-cart-title{
+    display:inline!important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -208,7 +229,7 @@ body{background:#f4f4f4;color:#181818;padding-top:155px;padding-bottom:40px}
 </div></div></div><nav class="promo-bar"><div class="categoria-hover"><a class="cat" href="#"><i class="fa-solid fa-bars"></i> Categorías</a><div class="hover-full"><main class="cat-page"><div class="cat-layout"><aside class="cat-sidebar" id="catSidebar"></aside><section class="cat-content"><div class="cat-banner"><div class="banner-icon" id="bannerIcon">🎧</div><div><h1 id="bannerTitle">Electronica</h1><p>Explora cientos productos populares y subcategorías.</p></div></div><div class="cat-title-row"><h2 id="sectionTitle">Electronica</h2><a href="categorias.html">Abrir página completa</a></div><div class="subcat-grid" id="subcatGrid"></div></section></div></main></div></div><a href="#">Ofertas promocional</a><a href="#">Nuevos</a><a href="#">Más vendido</a><a href="#">Cupones</a><a href="#">Envió gratis</a></nav></header>
 <main class="cart-page">
   <section class="cart-main">
-    <h1 class="cart-title">Cesta (<span id="cartCount">0</span>)</h1>
+    <h1 class="cart-title"><span class="desktop-cart-title">Cesta</span><span class="mobile-cart-title">Carrito</span> (<span id="cartCount">0</span>)</h1>
     <div class="cart-toolbar">
       <label class="check-label"><input type="checkbox" id="selectAll"> Seleccionar todos los artículos</label>
       <button class="delete-selected" id="deleteSelected">Borrar artículos seleccionados</button>
