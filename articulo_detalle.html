@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detalle del producto - AliMarket</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{--red:#e60023;--line:#e7e7e7;--green:#167d2b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+.header{position:fixed;top:0;left:0;width:100%;background:#fff;z-index:9999;padding:18px 70px 28px}
+.header-top{display:flex;align-items:center;gap:22px}.logo{font-family:Georgia,serif;font-size:43px;font-weight:bold;color:#b40000;text-decoration:none;letter-spacing:3px}
+.search-box{flex:1;height:43px;border:2px solid #777;border-radius:30px;display:flex;align-items:center;padding:0 15px;gap:10px;max-width:720px}.search-box input{border:none;outline:none;width:100%;font-size:16px;background:transparent}.search-box i{color:#555;font-size:18px}
+.header-icons{display:flex;align-items:center;gap:24px}.header-icons a{text-decoration:none;color:#000;font-weight:900;display:flex;align-items:center;gap:9px;font-size:19px}.header-icons i{font-size:30px}
+.promo-bar{margin-top:18px;display:flex;align-items:center;gap:12px;padding-left:48px}.promo-bar a{min-width:165px;background:#d8d8d8;color:#000;text-decoration:none;font-weight:900;text-align:center;padding:10px 18px;border-radius:18px;font-size:14px}.promo-bar .cat{background:#fa8d94;display:flex;align-items:center;justify-content:center;gap:10px}.categoria-hover{position:relative}
+.hover-full{position:fixed;top:145px;left:0;width:100%;height:calc(100vh - 145px);background:#d9d9d9;z-index:9998;padding:25px 70px;opacity:0;visibility:hidden;transform:translateY(15px);transition:.25s;overflow:auto}.categoria-hover:hover .hover-full,.hover-full:hover{opacity:1;visibility:visible;transform:translateY(0)}
+.cat-page{width:100%;max-width:1500px;margin:auto}.cat-layout{display:grid;grid-template-columns:290px 1fr;gap:24px}.cat-sidebar{background:#fff;border-radius:16px;padding:17px 18px;min-height:670px}.cat-item{height:55px;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:21px;font-weight:600;cursor:pointer;padding:0 8px;border-radius:12px}.cat-item:hover,.cat-item.active{background:#fff1f1;color:#e00000}.cat-left{display:flex;align-items:center;gap:12px}.cat-icon{width:28px;text-align:center;font-size:23px}.cat-content{padding-top:0}.cat-banner{height:132px;background:linear-gradient(90deg,#4b0000,#e50000,#ff2727);border-radius:14px;display:flex;align-items:center;gap:25px;padding:25px 32px;color:#fff;margin-bottom:20px}.cat-banner .banner-icon{font-size:66px}.cat-banner h1{font-size:36px;margin-bottom:8px}.cat-banner p{font-size:18px;font-weight:700}.cat-title-row{display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #fff;padding:0 8px 15px;margin-bottom:20px}.cat-title-row h2{font-size:34px;font-weight:900}.cat-title-row a{color:#e33333;text-decoration:none;font-size:19px;font-weight:700}.subcat-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}.subcat-card{height:190px;background:#fff;border:2px solid #fff;border-radius:12px;overflow:hidden;cursor:pointer;transition:.2s}.subcat-card:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(0,0,0,.18)}.subcat-img{height:127px;background:#cfcfcf;display:flex;align-items:center;justify-content:center}.subcat-img img{width:90px;height:90px;object-fit:contain}.subcat-card h3{height:63px;background:#fff;display:flex;align-items:center;justify-content:center;text-align:center;font-size:19px}
+body{margin:0;font-family:Arial,sans-serif;color:#181818;background:#fff;padding-top:150px}a{text-decoration:none;color:inherit}
+
+.page{
+  max-width:none;
+  margin:0;
+  padding:28px 375px 80px 4%;
+}.breadcrumb{color:#777;font-size:14px;margin-bottom:18px}.product-layout{
+  display:grid;
+  grid-template-columns:minmax(520px,1.1fr) minmax(420px,.9fr);
+  gap:30px;
+  align-items:start;
+}.gallery{display:grid;grid-template-columns:78px 1fr;gap:16px}.thumbs{display:flex;flex-direction:column;gap:12px;max-height:610px;overflow:auto}.thumb{width:72px;height:72px;border:2px solid transparent;border-radius:8px;overflow:hidden;background:#f3f3f3;cursor:pointer}.thumb.active{border-color:#111}.thumb img{width:100%;height:100%;object-fit:cover}.main-image{height:610px;background:#f6f6f6;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;position:relative}.main-image img{width:100%;height:100%;object-fit:contain}.zoom-note{position:absolute;left:14px;bottom:12px;background:rgba(0,0,0,.66);color:#fff;padding:7px 10px;border-radius:18px;font-size:12px}
+.info h1{font-size:24px;line-height:1.35;margin:0 0 10px}.sales{color:#666;font-size:14px;margin-bottom:14px}.rating{color:#f39a00;margin-bottom:14px}.price-row{display:flex;align-items:end;gap:10px;flex-wrap:wrap}.current-price{font-size:42px;color:var(--red);font-weight:900}.discount{color:var(--red);font-size:18px;font-weight:700}.old-price{text-decoration:line-through;color:#777}.tax-note{color:#666;font-size:13px;margin-top:7px}.coupon{margin:16px 0;padding:13px 14px;background:#fff1f3;color:#c80020;border-radius:8px;font-weight:700}.option-title{font-weight:800;margin:22px 0 10px}.option-list{display:flex;gap:10px;flex-wrap:wrap}.option-btn{min-width:72px;min-height:50px;padding:8px 12px;border:1px solid #ccc;background:#fff;border-radius:4px;cursor:pointer;font-weight:700}.option-btn.active{border:2px solid #111}.option-btn.has-img{width:64px;height:64px;padding:3px}.option-btn.has-img img{width:100%;height:100%;object-fit:cover}
+.buy-card{
+  position:fixed;
+  right:18px;
+  top:158px;
+  width:335px;
+  height:calc(100vh - 176px);
+  max-height:none;
+  overflow-y:auto;
+  overflow-x:hidden;
+  background:#fff;
+  border:1px solid #dedede;
+  border-radius:10px;
+  padding:18px 20px 24px;
+  z-index:45;
+  box-shadow:0 4px 18px rgba(0,0,0,.10);
+  scrollbar-gutter:stable;
+}.seller{font-weight:800;margin-bottom:18px}.service-title{font-weight:900;color:var(--green);margin-bottom:14px}.shipping-line{display:flex;gap:10px;margin:15px 0;line-height:1.45}.shipping-line i{margin-top:3px;color:var(--green)}.qty{display:flex;align-items:center;justify-content:space-between;margin:20px 0}.qty-control{display:flex;align-items:center;border:1px solid #ccc;border-radius:8px;overflow:hidden}.qty-control button{width:38px;height:38px;border:0;background:#f4f4f4;font-size:18px}.qty-control input{width:48px;height:38px;border:0;text-align:center;font-weight:700}.action-btn{width:100%;padding:15px;border-radius:8px;font-size:17px;font-weight:900;cursor:pointer;margin-top:10px}.buy-now{background:var(--red);color:#fff;border:0}.add-cart{background:#fff;border:1px solid #111}.share{display:flex;justify-content:space-between;margin-top:20px;color:#555}
+.buy-card::-webkit-scrollbar{width:7px}
+.buy-card::-webkit-scrollbar-thumb{background:#bbb;border-radius:10px}
+.buy-card::-webkit-scrollbar-track{background:transparent}
+.tabs{
+  position:sticky;
+  top:80px;
+  z-index:35;
+  background:#fff;
+  border-top:0;
+  border-bottom:1px solid #e5e5e5;
+  margin-top:42px;
+  display:flex;
+  gap:34px;
+  padding:18px 0;
+  overflow:auto
+}.tabs a{font-size:18px;font-weight:700;white-space:nowrap}.content-section{
+  padding:44px 0;
+  border-bottom:1px solid #e7e7e7;
+  max-width:100%;
+}.content-section h2{font-size:32px;margin:0 0 24px}.detail-grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line)}.detail-cell{display:grid;grid-template-columns:1fr 1fr;min-height:82px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}.detail-cell span{padding:18px;background:#f7f7f7;font-weight:700}.detail-cell strong{padding:18px;font-weight:500}.description{font-size:18px;line-height:1.7;max-width:1050px}.description img{max-width:100%;height:auto;display:block;margin:25px auto}.measure-card{background:#f7f7f7;border-radius:14px;padding:24px;overflow:auto}.measure-table{width:100%;border-collapse:collapse;min-width:700px}.measure-table th,.measure-table td{padding:14px;border-bottom:1px solid #ddd;text-align:center}.measure-table th{background:#111;color:#fff}.reviews-summary{display:flex;gap:40px;align-items:center;background:#fafafa;border-radius:14px;padding:25px}.review-score{font-size:50px;font-weight:900}.similar-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}.similar-card{border:1px solid var(--line);border-radius:12px;overflow:hidden}.similar-card img{width:100%;height:190px;object-fit:cover}.similar-card div{padding:12px}.similar-card b{display:block;margin-top:7px;color:var(--red);font-size:19px}.store-card{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:22px;border:1px solid var(--line);border-radius:12px}.store-card button{padding:12px 20px;border:1px solid #111;background:#fff;border-radius:7px;font-weight:800}.toast{position:fixed;right:20px;bottom:25px;background:#111;color:#fff;padding:14px 18px;border-radius:8px;opacity:0;transform:translateY(12px);transition:.25s;z-index:100}.toast.show{opacity:1;transform:none}
+@media(max-width:1250px){
+  .page{padding-right:25px}
+  .buy-card{position:static;width:auto;max-height:none;overflow:visible;box-shadow:none;grid-column:1/-1}
+}
+@media(max-width:1180px){.product-layout{grid-template-columns:1.15fr .9fr}.buy-card{grid-column:1/-1;position:static;width:auto;max-height:none;overflow:visible;box-shadow:none}.detail-grid{grid-template-columns:repeat(2,1fr)}.similar-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:760px){body{padding-top:220px}.header-main{display:grid;grid-template-columns:1fr auto}.logo{font-size:28px}.search{grid-column:1/-1;grid-row:2}.page{padding:18px 12px 55px}.product-layout{grid-template-columns:1fr}.gallery{grid-template-columns:1fr}.thumbs{order:2;flex-direction:row;height:75px}.main-image{height:420px}.thumb{flex:0 0 68px}.tabs{max-width:100%;top:116px}.detail-grid{grid-template-columns:1fr}.reviews-summary{flex-direction:column;align-items:flex-start}.similar-grid{grid-template-columns:repeat(2,1fr)}.similar-card img{height:150px}}
+
+.detail-photos{margin-top:30px}
+.detail-photos h3{font-size:25px;margin:0 0 18px}
+.detail-photo-list{display:flex;flex-direction:column;gap:22px;align-items:center}
+.detail-photo-list img{
+  width:min(100%,1050px);height:auto;display:block;border-radius:10px;
+  background:#f3f3f3;border:1px solid var(--line)
+}
+.detail-photo-empty{
+  padding:28px;background:#fafafa;border:1px dashed #ccc;border-radius:10px;
+  color:#777;text-align:center
+}
+
+
+.left-content-note{
+  display:none;
+}
+@media(min-width:1251px){
+  .gallery,.info,.tabs,.content-section{min-width:0}
+  .main-image{height:640px}
+  .description{max-width:none}
+  .detail-photo-list img{width:min(100%,1150px)}
+}
+
+
+.ai-summary{
+  margin-top:24px;
+  border-top:1px solid #e7e7e7;
+  padding-top:24px;
+  max-width:1000px;
+}
+.ai-summary h3{
+  margin:0 0 10px;
+  font-size:25px;
+}
+.ai-summary .legal{
+  color:#666;
+  line-height:1.5;
+  margin-bottom:16px;
+}
+.ai-summary ul{
+  margin:0;
+  padding-left:28px;
+  line-height:1.7;
+  font-size:18px;
+}
+.ai-summary li{margin:10px 0}
+.ai-summary strong{font-weight:900}
+.details-collapsed{
+  max-height:255px;
+  overflow:hidden;
+  position:relative;
+}
+.details-collapsed.open{max-height:none}
+.details-toggle{
+  display:block;
+  margin:18px auto 0;
+  min-width:280px;
+  padding:12px 20px;
+  background:#fff;
+  border:1px solid #999;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+}
+.selection-summary{
+  padding:12px 0;
+  margin:8px 0 2px;
+  border-top:1px solid #eee;
+  border-bottom:1px solid #eee;
+  font-size:14px;
+}
+.buy-card .current-price{
+  font-size:34px;
+  margin-bottom:3px;
+}
+.buy-card .price-row{
+  align-items:center;
+  margin-bottom:8px;
+}
+.buy-card .tax-note{
+  margin-bottom:12px;
+}
+.buy-card .seller{
+  padding:12px 0 16px;
+  border-top:1px solid #eee;
+  border-bottom:1px solid #eee;
+}
+.buy-card .service-title{
+  margin-top:18px;
+}
+.buy-card .shipping-line{
+  font-size:14px;
+  margin:14px 0;
+}
+.buy-card .action-btn{
+  border-radius:0;
+}
+.buy-card .share{
+  padding-top:14px;
+  border-top:1px solid #eee;
+}
+.product-main-left{min-width:0}
+@media(min-width:1251px){
+  .main-image{height:610px}
+  .description{max-width:none}
+  .detail-photo-list img{width:min(100%,1050px)}
+}
+@media(max-width:1250px){
+  .page{padding:22px 24px 70px}
+  .buy-card{
+    position:static;
+    width:auto;
+    height:auto;
+    max-height:none;
+    overflow:visible;
+    box-shadow:none;
+    grid-column:1/-1;
+    margin-top:16px;
+  }
+}
+@media(max-width:760px){
+  .page{padding:16px 12px 55px}
+  .product-layout{grid-template-columns:1fr}
+  .tabs{top:114px}
+}
+
+
+.full-info-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  border:1px solid var(--line);
+  background:#fff;
+}
+.full-info-item{
+  min-height:86px;
+  display:grid;
+  grid-template-columns:44% 56%;
+  border-right:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.full-info-item .label{
+  padding:16px;
+  background:#f7f7f7;
+  font-weight:800;
+  overflow-wrap:anywhere;
+}
+.full-info-item .value{
+  padding:16px;
+  overflow-wrap:anywhere;
+  white-space:pre-wrap;
+}
+.variant-detail-table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:950px;
+}
+.variant-detail-table th,.variant-detail-table td{
+  padding:12px;
+  border:1px solid #e3e3e3;
+  text-align:left;
+  vertical-align:middle;
+}
+.variant-detail-table th{background:#f5f5f5}
+.variant-detail-table img{
+  width:64px;height:64px;object-fit:cover;border-radius:6px;background:#eee;
+}
+.variant-attrs{
+  display:flex;flex-wrap:wrap;gap:6px;
+}
+.variant-attrs span{
+  padding:5px 8px;background:#f1f1f1;border-radius:5px;font-size:13px;
+}
+.all-images-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+}
+.all-images-grid img{
+  width:100%;aspect-ratio:1/1;object-fit:contain;
+  border:1px solid var(--line);background:#fafafa;border-radius:8px;
+}
+.video-info-card{
+  padding:20px;border:1px solid var(--line);border-radius:10px;background:#fafafa;
+}
+.empty-data{
+  padding:25px;border:1px dashed #bbb;border-radius:8px;color:#777;text-align:center;
+}
+.offer-status{
+  display:inline-block;padding:5px 9px;border-radius:20px;background:#fff0f2;color:#c80020;font-weight:800;
+}
+@media(max-width:1000px){
+  .full-info-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .all-images-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:650px){
+  .full-info-grid{grid-template-columns:1fr}
+  .all-images-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .full-info-item{grid-template-columns:42% 58%}
+}
+
+
+.raw-product-wrap{display:flex;flex-direction:column;gap:14px}
+.raw-product-group{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+.raw-product-group h3{margin:0;padding:15px 18px;background:#f3f3f3;font-size:20px}
+.raw-row{display:grid;grid-template-columns:260px 1fr;border-top:1px solid var(--line)}
+.raw-key{padding:13px 16px;background:#fafafa;font-weight:800;overflow-wrap:anywhere}
+.raw-value{padding:13px 16px;white-space:pre-wrap;overflow-wrap:anywhere}
+.raw-image{width:90px;height:90px;object-fit:cover;border:1px solid #ddd;border-radius:7px;margin:4px}
+.raw-array{display:flex;flex-wrap:wrap;gap:8px}
+.raw-object{padding:8px;border:1px solid #e6e6e6;border-radius:8px;margin:6px 0;background:#fff}
+.raw-empty{color:#777;font-style:italic}
+@media(max-width:700px){
+  .raw-row{grid-template-columns:1fr}
+  .raw-key{border-bottom:1px solid var(--line)}
+}
+
+
+.universal-group{border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff}
+.universal-group h3{margin:0;padding:15px 18px;background:#f2f2f2;font-size:20px}
+.universal-row{display:grid;grid-template-columns:260px 1fr;border-top:1px solid var(--line)}
+.universal-key{padding:13px 16px;background:#fafafa;font-weight:800;overflow-wrap:anywhere}
+.universal-value{padding:13px 16px;overflow-wrap:anywhere;white-space:pre-wrap}
+.universal-image{width:110px;height:110px;object-fit:cover;border:1px solid #ddd;border-radius:7px;margin:4px}
+.universal-object{border:1px solid #e2e2e2;border-radius:8px;padding:8px;margin:7px 0;background:#fff}
+.universal-array{display:flex;flex-wrap:wrap;gap:8px}
+.universal-empty{color:#777;font-style:italic}
+@media(max-width:700px){.universal-row{grid-template-columns:1fr}.universal-key{border-bottom:1px solid var(--line)}}
+
+
+.size-option-section{margin-top:22px}
+.size-option-title{font-weight:900;font-size:18px;margin-bottom:10px}
+.size-option-list{display:flex;flex-wrap:wrap;gap:10px}
+.size-option-btn{min-width:130px;padding:14px 18px;border:1px solid #bbb;background:#fff;border-radius:3px;font-size:17px;cursor:pointer}
+.size-option-btn.active{border:2px solid #111;font-weight:800}
+.size-option-btn:disabled{opacity:.45;cursor:not-allowed;text-decoration:line-through}
+.selected-combination{margin-top:12px;padding:10px 12px;background:#f7f7f7;border-radius:7px;font-size:14px}
+
+.buy-card *{max-width:100%}
+.buy-card .price-row{align-items:flex-end;row-gap:6px}
+.buy-card .current-price{font-size:32px;line-height:1.05;word-break:break-word}
+.buy-card .discount,.buy-card .old-price{font-size:15px}
+.buy-card .selection-summary{line-height:1.45;word-break:break-word}
+.buy-card .seller{line-height:1.4}
+.buy-card .shipping-line{align-items:flex-start}
+.buy-card .shipping-line div{min-width:0;word-break:break-word}
+.buy-card .qty{gap:12px}
+.buy-card .action-btn{position:relative;z-index:1}
+.buy-card::-webkit-scrollbar{width:8px}
+.buy-card::-webkit-scrollbar-thumb{background:#9d9d9d;border-radius:10px}
+.buy-card::-webkit-scrollbar-track{background:#f1f1f1}
+@media(max-height:720px) and (min-width:1251px){
+  .buy-card{top:150px;height:calc(100vh - 165px);padding-top:14px}
+  .buy-card .shipping-line{margin:10px 0}
+  .buy-card .qty{margin:14px 0}
+  .buy-card .action-btn{padding:12px}
+}
+
+
+/* ÚNICO CAMBIO: botones de tamaño/capacidad debajo de las variantes */
+.product-size-block{margin-top:22px}
+.product-size-title{font-size:18px;font-weight:900;margin-bottom:12px}
+.product-size-options{display:flex;flex-wrap:wrap;gap:10px}
+.product-size-btn{
+  min-width:125px;min-height:52px;padding:12px 18px;
+  border:1px solid #c8c8c8;background:#fff;border-radius:4px;
+  font-size:17px;font-weight:600;cursor:pointer
+}
+.product-size-btn:hover{border-color:#111}
+.product-size-btn.active{border:2px solid #111;font-weight:900}
+.product-size-btn:disabled{
+  opacity:.45;cursor:not-allowed;text-decoration:line-through;background:#f4f4f4
+}
+
+</style>
+
+</head>
+<body>
+<header class="header"><div class="header-top"><a href="index.html" class="logo">Alimarket</a><div class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input type="text" placeholder=""><i class="fa-solid fa-microphone"></i></div><div class="header-icons"><a href="favoritos.html"><i class="fa-solid fa-heart"></i> Favorito</a><a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i> Cesta</a><a href="usuario.html"><i class="fa-solid fa-user"></i> Usuario</a></div></div><nav class="promo-bar"><div class="categoria-hover"><a class="cat" href="#"><i class="fa-solid fa-bars"></i> Categorías</a><div class="hover-full"><main class="cat-page"><div class="cat-layout"><aside class="cat-sidebar" id="catSidebar"></aside><section class="cat-content"><div class="cat-banner"><div class="banner-icon" id="bannerIcon">🎧</div><div><h1 id="bannerTitle">Electronica</h1><p>Explora cientos productos populares y subcategorías.</p></div></div><div class="cat-title-row"><h2 id="sectionTitle">Electronica</h2><a href="categorias.html">Abrir página completa</a></div><div class="subcat-grid" id="subcatGrid"></div></section></div></main></div></div><a href="#">Ofertas promocional</a><a href="#">Nuevos</a><a href="#">Más vendido</a><a href="#">Cupones</a><a href="#">Envió gratis</a></nav></header>
+<main class="page">
+<div class="breadcrumb"><a href="index.html">Inicio</a> › <span id="breadcrumbCategory">Producto</span></div>
+<section class="product-layout">
+<div class="gallery"><div class="thumbs" id="thumbs"></div><div class="main-image"><img id="mainImage"><div class="zoom-note"><i class="fa-solid fa-magnifying-glass-plus"></i> Imagen ampliada</div></div></div>
+<div class="info"><h1 id="productName">Producto</h1><div class="sales"><span id="salesCount">1</span> vendido(s)</div><div class="rating">★★★★★ <span style="color:#666">4.8 · 126 valoraciones</span></div><div class="price-row"><div class="current-price" id="currentPrice">US$ 0.00</div><div class="discount" id="discount"></div><div class="old-price" id="oldPrice"></div></div><div class="tax-note">Precio mostrado antes de impuestos.</div><div class="coupon"><i class="fa-solid fa-tag"></i> Descuentos disponibles</div><div id="variantOptions"></div>
+<div class="product-size-block" id="productSizeBlock" style="display:none">
+  <div class="product-size-title">Tamaño, capacidad o medida</div>
+  <div class="product-size-options" id="productSizeOptions"></div>
+</div>
+<div class="size-option-section" id="sizeOptionSection" style="display:none">
+  <div class="size-option-title">Tamaño, capacidad o medida</div>
+  <div class="size-option-list" id="sizeOptionList"></div>
+</div>
+<div class="selected-combination" id="selectedCombination"></div>
+      <div class="ai-summary">
+        <h3>✦ Resumen del artículo</h3>
+        <div class="legal">Resumen generado automáticamente a partir de la información proporcionada por el vendedor.</div>
+        <ul id="aiSummaryList"></ul>
+      </div></div>
+<aside class="buy-card" aria-label="Panel fijo de compra">
+      <div class="price-row">
+        <div class="current-price" id="sideCurrentPrice">US$ 0.00</div>
+        <div class="discount" id="sideDiscount"></div>
+        <div class="old-price" id="sideOldPrice"></div>
+      </div>
+      <div class="tax-note">Precio mostrado antes de impuestos</div>
+      <div class="selection-summary">
+        <b id="selectedSummary">Selecciona una variante</b>
+      </div><div class="seller">Vendido por <span id="sellerDisplay">AliMarket Vendedor</span></div><div class="service-title">Compromiso de servicio</div><div class="shipping-line"><i class="fa-solid fa-truck-fast"></i><div><b>Envío: <span id="shippingCost">RD$ 0.00</span></b><br>Entrega: <b id="deliveryDate">—</b></div></div><div class="shipping-line"><i class="fa-solid fa-rotate-left"></i><div><b>Devolución gratuita</b><br><span style="color:#666">Dentro del plazo permitido</span></div></div><div class="shipping-line"><i class="fa-solid fa-shield-halved"></i><div><b>Pago seguro</b><br><span style="color:#666">Tus datos están protegidos</span></div></div><div class="qty"><b>Cantidad</b><div class="qty-control"><button id="minus">−</button><input id="quantity" value="1" readonly><button id="plus">+</button></div></div><button class="action-btn buy-now" id="buyNow">Comprar ahora</button><button class="action-btn add-cart" id="addCart">Agregar al carrito</button><div class="share"><span><i class="fa-solid fa-share-nodes"></i> Compartir</span><span><i class="fa-regular fa-heart"></i> Favorito</span></div></aside>
+</section>
+<nav class="tabs"><a href="#datos-completos-universales">Información completa</a><a href="#todos-los-datos">Todos los datos</a><a href="#informacion-completa">Información</a><a href="#variantes-completas">Variantes</a><a href="#imagenes-completas">Imágenes</a><a href="#detalles">Detalles</a><a href="#descripcion">Descripción</a><a href="#tienda">Tienda</a><a href="#similares">Similares</a></nav>
+
+<section class="content-section" id="informacion-completa">
+  <h2>Toda la información del producto</h2>
+  <div class="full-info-grid" id="fullInfoGrid"></div>
+</section>
+
+<section class="content-section" id="variantes-completas">
+  <h2>Variantes y SKU</h2>
+  <div style="overflow:auto" id="variantsFullWrap"></div>
+</section>
+
+<section class="content-section" id="imagenes-completas">
+  <h2>Todas las imágenes agregadas</h2>
+  <div class="all-images-grid" id="allImagesGrid"></div>
+  <div id="videoInformation" style="margin-top:24px"></div>
+</section>
+
+
+<section class="content-section" id="todos-los-datos">
+  <h2>Todos los datos agregados al producto</h2>
+  <p style="color:#666;margin-top:-10px">Esta sección muestra cada campo guardado al crear el artículo, incluyendo campos adicionales, variantes, imágenes, atributos y datos personalizados.</p>
+  <div class="raw-product-wrap" id="rawProductData"></div>
+</section>
+
+<section class="content-section" id="datos-completos-universales">
+<h2>Información completa del artículo</h2>
+<p style="color:#666;margin-top:-10px">Se muestra todo lo guardado al crear el producto, incluso campos adicionales.</p>
+<div id="universalProductData"></div>
+</section>
+<section class="content-section" id="valoraciones"><h2>Valoraciones</h2><div class="reviews-summary"><div><div class="review-score">4.8</div><div style="color:#f39a00;font-size:22px">★★★★★</div><div style="color:#666">126 valoraciones</div></div><div><b>Los compradores destacan:</b><p>Buena calidad, entrega rápida y producto igual a la descripción.</p></div></div></section>
+<section class="content-section" id="detalles"><h2>Detalles</h2><div class="details-collapsed" id="detailsCollapsed">
+      <div class="detail-grid" id="detailsGrid"></div>
+    </div>
+    <button class="details-toggle" id="detailsToggle" type="button">Ver más</button></section>
+<section class="content-section" id="descripcion"><h2>Descripción completa</h2><div class="description" id="descriptionContent"></div><div id="measureDynamic"></div></section>
+<section class="content-section" id="tienda"><h2>Tienda</h2><div class="store-card"><div><h3>AliMarket Vendedor Oficial</h3><p>Productos seleccionados y protección de compra.</p></div><button>Visitar tienda</button></div></section>
+<section class="content-section" id="similares"><h2>Artículos similares</h2><div class="similar-grid" id="similarGrid"></div></section>
+</main><div class="toast" id="toast"></div>
+<script>
+const $=s=>document.querySelector(s),params=new URLSearchParams(location.search),productId=params.get('id'),PRODUCTOS_KEY='productosPublicados',CARRITO_KEY='carritoAliMarket';
+const demos=[{id:'demo-1',name:'Smartphone moderno',price:8500,offerPrice:7900,currency:'DOP',category:'Electrónica',subcategory:'Smartphones',totalStock:20,image:'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=85',description:'<p>Smartphone moderno con pantalla de alta definición, batería de larga duración y excelente rendimiento.</p>',weight:.18,dimensions:{length:16,width:8,height:1},barcode:'750100000001'},{id:'demo-2',name:'Audífonos Bluetooth',price:1250,offerPrice:999,currency:'DOP',category:'Electrónica',subcategory:'Audio y auriculares',totalStock:15,image:'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=85',description:'<p>Audífonos inalámbricos con sonido nítido y estuche de carga.</p>',weight:.25,dimensions:{length:18,width:15,height:8},barcode:'750100000002'},{id:'demo-3',name:'Reloj elegante',price:2900,offerPrice:0,currency:'DOP',category:'Joyería y relojes',subcategory:'Relojes',totalStock:12,image:'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=85',description:'<p>Reloj elegante para ocasiones formales y uso diario.</p>',weight:.12,dimensions:{length:10,width:8,height:6},barcode:'750100000003'}];
+function savedProducts(){
+  try{
+    const list=JSON.parse(localStorage.getItem(PRODUCTOS_KEY)||'[]');
+    return Array.isArray(list)?list.filter(item=>item&&typeof item==='object'):[];
+  }catch(error){
+    console.error(error);
+    return [];
+  }
+}
+const savedList=savedProducts().map((item,index)=>{
+  if(!item.id)item.id='producto-'+(item.createdAt?String(item.createdAt).replace(/\D/g,''):Date.now()+'-'+index);
+  return item;
+});
+const allProducts=[...savedList,...demos];
+let product=productId?allProducts.find(item=>String(item.id)===String(productId)):savedList[0];
+if(!product)product=savedList[0]||demos[0];
+let selectedVariant=null,selectedSize=null,quantity=1;
+function money(v,c){const code=(c||'USD').split(' ')[0],s=code==='DOP'?'RD$':code==='EUR'?'€':'US$';return s+' '+Number(v||0).toLocaleString('es-DO',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function toast(m){const e=$('#toast');e.textContent=m;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2200)}
+function productImages(p){const a=[];if(p.image)a.push(p.image);if(Array.isArray(p.images))p.images.forEach(x=>{const u=typeof x==='string'?x:x?.url;if(u&&!a.includes(u))a.push(u)});if(Array.isArray(p.variants))p.variants.forEach(v=>{if(v.image&&!a.includes(v.image))a.push(v.image)});return a.length?a:['https://via.placeholder.com/900x900?text=Producto']}
+function renderGallery(){const imgs=productImages(product),t=$('#thumbs');t.innerHTML='';imgs.forEach((src,i)=>{const b=document.createElement('button');b.className='thumb'+(i===0?' active':'');b.innerHTML=`<img src="${src}">`;b.onclick=()=>{$('#mainImage').src=src;document.querySelectorAll('.thumb').forEach(x=>x.classList.remove('active'));b.classList.add('active')};t.appendChild(b)});$('#mainImage').src=imgs[0]}
+function renderVariants(){const w=$('#variantOptions');w.innerHTML='';const vs=Array.isArray(product.variants)?product.variants:[];if(!vs.length)return;w.innerHTML='<div class="option-title">Selecciona una variante</div><div class="option-list" id="variantList"></div>';const l=$('#variantList');vs.forEach((v,i)=>{const b=document.createElement('button');b.className='option-btn'+(v.image?' has-img':'')+(i===0?' active':'');b.innerHTML=v.image?`<img src="${v.image}">`:(v.variantName||`Variante ${i+1}`);b.onclick=()=>{selectedVariant=v;l.querySelectorAll('.option-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');if(v.image)$('#mainImage').src=v.image;updatePrice();renderDetails();renderTodosLosDatos();renderAllProductInformation();renderFullVariants();renderSelectedCombination()};l.appendChild(b)});selectedVariant=vs[0]}
+
+function normalizedSizeOptions(){
+ const raw=product.sizeOptions||product.sizes||product.medidas||[];
+ if(!Array.isArray(raw))return [];
+ return raw.map((item,index)=>typeof item==='string'
+   ?{name:item,stock:''}
+   :{name:item.name||item.label||item.value||`Opción ${index+1}`,stock:item.stock??''});
+}
+function renderSizeOptions(){
+ const section=$('#sizeOptionSection');
+ const list=$('#sizeOptionList');
+ const sizes=normalizedSizeOptions();
+ if(!section||!list)return;
+ if(!sizes.length){
+   section.style.display='none';
+   selectedSize=null;
+   renderSelectedCombination();
+   return;
+ }
+ section.style.display='block';
+ list.innerHTML='';
+ let firstAvailable=null;
+ sizes.forEach((size,index)=>{
+   const button=document.createElement('button');
+   const out=size.stock!==''&&Number(size.stock)<=0;
+   button.type='button';
+   button.className='size-option-btn';
+   button.textContent=size.name;
+   button.disabled=out;
+   if(!out&&!firstAvailable)firstAvailable={size,button};
+   button.onclick=()=>{
+     selectedSize=size;
+     list.querySelectorAll('.size-option-btn').forEach(x=>x.classList.remove('active'));
+     button.classList.add('active');
+     renderSelectedCombination();
+     renderDetails();
+   };
+   list.appendChild(button);
+ });
+ if(firstAvailable){
+   selectedSize=firstAvailable.size;
+   firstAvailable.button.classList.add('active');
+ }else{
+   selectedSize=sizes[0]||null;
+ }
+ renderSelectedCombination();
+}
+function renderSelectedCombination(){
+ const box=$('#selectedCombination');
+ if(!box)return;
+ const variantText=selectedVariant
+   ?(selectedVariant.variantName||Object.values(selectedVariant.attributes||{}).filter(Boolean).join(' / ')||'Variante seleccionada')
+   :'Producto estándar';
+ box.innerHTML=`<b>Selección:</b> ${variantText}${selectedSize?' · '+selectedSize.name:''}`;
+ if($('#selectedSummary'))$('#selectedSummary').textContent=variantText+(selectedSize?' · '+selectedSize.name:'');
+}
+
+
+function getProductSizes(){
+  const result=[];
+  const add=(name,stock='')=>{
+    const text=String(name||'').trim();
+    if(!text)return;
+    if(!result.some(item=>item.name.toLowerCase()===text.toLowerCase())){
+      result.push({name:text,stock});
+    }
+  };
+
+  const direct=product.sizeOptions||product.sizes||product.medidas||[];
+  if(Array.isArray(direct)){
+    direct.forEach(item=>{
+      if(typeof item==='string')add(item);
+      else if(item&&typeof item==='object'){
+        add(item.name||item.label||item.value||item.size,item.stock??'');
+      }
+    });
+  }
+
+  const variants=Array.isArray(product.variants)?product.variants:[];
+  variants.forEach(variant=>{
+    const a=variant.attributes||{};
+    [
+      a.talla,a.tamano,a.tamaño,a.size,a.capacidad,
+      a.almacenamiento,a.memoria,a.ram,a.medida
+    ].forEach(value=>add(value,variant.stock??''));
+  });
+
+  return result;
+}
+
+function renderProductSizes(){
+  const block=$('#productSizeBlock');
+  const list=$('#productSizeOptions');
+  if(!block||!list)return;
+
+  const sizes=getProductSizes();
+  if(!sizes.length){
+    block.style.display='none';
+    selectedSize=null;
+    return;
+  }
+
+  block.style.display='block';
+  list.innerHTML='';
+  let selectedButton=null;
+
+  sizes.forEach((size,index)=>{
+    const button=document.createElement('button');
+    button.type='button';
+    button.className='product-size-btn';
+    button.textContent=size.name;
+
+    const hasStock=size.stock!==''&&size.stock!==null&&size.stock!==undefined;
+    button.disabled=hasStock&&Number(size.stock)<=0;
+
+    button.onclick=()=>{
+      selectedSize=size;
+      list.querySelectorAll('.product-size-btn').forEach(btn=>btn.classList.remove('active'));
+      button.classList.add('active');
+      if($('#selectedSummary')){
+        const variantText=selectedVariant
+          ?(selectedVariant.variantName||Object.values(selectedVariant.attributes||{}).filter(Boolean).join(', ')||'Variante seleccionada')
+          :'Producto estándar';
+        $('#selectedSummary').textContent=variantText+' · '+size.name;
+      }
+    };
+
+    list.appendChild(button);
+
+    if(!button.disabled&&!selectedButton){
+      selectedButton=button;
+      selectedSize=size;
+    }
+  });
+
+  if(selectedButton)selectedButton.classList.add('active');
+}
+
+function updatePrice(){
+  const normal=Number(selectedVariant?.price??product.price??0);
+  const offer=Number(selectedVariant?.offer??product.offerPrice??0);
+  const active=offer>0&&offer<normal?offer:normal;
+  const discount=offer>0&&offer<normal?'-'+Math.round((1-offer/normal)*100)+'% dto.':'';
+  $('#currentPrice').textContent=money(active,product.currency);
+  $('#oldPrice').textContent=offer>0&&offer<normal?money(normal,product.currency):'';
+  $('#discount').textContent=discount;
+  if($('#sideCurrentPrice'))$('#sideCurrentPrice').textContent=money(active,product.currency);
+  if($('#sideOldPrice'))$('#sideOldPrice').textContent=offer>0&&offer<normal?money(normal,product.currency):'';
+  if($('#sideDiscount'))$('#sideDiscount').textContent=discount;
+  if($('#selectedSummary'))$('#selectedSummary').textContent=selectedVariant?(selectedVariant.variantName||Object.values(selectedVariant.attributes||{}).filter(Boolean).join(', ')||'Variante seleccionada'):'Producto estándar';
+}
+function renderDetails(){
+ const d=product.dimensions||{};
+ const attrs={
+   'Categoría':product.category||'No especificada',
+   'Subcategoría':product.subcategory||'No especificada',
+   'Atributos generales':product.attributes||'No especificados',
+   'Peso':product.weight?product.weight+' kg':'No especificado',
+   'Dimensiones':d.length?`${d.length} × ${d.width} × ${d.height} cm`:'No especificadas',
+   'Código de barras':product.barcode||'No especificado',
+   'Stock total':product.totalStock??0,
+   'Máximo por cliente':product.clientLimit??'No especificado',
+   'Idioma':product.language||'Español',
+   'Moneda':(product.currency||'USD').split(' ')[0],
+   'Estado':product.status||'publicado',
+   'Vendedor':product.sellerName||'AliMarket Vendedor'
+ };
+ if(selectedVariant?.attributes && typeof selectedVariant.attributes==='object'){
+   Object.entries(selectedVariant.attributes).forEach(([k,v])=>{
+     if(v!==''&&v!==null&&v!==undefined)attrs['Variante - '+k]=v;
+   });
+ }
+ if(selectedSize){attrs['Tamaño/medida seleccionado']=selectedSize.name;attrs['Stock del tamaño']=selectedSize.stock===''?'No especificado':selectedSize.stock;}
+ if(selectedVariant){
+   attrs['SKU seleccionado']=selectedVariant.code||'No especificado';
+   attrs['Stock de la variante']=selectedVariant.stock??0;
+ }
+ $('#detailsGrid').innerHTML=Object.entries(attrs).map(([k,v])=>`<div class="detail-cell"><span>${k}</span><strong>${v}</strong></div>`).join('');
+}
+
+function renderDetailPhotos(){
+ const list=$('#detailPhotoList');
+ const imgs=productImages(product);
+ if(!imgs.length){
+   list.innerHTML='<div class="detail-photo-empty">Este producto todavía no tiene fotos adicionales.</div>';
+   return;
+ }
+ list.innerHTML=imgs.map((src,index)=>`
+   <img src="${src}" alt="${(product.name||'Producto').replace(/"/g,'&quot;')} - Foto ${index+1}"
+        loading="lazy" onerror="this.style.display='none'">
+ `).join('');
+}
+
+
+function renderAISummary(){
+ const list=$('#aiSummaryList');
+ const dims=product.dimensions||{};
+ const points=[
+   `<strong>${product.name||'Producto'}</strong> disponible en la categoría ${product.category||'general'}${product.subcategory?' y subcategoría '+product.subcategory:''}.`,
+   `<strong>Precio y oferta:</strong> precio actual ${money((Number(product.offerPrice)>0?product.offerPrice:product.price),product.currency)}${Number(product.offerPrice)>0?' con descuento aplicado':''}.`,
+   `<strong>Variantes disponibles:</strong> ${Array.isArray(product.variants)&&product.variants.length?product.variants.length+' opciones con imágenes, precios y stock editables':'producto sin variantes registradas'}.`,
+   `<strong>Información física:</strong> ${product.weight?product.weight+' kg':'peso no especificado'}${dims.length?`, dimensiones ${dims.length} × ${dims.width} × ${dims.height} cm`:''}.`,
+   `<strong>Descripción:</strong> ${product.attributes||'consulta la descripción completa, las fotografías y la guía de medidas antes de comprar'}.`
+ ];
+ list.innerHTML=points.map(x=>`<li>${x}</li>`).join('');
+}
+
+
+function safeValue(value, fallback='No especificado'){
+  if(value===null || value===undefined || value==='') return fallback;
+  if(typeof value==='object') return JSON.stringify(value,null,2);
+  return String(value);
+}
+function formatDateTime(value){
+  if(!value)return 'No especificada';
+  const d=new Date(value);
+  return Number.isNaN(d.getTime())?value:d.toLocaleString('es-DO',{
+    day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'
+  });
+}
+function offerState(){
+  if(!Number(product.offerPrice))return 'Sin oferta';
+  const now=Date.now();
+  const start=product.offerStart?new Date(product.offerStart).getTime():null;
+  const end=product.offerEnd?new Date(product.offerEnd).getTime():null;
+  if(start && now<start)return 'Oferta programada';
+  if(end && now>end)return 'Oferta finalizada';
+  return 'Oferta activa';
+}
+function renderFullInformation(){
+  const d=product.dimensions||{};
+  const info=[
+    ['ID del producto',product.id],
+    ['Estado',product.status||'publicado'],
+    ['Nombre',product.name],
+    ['Categoría',product.category],
+    ['Subcategoría',product.subcategory],
+    ['Atributos generales',product.attributes],
+    ['Idioma',product.language],
+    ['Moneda principal',product.currency],
+    ['Precio normal',money(product.price,product.currency)],
+    ['Precio de oferta',Number(product.offerPrice)?money(product.offerPrice,product.currency):'Sin oferta'],
+    ['Estado de la oferta',offerState()],
+    ['Inicio de la oferta',formatDateTime(product.offerStart)],
+    ['Fin de la oferta',formatDateTime(product.offerEnd)],
+    ['Stock total',product.totalStock],
+    ['Máximo por cliente',product.clientLimit],
+    ['Cantidad de variantes',Array.isArray(product.variants)?product.variants.length:0],
+    ['Tamaños o medidas',normalizedSizeOptions().map(x=>x.name).join(', ')||'No especificados'],
+    ['Cantidad de imágenes',productImages(product).length],
+    ['Peso',product.weight?product.weight+' kg':'No especificado'],
+    ['Largo',d.length?d.length+' cm':'No especificado'],
+    ['Ancho',d.width?d.width+' cm':'No especificado'],
+    ['Alto',d.height?d.height+' cm':'No especificado'],
+    ['Dimensiones completas',d.length?`${d.length} × ${d.width} × ${d.height} cm`:'No especificadas'],
+    ['Código de barras',product.barcode],
+    ['Vendedor',product.sellerName||'AliMarket Vendedor'],
+    ['Fecha de publicación',formatDateTime(product.createdAt)],
+    ['Video agregado',product.video?.name||'No se agregó video'],
+    ['Tipo del video',product.video?.type||'No especificado'],
+    ['Tamaño del video',product.video?.size?`${(product.video.size/1024/1024).toFixed(2)} MB`:'No especificado']
+  ];
+  $('#fullInfoGrid').innerHTML=info.map(([label,value])=>`
+    <div class="full-info-item">
+      <div class="label">${label}</div>
+      <div class="value">${safeValue(value)}</div>
+    </div>
+  `).join('');
+}
+function renderFullVariants(){
+  const wrap=$('#variantsFullWrap');
+  const variants=Array.isArray(product.variants)?product.variants:[];
+  if(!variants.length){
+    wrap.innerHTML='<div class="empty-data">Este producto no tiene variantes registradas.</div>';
+    return;
+  }
+  wrap.innerHTML=`
+    <table class="variant-detail-table">
+      <thead>
+        <tr>
+          <th>#</th><th>Imagen</th><th>Nombre/atributos</th><th>Precio</th>
+          <th>Oferta</th><th>Stock</th><th>Código SKU</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${variants.map((v,i)=>{
+          const attrs=v.attributes&&typeof v.attributes==='object'
+            ?Object.entries(v.attributes).filter(([,x])=>x!==''&&x!==null&&x!==undefined)
+            :[];
+          return `<tr>
+            <td>${i+1}</td>
+            <td>${v.image?`<img src="${v.image}" alt="Variante ${i+1}">`:'Sin imagen'}</td>
+            <td>
+              <b>${v.variantName||attrs.map(([,x])=>x).join(' / ')||'Variante '+(i+1)}</b>
+              <div class="variant-attrs">
+                ${attrs.map(([k,x])=>`<span><b>${k}:</b> ${x}</span>`).join('')}
+              </div>
+            </td>
+            <td>${money(v.price??product.price,product.currency)}</td>
+            <td>${Number(v.offer)?money(v.offer,product.currency):'Sin oferta'}</td>
+            <td>${safeValue(v.stock,'0')}</td>
+            <td>${safeValue(v.code)}</td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>`;
+}
+function renderAllImages(){
+  const imgs=productImages(product);
+  $('#allImagesGrid').innerHTML=imgs.map((src,i)=>`
+    <img src="${src}" alt="${(product.name||'Producto').replace(/"/g,'&quot;')} - imagen ${i+1}" loading="lazy">
+  `).join('');
+  const video=$('#videoInformation');
+  if(product.video){
+    video.innerHTML=`<div class="video-info-card">
+      <h3>Video del producto</h3>
+      <p><b>Archivo:</b> ${safeValue(product.video.name)}</p>
+      <p><b>Tipo:</b> ${safeValue(product.video.type)}</p>
+      <p><b>Tamaño:</b> ${product.video.size?(product.video.size/1024/1024).toFixed(2)+' MB':'No especificado'}</p>
+      <small>El formulario guarda la información del archivo. Para reproducir videos después de recargar la página se necesita subirlos a un servidor o almacenamiento en la nube.</small>
+    </div>`;
+  }else{
+    video.innerHTML='<div class="empty-data">No se agregó un video a este producto.</div>';
+  }
+}
+function renderDynamicMeasureGuide(){
+  const target=$('#measureDynamic');
+  const variants=Array.isArray(product.variants)?product.variants:[];
+  const rows=variants.map(v=>{
+    const a=v.attributes||{};
+    const size=a.talla||a.tamano||a.tamaño||a.size;
+    if(!size)return null;
+    return {
+      size,
+      color:a.color||'—',
+      material:a.material||'—',
+      stock:v.stock??0,
+      code:v.code||'—'
+    };
+  }).filter(Boolean);
+  if(!rows.length){
+    target.innerHTML='';
+    return;
+  }
+  target.innerHTML=`<div class="measure-card">
+    <h2 style="font-size:26px">Tallas y medidas registradas</h2>
+    <table class="measure-table">
+      <thead><tr><th>Talla/Tamaño</th><th>Color</th><th>Material</th><th>Stock</th><th>SKU</th></tr></thead>
+      <tbody>${rows.map(r=>`<tr><td>${r.size}</td><td>${r.color}</td><td>${r.material}</td><td>${r.stock}</td><td>${r.code}</td></tr>`).join('')}</tbody>
+    </table>
+  </div>`;
+}
+
+
+function nombreCampo(key=''){
+  const nombres={
+    id:'ID del producto',name:'Nombre del producto',status:'Estado',
+    category:'Categoría',subcategory:'Subcategoría',attributes:'Atributos',
+    language:'Idioma',currency:'Moneda',price:'Precio normal',
+    offerPrice:'Precio de oferta',offerStart:'Inicio de la oferta',
+    offerEnd:'Fin de la oferta',totalStock:'Stock total',
+    clientLimit:'Cantidad máxima por cliente',images:'Imágenes',
+    image:'Imagen principal',variants:'Variantes',description:'Descripción',
+    weight:'Peso',dimensions:'Dimensiones',barcode:'Código de barras',
+    createdAt:'Fecha de publicación',video:'Video',sellerName:'Vendedor'
+  };
+  return nombres[key]||String(key).replace(/[_-]+/g,' ').replace(/\b\w/g,x=>x.toUpperCase());
+}
+function esImagen(valor){
+  return typeof valor==='string' && (
+    valor.startsWith('data:image/') ||
+    /\.(png|jpe?g|webp|gif|svg)(\?|$)/i.test(valor)
+  );
+}
+function valorCompleto(valor,nivel=0){
+  if(valor===null||valor===undefined||valor===''){
+    return '<span class="raw-empty">No especificado</span>';
+  }
+  if(esImagen(valor)){
+    return `<img class="raw-image" src="${valor}" alt="Imagen del producto">`;
+  }
+  if(Array.isArray(valor)){
+    if(!valor.length)return '<span class="raw-empty">Lista vacía</span>';
+    return `<div class="raw-array">${valor.map((item,i)=>{
+      if(item&&typeof item==='object'){
+        return `<div class="raw-object"><b>Elemento ${i+1}</b>${objetoCompleto(item,nivel+1)}</div>`;
+      }
+      return `<span class="info-badge">${valorCompleto(item,nivel+1)}</span>`;
+    }).join('')}</div>`;
+  }
+  if(typeof valor==='object'){
+    return objetoCompleto(valor,nivel+1);
+  }
+  if(typeof valor==='boolean')return valor?'Sí':'No';
+  if(typeof valor==='string' && /^\d{4}-\d{2}-\d{2}T/.test(valor)){
+    const d=new Date(valor);
+    if(!Number.isNaN(d.getTime()))return d.toLocaleString('es-DO');
+  }
+  return String(valor);
+}
+function objetoCompleto(obj,nivel=0){
+  return Object.entries(obj).map(([key,value])=>`
+    <div class="raw-row">
+      <div class="raw-key">${nombreCampo(key)}</div>
+      <div class="raw-value">${valorCompleto(value,nivel+1)}</div>
+    </div>
+  `).join('');
+}
+function renderTodosLosDatos(){
+  const target=$('#rawProductData');
+  if(!target)return;
+  const grupos=[
+    ['Información básica',[
+      'id','name','status','category','subcategory','attributes','language','currency','createdAt'
+    ]],
+    ['Precios y oferta',[
+      'price','offerPrice','offerStart','offerEnd'
+    ]],
+    ['Inventario y compra',[
+      'totalStock','clientLimit'
+    ]],
+    ['Información física',[
+      'weight','dimensions','barcode'
+    ]],
+    ['Multimedia',[
+      'image','images','video'
+    ]],
+    ['Variantes y SKU',[
+      'variants'
+    ]],
+    ['Descripción',[
+      'description'
+    ]],
+    ['Vendedor y tienda',[
+      'sellerName','storeName','shopName','sellerStatus','sellerVerified','sellerLocation','sellerContact'
+    ]]
+  ];
+  const usados=new Set();
+  let salida='';
+  grupos.forEach(([titulo,campos])=>{
+    const disponibles=campos.filter(c=>Object.prototype.hasOwnProperty.call(product,c));
+    if(!disponibles.length)return;
+    disponibles.forEach(c=>usados.add(c));
+    salida+=`<div class="raw-product-group"><h3>${titulo}</h3>${
+      disponibles.map(c=>`<div class="raw-row"><div class="raw-key">${nombreCampo(c)}</div><div class="raw-value">${valorCompleto(product[c])}</div></div>`).join('')
+    }</div>`;
+  });
+  const adicionales=Object.keys(product).filter(k=>!usados.has(k));
+  if(adicionales.length){
+    salida+=`<div class="raw-product-group"><h3>Otros campos agregados</h3>${
+      adicionales.map(c=>`<div class="raw-row"><div class="raw-key">${nombreCampo(c)}</div><div class="raw-value">${valorCompleto(product[c])}</div></div>`).join('')
+    }</div>`;
+  }
+  target.innerHTML=salida||'<div class="empty-data">No hay información guardada para este artículo.</div>';
+}
+
+
+function escapeHTML(value=''){
+  return String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[char]));
+}
+function prettyFieldName(key=''){
+  const names={id:'ID del producto',name:'Nombre del producto',status:'Estado',category:'Categoría',subcategory:'Subcategoría',attributes:'Atributos',language:'Idioma',currency:'Moneda',price:'Precio normal',offerPrice:'Precio de oferta',offerStart:'Inicio de oferta',offerEnd:'Fin de oferta',totalStock:'Stock total',clientLimit:'Máximo por cliente',image:'Imagen principal',images:'Imágenes',variants:'Variantes y SKU',description:'Descripción',weight:'Peso',dimensions:'Dimensiones',barcode:'Código de barras',createdAt:'Fecha de publicación',video:'Video',sellerName:'Vendedor',storeName:'Tienda'};
+  return names[key]||String(key).replace(/[_-]+/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+}
+function isImageValue(value){
+  return typeof value==='string'&&(value.startsWith('data:image/')||/\.(png|jpe?g|webp|gif|svg)(\?|$)/i.test(value));
+}
+function renderUniversalValue(value){
+  if(value===null||value===undefined||value==='')return '<span class="universal-empty">No especificado</span>';
+  if(isImageValue(value))return `<img class="universal-image" src="${value}" alt="Imagen">`;
+  if(Array.isArray(value)){
+    if(!value.length)return '<span class="universal-empty">Lista vacía</span>';
+    return `<div class="universal-array">${value.map((item,index)=>item&&typeof item==='object'?`<div class="universal-object"><b>Elemento ${index+1}</b>${renderUniversalObject(item)}</div>`:`<span class="info-badge">${renderUniversalValue(item)}</span>`).join('')}</div>`;
+  }
+  if(typeof value==='object')return renderUniversalObject(value);
+  if(typeof value==='boolean')return value?'Sí':'No';
+  if(typeof value==='string'&&/^\d{4}-\d{2}-\d{2}T/.test(value)){
+    const d=new Date(value); if(!Number.isNaN(d.getTime()))return escapeHTML(d.toLocaleString('es-DO'));
+  }
+  return escapeHTML(value);
+}
+function renderUniversalObject(object){
+  return Object.entries(object).map(([key,value])=>`<div class="universal-row"><div class="universal-key">${escapeHTML(prettyFieldName(key))}</div><div class="universal-value">${renderUniversalValue(value)}</div></div>`).join('');
+}
+function renderAllProductInformation(){
+  const target=$('#universalProductData');
+  if(!target||!product)return;
+  const groups=[
+    ['Información básica',['id','name','status','category','subcategory','attributes','language','currency','createdAt']],
+    ['Precio y oferta',['price','offerPrice','offerStart','offerEnd']],
+    ['Inventario',['totalStock','clientLimit']],
+    ['Información física',['weight','dimensions','barcode']],
+    ['Imágenes y video',['image','images','video']],
+    ['Variantes y SKU',['variants']],
+    ['Descripción',['description']],
+    ['Vendedor y tienda',['sellerName','storeName','shopName','sellerStatus','sellerVerified','sellerLocation','sellerContact']]
+  ];
+  const used=new Set(); let output='';
+  groups.forEach(([title,keys])=>{
+    const available=keys.filter(key=>Object.prototype.hasOwnProperty.call(product,key));
+    if(!available.length)return;
+    available.forEach(key=>used.add(key));
+    output+=`<div class="universal-group"><h3>${title}</h3>${available.map(key=>`<div class="universal-row"><div class="universal-key">${escapeHTML(prettyFieldName(key))}</div><div class="universal-value">${renderUniversalValue(product[key])}</div></div>`).join('')}</div>`;
+  });
+  const extra=Object.keys(product).filter(key=>!used.has(key));
+  if(extra.length)output+=`<div class="universal-group"><h3>Otros datos agregados</h3>${extra.map(key=>`<div class="universal-row"><div class="universal-key">${escapeHTML(prettyFieldName(key))}</div><div class="universal-value">${renderUniversalValue(product[key])}</div></div>`).join('')}</div>`;
+  target.innerHTML=output||'<div class="empty-data">No hay información guardada.</div>';
+}
+
+function renderSimilar(){const l=allProducts.filter(x=>x.id!==product.id).slice(0,10);$('#similarGrid').innerHTML=l.map(p=>`<a class="similar-card" href="articulo_detalle.html?id=${encodeURIComponent(p.id)}"><img src="${productImages(p)[0]}"><div>${p.name}<b>${money(Number(p.offerPrice)>0?p.offerPrice:p.price,p.currency)}</b></div></a>`).join('')}
+function render(){
+ document.title=(product.name||'Producto')+' - AliMarket';
+ $('#breadcrumbCategory').textContent=(product.category||'Producto')+' › '+(product.subcategory||'');
+ $('#productName').textContent=product.name||'Producto sin nombre';
+ if($('#sellerDisplay'))$('#sellerDisplay').textContent=product.sellerName||'AliMarket Vendedor';
+ $('#descriptionContent').innerHTML=product.description||'<p>El vendedor todavía no ha agregado una descripción detallada.</p>';
+ const shipping=Math.max(180,Math.round((Number(product.weight)||.5)*320+120));
+ $('#shippingCost').textContent=money(shipping,'DOP');
+ const d=new Date();d.setDate(d.getDate()+12);
+ $('#deliveryDate').textContent=d.toLocaleDateString('es-DO',{day:'2-digit',month:'short',year:'numeric'}).toUpperCase();
+ renderGallery();
+ renderVariants();
+ renderSizeOptions();
+ updatePrice();
+ renderDetails();
+ renderFullInformation();
+ renderFullVariants();
+ renderAllImages();
+ renderDynamicMeasureGuide();
+ renderTodosLosDatos();
+ renderAllProductInformation();
+ if(typeof renderAISummary==='function')renderAISummary();
+ if(typeof renderDetailPhotos==='function' && document.querySelector('#detailPhotoList'))renderDetailPhotos();
+ renderSimilar();
+}
+$('#minus').onclick=()=>{quantity=Math.max(1,quantity-1);$('#quantity').value=quantity};$('#plus').onclick=()=>{quantity++;$('#quantity').value=quantity};$('#addCart').onclick=()=>{const cart=JSON.parse(localStorage.getItem(CARRITO_KEY)||'[]'),id=product.id+(selectedVariant?.code?'-'+selectedVariant.code:'')+(selectedSize?.name?'-'+selectedSize.name:'')+(selectedSize?.name?'-'+selectedSize.name:''),f=cart.find(x=>x.id===id),unit=Number(selectedVariant?.offer||selectedVariant?.price||product.offerPrice||product.price||0);if(f)f.cantidad+=quantity;else cart.push({id,name:product.name,price:unit,currency:(product.currency||'USD').split(' ')[0],image:selectedVariant?.image||productImages(product)[0],cantidad:quantity,variant:selectedVariant?.variantName||'',size:selectedSize?.name||'',size:selectedSize?.name||''});localStorage.setItem(CARRITO_KEY,JSON.stringify(cart));toast('Producto agregado al carrito')};$('#buyNow').onclick=()=>{$('#addCart').click();location.href='carrito.html'};const indexSearchInput=document.querySelector('.search-box input');
+const indexSearchIcon=document.querySelector('.search-box .fa-magnifying-glass');
+function searchFromHeader(){
+  const query=(indexSearchInput?.value||'').trim().toLowerCase();
+  if(!query)return;
+  const found=allProducts.find(item=>(item.name||'').toLowerCase().includes(query));
+  if(found)location.href='articulo_detalle.html?id='+encodeURIComponent(found.id);
+  else toast('No se encontró el producto');
+}
+if(indexSearchInput)indexSearchInput.addEventListener('keydown',event=>{if(event.key==='Enter')searchFromHeader()});
+if(indexSearchIcon){indexSearchIcon.style.cursor='pointer';indexSearchIcon.addEventListener('click',searchFromHeader)};
+const detailsToggle=$('#detailsToggle');
+if(detailsToggle){
+ detailsToggle.onclick=()=>{
+   const box=$('#detailsCollapsed');
+   const open=box.classList.toggle('open');
+   detailsToggle.textContent=open?'Ver menos':'Ver más';
+ };
+}
+
+render();
+
+const categorias=[{nombre:"Electronica",icono:"🎧",subs:["Auriculares","Smartwatch","Camaras","Drones","Consolas","Audio","Parlantes","Microfonos","TV Box","Cargadores","Bluetooth","Luces-LED"]},{nombre:"Telefonos",icono:"📱",subs:["Samsung","iPhone","Xiaomi","Motorola","Huawei","Tecno","Infinix","Cargadores","Cables","Protectores","Pantallas","Accesorios"]},{nombre:"Computadoras",icono:"💻",subs:["Laptop","PC Gamer","Mouse","Teclados","Monitores","Discos SSD","Memorias","Impresoras","Router","USB","Cámaras web","Bocinas"]},{nombre:"Moda Mujer",icono:"👗",subs:["Vestidos","Blusas","Jeans","Zapatos","Carteras","Relojes","Perfumes","Faldas","Maquillaje","Pulseras","Collares","Sandalias"]},{nombre:"Moda Hombre",icono:"👕",subs:["Polos","Jeans","Tenis","Gorras","Relojes","Camisas","Correas","Perfumes","Billeteras","Shorts","Abrigos","Sandalias"]},{nombre:"Hogar y Jardin",icono:"🏠",subs:["Cocina","Muebles","Decoración","Herramientas","Jardín","Luces","Baño","Organizadores","Camas","Cortinas","Sillas","Mesas"]},{nombre:"Belleza y Salud",icono:"💄",subs:["Cuidado facial","Cabello","Perfumes","Maquillaje","Barbería","Vitaminas","Masajes","Cremas","Aceites","Uñas","Cepillos","Máquinas"]},{nombre:"Deportes",icono:"⚽",subs:["Pelotas","Tenis","Ropa deportiva","Gym","Bicicletas","Guantes","Pesas","Gorras","Mochilas","Botellas","Caminadoras","Accesorios"]},{nombre:"Juguetes",icono:"🧸",subs:["Carritos","Muñecas","Peluches","Drones niños","Bloques","Educativos","Bicicletas","Piscinas","Pistolas agua","Robots","Juegos mesa","Figuras"]},{nombre:"Automotriz",icono:"🚗",subs:["Luces LED","Aceites","Baterías","Radios","Bocinas","Forros","Cámaras","Sensores","Herramientas","Aros","Gomas","Accesorios"]},{nombre:"Herramientas",icono:"🛠️",subs:["Taladros","Martillos","Destornilladores","Sierras","Llaves","Compresores","Pintura","Cajas","Eléctricas","Medidores","Soldadoras","Cortadoras"]},{nombre:"Officina y Escuela",icono:"📚",subs:["Cuadernos","Lápices","Mochilas","Calculadoras","Sillas","Escritorios","Impresoras","Papelería","Carpetas","Marcadores","Reglas","Libros"]}];
+const sidebar=document.getElementById("catSidebar"),grid=document.getElementById("subcatGrid"),bannerTitle=document.getElementById("bannerTitle"),bannerIcon=document.getElementById("bannerIcon"),sectionTitle=document.getElementById("sectionTitle");function renderSidebar(){sidebar.innerHTML="";categorias.forEach((cat,index)=>{const item=document.createElement("div");item.className="cat-item"+(index===0?" active":"");item.innerHTML=`<div class="cat-left"><span class="cat-icon">${cat.icono}</span><span>${cat.nombre}</span></div><span>›</span>`;item.onmouseenter=()=>selectCat(index);item.onclick=()=>selectCat(index);sidebar.appendChild(item)})}function selectCat(index){document.querySelectorAll(".cat-item").forEach(el=>el.classList.remove("active"));document.querySelectorAll(".cat-item")[index].classList.add("active");const cat=categorias[index];bannerTitle.innerText=cat.nombre;bannerIcon.innerText=cat.icono;sectionTitle.innerText=cat.nombre;grid.innerHTML="";cat.subs.forEach(sub=>{const card=document.createElement("div");card.className="subcat-card";card.innerHTML=`<div class="subcat-img"><img src="https://cdn-icons-png.flaticon.com/512/1048/1048949.png"></div><h3>${sub}</h3>`;grid.appendChild(card)})}renderSidebar();selectCat(0);
+</script>
+</body>
+</html>

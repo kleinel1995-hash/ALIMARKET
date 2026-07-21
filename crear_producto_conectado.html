@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crear producto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --rojo:#ef1f24;
+  --fondo:#f5f6f8;
+  --borde:#dfe3e8;
+  --texto:#1f2328;
+  --muted:#697077;
+  --azul:#168bd2;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Inter,Arial,sans-serif;
+  color:var(--texto);
+  background:var(--fondo);
+}
+.topbar{
+  position:sticky; top:0; z-index:20;
+  height:74px; display:flex; align-items:center; justify-content:space-between;
+  padding:0 28px; background:#fff; border-bottom:1px solid #e8ebef;
+}
+.topbar h1{font-size:28px;margin:0}
+.topbar button{
+  background:#fff;border:1px solid #d5d9de;border-radius:8px;
+  padding:11px 20px;font-weight:600;cursor:pointer;
+}
+.container{max-width:1320px;margin:0 auto;padding:16px 22px 60px}
+.card{
+  background:#fff;border:1px solid #eceff2;border-radius:10px;
+  padding:20px 28px 26px;margin-bottom:14px;
+  box-shadow:0 1px 2px rgba(0,0,0,.02);
+}
+.section-title{display:flex;align-items:center;gap:13px;margin-bottom:24px}
+.section-title .num{
+  width:31px;height:31px;border-radius:50%;display:grid;place-items:center;
+  color:#fff;background:var(--rojo);font-weight:700;font-size:16px;
+}
+.section-title h2{font-size:21px;margin:0}
+.grid-2{display:grid;grid-template-columns:1.65fr .9fr;gap:28px 56px}
+.grid-sale{display:grid;grid-template-columns:1fr 1fr;gap:22px 70px}
+.field{margin-bottom:22px}
+.field label{display:block;font-weight:600;margin-bottom:10px;font-size:15px}
+.req{color:var(--rojo)}
+.control, select, input[type="text"], input[type="number"], input[type="datetime-local"]{
+  width:100%;height:46px;border:1px solid var(--borde);border-radius:7px;
+  padding:0 14px;background:#fff;font:inherit;color:var(--texto);outline:none;
+}
+.control:focus,select:focus,input:focus{border-color:#999;box-shadow:0 0 0 3px rgba(0,0,0,.04)}
+.input-wrap{position:relative}
+.counter{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:#777;font-size:13px}
+.row-input{display:flex}
+.row-input .prefix,.row-input .suffix{
+  height:46px;display:flex;align-items:center;padding:0 14px;border:1px solid var(--borde);
+  background:#fafafa;white-space:nowrap
+}
+.row-input .prefix{border-radius:7px 0 0 7px;border-right:0}
+.row-input .suffix{border-radius:0 7px 7px 0;border-left:0;color:#666}
+.row-input input{border-radius:0}
+.help{font-size:13px;color:var(--muted);margin-top:8px}
+.upload-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:16px}
+.upload-box{
+  aspect-ratio:1/1;border:1px dashed #d4d9de;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  color:#9aa0a6;background:#fff;overflow:hidden;position:relative;cursor:pointer;
+}
+.upload-box.primary{border-style:solid}
+.upload-box .plus{font-size:42px;line-height:1;color:#5f6368}
+.upload-box small{margin-top:8px;color:#666}
+.upload-box img{width:100%;height:100%;object-fit:cover}
+.remove-img{
+  position:absolute;right:5px;top:5px;width:25px;height:25px;border:0;border-radius:50%;
+  background:rgba(0,0,0,.7);color:#fff;cursor:pointer;display:none
+}
+.upload-box.filled .remove-img{display:block}
+.video-box{width:120px;height:95px;margin-top:16px}
+.editor{border:1px solid var(--borde);border-radius:7px;overflow:hidden}
+.toolbar{
+  min-height:48px;display:flex;align-items:center;gap:6px;padding:6px 10px;
+  border-bottom:1px solid var(--borde);flex-wrap:wrap;background:#fff
+}
+.toolbar select{width:auto;height:36px;padding:0 34px 0 10px}
+.tool-btn{
+  width:36px;height:36px;border:0;background:transparent;border-radius:5px;
+  font-size:18px;cursor:pointer
+}
+.tool-btn:hover{background:#f0f2f4}
+.editor-area{min-height:190px;padding:18px;outline:none;color:#555}
+.sale-subtitle{font-size:18px;margin:0 0 18px}
+.sku-selects{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-bottom:14px}
+.table-wrap{overflow:auto;border:1px solid var(--borde);border-radius:7px}
+table{width:100%;border-collapse:collapse;min-width:900px}
+th,td{border-bottom:1px solid #e5e8eb;border-right:1px solid #eef0f2;padding:8px 12px;text-align:left;font-size:14px}
+th{background:#fafafa;font-weight:600}
+td:last-child,th:last-child{border-right:0}
+.sku-img{width:44px;height:44px;object-fit:cover;border-radius:5px;background:#eee}
+.table-input{height:43px!important}
+.add-variant{
+  padding:16px;color:var(--azul);background:#fff;border:0;cursor:pointer;font-weight:600
+}
+.additional-grid{display:grid;grid-template-columns:280px 1fr 370px;gap:35px}
+.dimensions{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:8px}
+.actions{
+  position:sticky;bottom:0;z-index:15;background:rgba(255,255,255,.96);
+  border-top:1px solid #e2e5e8;padding:14px 22px;display:flex;justify-content:flex-end;gap:12px
+}
+.btn{border:1px solid #ccd1d6;background:#fff;border-radius:7px;padding:12px 22px;font-weight:600;cursor:pointer}
+.btn-primary{background:var(--rojo);border-color:var(--rojo);color:#fff}
+.notice{
+  position:fixed;right:22px;bottom:85px;background:#222;color:#fff;padding:13px 18px;
+  border-radius:8px;opacity:0;transform:translateY(15px);transition:.25s;pointer-events:none
+}
+.notice.show{opacity:1;transform:none}
+@media(max-width:1000px){
+  .grid-2,.grid-sale{grid-template-columns:1fr;gap:0}
+  .upload-grid{grid-template-columns:repeat(5,1fr)}
+  .additional-grid{grid-template-columns:1fr}
+}
+@media(max-width:650px){
+  .topbar{height:62px;padding:0 14px}.topbar h1{font-size:21px}
+  .container{padding:10px}.card{padding:18px 14px}
+  .upload-grid{grid-template-columns:repeat(3,1fr);gap:10px}
+  .sku-selects{grid-template-columns:1fr}
+  .section-title h2{font-size:18px}
+  .actions{padding:10px}
+}
+
+.editor-area:empty:before{content:attr(data-placeholder);color:#999}
+.variant-suggestion{margin-top:7px;font-size:12px;color:#6f757b}
+.variant-image-preview{width:50px;height:50px;object-fit:cover;border-radius:6px;border:1px solid #ddd}
+.variant-empty{padding:24px;text-align:center;color:#72777d;background:#fafafa}
+
+
+.size-builder{margin:18px 0 22px;padding:18px;border:1px solid var(--borde);border-radius:8px;background:#fafafa}
+.size-builder h4{margin:0 0 12px;font-size:16px}
+.size-input-row{display:grid;grid-template-columns:1fr 180px auto;gap:10px;align-items:end}
+.size-chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}
+.size-chip{display:flex;align-items:center;gap:8px;padding:9px 12px;background:#fff;border:1px solid #cfd4da;border-radius:7px;font-weight:600}
+.size-chip button{border:0;background:transparent;color:#d00;font-size:18px;cursor:pointer}
+@media(max-width:650px){.size-input-row{grid-template-columns:1fr}.size-input-row button{width:100%}}
+</style>
+
+</head>
+<body>
+<header class="topbar">
+  <h1>Crear producto</h1>
+  <div style="display:flex;gap:10px"><button type="button" id="verTienda">Ver tienda</button><button type="button" id="guardarSuperior">Guardar borrador</button></div>
+</header>
+
+<main class="container">
+<form id="productForm">
+
+<section class="card">
+  <div class="section-title"><span class="num">1</span><h2>Información básica</h2></div>
+  <div class="grid-2">
+    <div>
+      <div class="field">
+        <label><span class="req">*</span> Nombre del producto</label>
+        <div class="input-wrap">
+          <input id="productName" type="text" maxlength="128" placeholder="Introduce el nombre del producto" required>
+          <span class="counter"><span id="nameCount">0</span>/128</span>
+        </div>
+      </div>
+      <div class="field">
+        <label><span class="req">*</span> Categoría</label>
+        <select id="category" required>
+          <option value="">Selecciona una categoría</option>
+        </select>
+      </div>
+      <div class="field">
+        <label><span class="req">*</span> Subcategoría</label>
+        <select id="subcategory" required disabled>
+          <option value="">Primero selecciona una categoría</option>
+        </select>
+      </div>
+      <div class="field">
+        <label><span class="req">*</span> Atributos</label>
+        <input id="attributes" type="text" placeholder="Selecciona los atributos" required>
+      </div>
+    </div>
+    <div>
+      <div class="field">
+        <label><span class="req">*</span> Moneda</label>
+        <select id="currency"><option>USD</option><option>DOP</option><option>EUR</option></select>
+      </div>
+      <div class="field">
+        <label><span class="req">*</span> Idioma</label>
+        <select id="language"><option>Español</option><option>English</option><option>Français</option></select>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="card">
+  <div class="section-title"><span class="num">2</span><h2>Imágenes y videos</h2></div>
+  <div class="field">
+    <label><span class="req">*</span> Imágenes del producto</label>
+    <div class="help">Sube de 3 a 10 imágenes. La primera imagen será la portada.</div>
+  </div>
+  <input type="file" id="imageInput" accept="image/*" multiple hidden>
+  <div class="upload-grid" id="imageGrid"></div>
+
+  <div class="field" style="margin-top:26px">
+    <label>Videos del producto <span style="font-weight:400">(opcional)</span></label>
+    <div class="help">Formato soportado: MP4, tamaño máximo: 500MB, duración máxima: 60s.</div>
+    <input type="file" id="videoInput" accept="video/mp4" hidden>
+    <div class="upload-box primary video-box" id="videoBox">
+      <div style="font-size:32px">▶</div><small>Añadir video</small>
+    </div>
+    <div id="videoName" class="help"></div>
+  </div>
+</section>
+
+<section class="card">
+  <div class="section-title"><span class="num">3</span><h2>Descripción del producto</h2></div>
+  <div class="field">
+    <label><span class="req">*</span> Descripción detallada</label>
+    <div class="editor">
+      <div class="toolbar">
+        <select id="blockType"><option value="p">Párrafo</option><option value="h2">Título</option></select>
+        <select id="fontSize"><option value="3">14px</option><option value="4">16px</option><option value="">18px</option></select>
+        <button class="tool-btn" type="button" data-cmd="bold"><b>B</b></button>
+        <button class="tool-btn" type="button" data-cmd="italic"><i>I</i></button>
+        <button class="tool-btn" type="button" data-cmd="underline"><u>U</u></button>
+        <button class="tool-btn" type="button" data-cmd="insertUnorderedList">☷</button>
+        <button class="tool-btn" type="button" data-cmd="insertOrderedList">☰</button>
+        <button class="tool-btn" type="button" data-cmd="justifyLeft">≡</button>
+        <button class="tool-btn" type="button" data-cmd="justifyCenter">≣</button>
+        <button class="tool-btn" type="button" id="linkBtn">🔗</button>
+      </div>
+      <div id="description" class="editor-area" contenteditable="true" data-placeholder="Introduce la descripción detallada del producto"></div>
+    </div>
+  </div>
+</section>
+
+<section class="card">
+  <div class="section-title"><span class="num">4</span><h2>Información de venta</h2></div>
+  <h3 class="sale-subtitle">Precio</h3>
+  <div class="grid-sale">
+    <div class="field">
+      <label><span class="req">*</span> Precio</label>
+      <div class="row-input"><span class="prefix">US$</span><input id="price" type="number" min="0" step="0.01" value="" required></div>
+    </div>
+    <div class="field">
+      <label><span class="req">*</span> Moneda</label>
+      <select id="saleCurrency"><option>USD - Dólar estadounidense</option><option>DOP - Peso dominicano</option><option>EUR - Euro</option></select>
+    </div>
+    <div class="field">
+      <label>Precio de oferta</label>
+      <div class="row-input"><span class="prefix">US$</span><input id="offerPrice" type="number" min="0" step="0.01" value=""></div>
+    </div>
+    <div class="field">
+      <label>Periodo de oferta</label>
+      <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center">
+        <input id="offerStart" type="datetime-local"><span>~</span><input id="offerEnd" type="datetime-local">
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sale-subtitle">Stock</h3>
+  <div class="grid-sale">
+    <div class="field">
+      <label><span class="req">*</span> Cantidad total</label>
+      <div class="row-input"><input id="totalStock" type="number" min="0" value="" required><span class="suffix">unidades</span></div>
+      <div class="help">Cantidad disponible para todos los SKU.</div>
+    </div>
+    <div class="field">
+      <label><span class="req">*</span> Cantidad por cliente</label>
+      <div class="row-input"><input id="clientLimit" type="number" min="1" value="" required><span class="suffix">unidades</span></div>
+      <div class="help">Cantidad máxima que un cliente puede comprar.</div>
+    </div>
+  </div>
+
+  <h3 class="sale-subtitle">Variantes (SKU)</h3>
+  <div class="help" style="margin-bottom:14px">
+    Los campos de variante cambian según la categoría y se pueden editar escribiendo.
+    Se creará una variante por cada imagen seleccionada.
+  </div>
+  <div class="sku-selects" id="variantFields"></div>
+
+  <div class="size-builder">
+    <h4>Tamaños, capacidades o medidas</h4>
+    <div class="help">Agrega opciones como: 12GB 512GB, 16GB 1TB, S, M, L, 42, 20 cm o cualquier medida.</div>
+    <div class="size-input-row" style="margin-top:12px">
+      <div class="field" style="margin:0">
+        <label>Nombre de la opción</label>
+        <input id="sizeNameInput" type="text" placeholder="Ej.: 12GB 512GB">
+      </div>
+      <div class="field" style="margin:0">
+        <label>Stock opcional</label>
+        <input id="sizeStockInput" type="number" min="0" placeholder="Ej.: 10">
+      </div>
+      <button type="button" class="btn" id="addSizeOption">Agregar tamaño</button>
+    </div>
+    <div class="size-chips" id="sizeOptionsList"></div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>SKU</th><th>Imagen</th><th>Precio</th><th>Precio de oferta</th><th>Stock</th><th>Código SKU</th><th></th></tr></thead>
+      <tbody id="variantBody"></tbody>
+    </table>
+    <button type="button" class="add-variant" id="addVariant">＋ Agregar variantes según imágenes</button>
+  </div>
+
+  <h3 class="sale-subtitle" style="margin-top:32px">Información adicional</h3>
+  <div class="additional-grid">
+    <div class="field">
+      <label>Peso del producto</label>
+      <div class="row-input"><input id="weight" type="number" min="0" step="0.01" value=""><span class="suffix">kg</span></div>
+    </div>
+    <div class="field">
+      <label>Dimensiones del producto</label>
+      <div class="dimensions">
+        <div class="row-input"><input id="length" type="number" value=""><span class="suffix">cm</span></div><span>×</span>
+        <div class="row-input"><input id="width" type="number" value=""><span class="suffix">cm</span></div><span>×</span>
+        <div class="row-input"><input id="height" type="number" value=""><span class="suffix">cm</span></div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Código de barras (ISBN, UPC, etc.)</label>
+      <input id="barcode" type="text" value="">
+    </div>
+  </div>
+</section>
+
+<div class="actions">
+  <button type="button" class="btn" id="cancelBtn">Cancelar</button>
+  <button type="button" class="btn" id="draftBtn">Guardar borrador</button>
+  <button type="submit" class="btn btn-primary">Publicar producto</button>
+</div>
+</form>
+</main>
+<div class="notice" id="notice"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const imageGrid = $('#imageGrid');
+const imageInput = $('#imageInput');
+let images = [];
+let variants = [];
+let sizeOptions = [];
+let selectedVideo = null;
+
+function notify(text){
+  const n=$('#notice'); n.textContent=text; n.classList.add('show');
+  setTimeout(()=>n.classList.remove('show'),2600);
+}
+function renderImages(){
+  imageGrid.innerHTML='';
+  for(let i=0;i<10;i++){
+    const box=document.createElement('div');
+    box.className='upload-box'+(i===0?' primary':'');
+    if(images[i]){
+      box.classList.add('filled');
+      const img=document.createElement('img'); img.src=images[i].url; box.appendChild(img);
+      const rm=document.createElement('button'); rm.type='button'; rm.className='remove-img'; rm.textContent='×';
+      rm.onclick=e=>{e.stopPropagation();images.splice(i,1);renderImages();}; box.appendChild(rm);
+    }else if(i===images.length){
+      box.innerHTML='<div class="plus">＋</div><small>Añadir imagen</small>';
+      box.onclick=()=>imageInput.click();
+    }else{
+      box.innerHTML='<div style="font-size:28px">♟</div><small>'+(i+1)+'</small>';
+    }
+    imageGrid.appendChild(box);
+  }
+}
+async function comprimirImagen(file, maxWidth=900, quality=.78){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onerror=()=>reject(new Error('No se pudo leer la imagen'));
+    reader.onload=()=>{
+      const img=new Image();
+      img.onerror=()=>reject(new Error('Formato de imagen no compatible'));
+      img.onload=()=>{
+        let width=img.width, height=img.height;
+        if(width>maxWidth){
+          height=Math.round(height*(maxWidth/width));
+          width=maxWidth;
+        }
+        const canvas=document.createElement('canvas');
+        canvas.width=width; canvas.height=height;
+        const ctx=canvas.getContext('2d');
+        ctx.drawImage(img,0,0,width,height);
+        resolve(canvas.toDataURL('image/jpeg',quality));
+      };
+      img.src=reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+imageInput.addEventListener('change',async e=>{
+  const files=[...e.target.files].slice(0,10-images.length);
+  if(!files.length)return;
+  notify('Procesando imágenes...');
+  try{
+    for(const file of files){
+      const dataUrl=await comprimirImagen(file);
+      images.push({name:file.name,url:dataUrl});
+    }
+    renderImages();
+    notify('Imágenes agregadas');
+  }catch(error){
+    console.error(error);
+    notify('No se pudo procesar una imagen');
+  }
+  imageInput.value='';
+});
+renderImages();
+
+$('#videoBox').onclick=()=>$('#videoInput').click();
+$('#videoInput').onchange=e=>{
+  const f=e.target.files[0];
+  if(f){
+    selectedVideo={name:f.name,type:f.type,size:f.size};
+    $('#videoName').textContent='Video seleccionado: '+f.name;
+    notify('Video agregado');
+  }
+};
+
+$('#productName').oninput=e=>$('#nameCount').textContent=e.target.value.length;
+
+document.querySelectorAll('[data-cmd]').forEach(b=>b.onclick=()=>document.execCommand(b.dataset.cmd,false,null));
+$('#fontSize').onchange=e=>document.execCommand('fontSize',false,e.target.value);
+$('#blockType').onchange=e=>document.execCommand('formatBlock',false,e.target.value);
+$('#linkBtn').onclick=()=>{
+  const url=prompt('Introduce el enlace:');
+  if(url) document.execCommand('createLink',false,url);
+};
+
+
+const categoryData={
+"Electrónica":{subs:["Teléfonos y accesorios","Computadoras y tablets","Audio y auriculares","Relojes inteligentes","Cámaras y fotografía","Videojuegos y consolas","Televisores","Accesorios electrónicos","Drones","Componentes electrónicos"],fields:[["color","Color","Ej.: Negro"],["modelo","Modelo","Ej.: Pro Max"],["capacidad","Capacidad","Ej.: 128 GB"]]},
+"Teléfonos":{subs:["Smartphones","Teléfonos básicos","Protectores","Cargadores","Cables USB","Pantallas","Baterías","Soportes","Tarjetas de memoria","Accesorios"],fields:[["color","Color","Ej.: Azul"],["almacenamiento","Almacenamiento","Ej.: 256 GB"],["ram","Memoria RAM","Ej.: 8 GB"]]},
+"Computadoras":{subs:["Laptops","Computadoras de escritorio","Monitores","Teclados","Mouse","Discos SSD","Memorias RAM","Impresoras","Routers","Accesorios"],fields:[["color","Color","Ej.: Gris"],["ram","RAM","Ej.: 16 GB"],["almacenamiento","Almacenamiento","Ej.: 512 GB SSD"]]},
+"Moda Mujer":{subs:["Vestidos","Blusas","Pantalones","Jeans","Faldas","Zapatos","Sandalias","Carteras","Ropa interior","Accesorios"],fields:[["color","Color","Ej.: Rojo"],["talla","Talla","Ej.: M"],["material","Material","Ej.: Algodón"]]},
+"Moda Hombre":{subs:["Camisas","Polos","Pantalones","Jeans","Shorts","Zapatos","Tenis","Gorras","Ropa interior","Accesorios"],fields:[["color","Color","Ej.: Negro"],["talla","Talla","Ej.: L"],["material","Material","Ej.: Poliéster"]]},
+"Joyería y relojes":{subs:["Relojes","Anillos","Collares","Pulseras","Aretes","Cadenas","Dijes","Joyería para mujer","Joyería para hombre","Accesorios"],fields:[["color","Color","Ej.: Dorado"],["material","Material","Ej.: Acero inoxidable"],["tamano","Tamaño","Ej.: 20 cm"]]},
+"Hogar y jardín":{subs:["Cocina","Muebles","Decoración","Baño","Dormitorio","Iluminación","Organización","Jardín","Limpieza","Textiles"],fields:[["color","Color","Ej.: Blanco"],["tamano","Tamaño","Ej.: Grande"],["material","Material","Ej.: Plástico"]]},
+"Belleza y salud":{subs:["Cuidado facial","Cuidado corporal","Cabello","Maquillaje","Perfumes","Uñas","Barbería","Masajes","Higiene personal","Accesorios"],fields:[["tipo","Tipo","Ej.: Crema"],["contenido","Contenido","Ej.: 250 ml"],["aroma","Aroma o tono","Ej.: Vainilla"]]},
+"Deportes":{subs:["Ropa deportiva","Calzado deportivo","Fitness","Fútbol","Baloncesto","Ciclismo","Natación","Camping","Pesas","Accesorios"],fields:[["color","Color","Ej.: Azul"],["talla","Talla","Ej.: XL"],["tipo","Tipo","Ej.: Profesional"]]},
+"Juguetes":{subs:["Carritos","Muñecas","Peluches","Bloques","Juguetes educativos","Robots","Juegos de mesa","Figuras","Juguetes al aire libre","Bicicletas infantiles"],fields:[["color","Color","Ej.: Multicolor"],["edad","Edad recomendada","Ej.: 3 a 6 años"],["modelo","Modelo","Ej.: Robot X1"]]},
+"Automotriz":{subs:["Accesorios para carros","Luces LED","Radios","Cámaras","Sensores","Forros","Herramientas","Aceites","Baterías","Motocicletas"],fields:[["color","Color","Ej.: Negro"],["modelo","Modelo compatible","Ej.: Toyota Corolla"],["ano","Año compatible","Ej.: 2015-2024"]]},
+"Herramientas":{subs:["Herramientas eléctricas","Herramientas manuales","Taladros","Sierras","Soldadoras","Medición","Pintura","Jardinería","Compresores","Accesorios"],fields:[["modelo","Modelo","Ej.: T-500"],["potencia","Potencia","Ej.: 800 W"],["voltaje","Voltaje","Ej.: 110 V"]]},
+"Oficina y escuela":{subs:["Cuadernos","Lápices y bolígrafos","Mochilas","Calculadoras","Papelería","Impresoras","Escritorios","Sillas","Carpetas","Libros"],fields:[["color","Color","Ej.: Azul"],["tamano","Tamaño","Ej.: A4"],["cantidad","Cantidad o presentación","Ej.: Paquete de 12"]]},
+"Bebés":{subs:["Ropa para bebés","Calzado","Coches","Sillas para auto","Biberones","Pañales","Juguetes","Cunas","Baño","Alimentación"],fields:[["color","Color","Ej.: Rosa"],["edad","Edad o etapa","Ej.: 6-12 meses"],["tamano","Tamaño","Ej.: Mediano"]]},
+"Mascotas":{subs:["Alimentos","Camas","Collares","Correas","Juguetes","Higiene","Ropa","Transportadoras","Acuarios","Accesorios"],fields:[["tipoMascota","Tipo de mascota","Ej.: Perro"],["tamano","Tamaño","Ej.: Mediano"],["saborColor","Sabor o color","Ej.: Pollo"]]},
+"Calzado":{subs:["Tenis","Zapatos formales","Sandalias","Botas","Zapatillas","Calzado deportivo","Calzado infantil","Tacones","Mocasines","Accesorios"],fields:[["color","Color","Ej.: Blanco"],["talla","Talla","Ej.: 42"],["material","Material","Ej.: Cuero"]]},
+"Bolsos y accesorios":{subs:["Carteras","Mochilas","Billeteras","Maletas","Bolsos de viaje","Cinturones","Gorras","Lentes","Paraguas","Accesorios"],fields:[["color","Color","Ej.: Marrón"],["tamano","Tamaño","Ej.: Mediano"],["material","Material","Ej.: Cuero sintético"]]},
+"Alimentos y bebidas":{subs:["Snacks","Dulces","Café","Té","Bebidas","Conservas","Condimentos","Cereales","Productos orgánicos","Otros alimentos"],fields:[["sabor","Sabor","Ej.: Chocolate"],["pesoNeto","Peso neto","Ej.: 500 g"],["presentacion","Presentación","Ej.: Paquete"]]}
+};
+
+
+function renderSizeOptions(){
+ const list=$('#sizeOptionsList');
+ if(!list)return;
+ if(!sizeOptions.length){
+   list.innerHTML='<span class="help">Todavía no hay tamaños o medidas agregados.</span>';
+   return;
+ }
+ list.innerHTML=sizeOptions.map((item,index)=>`<div class="size-chip"><span>${item.name}${item.stock!==''&&item.stock!==null&&item.stock!==undefined?' · Stock: '+item.stock:''}</span><button type="button" data-index="${index}">×</button></div>`).join('');
+ list.querySelectorAll('button').forEach(btn=>btn.onclick=()=>{
+   sizeOptions.splice(Number(btn.dataset.index),1);
+   renderSizeOptions();
+ });
+}
+$('#addSizeOption').onclick=()=>{
+ const name=$('#sizeNameInput').value.trim();
+ const stockValue=$('#sizeStockInput').value;
+ if(!name){notify('Escribe el tamaño, capacidad o medida');return;}
+ if(sizeOptions.some(x=>x.name.toLowerCase()===name.toLowerCase())){notify('Esa opción ya existe');return;}
+ sizeOptions.push({name,stock:stockValue===''?'':Number(stockValue)});
+ $('#sizeNameInput').value='';
+ $('#sizeStockInput').value='';
+ renderSizeOptions();
+};
+renderSizeOptions();
+
+const categorySelect=$('#category');
+const subcategorySelect=$('#subcategory');
+const variantFields=$('#variantFields');
+
+function cargarCategorias(){
+ categorySelect.innerHTML='<option value="">Selecciona una categoría</option>';
+ Object.keys(categoryData).forEach(cat=>{
+   const op=document.createElement('option');op.value=cat;op.textContent=cat;categorySelect.appendChild(op);
+ });
+}
+function cargarSubcategorias(cat,selected=''){
+ subcategorySelect.innerHTML='';
+ if(!cat||!categoryData[cat]){
+   subcategorySelect.disabled=true;
+   subcategorySelect.innerHTML='<option value="">Primero selecciona una categoría</option>';
+   return;
+ }
+ subcategorySelect.disabled=false;
+ subcategorySelect.innerHTML='<option value="">Selecciona una subcategoría</option>';
+ categoryData[cat].subs.forEach(sub=>{
+   const op=document.createElement('option');op.value=sub;op.textContent=sub;op.selected=sub===selected;subcategorySelect.appendChild(op);
+ });
+}
+function renderVariantFields(cat){
+ variantFields.innerHTML='';
+ if(!cat||!categoryData[cat]){
+   variantFields.innerHTML='<div class="variant-empty" style="grid-column:1/-1">Selecciona una categoría para mostrar sus variantes.</div>';
+   return;
+ }
+ categoryData[cat].fields.forEach(([key,label,placeholder])=>{
+   const div=document.createElement('div');div.className='field';
+   div.innerHTML=`<label>${label}</label><input type="text" class="variant-dynamic-input" data-key="${key}" placeholder="${placeholder}"><div class="variant-suggestion">Puedes escribir y editar este valor.</div>`;
+   variantFields.appendChild(div);
+ });
+}
+categorySelect.addEventListener('change',()=>{
+ cargarSubcategorias(categorySelect.value);
+ renderVariantFields(categorySelect.value);
+ variants=[];
+ renderVariants();
+});
+
+function renderVariants(){
+ const body=$('#variantBody');body.innerHTML='';
+ if(!variants.length){
+   body.innerHTML='<tr><td colspan="7" class="variant-empty">Selecciona imágenes, completa los campos y pulsa “Agregar variantes según imágenes”.</td></tr>';
+   return;
+ }
+ variants.forEach((v,i)=>{
+   const nombre=v.variantName||Object.values(v.attributes||{}).filter(Boolean).join(' / ')||`Variante ${i+1}`;
+   const tr=document.createElement('tr');
+   tr.innerHTML=`
+    <td><input class="table-input" type="text" value="${nombre}" data-i="${i}" data-k="variantName"></td>
+    <td>${v.image?`<img class="variant-image-preview" src="${v.image}">`:'Sin imagen'}</td>
+    <td><div class="row-input"><span class="prefix">US$</span><input class="table-input" type="number" min="0" step="0.01" value="${v.price??''}" data-i="${i}" data-k="price"></div></td>
+    <td><div class="row-input"><span class="prefix">US$</span><input class="table-input" type="number" min="0" step="0.01" value="${v.offer??''}" data-i="${i}" data-k="offer"></div></td>
+    <td><input class="table-input" type="number" min="0" value="${v.stock??''}" data-i="${i}" data-k="stock"></td>
+    <td><input class="table-input" type="text" value="${v.code||''}" data-i="${i}" data-k="code"></td>
+    <td><button type="button" class="tool-btn remove-var" data-i="${i}">🗑</button></td>`;
+   body.appendChild(tr);
+ });
+ body.querySelectorAll('input').forEach(inp=>inp.oninput=e=>{
+   const i=+e.target.dataset.i,k=e.target.dataset.k;
+   variants[i][k]=['price','offer','stock'].includes(k)&&e.target.value!==''?Number(e.target.value):e.target.value;
+ });
+ body.querySelectorAll('.remove-var').forEach(b=>b.onclick=()=>{variants.splice(+b.dataset.i,1);renderVariants();});
+}
+
+$('#addVariant').onclick=()=>{
+ const cat=categorySelect.value;
+ if(!cat){notify('Primero selecciona una categoría');return;}
+ if(!images.length){notify('Primero selecciona por lo menos una imagen');return;}
+ const attributes={};
+ variantFields.querySelectorAll('.variant-dynamic-input').forEach(inp=>attributes[inp.dataset.key]=inp.value.trim());
+ if(Object.values(attributes).every(v=>!v)){notify('Escribe por lo menos un valor de variante');return;}
+
+ const precio=$('#price').value===''?'':Number($('#price').value);
+ const oferta=$('#offerPrice').value===''?'':Number($('#offerPrice').value);
+ const total=$('#totalStock').value===''?'':Number($('#totalStock').value);
+ const porImagen=total===''?'':Math.floor(total/images.length);
+
+ variants=images.map((img,index)=>{
+   const attrs={...attributes};
+   const keys=Object.keys(attrs);
+   if(keys.length&&attrs[keys[keys.length-1]])attrs[keys[keys.length-1]]+=` ${index+1}`;
+   return{
+     attributes:attrs,
+     variantName:Object.values(attrs).filter(Boolean).join(' / '),
+     image:img.url,
+     imageName:img.name,
+     price:precio,
+     offer:oferta,
+     stock:porImagen,
+     code:(cat.slice(0,3)+String(index+1).padStart(3,'0')).replace(/\s/g,'').toUpperCase()
+   };
+ });
+ renderVariants();
+ notify(`${variants.length} variante(s) creadas según las imágenes`);
+};
+
+cargarCategorias();
+cargarSubcategorias('');
+renderVariantFields('');
+renderVariants();
+
+function productData(status){
+  return {
+    status,
+    name:$('#productName').value.trim(),
+    category:$('#category').value,
+    subcategory:$('#subcategory').value,
+    attributes:$('#attributes').value.trim(),
+    currency:$('#currency').value,
+    language:$('#language').value,
+    id:'PRD-'+Date.now()+'-'+Math.random().toString(36).slice(2,7),
+    images:images.map(x=>({name:x.name,url:x.url})),
+    image:images[0]?.url||'',
+    description:$('#description').innerHTML,
+    price:Number($('#price').value),
+    offerPrice:Number($('#offerPrice').value),
+    offerStart:$('#offerStart').value,
+    offerEnd:$('#offerEnd').value,
+    totalStock:Number($('#totalStock').value),
+    clientLimit:Number($('#clientLimit').value),
+    variants,
+    sizeOptions,
+    weight:Number($('#weight').value),
+    dimensions:{length:Number($('#length').value),width:Number($('#width').value),height:Number($('#height').value)},
+    barcode:$('#barcode').value.trim(),
+    video:selectedVideo,
+    sellerName:'AliMarket Vendedor',
+    createdAt:new Date().toISOString()
+  };
+}
+function guardarEnLocalStorage(clave,valor){
+  try{
+    localStorage.setItem(clave,JSON.stringify(valor));
+    return true;
+  }catch(error){
+    console.error(error);
+    notify('No hay espacio suficiente. Usa imágenes más pequeñas.');
+    return false;
+  }
+}
+function saveDraft(){
+  const data=productData('borrador');
+  if(guardarEnLocalStorage('productoBorrador',data)){
+    notify('Borrador guardado correctamente');
+  }
+}
+$('#draftBtn').onclick=saveDraft;
+$('#verTienda').onclick=()=>location.href='index.html';
+$('#guardarSuperior').onclick=saveDraft;
+$('#cancelBtn').onclick=()=>{
+  if(confirm('¿Deseas limpiar el formulario?')){localStorage.removeItem('productoBorrador');location.reload();}
+};
+$('#productForm').onsubmit=e=>{
+  e.preventDefault();
+  if(images.length<3){notify('Debes subir por lo menos 3 imágenes');return;}
+  if(!$('#description').innerText.trim()){notify('Escribe la descripción del producto');return;}
+  if(!$('#subcategory').value){notify('Selecciona una subcategoría');return;}
+  if(variants.length!==images.length){notify('Agrega las variantes según las imágenes seleccionadas');return;}
+  const offer=Number($('#offerPrice').value), price=Number($('#price').value);
+  if(offer && offer>=price){notify('El precio de oferta debe ser menor que el precio normal');return;}
+
+  const products=JSON.parse(localStorage.getItem('productosPublicados')||'[]');
+  const nuevoProducto=productData('publicado');
+  products.unshift(nuevoProducto);
+
+  if(!guardarEnLocalStorage('productosPublicados',products))return;
+
+  localStorage.removeItem('productoBorrador');
+  notify('Producto publicado. Abriendo la tienda...');
+  setTimeout(()=>location.href='index.html',900);
+};
+window.addEventListener('DOMContentLoaded',()=>{
+  const d=JSON.parse(localStorage.getItem('productoBorrador')||'null');
+  if(!d)return;
+  $('#productName').value=d.name||'';$('#nameCount').textContent=$('#productName').value.length;
+  $('#category').value=d.category||'';
+  cargarSubcategorias(d.category||'',d.subcategory||'');
+  renderVariantFields(d.category||'');
+  $('#attributes').value=d.attributes||'';
+  $('#currency').value=d.currency||'USD';$('#language').value=d.language||'Español';
+  $('#description').innerHTML=d.description||'';$('#price').value=d.price??'';
+  $('#offerPrice').value=d.offerPrice??'';$('#offerStart').value=d.offerStart||'';$('#offerEnd').value=d.offerEnd||'';
+  $('#totalStock').value=d.totalStock??'';$('#clientLimit').value=d.clientLimit??'';
+  if(Array.isArray(d.images)){images=d.images.map(x=>typeof x==='string'?{name:x,url:''}:x).filter(x=>x.url);renderImages();}
+  if(d.variants){variants=d.variants;renderVariants();}
+  if(Array.isArray(d.sizeOptions)){sizeOptions=d.sizeOptions;renderSizeOptions();}
+  $('#weight').value=d.weight??'';
+  if(d.dimensions){$('#length').value=d.dimensions.length;$('#width').value=d.dimensions.width;$('#height').value=d.dimensions.height;}
+  $('#barcode').value=d.barcode||'';
+  if(d.video){
+    selectedVideo=d.video;
+    $('#videoName').textContent='Video seleccionado: '+(d.video.name||'Video');
+  }
+  notify('Borrador recuperado');
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AliMarket</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#d9d9d9;color:#000;padding-top:150px;padding-bottom:90px}
+.header{position:fixed;top:0;left:0;width:100%;background:#fff;z-index:9999;padding:18px 70px 28px}
+.header-top{display:flex;align-items:center;gap:22px}.logo{font-family:Georgia,serif;font-size:43px;font-weight:bold;color:#b40000;text-decoration:none;letter-spacing:3px}
+.search-box{flex:1;height:43px;border:2px solid #777;border-radius:30px;display:flex;align-items:center;padding:0 15px;gap:10px;max-width:720px}.search-box input{border:none;outline:none;width:100%;font-size:16px;background:transparent}.search-box i{color:#555;font-size:18px}
+.header-icons{display:flex;align-items:center;gap:24px}.header-icons a{text-decoration:none;color:#000;font-weight:900;display:flex;align-items:center;gap:9px;font-size:19px}.header-icons i{font-size:30px}
+.promo-bar{margin-top:18px;display:flex;align-items:center;gap:12px;padding-left:48px}.promo-bar a{min-width:165px;background:#d8d8d8;color:#000;text-decoration:none;font-weight:900;text-align:center;padding:10px 18px;border-radius:18px;font-size:14px}.promo-bar .cat{background:#fa8d94;display:flex;align-items:center;justify-content:center;gap:10px}.categoria-hover{position:relative}
+.hover-full{position:fixed;top:145px;left:0;width:100%;height:calc(100vh - 145px);background:#d9d9d9;z-index:9998;padding:25px 70px;opacity:0;visibility:hidden;transform:translateY(15px);transition:.25s;overflow:auto}.categoria-hover:hover .hover-full,.hover-full:hover{opacity:1;visibility:visible;transform:translateY(0)}
+.cat-page{width:100%;max-width:1500px;margin:auto}.cat-layout{display:grid;grid-template-columns:290px 1fr;gap:24px}.cat-sidebar{background:#fff;border-radius:16px;padding:17px 18px;min-height:670px}.cat-item{height:55px;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:21px;font-weight:600;cursor:pointer;padding:0 8px;border-radius:12px}.cat-item:hover,.cat-item.active{background:#fff1f1;color:#e00000}.cat-left{display:flex;align-items:center;gap:12px}.cat-icon{width:28px;text-align:center;font-size:23px}.cat-content{padding-top:0}.cat-banner{height:132px;background:linear-gradient(90deg,#4b0000,#e50000,#ff2727);border-radius:14px;display:flex;align-items:center;gap:25px;padding:25px 32px;color:#fff;margin-bottom:20px}.cat-banner .banner-icon{font-size:66px}.cat-banner h1{font-size:36px;margin-bottom:8px}.cat-banner p{font-size:18px;font-weight:700}.cat-title-row{display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #fff;padding:0 8px 15px;margin-bottom:20px}.cat-title-row h2{font-size:34px;font-weight:900}.cat-title-row a{color:#e33333;text-decoration:none;font-size:19px;font-weight:700}.subcat-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}.subcat-card{height:190px;background:#fff;border:2px solid #fff;border-radius:12px;overflow:hidden;cursor:pointer;transition:.2s}.subcat-card:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(0,0,0,.18)}.subcat-img{height:127px;background:#cfcfcf;display:flex;align-items:center;justify-content:center}.subcat-img img{width:90px;height:90px;object-fit:contain}.subcat-card h3{height:63px;background:#fff;display:flex;align-items:center;justify-content:center;text-align:center;font-size:19px}
+.hero{width:86%;height:420px;margin:30px auto 25px;background:linear-gradient(90deg,#e00000,#f00000,#cf0000);overflow:hidden;position:relative;display:flex;align-items:center;padding:45px}.hero-text{color:#fff;width:45%;z-index:2}.hero-text h1{font-size:55px;line-height:1.2;margin-bottom:28px;font-weight:900}.hero-text p{font-size:32px;line-height:1.35;margin-bottom:28px}.hero-text button{background:#fff;color:#d90000;border:none;padding:17px 48px;border-radius:9px;font-size:25px;font-weight:900;cursor:pointer}.hero-img{position:absolute;right:0;bottom:0;width:58%;height:100%;background:url("https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=900&q=80") center/cover no-repeat;opacity:.95}.section{width:86%;margin:25px auto}.section h2{font-size:36px;font-weight:900;margin-bottom:20px}.products{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.product{background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.15)}.product img{width:100%;height:180px;object-fit:cover}.product-info{padding:15px}.product-info h3{font-size:17px;margin-bottom:8px}.price{color:#d60000;font-size:22px;font-weight:900}.product button{margin-top:12px;width:100%;padding:12px;border:none;border-radius:12px;background:#000;color:#fff;font-weight:bold;cursor:pointer}.product{position:relative;cursor:pointer}.product-badge{position:absolute;top:10px;left:10px;background:#e60023;color:#fff;padding:6px 9px;border-radius:20px;font-size:12px;font-weight:900;z-index:2}.old-price{font-size:14px;color:#777;text-decoration:line-through;margin-left:7px}.product-meta{font-size:13px;color:#666;margin-top:5px}.empty-products{grid-column:1/-1;background:#fff;border-radius:16px;padding:35px;text-align:center}.mobile-bottom{display:none}
+@media(max-width:768px){body{padding-top:220px}.header{padding:20px 18px 18px}.header-top{display:grid;grid-template-columns:1fr auto}.logo{font-size:44px}.header-icons a{display:none}.header-icons::after{content:"\f0f3";font-family:"Font Awesome 6 Free";font-weight:900;font-size:42px}.search-box{grid-column:1/3;max-width:100%;width:100%;height:62px}.promo-bar{padding-left:0;overflow-x:auto}.promo-bar::-webkit-scrollbar{display:none}.promo-bar a{min-width:160px}.hover-full{display:none}.hero{width:100%;height:300px;margin-top:20px;padding:25px}.hero-text{width:58%}.hero-text h1{font-size:32px}.hero-text p{font-size:21px}.hero-text button{font-size:18px;padding:12px 25px}.hero-img{width:58%}.section{width:100%;padding:25px}.products{grid-template-columns:repeat(2,1fr)}.product img{height:130px}.mobile-bottom{position:fixed;bottom:0;left:0;right:0;height:85px;background:#d9d9d9;display:flex;justify-content:space-around;align-items:center;z-index:9999}.mobile-bottom a{color:#000;text-decoration:none;font-size:34px}.discount{color:#e00068!important;font-weight:900;font-size:28px!important}}
+
+/* Menú desplegable de usuario */
+.user-menu-wrap{position:relative}
+.user-menu-trigger{cursor:pointer}
+.user-dropdown{
+  position:absolute;
+  top:calc(100% + 14px);
+  right:0;
+  width:360px;
+  max-height:610px;
+  overflow-y:auto;
+  background:#fff;
+  border:1px solid #e3e3e3;
+  border-radius:20px;
+  box-shadow:0 12px 35px rgba(0,0,0,.18);
+  padding:18px 18px 16px;
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(10px);
+  transition:.2s ease;
+  z-index:10050;
+}
+.user-menu-wrap:hover .user-dropdown,
+.user-menu-wrap.open .user-dropdown{
+  opacity:1;
+  visibility:visible;
+  transform:none;
+}
+.user-dropdown::before{
+  content:"";
+  position:absolute;
+  top:-10px;
+  right:34px;
+  width:18px;
+  height:18px;
+  background:#fff;
+  border-left:1px solid #e3e3e3;
+  border-top:1px solid #e3e3e3;
+  transform:rotate(45deg);
+}
+.user-login-btn{
+  display:block;
+  width:100%;
+  padding:18px 20px;
+  border:0;
+  border-radius:40px;
+  background:#111827;
+  color:#fff;
+  font-size:22px;
+  font-weight:800;
+  text-align:center;
+  cursor:pointer;
+}
+.user-register{
+  display:block;
+  text-align:center;
+  margin:12px 0 18px;
+  font-size:18px;
+  font-weight:700;
+  color:#222;
+}
+.user-divider{height:1px;background:#e5e5e5;margin:6px 0 14px}
+.user-menu-list{display:flex;flex-direction:column}
+.user-menu-item{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:16px 10px;
+  color:#222;
+  text-decoration:none;
+  font-size:20px;
+  border-radius:10px;
+  transition:.18s;
+}
+.user-menu-item:hover{background:#f4f4f4}
+.user-menu-item i{
+  width:26px;
+  text-align:center;
+  font-size:22px;
+  color:#333;
+}
+.user-dropdown::-webkit-scrollbar{width:8px}
+.user-dropdown::-webkit-scrollbar-thumb{background:#7c7c7c;border-radius:10px}
+.user-dropdown::-webkit-scrollbar-track{background:#f2f2f2;border-radius:10px}
+@media(max-width:768px){
+  .user-dropdown{
+    position:fixed;
+    top:88px;
+    right:12px;
+    left:12px;
+    width:auto;
+    max-height:calc(100vh - 110px);
+  }
+  .user-dropdown::before{display:none}
+}
+
+
+/* Ventanas modales de acceso */
+.auth-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.48);
+  display:none;align-items:center;justify-content:center;
+  padding:20px;z-index:20000
+}
+.auth-overlay.show{display:flex}
+.auth-modal{
+  width:min(470px,96vw);max-height:90vh;overflow:auto;
+  background:#fff;border-radius:22px;box-shadow:0 24px 70px rgba(0,0,0,.3);
+  padding:30px;position:relative
+}
+.auth-close{
+  position:absolute;right:18px;top:14px;width:38px;height:38px;
+  border:0;background:#f1f1f1;border-radius:50%;font-size:22px;cursor:pointer
+}
+.auth-modal h2{font-size:30px;margin:8px 0 6px}
+.auth-modal .subtitle{color:#6b7280;margin-bottom:22px}
+.auth-tabs{display:flex;gap:8px;background:#f2f2f2;padding:5px;border-radius:12px;margin-bottom:22px}
+.auth-tab{flex:1;border:0;background:transparent;padding:12px;border-radius:9px;font-weight:800;cursor:pointer}
+.auth-tab.active{background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.auth-panel{display:none}
+.auth-panel.active{display:block}
+.auth-field{margin-bottom:16px}
+.auth-field label{display:block;font-weight:800;margin-bottom:7px}
+.auth-input-wrap{position:relative}
+.auth-input-wrap i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#6b7280}
+.auth-input-wrap input{
+  width:100%;height:50px;border:1px solid #dfe3e8;border-radius:10px;
+  padding:0 44px;font-size:16px;outline:none
+}
+.auth-input-wrap input:focus{border-color:#333;box-shadow:0 0 0 3px rgba(0,0,0,.05)}
+.auth-eye{
+  position:absolute;right:10px;top:50%;transform:translateY(-50%);
+  border:0;background:transparent;cursor:pointer;font-size:16px
+}
+.auth-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.auth-options{display:flex;justify-content:space-between;gap:12px;align-items:center;margin:8px 0 18px}
+.auth-link-btn{border:0;background:transparent;color:#b40000;font-weight:800;cursor:pointer}
+.auth-submit{
+  width:100%;border:0;border-radius:28px;padding:15px;
+  background:linear-gradient(90deg,#e60023,#b40000);
+  color:#fff;font-size:18px;font-weight:900;cursor:pointer
+}
+.auth-message{display:none;margin-bottom:14px;padding:12px;border-radius:9px;font-weight:700}
+.auth-message.success{display:block;background:#e8f7ed;color:#176b33}
+.auth-message.error{display:block;background:#ffe9e9;color:#a00000}
+.auth-small{font-size:13px;color:#666;margin-top:6px}
+.logout-item{display:none}
+.user-menu-wrap.logged-in .logout-item{display:flex}
+.user-menu-wrap.logged-in .guest-only{display:none}
+@media(max-width:600px){
+  .auth-modal{padding:24px 18px;border-radius:16px}
+  .auth-row{grid-template-columns:1fr}
+}
+
+</style>
+</head>
+<body>
+<header class="header"><div class="header-top"><a href="index.html" class="logo">Alimarket</a><div class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input type="text" placeholder=""><i class="fa-solid fa-microphone"></i></div><div class="header-icons"><a href="favoritos.html"><i class="fa-solid fa-heart"></i> Favorito</a><a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i> Cesta</a><div class="user-menu-wrap" id="userMenuWrap">
+  <a href="usuario.html" class="user-menu-trigger" id="userMenuTrigger">
+    <i class="fa-solid fa-user"></i> Usuario
+  </a>
+  <div class="user-dropdown" id="userDropdown">
+    <button type="button" class="user-login-btn guest-only" id="openLoginModal">Iniciar sesión</button>
+    <button type="button" class="user-register auth-link-btn guest-only" id="openRegisterModal">Registrarse</button>
+    <div class="user-divider"></div>
+    <div class="user-menu-list">
+      <a href="pedidos.html" class="user-menu-item"><i class="fa-regular fa-clipboard"></i><span>Mis pedidos</span></a>
+      <a href="monedas.html" class="user-menu-item"><i class="fa-solid fa-coins"></i><span>Mis monedas</span></a>
+      <a href="mensajes.html" class="user-menu-item"><i class="fa-regular fa-message"></i><span>Centro de mensajes</span></a>
+      <a href="formas_pago.html" class="user-menu-item"><i class="fa-regular fa-credit-card"></i><span>Forma de pago</span></a>
+      <a href="favoritos.html" class="user-menu-item"><i class="fa-regular fa-heart"></i><span>Lista de deseos</span></a>
+      <a href="cupones.html" class="user-menu-item"><i class="fa-solid fa-ticket"></i><span>Mis cupones</span></a>
+      <a href="configuracion.html" class="user-menu-item"><i class="fa-solid fa-gear"></i><span>Configuración</span></a>
+      <a href="business.html" class="user-menu-item"><i class="fa-solid fa-briefcase"></i><span>AliMarket Business</span></a>
+      <a href="dropshipping.html" class="user-menu-item"><i class="fa-solid fa-boxes-stacked"></i><span>Centro de dropshipping</span></a>
+      <a href="vendedor.html" class="user-menu-item"><i class="fa-solid fa-store"></i><span>Invitación a vendedor</span></a>
+      <button type="button" class="user-menu-item logout-item" id="logoutMenuItem" style="width:100%;border:0;background:transparent;cursor:pointer">
+        <i class="fa-solid fa-right-from-bracket"></i><span>Cerrar sesión</span>
+      </button>
+    </div>
+  </div>
+</div></div></div><nav class="promo-bar"><div class="categoria-hover"><a class="cat" href="#"><i class="fa-solid fa-bars"></i> Categorías</a><div class="hover-full"><main class="cat-page"><div class="cat-layout"><aside class="cat-sidebar" id="catSidebar"></aside><section class="cat-content"><div class="cat-banner"><div class="banner-icon" id="bannerIcon">🎧</div><div><h1 id="bannerTitle">Electronica</h1><p>Explora cientos productos populares y subcategorías.</p></div></div><div class="cat-title-row"><h2 id="sectionTitle">Electronica</h2><a href="categorias.html">Abrir página completa</a></div><div class="subcat-grid" id="subcatGrid"></div></section></div></main></div></div><a href="#">Ofertas promocional</a><a href="#">Nuevos</a><a href="#">Más vendido</a><a href="#">Cupones</a><a href="#">Envió gratis</a></nav></header>
+<section class="hero"><div class="hero-text"><h1>SuperOfertas<br>Hasta -70% dto.</h1><p>Miles de ofertas<br>por tiempo limitado</p><button type="button" onclick="location.href='crear_producto_conectado.html'">Crear producto</button></div><div class="hero-img"></div></section>
+<section class="section"><h2>Productos destacados</h2><div class="products" id="productsGrid"><div class="product"><img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=500&q=80"><div class="product-info"><h3>Smartphone moderno</h3><div class="price">RD$ 8,500</div><button>Agregar</button></div></div><div class="product"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80"><div class="product-info"><h3>Audífonos Bluetooth</h3><div class="price">RD$ 1,250</div><button>Agregar</button></div></div><div class="product"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80"><div class="product-info"><h3>Reloj elegante</h3><div class="price">RD$ 2,900</div><button>Agregar</button></div></div><div class="product"><img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=500&q=80"><div class="product-info"><h3>Smart Watch</h3><div class="price">RD$ 3,600</div><button>Agregar</button></div></div></div></section>
+<nav class="mobile-bottom"><a href="index.html"><i class="fa-solid fa-house"></i></a><a href="#"><i class="fa-solid fa-comments"></i></a><a href="#" class="discount">20%</a><a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i></a><a href="usuario.html"><i class="fa-solid fa-user"></i></a></nav>
+<script>
+
+const PRODUCTOS_KEY='productosPublicados';
+const CARRITO_KEY='carritoAliMarket';
+const productosPredeterminados=[
+  {id:'demo-1',name:'Smartphone moderno',price:8500,offerPrice:0,currency:'DOP',image:'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=500&q=80',category:'Electrónica',totalStock:20},
+  {id:'demo-2',name:'Audífonos Bluetooth',price:1250,offerPrice:0,currency:'DOP',image:'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80',category:'Electrónica',totalStock:15},
+  {id:'demo-3',name:'Reloj elegante',price:2900,offerPrice:0,currency:'DOP',image:'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80',category:'Moda',totalStock:12},
+  {id:'demo-4',name:'Smart Watch',price:3600,offerPrice:0,currency:'DOP',image:'https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=500&q=80',category:'Electrónica',totalStock:18}
+];
+
+function escaparHTML(valor=''){
+  return String(valor).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+}
+function monedaProducto(p){
+  const codigo=(p.currency||'USD').split(' ')[0];
+  const simbolo=codigo==='DOP'?'RD$':codigo==='EUR'?'€':'US$';
+  return {codigo,simbolo};
+}
+function precioActivo(p){
+  const oferta=Number(p.offerPrice)||0;
+  return oferta>0?oferta:Number(p.price)||0;
+}
+function productosGuardados(){
+  try{
+    const lista=JSON.parse(localStorage.getItem(PRODUCTOS_KEY)||'[]');
+    return Array.isArray(lista)?lista.filter(p=>p && p.status==='publicado'):[];
+  }catch(e){
+    console.error(e);
+    return [];
+  }
+}
+function renderProductos(){
+  const grid=document.getElementById('productsGrid');
+  const creados=productosGuardados();
+  const lista=[...creados,...productosPredeterminados];
+  if(!lista.length){
+    grid.innerHTML='<div class="empty-products"><h3>No hay productos publicados</h3></div>';
+    return;
+  }
+
+  grid.innerHTML=lista.map((p,index)=>{
+    const {simbolo}=monedaProducto(p);
+    const precio=precioActivo(p);
+    const oferta=Number(p.offerPrice)||0;
+    const normal=Number(p.price)||0;
+    const imagen=p.image || (Array.isArray(p.images) && p.images[0] && (p.images[0].url||p.images[0])) || 'https://via.placeholder.com/500x400?text=Producto';
+    const nuevo=index<creados.length;
+    return `<article class="product" data-id="${escaparHTML(p.id||'producto-'+index)}" data-detail="articulo_detalle.html?id=${encodeURIComponent(p.id||'producto-'+index)}">
+      ${nuevo?'<span class="product-badge">Nuevo</span>':''}
+      <img src="${imagen}" alt="${escaparHTML(p.name||'Producto')}" onerror="this.src='https://via.placeholder.com/500x400?text=Producto'">
+      <div class="product-info">
+        <h3>${escaparHTML(p.name||'Producto sin nombre')}</h3>
+        <div class="price">${simbolo} ${precio.toLocaleString('es-DO',{minimumFractionDigits:2,maximumFractionDigits:2})}
+          ${oferta>0 && oferta<normal?`<span class="old-price">${simbolo} ${normal.toLocaleString('es-DO',{minimumFractionDigits:2,maximumFractionDigits:2})}</span>`:''}
+        </div>
+        <div class="product-meta">${escaparHTML(p.category||'Sin categoría')} · Stock: ${Number(p.totalStock)||0}</div>
+        <button type="button" class="add-cart" data-index="${index}">Agregar</button>
+      </div>
+    </article>`;
+  }).join('');
+
+  grid.querySelectorAll('.product').forEach(card=>{
+    card.addEventListener('click',e=>{
+      if(e.target.closest('.add-cart')) return;
+      location.href=card.dataset.detail;
+    });
+  });
+
+  grid.querySelectorAll('.add-cart').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const producto=lista[Number(btn.dataset.index)];
+      const carrito=JSON.parse(localStorage.getItem(CARRITO_KEY)||'[]');
+      const existente=carrito.find(x=>x.id===producto.id);
+      if(existente) existente.cantidad=(existente.cantidad||1)+1;
+      else carrito.push({
+        id:producto.id,
+        name:producto.name,
+        price:precioActivo(producto),
+        currency:(producto.currency||'USD').split(' ')[0],
+        image:producto.image || (producto.images?.[0]?.url||''),
+        cantidad:1
+      });
+      localStorage.setItem(CARRITO_KEY,JSON.stringify(carrito));
+      btn.innerText='Agregado ✓';
+      btn.style.background='#d60000';
+      setTimeout(()=>{btn.innerText='Agregar';btn.style.background='#000'},1200);
+    });
+  });
+}
+renderProductos();
+window.addEventListener('storage',e=>{
+  if(e.key===PRODUCTOS_KEY)renderProductos();
+});
+
+const categorias=[{nombre:"Electronica",icono:"🎧",subs:["Auriculares","Smartwatch","Camaras","Drones","Consolas","Audio","Parlantes","Microfonos","TV Box","Cargadores","Bluetooth","Luces-LED"]},{nombre:"Telefonos",icono:"📱",subs:["Samsung","iPhone","Xiaomi","Motorola","Huawei","Tecno","Infinix","Cargadores","Cables","Protectores","Pantallas","Accesorios"]},{nombre:"Computadoras",icono:"💻",subs:["Laptop","PC Gamer","Mouse","Teclados","Monitores","Discos SSD","Memorias","Impresoras","Router","USB","Cámaras web","Bocinas"]},{nombre:"Moda Mujer",icono:"👗",subs:["Vestidos","Blusas","Jeans","Zapatos","Carteras","Relojes","Perfumes","Faldas","Maquillaje","Pulseras","Collares","Sandalias"]},{nombre:"Moda Hombre",icono:"👕",subs:["Polos","Jeans","Tenis","Gorras","Relojes","Camisas","Correas","Perfumes","Billeteras","Shorts","Abrigos","Sandalias"]},{nombre:"Hogar y Jardin",icono:"🏠",subs:["Cocina","Muebles","Decoración","Herramientas","Jardín","Luces","Baño","Organizadores","Camas","Cortinas","Sillas","Mesas"]},{nombre:"Belleza y Salud",icono:"💄",subs:["Cuidado facial","Cabello","Perfumes","Maquillaje","Barbería","Vitaminas","Masajes","Cremas","Aceites","Uñas","Cepillos","Máquinas"]},{nombre:"Deportes",icono:"⚽",subs:["Pelotas","Tenis","Ropa deportiva","Gym","Bicicletas","Guantes","Pesas","Gorras","Mochilas","Botellas","Caminadoras","Accesorios"]},{nombre:"Juguetes",icono:"🧸",subs:["Carritos","Muñecas","Peluches","Drones niños","Bloques","Educativos","Bicicletas","Piscinas","Pistolas agua","Robots","Juegos mesa","Figuras"]},{nombre:"Automotriz",icono:"🚗",subs:["Luces LED","Aceites","Baterías","Radios","Bocinas","Forros","Cámaras","Sensores","Herramientas","Aros","Gomas","Accesorios"]},{nombre:"Herramientas",icono:"🛠️",subs:["Taladros","Martillos","Destornilladores","Sierras","Llaves","Compresores","Pintura","Cajas","Eléctricas","Medidores","Soldadoras","Cortadoras"]},{nombre:"Officina y Escuela",icono:"📚",subs:["Cuadernos","Lápices","Mochilas","Calculadoras","Sillas","Escritorios","Impresoras","Papelería","Carpetas","Marcadores","Reglas","Libros"]}];
+const sidebar=document.getElementById("catSidebar"),grid=document.getElementById("subcatGrid"),bannerTitle=document.getElementById("bannerTitle"),bannerIcon=document.getElementById("bannerIcon"),sectionTitle=document.getElementById("sectionTitle");function renderSidebar(){sidebar.innerHTML="";categorias.forEach((cat,index)=>{const item=document.createElement("div");item.className="cat-item"+(index===0?" active":"");item.innerHTML=`<div class="cat-left"><span class="cat-icon">${cat.icono}</span><span>${cat.nombre}</span></div><span>›</span>`;item.onmouseenter=()=>selectCat(index);item.onclick=()=>selectCat(index);sidebar.appendChild(item)})}function selectCat(index){document.querySelectorAll(".cat-item").forEach(el=>el.classList.remove("active"));document.querySelectorAll(".cat-item")[index].classList.add("active");const cat=categorias[index];bannerTitle.innerText=cat.nombre;bannerIcon.innerText=cat.icono;sectionTitle.innerText=cat.nombre;grid.innerHTML="";cat.subs.forEach(sub=>{const card=document.createElement("div");card.className="subcat-card";card.innerHTML=`<div class="subcat-img"><img src="https://cdn-icons-png.flaticon.com/512/1048/1048949.png"></div><h3>${sub}</h3>`;grid.appendChild(card)})}renderSidebar();selectCat(0);
+
+const userMenuWrap=document.getElementById('userMenuWrap');
+const userMenuTrigger=document.getElementById('userMenuTrigger');
+if(userMenuWrap&&userMenuTrigger){
+  userMenuTrigger.addEventListener('click',event=>{
+    if(window.innerWidth<=768){
+      event.preventDefault();
+      userMenuWrap.classList.toggle('open');
+    }
+  });
+  document.addEventListener('click',event=>{
+    if(!userMenuWrap.contains(event.target))userMenuWrap.classList.remove('open');
+  });
+}
+
+</script>
+
+<div class="auth-overlay" id="authOverlay" aria-hidden="true">
+  <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <button class="auth-close" id="authClose" type="button">×</button>
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-panel="loginPanel" type="button">Iniciar sesión</button>
+      <button class="auth-tab" data-panel="registerPanel" type="button">Registrarse</button>
+    </div>
+
+    <section class="auth-panel active" id="loginPanel">
+      <h2 id="authTitle">Iniciar sesión</h2>
+      <p class="subtitle">Accede a tus pedidos, favoritos y métodos de pago.</p>
+      <div class="auth-message" id="loginMessage"></div>
+      <form id="modalLoginForm">
+        <div class="auth-field">
+          <label>Correo electrónico</label>
+          <div class="auth-input-wrap">
+            <i class="fa-regular fa-envelope"></i>
+            <input id="modalLoginEmail" type="email" required placeholder="correo@ejemplo.com">
+          </div>
+        </div>
+        <div class="auth-field">
+          <label>Contraseña</label>
+          <div class="auth-input-wrap">
+            <i class="fa-solid fa-lock"></i>
+            <input id="modalLoginPassword" type="password" required placeholder="Tu contraseña">
+            <button type="button" class="auth-eye" data-target="modalLoginPassword"><i class="fa-regular fa-eye"></i></button>
+          </div>
+        </div>
+        <div class="auth-options">
+          <label><input id="modalRemember" type="checkbox"> Recordarme</label>
+          <button type="button" class="auth-link-btn" id="modalForgot">¿Olvidaste tu contraseña?</button>
+        </div>
+        <button class="auth-submit" type="submit">Iniciar sesión</button>
+      </form>
+    </section>
+
+    <section class="auth-panel" id="registerPanel">
+      <h2>Crear cuenta</h2>
+      <p class="subtitle">Completa tus datos para registrarte.</p>
+      <div class="auth-message" id="registerMessage"></div>
+      <form id="modalRegisterForm">
+        <div class="auth-row">
+          <div class="auth-field">
+            <label>Nombre</label>
+            <div class="auth-input-wrap"><i class="fa-regular fa-user"></i><input id="modalFirstName" required></div>
+          </div>
+          <div class="auth-field">
+            <label>Apellido</label>
+            <div class="auth-input-wrap"><i class="fa-regular fa-user"></i><input id="modalLastName" required></div>
+          </div>
+        </div>
+        <div class="auth-field">
+          <label>Correo electrónico</label>
+          <div class="auth-input-wrap"><i class="fa-regular fa-envelope"></i><input id="modalRegisterEmail" type="email" required></div>
+        </div>
+        <div class="auth-field">
+          <label>Teléfono</label>
+          <div class="auth-input-wrap"><i class="fa-solid fa-phone"></i><input id="modalPhone" type="tel" required placeholder="809-000-0000"></div>
+        </div>
+        <div class="auth-field">
+          <label>Contraseña</label>
+          <div class="auth-input-wrap">
+            <i class="fa-solid fa-lock"></i>
+            <input id="modalRegisterPassword" type="password" required minlength="6">
+            <button type="button" class="auth-eye" data-target="modalRegisterPassword"><i class="fa-regular fa-eye"></i></button>
+          </div>
+        </div>
+        <div class="auth-field">
+          <label>Confirmar contraseña</label>
+          <div class="auth-input-wrap">
+            <i class="fa-solid fa-lock"></i>
+            <input id="modalConfirmPassword" type="password" required minlength="6">
+            <button type="button" class="auth-eye" data-target="modalConfirmPassword"><i class="fa-regular fa-eye"></i></button>
+          </div>
+        </div>
+        <label style="display:flex;gap:8px;align-items:center;margin-bottom:18px">
+          <input id="modalTerms" type="checkbox"> Acepto los términos y condiciones
+        </label>
+        <button class="auth-submit" type="submit">Crear cuenta</button>
+      </form>
+    </section>
+  </div>
+</div>
+
+</body>
+</html>

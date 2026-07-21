@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menú de usuario AliMarket</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*{box-sizing:border-box;font-family:Arial,sans-serif}
+body{margin:0;background:#ececec;padding:50px}
+.demo-header{display:flex;justify-content:flex-end;background:#fff;padding:20px;border-radius:14px}
+.header-icons a{text-decoration:none;color:#111;font-weight:800;display:flex;align-items:center;gap:8px;font-size:19px}
+
+/* Menú desplegable de usuario */
+.user-menu-wrap{position:relative}
+.user-menu-trigger{cursor:pointer}
+.user-dropdown{
+  position:absolute;
+  top:calc(100% + 14px);
+  right:0;
+  width:360px;
+  max-height:610px;
+  overflow-y:auto;
+  background:#fff;
+  border:1px solid #e3e3e3;
+  border-radius:20px;
+  box-shadow:0 12px 35px rgba(0,0,0,.18);
+  padding:18px 18px 16px;
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(10px);
+  transition:.2s ease;
+  z-index:10050;
+}
+.user-menu-wrap:hover .user-dropdown,
+.user-menu-wrap.open .user-dropdown{
+  opacity:1;
+  visibility:visible;
+  transform:none;
+}
+.user-dropdown::before{
+  content:"";
+  position:absolute;
+  top:-10px;
+  right:34px;
+  width:18px;
+  height:18px;
+  background:#fff;
+  border-left:1px solid #e3e3e3;
+  border-top:1px solid #e3e3e3;
+  transform:rotate(45deg);
+}
+.user-login-btn{
+  display:block;
+  width:100%;
+  padding:18px 20px;
+  border:0;
+  border-radius:40px;
+  background:#111827;
+  color:#fff;
+  font-size:22px;
+  font-weight:800;
+  text-align:center;
+  cursor:pointer;
+}
+.user-register{
+  display:block;
+  text-align:center;
+  margin:12px 0 18px;
+  font-size:18px;
+  font-weight:700;
+  color:#222;
+}
+.user-divider{height:1px;background:#e5e5e5;margin:6px 0 14px}
+.user-menu-list{display:flex;flex-direction:column}
+.user-menu-item{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:16px 10px;
+  color:#222;
+  text-decoration:none;
+  font-size:20px;
+  border-radius:10px;
+  transition:.18s;
+}
+.user-menu-item:hover{background:#f4f4f4}
+.user-menu-item i{
+  width:26px;
+  text-align:center;
+  font-size:22px;
+  color:#333;
+}
+.user-dropdown::-webkit-scrollbar{width:8px}
+.user-dropdown::-webkit-scrollbar-thumb{background:#7c7c7c;border-radius:10px}
+.user-dropdown::-webkit-scrollbar-track{background:#f2f2f2;border-radius:10px}
+@media(max-width:768px){
+  .user-dropdown{
+    position:fixed;
+    top:88px;
+    right:12px;
+    left:12px;
+    width:auto;
+    max-height:calc(100vh - 110px);
+  }
+  .user-dropdown::before{display:none}
+}
+
+.user-dropdown{opacity:1;visibility:visible;transform:none;position:absolute}
+</style>
+</head>
+<body>
+<div class="demo-header">
+  <div class="user-menu-wrap" id="userMenuWrap">
+  <a href="usuario.html" class="user-menu-trigger" id="userMenuTrigger">
+    <i class="fa-solid fa-user"></i> Usuario
+  </a>
+  <div class="user-dropdown" id="userDropdown">
+    <button type="button" class="user-login-btn" onclick="location.href='login.html'">Iniciar sesión</button>
+    <a href="registro.html" class="user-register">Registrarse</a>
+    <div class="user-divider"></div>
+    <div class="user-menu-list">
+      <a href="pedidos.html" class="user-menu-item"><i class="fa-regular fa-clipboard"></i><span>Mis pedidos</span></a>
+      <a href="monedas.html" class="user-menu-item"><i class="fa-solid fa-coins"></i><span>Mis monedas</span></a>
+      <a href="mensajes.html" class="user-menu-item"><i class="fa-regular fa-message"></i><span>Centro de mensajes</span></a>
+      <a href="formas_pago.html" class="user-menu-item"><i class="fa-regular fa-credit-card"></i><span>Forma de pago</span></a>
+      <a href="favoritos.html" class="user-menu-item"><i class="fa-regular fa-heart"></i><span>Lista de deseos</span></a>
+      <a href="cupones.html" class="user-menu-item"><i class="fa-solid fa-ticket"></i><span>Mis cupones</span></a>
+      <a href="configuracion.html" class="user-menu-item"><i class="fa-solid fa-gear"></i><span>Configuración</span></a>
+      <a href="business.html" class="user-menu-item"><i class="fa-solid fa-briefcase"></i><span>AliMarket Business</span></a>
+      <a href="dropshipping.html" class="user-menu-item"><i class="fa-solid fa-boxes-stacked"></i><span>Centro de dropshipping</span></a>
+      <a href="vendedor.html" class="user-menu-item"><i class="fa-solid fa-store"></i><span>Invitación a vendedor</span></a>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+const userMenuWrap=document.getElementById('userMenuWrap');
+const userMenuTrigger=document.getElementById('userMenuTrigger');
+if(userMenuWrap&&userMenuTrigger){
+  userMenuTrigger.addEventListener('click',event=>{
+    if(window.innerWidth<=768){
+      event.preventDefault();
+      userMenuWrap.classList.toggle('open');
+    }
+  });
+  document.addEventListener('click',event=>{
+    if(!userMenuWrap.contains(event.target))userMenuWrap.classList.remove('open');
+  });
+}
+</script>
+</body>
+</html>

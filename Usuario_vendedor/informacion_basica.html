@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AliMarket Seller Center - Registro</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Arial,sans-serif}
+:root{--red:#ff0000;--dark:#111827;--muted:#6b7280;--line:#e5e7eb;--bg:#f7f8fb;--card:#fff;--blue:#eef6ff;--green:#16a34a}
+body{background:var(--bg);color:var(--dark);font-size:14px;min-height:100vh}.topbar{height:78px;background:white;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 34px;position:fixed;top:0;left:0;right:0;z-index:1000;box-shadow:0 2px 10px rgba(0,0,0,.04)}.logo{font-size:28px;font-weight:800;color:#f00;line-height:.9}.logo small{display:block;color:#111;font-size:12px;font-weight:500;text-align:center;margin-top:8px}.nav{display:flex;gap:34px;margin-left:40px;flex:1;justify-content:center}.nav a{text-decoration:none;color:#111;font-weight:600;font-size:14px}.icons{display:flex;align-items:center;gap:25px}.bell{position:relative;cursor:pointer}.bell span{position:absolute;top:-11px;right:-12px;background:red;color:white;border-radius:20px;font-size:10px;min-width:17px;height:17px;padding:1px 5px;display:grid;place-items:center}.bell.zero span{background:#cfd4dc;color:#111}.login{display:flex;gap:8px;align-items:center;font-weight:600}.layout{display:block;max-width:1380px;margin:0 auto;padding-top:78px}.sidebar{position:fixed;top:78px;left:calc((100vw - min(1380px,100vw))/2);width:330px;height:calc(100vh - 78px);overflow-y:auto;padding:38px 30px;border-right:1px solid var(--line);background:rgba(255,255,255,.97);z-index:100;box-shadow:8px 0 24px rgba(0,0,0,.03)}.sidebar h1{font-size:29px;margin-bottom:16px}.sidebar>p{color:#4b5563;line-height:1.7;font-size:16px;margin-bottom:28px}.steps{background:white;border:1px solid #f1f1f1;border-radius:7px;overflow:hidden}.step{display:grid;grid-template-columns:38px 1fr;gap:10px;padding:22px 24px;position:relative}.step:not(:last-child):after{content:"";position:absolute;left:37px;bottom:-22px;width:1px;height:42px;background:#e8e8e8}.num{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#eef0f4;font-weight:800}.step.active{background:linear-gradient(90deg,#fff0f0,#fff8f8)}.step.active .num{background:red;color:white}.step.done .num{background:var(--green);color:white}.step.done b{color:#166534}.step b{font-size:15px}.step p{color:#4b5563;margin-top:8px;font-size:13px}.sidecard{margin-top:28px;background:white;border-radius:8px;padding:25px;border:1px solid #f1f1f1;box-shadow:0 12px 35px rgba(0,0,0,.03)}.sidecard h3{font-size:17px;margin-bottom:16px}.benefit{display:grid;grid-template-columns:30px 1fr;gap:13px;align-items:start;margin:15px 0;color:#111}.benefit i{color:#0b36c8;background:#f0f3ff;border-radius:50%;width:23px;height:23px;display:grid;place-items:center}.benefit span{font-size:13px;line-height:1.6}.security{display:grid;grid-template-columns:42px 1fr;gap:15px}.security i{font-size:31px;color:#0773ff}.main{margin-left:330px;padding:38px 36px 30px;min-height:calc(100vh - 78px)}.main h2{font-size:30px;margin-bottom:15px}.sub{color:#4b5563;margin-bottom:30px}.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:28px 28px 30px;margin-bottom:18px;box-shadow:0 8px 25px rgba(0,0,0,.05)}.card h3{font-size:20px;margin-bottom:28px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:25px 24px}.grid3{display:grid;grid-template-columns:1fr 1fr .82fr;gap:25px}.full{grid-column:1/-1}label{display:block;font-weight:700;margin-bottom:10px;font-size:14px}.req{color:red}input,select,textarea{width:100%;height:48px;border:1px solid #d5dae3;border-radius:7px;padding:0 15px;background:#fff;font-size:14px;outline:none;color:#111}input:focus,select:focus,textarea:focus{border-color:red;box-shadow:0 0 0 3px rgba(255,0,0,.08)}textarea{height:96px;padding-top:14px;resize:none;line-height:1.5}.phone{display:flex}.phone button{width:68px;border:1px solid #d5dae3;background:white;border-radius:7px 0 0 7px;border-right:0;font-size:23px}.phone input{border-radius:0 7px 7px 0}.hint{background:#edf6ff;border-radius:6px;padding:13px 14px;margin:-8px 0 24px;color:#111;font-size:13px}.hint i{margin-right:8px}.counter{text-align:right;color:#6b7280;font-size:12px;margin-top:-23px;padding-right:12px}.passbox{position:relative}.passbox i{position:absolute;right:14px;top:14px;color:#555;cursor:pointer}.check{display:flex;align-items:flex-start;gap:10px;margin-top:24px;color:#333;line-height:1.5}.check input{width:17px;height:17px;min-width:17px;margin-top:2px}.check a{color:#006fd6;text-decoration:none}.actions{display:flex;justify-content:space-between;align-items:center;gap:12px}.btn{height:50px;border-radius:7px;border:1px solid #d5dae3;padding:0 28px;background:white;font-weight:700;cursor:pointer}.btn:hover{filter:brightness(.98)}.btn-red{background:red;color:white;border-color:red;width:310px;box-shadow:0 10px 20px rgba(255,0,0,.18)}.btn-green{background:var(--green);border-color:var(--green);color:white}.foot{text-align:center;color:#4b5563;padding:18px}.toast{position:fixed;right:25px;bottom:25px;background:#111827;color:white;padding:16px 20px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.25);display:none;z-index:2000}.mobile-menu{display:none}.form-step{display:none}.form-step.active{display:block}.filebox{border:2px dashed #d5dae3;border-radius:10px;background:#fafafa;padding:18px;text-align:center;color:#4b5563}.filebox input{height:auto;border:0;padding:10px 0}.successBox{background:#f0fff4;border:1px solid #bbf7d0;color:#166534;border-radius:10px;padding:18px;margin-bottom:18px;display:none}.summary{display:grid;gap:14px}.summary-row{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #edf0f4;padding:12px 0}.summary-row b{color:#111}.summary-row span{text-align:right;color:#4b5563}.tag{display:inline-flex;align-items:center;gap:8px;background:#f3f4f6;border-radius:999px;padding:8px 12px;margin:5px;font-weight:700;color:#374151}.noticePanel{position:fixed;right:25px;top:84px;width:320px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 20px 45px rgba(0,0,0,.14);z-index:1500;display:none;overflow:hidden}.noticePanel h4{padding:16px 18px;border-bottom:1px solid var(--line)}.noticePanel p{padding:18px;color:#6b7280;line-height:1.5}.noticePanel button{margin:0 18px 18px;width:calc(100% - 36px);height:42px;border:0;background:#111;color:#fff;border-radius:8px;font-weight:700;cursor:pointer}@media(max-width:900px){body{padding-top:70px}.topbar{padding:0 16px;height:70px}.nav,.icons .login{display:none}.logo{font-size:24px}.mobile-menu{display:block;font-size:22px}.layout{padding-top:0}.sidebar{position:relative;top:0;left:0;width:100%;height:auto;overflow:visible;border-right:0;padding:22px 16px}.sidebar h1{font-size:24px}.steps{display:flex;overflow-x:auto}.step{min-width:230px}.sidecard{display:none}.main{margin-left:0;padding:22px 14px 80px}.main h2{font-size:25px}.card{padding:22px 16px}.grid,.grid3{grid-template-columns:1fr;gap:18px}.full{grid-column:auto}.actions{gap:12px;flex-direction:column-reverse}.btn-red,.btn{width:100%;padding:0 14px}.noticePanel{right:12px;left:12px;width:auto;top:76px}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="logo">AliMarket<small>Seller Center</small></div>
+  <nav class="nav"><a>Inicio</a><a>Productos</a><a>Pedidos</a><a>Tienda</a><a>Marketing</a><a>Promociones</a><a>Finanzas</a><a>Datos</a></nav>
+  <div class="icons"><div class="bell zero" onclick="toggleNotices()"><i class="fa-regular fa-bell fa-lg"></i><span id="notifyCount">0</span></div><i class="fa-regular fa-circle-question fa-lg"></i><div class="login">Iniciar sesión <i class="fa-solid fa-chevron-down"></i></div></div>
+  <div class="mobile-menu"><i class="fa-solid fa-bars"></i></div>
+</header>
+<div class="noticePanel" id="noticePanel"><h4>Notificaciones</h4><p>No tienes notificaciones nuevas.</p><button onclick="clearNotifications()">Marcar como leídas</button></div>
+<div class="layout">
+  <aside class="sidebar">
+    <h1>Registro de vendedor</h1>
+    <p>Únete a millones de vendedores<br>que ya venden en AliMarket.</p>
+    <div class="steps">
+      <div class="step active"><div class="num">1</div><div><b>Información básica</b><p>Cuéntanos sobre ti y tu negocio</p></div></div>
+      <div class="step"><div class="num">2</div><div><b>Información de la empresa</b><p>Documentos y datos fiscales</p></div></div>
+      <div class="step"><div class="num">3</div><div><b>Tienda y productos</b><p>Información de tu tienda</p></div></div>
+      <div class="step"><div class="num">4</div><div><b>Verificación de identidad</b><p>Verifica tu identidad y documentos</p></div></div>
+      <div class="step"><div class="num">5</div><div><b>Revisión y envío</b><p>Revisa y envía tu solicitud</p></div></div>
+    </div>
+    <div class="sidecard"><h3>¿Por qué vender en AliMarket?</h3>
+      <div class="benefit"><i class="fa-solid fa-globe"></i><span>Acceso a millones de compradores en todo el mundo</span></div>
+      <div class="benefit"><i class="fa-solid fa-bullhorn"></i><span>Herramientas de marketing para impulsar tus ventas</span></div>
+      <div class="benefit"><i class="fa-solid fa-shield-halved"></i><span>Pagos seguros y protegidos</span></div>
+      <div class="benefit"><i class="fa-regular fa-user"></i><span>Soporte dedicado para vendedores</span></div>
+    </div>
+    <div class="sidecard security"><i class="fa-solid fa-shield"></i><div><h3>Seguridad garantizada</h3><p>Tu información está protegida con cifrado de nivel bancario.</p></div></div>
+  </aside>
+  <main class="main">
+    <h2 id="pageTitle">Información básica</h2><p class="sub" id="pageSub">Comencemos con la información básica sobre ti y tu negocio.</p>
+    <form id="sellerForm">
+      <div class="form-step active" data-step="1">
+      <section class="card"><h3>Información personal</h3>
+        <div class="grid">
+          <div><label>Nombre completo <span class="req">*</span></label><input required placeholder="Ej: Juan Pérez Rodríguez" name="nombre"></div>
+          <div><label>Correo electrónico <span class="req">*</span></label><input required type="email" placeholder="Ej: juanperez@email.com" name="email"></div>
+          <div><label>Número de teléfono <span class="req">*</span></label><div class="phone"><button type="button">🇩🇴⌄</button><input required placeholder="+1 (809) 123-4567" name="telefono"></div></div>
+          <div><label>País de residencia <span class="req">*</span></label><select required name="pais"><option>República Dominicana</option><option>Estados Unidos</option><option>España</option><option>México</option></select></div>
+          <div class="full"><label>Dirección de residencia <span class="req">*</span></label><input required placeholder="Calle, número, apartamento, sector" name="direccion"></div>
+        </div><br>
+        <div class="grid3">
+          <div><label>Provincia / Estado <span class="req">*</span></label><select required name="provincia"><option value="">Seleccionar provincia</option><option>Santo Domingo</option><option>Distrito Nacional</option><option>Santiago</option><option>La Vega</option><option>San Cristóbal</option></select></div>
+          <div><label>Ciudad <span class="req">*</span></label><input required placeholder="Ej: Santo Domingo" name="ciudad"></div>
+          <div><label>Código postal <span class="req">*</span></label><input required placeholder="Ej: 10101" name="postal"></div>
+        </div>
+      </section>
+      <section class="card"><h3>Información del negocio</h3>
+        <div class="grid">
+          <div><label>Tipo de negocio <span class="req">*</span></label><select required name="tipo"><option value="">Seleccionar tipo de negocio</option><option>Persona física</option><option>Empresa / SRL</option><option>Tienda online</option></select></div>
+          <div><label>Nombre de la empresa / Tienda <span class="req">*</span></label><input required placeholder="Ej: Mi Tienda Online, SRL" name="tienda"></div>
+          <div><label>Categoría principal que venderás <span class="req">*</span></label><select required name="categoria"><option value="">Seleccionar categoría</option><option>Electrónica</option><option>Moda</option><option>Hogar</option><option>Repuestos</option><option>Belleza</option></select></div>
+          <div><label>Descripción de tu negocio <span class="req">*</span></label><textarea maxlength="500" required placeholder="Cuéntanos brevemente qué productos vas a vender..." name="descripcion"></textarea><div class="counter"><span id="count">0</span>/500</div></div>
+        </div>
+      </section>
+      <section class="card"><h3>Información financiera</h3><div class="hint"><i class="fa-solid fa-circle-info"></i>Asegúrate de que la información bancaria esté a nombre de la empresa o persona que registra la tienda.</div>
+        <div class="grid">
+          <div><label>Nombre del titular de la cuenta <span class="req">*</span></label><input required placeholder="Como aparece en el banco" name="titular"></div>
+          <div><label>Nombre del banco <span class="req">*</span></label><input required placeholder="Ej: Banco Popular Dominicano" name="banco"></div>
+          <div><label>Tipo de cuenta <span class="req">*</span></label><select required name="tipoCuenta"><option value="">Seleccionar tipo de cuenta</option><option>Ahorro</option><option>Corriente</option></select></div>
+          <div><label>Número de cuenta / IBAN <span class="req">*</span></label><input required placeholder="Ej: 12345678910111213" name="cuenta"></div>
+          <div><label>Código SWIFT (opcional)</label><input placeholder="Ej: BPOPULARDO" name="swift"></div>
+          <div><label>Moneda preferida para pagos <span class="req">*</span></label><select required name="moneda"><option>USD - Dólar estadounidense</option><option>DOP - Peso dominicano</option><option>EUR - Euro</option></select></div>
+        </div>
+      </section>
+      <section class="card"><h3>Contraseña de acceso</h3><p class="sub">Esta será la contraseña para acceder a tu cuenta de vendedor.</p>
+        <div class="grid">
+          <div><label>Contraseña <span class="req">*</span></label><div class="passbox"><input id="pass1" minlength="8" required type="password" placeholder="Mínimo 8 caracteres" name="password"><i class="fa-regular fa-eye-slash" onclick="togglePass('pass1',this)"></i></div></div>
+          <div><label>Confirmar contraseña <span class="req">*</span></label><div class="passbox"><input id="pass2" minlength="8" required type="password" placeholder="Repite tu contraseña" name="confirmPassword"><i class="fa-regular fa-eye-slash" onclick="togglePass('pass2',this)"></i></div></div>
+        </div>
+        <label class="check"><input required type="checkbox" name="aceptado"> He leído y acepto el <a>Acuerdo de Vendedor</a>, la <a>Política de Privacidad</a> y las <a>Reglas de la Plataforma</a> <span class="req">*</span></label>
+      </section>
+      <section class="card actions"><button type="button" class="btn" onclick="resetAll()">Cancelar</button><button type="button" class="btn btn-red" onclick="nextStep(1)">Guardar y continuar <i class="fa-solid fa-arrow-right"></i></button></section>
+      </div>
+
+      <div class="form-step" data-step="2">
+        <div class="successBox">✅ Información básica guardada. Ahora completa la información de la empresa.</div>
+        <section class="card"><h3>Datos fiscales de la empresa</h3><div class="grid">
+          <div><label>Razón social <span class="req">*</span></label><input required placeholder="Ej: Mi Empresa SRL" name="razonSocial"></div>
+          <div><label>RNC / Identificación fiscal <span class="req">*</span></label><input required placeholder="Ej: 131234567" name="rnc"></div>
+          <div><label>Tipo de empresa <span class="req">*</span></label><select required name="tipoEmpresa"><option value="">Seleccionar tipo</option><option>SRL</option><option>EIRL</option><option>Persona física registrada</option><option>Compañía extranjera</option></select></div>
+          <div><label>Fecha de constitución <span class="req">*</span></label><input required type="date" name="fechaConstitucion"></div>
+          <div class="full"><label>Domicilio fiscal <span class="req">*</span></label><input required placeholder="Calle, número, sector, ciudad" name="domicilioFiscal"></div>
+        </div></section>
+        <section class="card"><h3>Representante legal</h3><div class="grid">
+          <div><label>Nombre del representante <span class="req">*</span></label><input required placeholder="Nombre completo" name="representante"></div>
+          <div><label>Cédula / Pasaporte <span class="req">*</span></label><input required placeholder="Ej: 001-0000000-0" name="documentoRep"></div>
+          <div><label>Teléfono de contacto <span class="req">*</span></label><input required placeholder="+1 (809) 000-0000" name="telefonoRep"></div>
+          <div><label>Correo de contacto <span class="req">*</span></label><input required type="email" placeholder="correo@empresa.com" name="emailRep"></div>
+        </div></section>
+        <section class="card"><h3>Documentos de la empresa</h3><div class="grid">
+          <div class="filebox"><label>Registro mercantil <span class="req">*</span></label><input required type="file" accept=".pdf,.jpg,.jpeg,.png" name="registroMercantil"><p>PDF, JPG o PNG</p></div>
+          <div class="filebox"><label>Certificación RNC <span class="req">*</span></label><input required type="file" accept=".pdf,.jpg,.jpeg,.png" name="certificacionRnc"><p>PDF, JPG o PNG</p></div>
+          <div class="filebox"><label>Documento del representante <span class="req">*</span></label><input required type="file" accept=".pdf,.jpg,.jpeg,.png" name="docRepresentante"><p>Cédula o pasaporte</p></div>
+          <div class="filebox"><label>Comprobante bancario <span class="req">*</span></label><input required type="file" accept=".pdf,.jpg,.jpeg,.png" name="comprobanteBanco"><p>Cuenta a nombre de la empresa</p></div>
+        </div></section>
+        <section class="card actions"><button type="button" class="btn" onclick="goStep(1)"><i class="fa-solid fa-arrow-left"></i> Volver</button><button type="button" class="btn btn-red" onclick="nextStep(2)">Guardar y continuar <i class="fa-solid fa-arrow-right"></i></button></section>
+      </div>
+
+      <div class="form-step" data-step="3">
+        <div class="successBox">✅ Información de empresa guardada. Ahora configura tu tienda y productos.</div>
+        <section class="card"><h3>Tienda</h3><div class="grid">
+          <div><label>Nombre público de la tienda <span class="req">*</span></label><input required placeholder="Ej: Tech Store RD" name="nombrePublico"></div>
+          <div><label>URL deseada <span class="req">*</span></label><input required placeholder="tech-store-rd" name="urlTienda"></div>
+          <div><label>Idioma principal <span class="req">*</span></label><select required name="idioma"><option>Español</option><option>Inglés</option><option>Portugués</option></select></div>
+          <div><label>Moneda de venta <span class="req">*</span></label><select required name="monedaVenta"><option>USD</option><option>DOP</option><option>EUR</option></select></div>
+          <div class="full"><label>Descripción de la tienda <span class="req">*</span></label><textarea required name="descripcionTienda" placeholder="Describe tu tienda para los compradores"></textarea></div>
+        </div></section>
+        <section class="card"><h3>Productos iniciales</h3><div class="grid">
+          <div><label>Cantidad estimada de productos <span class="req">*</span></label><select required name="cantidadProductos"><option value="">Seleccionar</option><option>1 - 20</option><option>21 - 100</option><option>101 - 500</option><option>Más de 500</option></select></div>
+          <div><label>Origen de productos <span class="req">*</span></label><select required name="origenProductos"><option value="">Seleccionar</option><option>Fabricación propia</option><option>Distribuidor local</option><option>Importación</option><option>Dropshipping</option></select></div>
+          <div><label>Tiempo de preparación <span class="req">*</span></label><select required name="preparacion"><option value="">Seleccionar</option><option>1-2 días</option><option>3-5 días</option><option>6-10 días</option></select></div>
+          <div><label>Garantía ofrecida <span class="req">*</span></label><select required name="garantia"><option value="">Seleccionar</option><option>7 días</option><option>15 días</option><option>30 días</option><option>Sin garantía</option></select></div>
+        </div></section>
+        <section class="card actions"><button type="button" class="btn" onclick="goStep(2)"><i class="fa-solid fa-arrow-left"></i> Volver</button><button type="button" class="btn btn-red" onclick="nextStep(3)">Guardar y continuar <i class="fa-solid fa-arrow-right"></i></button></section>
+      </div>
+
+      <div class="form-step" data-step="4">
+        <div class="successBox">✅ Tienda guardada. Ahora verifica tu identidad.</div>
+        <section class="card"><h3>Verificación de identidad</h3><div class="grid">
+          <div><label>Tipo de documento <span class="req">*</span></label><select required name="tipoDocumento"><option value="">Seleccionar</option><option>Cédula</option><option>Pasaporte</option><option>Licencia</option></select></div>
+          <div><label>Número de documento <span class="req">*</span></label><input required placeholder="Número de documento" name="numeroDocumento"></div>
+          <div class="filebox"><label>Foto frontal del documento <span class="req">*</span></label><input required type="file" accept=".jpg,.jpeg,.png,.pdf" name="docFrontal"><p>Imagen clara y legible</p></div>
+          <div class="filebox"><label>Foto trasera del documento <span class="req">*</span></label><input required type="file" accept=".jpg,.jpeg,.png,.pdf" name="docTrasero"><p>Imagen clara y legible</p></div>
+          <div class="filebox full"><label>Selfie con documento <span class="req">*</span></label><input required type="file" accept=".jpg,.jpeg,.png" name="selfieDocumento"><p>Sube una foto sosteniendo el documento</p></div>
+        </div></section>
+        <section class="card"><h3>Seguridad de cuenta</h3><div class="grid">
+          <div><label>Pregunta de seguridad <span class="req">*</span></label><select required name="pregunta"><option value="">Seleccionar pregunta</option><option>Nombre de tu primera mascota</option><option>Ciudad donde naciste</option><option>Nombre de tu escuela</option></select></div>
+          <div><label>Respuesta <span class="req">*</span></label><input required placeholder="Respuesta secreta" name="respuesta"></div>
+        </div></section>
+        <section class="card actions"><button type="button" class="btn" onclick="goStep(3)"><i class="fa-solid fa-arrow-left"></i> Volver</button><button type="button" class="btn btn-red" onclick="nextStep(4)">Guardar y continuar <i class="fa-solid fa-arrow-right"></i></button></section>
+      </div>
+
+      <div class="form-step" data-step="5">
+        <div class="successBox">✅ Verificación guardada. Revisa y envía tu solicitud.</div>
+        <section class="card"><h3>Resumen del registro</h3><div class="summary" id="summaryBox"></div></section>
+        <section class="card"><h3>Confirmación final</h3><p class="sub">Al enviar, tu solicitud quedará guardada en este navegador y marcada como pendiente de revisión.</p><label class="check"><input required type="checkbox" name="confirmFinal"> Confirmo que toda la información enviada es correcta y verificable. <span class="req">*</span></label></section>
+        <section class="card actions"><button type="button" class="btn" onclick="goStep(4)"><i class="fa-solid fa-arrow-left"></i> Volver</button><button type="button" class="btn btn-green" onclick="submitFinal()">Enviar solicitud <i class="fa-solid fa-paper-plane"></i></button></section>
+      </div>
+    </form>
+    <div class="foot"><i class="fa-solid fa-lock"></i> &nbsp; Tu información está segura con nosotros. AliMarket nunca compartirá tus datos sin tu consentimiento.</div>
+  </main>
+</div>
+<div class="toast" id="toast">✅ Registro guardado correctamente.</div>
+<script>
+const form=document.getElementById('sellerForm');
+const desc=document.querySelector('textarea[name="descripcion"]');
+const count=document.getElementById('count');
+const toast=document.getElementById('toast');
+const pageTitle=document.getElementById('pageTitle');
+const pageSub=document.getElementById('pageSub');
+const titles={1:['Información básica','Comencemos con la información básica sobre ti y tu negocio.'],2:['Información de la empresa','Completa los documentos y datos fiscales de tu empresa.'],3:['Tienda y productos','Configura la información pública de tu tienda y productos.'],4:['Verificación de identidad','Verifica tu identidad para proteger tu cuenta de vendedor.'],5:['Revisión y envío','Revisa toda la información antes de enviar tu solicitud.']};
+let currentStep=1;
+if(desc){desc.addEventListener('input',()=>count.textContent=desc.value.length)}
+function showToast(msg){toast.textContent=msg;toast.style.display='block';setTimeout(()=>toast.style.display='none',2400)}
+function togglePass(id,icon){const input=document.getElementById(id);input.type=input.type==='password'?'text':'password';icon.classList.toggle('fa-eye');icon.classList.toggle('fa-eye-slash')}
+function fieldsByStep(step){return [...document.querySelectorAll(`.form-step[data-step="${step}"] input, .form-step[data-step="${step}"] select, .form-step[data-step="${step}"] textarea`)].filter(el=>el.hasAttribute('required'))}
+function validateStep(step){for(const field of fieldsByStep(step)){if(!field.checkValidity()){field.reportValidity();field.focus();return false}} if(step===1){const p1=document.getElementById('pass1').value,p2=document.getElementById('pass2').value;if(p1!==p2){alert('Las contraseñas no coinciden');document.getElementById('pass2').focus();return false}} return true}
+function collectStep(step){const data={};document.querySelectorAll(`.form-step[data-step="${step}"] input, .form-step[data-step="${step}"] select, .form-step[data-step="${step}"] textarea`).forEach(el=>{if(el.type==='file'){data[el.name]=el.files[0]?el.files[0].name:''}else if(el.type==='checkbox'){data[el.name||'checkbox']=el.checked}else{data[el.name]=el.value}});return data}
+function saveStep(step){const old=JSON.parse(localStorage.getItem('registroVendedorAliMarket')||'{}');old['paso'+step]=collectStep(step);old.pasoActual=step;old.fecha=new Date().toLocaleString();localStorage.setItem('registroVendedorAliMarket',JSON.stringify(old))}
+function goStep(step){currentStep=step;document.querySelectorAll('.form-step').forEach(x=>x.classList.remove('active'));document.querySelector(`.form-step[data-step="${step}"]`).classList.add('active');document.querySelectorAll('.step').forEach((x,i)=>{x.classList.toggle('active',i===step-1);x.classList.toggle('done',i<step-1)});pageTitle.textContent=titles[step][0];pageSub.textContent=titles[step][1];document.querySelectorAll('.successBox').forEach(x=>x.style.display= step>1 ? 'block':'none');if(step===5)renderSummary();window.scrollTo({top:0,behavior:'smooth'})}
+function nextStep(step){if(!validateStep(step))return;saveStep(step);showToast('✅ Información guardada correctamente.');goStep(step+1)}
+function renderSummary(){const saved=JSON.parse(localStorage.getItem('registroVendedorAliMarket')||'{}');const p1=saved.paso1||{},p2=saved.paso2||{},p3=saved.paso3||{},p4=saved.paso4||{};const rows=[['Nombre',p1.nombre],['Correo',p1.email],['Teléfono',p1.telefono],['Tienda / negocio',p1.tienda],['Razón social',p2.razonSocial],['RNC',p2.rnc],['Representante',p2.representante],['Nombre público tienda',p3.nombrePublico],['URL tienda',p3.urlTienda],['Productos estimados',p3.cantidadProductos],['Documento',p4.tipoDocumento+' - '+(p4.numeroDocumento||'')],['Fecha de guardado',saved.fecha]];document.getElementById('summaryBox').innerHTML=rows.map(r=>`<div class="summary-row"><b>${r[0]}</b><span>${r[1]||'Pendiente'}</span></div>`).join('')+'<div><span class="tag"><i class="fa-solid fa-circle-check"></i> Guardado local</span><span class="tag"><i class="fa-solid fa-shield-halved"></i> Pendiente de revisión</span></div>'}
+function submitFinal(){if(!validateStep(5))return;saveStep(5);const saved=JSON.parse(localStorage.getItem('registroVendedorAliMarket')||'{}');saved.estado='Pendiente de revisión';saved.enviado=true;saved.fechaEnvio=new Date().toLocaleString();localStorage.setItem('registroVendedorAliMarket',JSON.stringify(saved));showToast('✅ Solicitud enviada correctamente. Estado: pendiente de revisión.');setTimeout(()=>alert('Registro de vendedor enviado correctamente.\nEstado: Pendiente de revisión.'),400)}
+function resetAll(){if(confirm('¿Quieres borrar los datos escritos y empezar de nuevo?')){form.reset();if(count)count.textContent=0;localStorage.removeItem('registroVendedorAliMarket');goStep(1);showToast('Datos borrados.')}}
+form.addEventListener('submit',e=>e.preventDefault());
+function updateBell(){const n=Number(localStorage.getItem('notificacionesAliMarket')||0);document.getElementById('notifyCount').textContent=n;document.querySelector('.bell').classList.toggle('zero',n===0)}
+function toggleNotices(){const p=document.getElementById('noticePanel');p.style.display=p.style.display==='block'?'none':'block'}
+function clearNotifications(){localStorage.setItem('notificacionesAliMarket','0');updateBell();document.getElementById('noticePanel').style.display='none'}
+localStorage.setItem('notificacionesAliMarket',localStorage.getItem('notificacionesAliMarket')||'0');updateBell();
+</script>
+</body>
+</html>
