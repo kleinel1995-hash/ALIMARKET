@@ -352,9 +352,30 @@ body{margin:0;font-family:Arial,sans-serif;color:#181818;background:#fff;padding
  .header{display:none!important}
  .mobile-detail-header{position:fixed;top:0;left:0;right:0;height:74px;background:#fff;z-index:15000;display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid #eee}
  .mobile-detail-header button{width:42px;height:42px;border:0;background:#fff;font-size:23px}
- .mobile-search{flex:1;height:46px;border:2px solid #111;border-radius:15px;display:flex;overflow:hidden}
- .mobile-search input{flex:1;min-width:0;border:0;outline:0;padding:0 13px;font-size:17px}
- .mobile-search button{width:58px!important;height:100%!important;background:#111!important;color:#fff!important}
+ .mobile-index-search{
+  flex:1!important;
+  max-width:none!important;
+  width:auto!important;
+  height:46px!important;
+  border:2px solid #777!important;
+  border-radius:30px!important;
+  display:flex!important;
+  align-items:center!important;
+  padding:0 15px!important;
+  gap:10px!important;
+  background:#fff!important
+}
+.mobile-index-search input{
+  border:none!important;
+  outline:none!important;
+  width:100%!important;
+  min-width:0!important;
+  font-size:16px!important;
+  background:transparent!important;
+  padding:0!important
+}
+.mobile-index-search i{color:#555!important;font-size:18px!important}
+.mobile-index-search .fa-magnifying-glass{cursor:pointer!important}
  .page{padding:0!important;margin:0!important;width:100%!important}
  .breadcrumb{display:none!important}
  .product-layout{display:block!important}
@@ -406,7 +427,7 @@ body{margin:0;font-family:Arial,sans-serif;color:#181818;background:#fff;padding
 
 <header class="mobile-detail-header">
  <button id="mBack"><i class="fa-solid fa-chevron-left"></i></button>
- <div class="mobile-search"><input id="mSearch" placeholder="Buscar productos"><button id="mSearchBtn"><i class="fa-solid fa-magnifying-glass"></i></button></div>
+ <div class="search-box mobile-index-search"><i class="fa-solid fa-magnifying-glass"></i><input type="text" placeholder=""><i class="fa-solid fa-microphone"></i></div>
  <button id="mShare"><i class="fa-solid fa-share-nodes"></i></button>
 </header>
 
@@ -1100,12 +1121,14 @@ function updateMobileCount(){
 $('#mBack')?.addEventListener('click',()=>history.length>1?history.back():location.href='index.html');
 $('#mCart')?.addEventListener('click',()=>location.href='carrito.html');
 $('#mAdd')?.addEventListener('click',()=>{$('#addCart')?.click();updateMobileCount()});
-$('#mSearchBtn')?.addEventListener('click',()=>{
- const q=($('#mSearch')?.value||'').trim().toLowerCase();
+document.querySelector('.mobile-index-search .fa-magnifying-glass')?.addEventListener('click',()=>{
+ const q=(document.querySelector('.mobile-index-search input')?.value||'').trim().toLowerCase();
  const f=allProducts.find(x=>(x.name||'').toLowerCase().includes(q));
  f?location.href='articulo_detalle.html?id='+encodeURIComponent(f.id):toast('No se encontró el producto');
 });
-$('#mSearch')?.addEventListener('keydown',e=>{if(e.key==='Enter')$('#mSearchBtn')?.click()});
+document.querySelector('.mobile-index-search input')?.addEventListener('keydown',e=>{
+ if(e.key==='Enter')document.querySelector('.mobile-index-search .fa-magnifying-glass')?.click();
+});
 $('#mShare')?.addEventListener('click',async()=>{
  if(navigator.share){try{await navigator.share({title:product.name,url:location.href})}catch(e){}}
  else{navigator.clipboard?.writeText(location.href);toast('Enlace copiado')}
