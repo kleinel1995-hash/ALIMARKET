@@ -202,6 +202,74 @@ body{background:#f4f4f4;color:#181818;padding-top:155px;padding-bottom:40px}
   }
 }
 
+
+/* Menú inferior móvil igual al index */
+.mobile-bottom{display:none}
+
+@media(max-width:768px){
+  body{
+    padding-bottom:104px!important;
+  }
+
+  .mobile-bottom{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    height:92px;
+    background:#fff;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    padding:7px 4px 4px;
+    border-top:1px solid #ddd;
+    box-shadow:0 -3px 10px rgba(0,0,0,.08);
+    z-index:9999;
+  }
+
+  .mobile-bottom a{
+    color:#222;
+    text-decoration:none;
+    font-size:28px;
+    min-width:62px;
+    height:72px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:5px;
+  }
+
+  .mobile-bottom a::after{
+    font-size:13px;
+    font-family:Arial,sans-serif;
+  }
+
+  .mobile-bottom a:nth-child(1)::after{content:"Inicio"}
+  .mobile-bottom a:nth-child(2)::after{content:"Mensajes"}
+  .mobile-bottom a:nth-child(4){
+    color:#d00000;
+  }
+  .mobile-bottom a:nth-child(4)::after{content:"Cesta"}
+  .mobile-bottom a:nth-child(5)::after{content:"Usuario"}
+
+  .mobile-bottom .discount{
+    width:72px;
+    min-width:72px;
+    height:72px;
+    border-radius:50%;
+    background:#e5243f;
+    color:#fff;
+    font-size:23px;
+    font-weight:900;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .mobile-bottom .discount::after{content:""!important}
+}
+
 </style>
 </head>
 <body>
@@ -249,6 +317,15 @@ body{background:#f4f4f4;color:#181818;padding-top:155px;padding-bottom:40px}
     </div>
   </aside>
 </main>
+
+<nav class="mobile-bottom">
+  <a href="index.html"><i class="fa-solid fa-house"></i></a>
+  <a href="mensajes.html"><i class="fa-solid fa-comments"></i></a>
+  <a href="#" class="discount">20%</a>
+  <a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i></a>
+  <a href="usuario.html"><i class="fa-solid fa-user"></i></a>
+</nav>
+
 <div class="toast" id="toast"></div>
 
 <script>
