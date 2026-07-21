@@ -456,6 +456,22 @@ body{margin:0;font-family:Arial,sans-serif;color:#181818;background:#fff;padding
 .alerta-overlay.cerrando{opacity:0}.alerta-overlay.cerrando .alerta{transform:scale(.8) translateY(30px);opacity:0}
 @media(max-width:600px){.alerta{padding:38px 22px 28px;border-radius:24px}.icono-contenedor{width:125px;height:125px}.circulo-check{width:105px;height:105px}.check{width:52px;height:29px;border-left-width:11px;border-bottom-width:11px}.alerta-titulo{font-size:36px}.btn-aceptar{font-size:21px}}
 
+
+/* Mostrar solamente el cuadro de la alerta, sin fondo oscuro completo */
+.alerta-overlay{
+  background:transparent!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+  pointer-events:none!important;
+}
+.alerta-overlay.activa{
+  visibility:visible!important;
+  opacity:1!important;
+}
+.alerta{
+  pointer-events:auto!important;
+}
+
 </style>
 
 </head>
@@ -1212,7 +1228,7 @@ function cerrarAlerta(){
   setTimeout(()=>{alertaOverlay.classList.remove('activa','cerrando');document.body.style.overflow='';},300);
 }
 btnAceptar.addEventListener('click',cerrarAlerta);
-alertaOverlay.addEventListener('click',e=>{if(e.target===alertaOverlay)cerrarAlerta()});
+
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&alertaOverlay.classList.contains('activa'))cerrarAlerta()});
 
 </script>
