@@ -420,6 +420,22 @@ body{margin:0;font-family:Arial,sans-serif;color:#181818;background:#fff;padding
  .cart-badge{position:absolute;right:2px;top:0;background:#e60023;color:#fff;border-radius:12px;min-width:22px;height:22px;font-size:12px;display:flex;align-items:center;justify-content:center}
 }
 
+
+.mobile-image-close{display:none}
+@media(max-width:760px){
+  body{padding-top:0!important}
+  .mobile-detail-header{display:none!important}
+  .main-image{position:relative!important}
+  .mobile-image-close{
+    position:absolute;top:14px;right:14px;
+    width:46px;height:46px;border:0;border-radius:50%;
+    background:rgba(255,255,255,.95);color:#111;
+    display:flex;align-items:center;justify-content:center;
+    font-size:24px;cursor:pointer;z-index:30;
+    box-shadow:0 3px 12px rgba(0,0,0,.22)
+  }
+}
+
 </style>
 
 </head>
@@ -435,7 +451,11 @@ body{margin:0;font-family:Arial,sans-serif;color:#181818;background:#fff;padding
 <main class="page">
 <div class="breadcrumb"><a href="index.html">Inicio</a> › <span id="breadcrumbCategory">Producto</span></div>
 <section class="product-layout">
-<div class="gallery"><div class="thumbs" id="thumbs"></div><div class="main-image"><img id="mainImage"><div class="zoom-note"><i class="fa-solid fa-magnifying-glass-plus"></i> Imagen ampliada</div></div></div>
+<div class="gallery"><div class="thumbs" id="thumbs"></div><div class="main-image">
+<button class="mobile-image-close" id="mobileImageClose" type="button" aria-label="Cerrar">
+<i class="fa-solid fa-xmark"></i>
+</button>
+<img id="mainImage"><div class="zoom-note"><i class="fa-solid fa-magnifying-glass-plus"></i> Imagen ampliada</div></div></div>
 <div class="info"><h1 id="productName">Producto</h1><div class="sales"><span id="salesCount">1</span> vendido(s)</div><div class="rating">★★★★★ <span style="color:#666">4.8 · 126 valoraciones</span></div><div class="price-row"><div class="current-price" id="currentPrice">US$ 0.00</div><div class="discount" id="discount"></div><div class="old-price" id="oldPrice"></div></div><div class="tax-note">Precio mostrado antes de impuestos.</div><div class="coupon"><i class="fa-solid fa-tag"></i> Descuentos disponibles</div><div id="variantOptions"></div>
 <div class="product-size-block" id="productSizeBlock" style="display:none">
   <div class="product-size-title">Tamaño, capacidad o medida</div>
@@ -1134,6 +1154,12 @@ $('#mShare')?.addEventListener('click',async()=>{
  else{navigator.clipboard?.writeText(location.href);toast('Enlace copiado')}
 });
 updateMobileCount();
+
+
+document.getElementById('mobileImageClose')?.addEventListener('click',()=>{
+  if(history.length>1) history.back();
+  else location.href='index.html';
+});
 
 </script>
 </body>
