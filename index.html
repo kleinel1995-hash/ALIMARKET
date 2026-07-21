@@ -218,6 +218,40 @@ body{background:#d9d9d9;color:#000;padding-top:150px;padding-bottom:90px}
   .auth-modal{width:calc(100% - 24px)!important;max-height:88vh!important}
 }
 
+
+@media(max-width:768px){
+  .header-top{
+    grid-template-columns:1fr auto!important;
+    grid-template-areas:
+      "logo user"
+      "search search"!important;
+  }
+  .logo{
+    grid-area:logo!important;
+    align-self:center!important;
+  }
+  .search-box{
+    grid-area:search!important;
+  }
+  .header-icons{
+    grid-area:user!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    width:54px!important;
+    height:54px!important;
+  }
+  .header-icons::after{
+    content:"\f2bd"!important;
+    font-family:"Font Awesome 6 Free"!important;
+    font-weight:400!important;
+    font-size:47px!important;
+    line-height:1!important;
+    color:#000!important;
+    display:block!important;
+  }
+}
+
 </style>
 </head>
 <body>
