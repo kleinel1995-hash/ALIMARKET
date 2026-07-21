@@ -345,10 +345,71 @@ body{margin:0;font-family:Arial,sans-serif;color:#181818;background:#fff;padding
   opacity:.45;cursor:not-allowed;text-decoration:line-through;background:#f4f4f4
 }
 
+
+.mobile-detail-header,.mobile-bottom-buy,.mobile-extra{display:none}
+@media(max-width:760px){
+ body{padding:74px 0 88px!important;background:#f3f5f7!important}
+ .header{display:none!important}
+ .mobile-detail-header{position:fixed;top:0;left:0;right:0;height:74px;background:#fff;z-index:15000;display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid #eee}
+ .mobile-detail-header button{width:42px;height:42px;border:0;background:#fff;font-size:23px}
+ .mobile-search{flex:1;height:46px;border:2px solid #111;border-radius:15px;display:flex;overflow:hidden}
+ .mobile-search input{flex:1;min-width:0;border:0;outline:0;padding:0 13px;font-size:17px}
+ .mobile-search button{width:58px!important;height:100%!important;background:#111!important;color:#fff!important}
+ .page{padding:0!important;margin:0!important;width:100%!important}
+ .breadcrumb{display:none!important}
+ .product-layout{display:block!important}
+ .gallery{display:flex!important;flex-direction:column!important;gap:0!important;background:#fff}
+ .main-image{order:1;height:auto!important;min-height:430px;border-radius:0!important;background:#fff!important}
+ .main-image img{width:100%;height:auto!important;max-height:520px;object-fit:contain}
+ .zoom-note{display:none!important}
+ .thumbs{order:2!important;flex-direction:row!important;height:auto!important;max-height:none!important;overflow-x:auto!important;gap:9px;padding:12px 16px}
+ .thumb{flex:0 0 70px!important;width:70px!important;height:70px!important}
+ .info{padding:0 17px 22px;background:#fff}
+ .info h1{font-size:21px!important}
+ .current-price{font-size:39px!important}
+ .discount{background:#ffe7ec;padding:5px 9px;border-radius:18px}
+ .option-btn.has-img{width:72px!important;height:72px!important}
+ .buy-card{position:static!important;width:auto!important;height:auto!important;max-height:none!important;overflow:visible!important;border:0!important;box-shadow:none!important;border-radius:0!important;margin-top:10px!important;padding:20px 17px!important}
+ .buy-card>.price-row,.buy-card>.tax-note,.buy-card>.selection-summary,.buy-card .qty,.buy-card .action-btn,.buy-card .share{display:none!important}
+ .tabs{display:none!important}
+ .content-section{margin-top:10px!important;padding:23px 17px!important;background:#fff!important;border:0!important}
+ .content-section h2{font-size:26px!important}
+ #informacion-completa,#variantes-completas,#imagenes-completas,#todos-los-datos,#datos-completos-universales{display:none!important}
+ .detail-grid{grid-template-columns:1fr!important}
+ .detail-cell{grid-template-columns:40% 60%!important;min-height:58px!important}
+ .detail-cell span,.detail-cell strong{padding:12px!important;font-size:15px!important}
+ .description{font-size:18px!important;line-height:1.55!important}
+ .description img{width:calc(100% + 34px)!important;max-width:none!important;margin:18px -17px!important;border-radius:0!important}
+ .reviews-summary{display:block!important;padding:0!important;background:#fff!important}
+ .similar-grid{grid-template-columns:repeat(2,1fr)!important;gap:10px!important}
+ .similar-card img{height:auto!important;aspect-ratio:1/1;object-fit:cover!important}
+ .mobile-extra{display:block;background:#fff;margin-top:10px;padding:23px 17px}
+ .mobile-extra h2{font-size:26px;margin:0 0 18px}
+ .mobile-row{display:flex;gap:13px;padding:17px 0;border-bottom:1px solid #eee}
+ .mobile-row i{font-size:22px;width:28px}
+ .mobile-row strong{font-size:18px;display:block;margin-bottom:5px}
+ .mobile-row span{font-size:15px;color:#666;line-height:1.45}
+ .review-item{padding:17px 0;border-bottom:1px solid #eee}
+ .review-stars{color:#ffc400;font-size:20px}
+ .review-meta{color:#888;font-size:13px;margin:5px 0}
+ .review-text{font-size:17px;line-height:1.45}
+ .mobile-bottom-buy{position:fixed;left:0;right:0;bottom:0;height:82px;background:#fff;border-top:1px solid #ddd;z-index:16000;display:grid;grid-template-columns:54px 54px 54px 1fr;gap:5px;align-items:center;padding:9px 13px}
+ .mobile-bottom-buy button{border:0;background:#fff;font-size:23px;height:52px;position:relative}
+ .mobile-bottom-buy .add-mobile{background:#ed0033;color:#fff;border-radius:30px;font-size:20px;font-weight:900}
+ .cart-badge{position:absolute;right:2px;top:0;background:#e60023;color:#fff;border-radius:12px;min-width:22px;height:22px;font-size:12px;display:flex;align-items:center;justify-content:center}
+}
+
 </style>
 
 </head>
 <body>
+
+<header class="mobile-detail-header">
+ <button id="mBack"><i class="fa-solid fa-chevron-left"></i></button>
+ <div class="mobile-search"><input id="mSearch" placeholder="Buscar productos"><button id="mSearchBtn"><i class="fa-solid fa-magnifying-glass"></i></button></div>
+ <button id="mShare"><i class="fa-solid fa-share-nodes"></i></button>
+</header>
+
 <header class="header"><div class="header-top"><a href="index.html" class="logo">Alimarket</a><div class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input type="text" placeholder=""><i class="fa-solid fa-microphone"></i></div><div class="header-icons"><a href="favoritos.html"><i class="fa-solid fa-heart"></i> Favorito</a><a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i> Cesta</a><a href="usuario.html"><i class="fa-solid fa-user"></i> Usuario</a></div></div><nav class="promo-bar"><div class="categoria-hover"><a class="cat" href="#"><i class="fa-solid fa-bars"></i> Categorías</a><div class="hover-full"><main class="cat-page"><div class="cat-layout"><aside class="cat-sidebar" id="catSidebar"></aside><section class="cat-content"><div class="cat-banner"><div class="banner-icon" id="bannerIcon">🎧</div><div><h1 id="bannerTitle">Electronica</h1><p>Explora cientos productos populares y subcategorías.</p></div></div><div class="cat-title-row"><h2 id="sectionTitle">Electronica</h2><a href="categorias.html">Abrir página completa</a></div><div class="subcat-grid" id="subcatGrid"></div></section></div></main></div></div><a href="#">Ofertas promocional</a><a href="#">Nuevos</a><a href="#">Más vendido</a><a href="#">Cupones</a><a href="#">Envió gratis</a></nav></header>
 <main class="page">
 <div class="breadcrumb"><a href="index.html">Inicio</a> › <span id="breadcrumbCategory">Producto</span></div>
@@ -416,9 +477,34 @@ body{margin:0;font-family:Arial,sans-serif;color:#181818;background:#fff;padding
     </div>
     <button class="details-toggle" id="detailsToggle" type="button">Ver más</button></section>
 <section class="content-section" id="descripcion"><h2>Descripción completa</h2><div class="description" id="descriptionContent"></div><div id="measureDynamic"></div></section>
+
+<section class="mobile-extra">
+ <div class="mobile-row"><i class="fa-solid fa-truck-fast"></i><div><strong>Envío gratis</strong><span>Entrega estimada según tu ubicación.</span></div></div>
+ <div class="mobile-row"><i class="fa-solid fa-rotate-left"></i><div><strong>Devoluciones gratis</strong><span>Dentro del plazo permitido.</span></div></div>
+ <div class="mobile-row"><i class="fa-solid fa-shield-halved"></i><div><strong>Seguridad y privacidad</strong><span>Pagos seguros y datos protegidos.</span></div></div>
+</section>
+<section class="mobile-extra">
+ <h2>Reseñas</h2>
+ <div style="font-size:42px;font-weight:900">4.9 <span class="review-stars">★★★★★</span></div>
+ <div class="review-item"><div class="review-stars">★★★★★</div><div class="review-meta">Compra verificada</div><div class="review-text">Llegó rápidamente, en perfectas condiciones y funciona de maravilla.</div></div>
+ <div class="review-item"><div class="review-stars">★★★★★</div><div class="review-meta">Compra verificada</div><div class="review-text">Excelente producto y muy buena relación calidad-precio.</div></div>
+</section>
+<section class="mobile-extra">
+ <h2>Preguntas y respuestas</h2>
+ <div style="background:#f5f5f5;border-radius:12px;padding:16px"><strong>¿Tienes una pregunta?</strong><p style="color:#777">Consulta al vendedor sobre este producto.</p></div>
+</section>
+
 <section class="content-section" id="tienda"><h2>Tienda</h2><div class="store-card"><div><h3>AliMarket Vendedor Oficial</h3><p>Productos seleccionados y protección de compra.</p></div><button>Visitar tienda</button></div></section>
 <section class="content-section" id="similares"><h2>Artículos similares</h2><div class="similar-grid" id="similarGrid"></div></section>
-</main><div class="toast" id="toast"></div>
+</main>
+<nav class="mobile-bottom-buy">
+ <button><i class="fa-solid fa-medal"></i></button>
+ <button><i class="fa-regular fa-message"></i></button>
+ <button id="mCart"><i class="fa-solid fa-cart-shopping"></i><span class="cart-badge" id="mCartCount">0</span></button>
+ <button class="add-mobile" id="mAdd">Agregar al carrito</button>
+</nav>
+
+<div class="toast" id="toast"></div>
 <script>
 const $=s=>document.querySelector(s),params=new URLSearchParams(location.search),productId=params.get('id'),PRODUCTOS_KEY='productosPublicados',CARRITO_KEY='carritoAliMarket';
 const demos=[{id:'demo-1',name:'Smartphone moderno',price:8500,offerPrice:7900,currency:'DOP',category:'Electrónica',subcategory:'Smartphones',totalStock:20,image:'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=85',description:'<p>Smartphone moderno con pantalla de alta definición, batería de larga duración y excelente rendimiento.</p>',weight:.18,dimensions:{length:16,width:8,height:1},barcode:'750100000001'},{id:'demo-2',name:'Audífonos Bluetooth',price:1250,offerPrice:999,currency:'DOP',category:'Electrónica',subcategory:'Audio y auriculares',totalStock:15,image:'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=85',description:'<p>Audífonos inalámbricos con sonido nítido y estuche de carga.</p>',weight:.25,dimensions:{length:18,width:15,height:8},barcode:'750100000002'},{id:'demo-3',name:'Reloj elegante',price:2900,offerPrice:0,currency:'DOP',category:'Joyería y relojes',subcategory:'Relojes',totalStock:12,image:'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=85',description:'<p>Reloj elegante para ocasiones formales y uso diario.</p>',weight:.12,dimensions:{length:10,width:8,height:6},barcode:'750100000003'}];
@@ -1003,6 +1089,29 @@ render();
 
 const categorias=[{nombre:"Electronica",icono:"🎧",subs:["Auriculares","Smartwatch","Camaras","Drones","Consolas","Audio","Parlantes","Microfonos","TV Box","Cargadores","Bluetooth","Luces-LED"]},{nombre:"Telefonos",icono:"📱",subs:["Samsung","iPhone","Xiaomi","Motorola","Huawei","Tecno","Infinix","Cargadores","Cables","Protectores","Pantallas","Accesorios"]},{nombre:"Computadoras",icono:"💻",subs:["Laptop","PC Gamer","Mouse","Teclados","Monitores","Discos SSD","Memorias","Impresoras","Router","USB","Cámaras web","Bocinas"]},{nombre:"Moda Mujer",icono:"👗",subs:["Vestidos","Blusas","Jeans","Zapatos","Carteras","Relojes","Perfumes","Faldas","Maquillaje","Pulseras","Collares","Sandalias"]},{nombre:"Moda Hombre",icono:"👕",subs:["Polos","Jeans","Tenis","Gorras","Relojes","Camisas","Correas","Perfumes","Billeteras","Shorts","Abrigos","Sandalias"]},{nombre:"Hogar y Jardin",icono:"🏠",subs:["Cocina","Muebles","Decoración","Herramientas","Jardín","Luces","Baño","Organizadores","Camas","Cortinas","Sillas","Mesas"]},{nombre:"Belleza y Salud",icono:"💄",subs:["Cuidado facial","Cabello","Perfumes","Maquillaje","Barbería","Vitaminas","Masajes","Cremas","Aceites","Uñas","Cepillos","Máquinas"]},{nombre:"Deportes",icono:"⚽",subs:["Pelotas","Tenis","Ropa deportiva","Gym","Bicicletas","Guantes","Pesas","Gorras","Mochilas","Botellas","Caminadoras","Accesorios"]},{nombre:"Juguetes",icono:"🧸",subs:["Carritos","Muñecas","Peluches","Drones niños","Bloques","Educativos","Bicicletas","Piscinas","Pistolas agua","Robots","Juegos mesa","Figuras"]},{nombre:"Automotriz",icono:"🚗",subs:["Luces LED","Aceites","Baterías","Radios","Bocinas","Forros","Cámaras","Sensores","Herramientas","Aros","Gomas","Accesorios"]},{nombre:"Herramientas",icono:"🛠️",subs:["Taladros","Martillos","Destornilladores","Sierras","Llaves","Compresores","Pintura","Cajas","Eléctricas","Medidores","Soldadoras","Cortadoras"]},{nombre:"Officina y Escuela",icono:"📚",subs:["Cuadernos","Lápices","Mochilas","Calculadoras","Sillas","Escritorios","Impresoras","Papelería","Carpetas","Marcadores","Reglas","Libros"]}];
 const sidebar=document.getElementById("catSidebar"),grid=document.getElementById("subcatGrid"),bannerTitle=document.getElementById("bannerTitle"),bannerIcon=document.getElementById("bannerIcon"),sectionTitle=document.getElementById("sectionTitle");function renderSidebar(){sidebar.innerHTML="";categorias.forEach((cat,index)=>{const item=document.createElement("div");item.className="cat-item"+(index===0?" active":"");item.innerHTML=`<div class="cat-left"><span class="cat-icon">${cat.icono}</span><span>${cat.nombre}</span></div><span>›</span>`;item.onmouseenter=()=>selectCat(index);item.onclick=()=>selectCat(index);sidebar.appendChild(item)})}function selectCat(index){document.querySelectorAll(".cat-item").forEach(el=>el.classList.remove("active"));document.querySelectorAll(".cat-item")[index].classList.add("active");const cat=categorias[index];bannerTitle.innerText=cat.nombre;bannerIcon.innerText=cat.icono;sectionTitle.innerText=cat.nombre;grid.innerHTML="";cat.subs.forEach(sub=>{const card=document.createElement("div");card.className="subcat-card";card.innerHTML=`<div class="subcat-img"><img src="https://cdn-icons-png.flaticon.com/512/1048/1048949.png"></div><h3>${sub}</h3>`;grid.appendChild(card)})}renderSidebar();selectCat(0);
+
+function updateMobileCount(){
+ try{
+  const c=JSON.parse(localStorage.getItem(CARRITO_KEY)||'[]');
+  const n=Array.isArray(c)?c.reduce((s,x)=>s+(Number(x.cantidad)||1),0):0;
+  if($('#mCartCount'))$('#mCartCount').textContent=n;
+ }catch(e){}
+}
+$('#mBack')?.addEventListener('click',()=>history.length>1?history.back():location.href='index.html');
+$('#mCart')?.addEventListener('click',()=>location.href='carrito.html');
+$('#mAdd')?.addEventListener('click',()=>{$('#addCart')?.click();updateMobileCount()});
+$('#mSearchBtn')?.addEventListener('click',()=>{
+ const q=($('#mSearch')?.value||'').trim().toLowerCase();
+ const f=allProducts.find(x=>(x.name||'').toLowerCase().includes(q));
+ f?location.href='articulo_detalle.html?id='+encodeURIComponent(f.id):toast('No se encontró el producto');
+});
+$('#mSearch')?.addEventListener('keydown',e=>{if(e.key==='Enter')$('#mSearchBtn')?.click()});
+$('#mShare')?.addEventListener('click',async()=>{
+ if(navigator.share){try{await navigator.share({title:product.name,url:location.href})}catch(e){}}
+ else{navigator.clipboard?.writeText(location.href);toast('Enlace copiado')}
+});
+updateMobileCount();
+
 </script>
 </body>
 </html>
