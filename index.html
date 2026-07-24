@@ -346,6 +346,26 @@ font-size:13px!important
 .mobile-bottom{height:92px!important}
 }
 
+/* Ajuste final: modelo exacto de la imagen en móvil */
+@media(max-width:768px){
+html,body{width:100%;overflow-x:hidden}
+body{zoom:75%!important;transform-origin:top left!important;background:#fff!important;padding-top:255px!important;padding-bottom:96px!important}
+.header{padding:13px 18px 12px!important;background:#fff!important;box-shadow:none!important}
+.header-top{grid-template-columns:1fr 56px!important;grid-template-areas:"logo user" "search search"!important;gap:13px!important}
+.logo{font-size:45px!important;color:#a70000!important;letter-spacing:0!important}
+.header-icons{width:56px!important;height:54px!important}
+.header-icons::after{font-size:48px!important}
+.search-box{height:62px!important;border:1.5px solid #777!important;border-radius:32px!important;padding:0 20px!important;gap:13px!important}
+.search-box input{font-size:20px!important}.search-box>i:first-child{font-size:24px!important}.photo-search-btn{font-size:24px!important}
+.promo-bar{margin-top:13px!important;gap:10px!important}.promo-bar a{padding:11px 20px!important;border-radius:24px!important;font-size:16px!important}.promo-bar .cat{min-width:170px!important;background:#f6a1a7!important}
+.hero{width:calc(100% - 24px)!important;height:300px!important;margin:10px 12px 24px!important;padding:28px 30px!important;border-radius:14px!important}
+.hero-text{width:52%!important}.hero-text h1{font-size:35px!important;line-height:1.15!important;margin-bottom:17px!important}.hero-text p{font-size:22px!important;line-height:1.35!important;margin-bottom:20px!important}.hero-text button{font-size:18px!important;padding:13px 26px!important;border-radius:10px!important}
+.section{padding:0 18px 18px!important}.section h2{font-size:30px!important;margin-bottom:16px!important}.products{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}
+.product{border-radius:15px!important;box-shadow:0 3px 12px rgba(0,0,0,.13)!important}.product img{height:178px!important;border-radius:15px 15px 0 0!important;object-fit:cover!important}.product-info{padding:10px 13px 14px!important;text-align:left!important}.product-info h3{font-size:17px!important;margin-bottom:5px!important}
+.product-rating{margin:4px 0 7px!important;gap:7px!important}.product-rating .stars{font-size:14px!important;letter-spacing:.5px!important}.rating-number{font-size:14px!important}.price{font-size:23px!important;margin:0!important}.bulk-price{font-size:13px!important;padding:4px 6px!important;margin-top:7px!important}.free-shipping{font-size:15px!important;margin-top:10px!important}
+.product button,.add-cart{display:none!important}.product-badge{display:block!important;top:8px!important;left:8px!important;padding:5px 8px!important;border-radius:6px!important;font-size:13px!important}.mobile-bottom{height:92px!important;background:#fff!important;border-top:1px solid #ddd!important}
+}
+
 </style>  
 </head>  
 <body>  
@@ -376,7 +396,7 @@ font-size:13px!important
 </div></div></div><nav class="promo-bar"><div class="categoria-hover"><a class="cat" href="#"><i class="fa-solid fa-bars"></i> Categorías</a><div class="hover-full"><main class="cat-page"><div class="cat-layout"><aside class="cat-sidebar" id="catSidebar"></aside><section class="cat-content"><div class="cat-banner"><div class="banner-icon" id="bannerIcon">🎧</div><div><h1 id="bannerTitle">Electronica</h1><p>Explora cientos productos populares y subcategorías.</p></div></div><div class="cat-title-row"><h2 id="sectionTitle">Electronica</h2><a href="categorias.html">Abrir página completa</a></div><div class="subcat-grid" id="subcatGrid"></div></section></div></main></div></div><a href="#">Ofertas promocional</a><a href="#">Nuevos</a><a href="#">Más vendido</a><a href="#">Cupones</a><a href="#">Envió gratis</a></nav></header>  
 <section class="hero"><div class="hero-text"><h1>SuperOfertas<br>Hasta -70% dto.</h1><p>Miles de ofertas<br>por tiempo limitado</p><button type="button" onclick="location.href='crear_producto_conectado.html'">Crear producto</button></div><div class="hero-img"></div></section>  
 <section class="section"><h2>Productos destacados</h2><div class="products" id="productsGrid"><div class="product"><img src="https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=700&q=85"><div class="product-info"><h3>Smartphone moderno</h3><div class="price">RD$ 8,500</div><button>Agregar</button></div></div><div class="product"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=700&q=85"><div class="product-info"><h3>Audífonos Bluetooth</h3><div class="price">RD$ 1,250</div><button>Agregar</button></div></div><div class="product"><img src="https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&w=700&q=85"><div class="product-info"><h3>Reloj elegante</h3><div class="price">RD$ 2,900</div><button>Agregar</button></div></div><div class="product"><img src="https://images.unsplash.com/photo-1579586337278-3befd40fd17a?auto=format&fit=crop&w=700&q=85"><div class="product-info"><h3>Smart Watch</h3><div class="price">RD$ 3,600</div><button>Agregar</button></div></div></div></section>  
-<nav class="mobile-bottom"><a href="index.html"><i class="fa-solid fa-house"></i></a><a href="#"><i class="fa-solid fa-comments"></i></a><a href="#" class="discount">20%</a><a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i></a><a href="usuario.html"><i class="fa-solid fa-user"></i></a></nav>  
+<nav class="mobile-bottom"><a href="index.html"><i class="fa-solid fa-house"></i></a><a href="mensajes.html"><i class="fa-solid fa-comments"></i></a><a href="#" class="discount">20%</a><a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i></a><a href="usuario.html"><i class="fa-solid fa-user"></i></a></nav>  
 <script>  const PRODUCTOS_KEY='productosPublicados';
 const CARRITO_KEY='carritoAliMarket';
 const productosPredeterminados=[
