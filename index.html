@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{zoom: 75%; background:#d9d9d9;color:#000;padding-top:150px;padding-bottom:90px}
+body{background:#d9d9d9;color:#000;padding-top:150px;padding-bottom:90px}
 .header{position:fixed;top:0;left:0;width:100%;background:#fff;z-index:9999;padding:18px 70px 28px}
 .header-top{display:flex;align-items:center;gap:22px}.logo{font-family:Georgia,serif;font-size:43px;font-weight:bold;color:#b40000;text-decoration:none;letter-spacing:3px}
 .search-box{flex:1;height:43px;border:2px solid #777;border-radius:30px;display:flex;align-items:center;padding:0 15px;gap:10px;max-width:720px}.search-box input{border:none;outline:none;width:100%;font-size:16px;background:transparent}.search-box i{color:#555;font-size:18px}
@@ -16,7 +16,7 @@ body{zoom: 75%; background:#d9d9d9;color:#000;padding-top:150px;padding-bottom:9
 .hover-full{position:fixed;top:145px;left:0;width:100%;height:calc(100vh - 145px);background:#d9d9d9;z-index:9998;padding:25px 70px;opacity:0;visibility:hidden;transform:translateY(15px);transition:.25s;overflow:auto}.categoria-hover:hover .hover-full,.hover-full:hover{opacity:1;visibility:visible;transform:translateY(0)}
 .cat-page{width:100%;max-width:1500px;margin:auto}.cat-layout{display:grid;grid-template-columns:290px 1fr;gap:24px}.cat-sidebar{background:#fff;border-radius:16px;padding:17px 18px;min-height:670px}.cat-item{height:55px;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:21px;font-weight:600;cursor:pointer;padding:0 8px;border-radius:12px}.cat-item:hover,.cat-item.active{background:#fff1f1;color:#e00000}.cat-left{display:flex;align-items:center;gap:12px}.cat-icon{width:28px;text-align:center;font-size:23px}.cat-content{padding-top:0}.cat-banner{height:132px;background:linear-gradient(90deg,#4b0000,#e50000,#ff2727);border-radius:14px;display:flex;align-items:center;gap:25px;padding:25px 32px;color:#fff;margin-bottom:20px}.cat-banner .banner-icon{font-size:66px}.cat-banner h1{font-size:36px;margin-bottom:8px}.cat-banner p{font-size:18px;font-weight:700}.cat-title-row{display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #fff;padding:0 8px 15px;margin-bottom:20px}.cat-title-row h2{font-size:34px;font-weight:900}.cat-title-row a{color:#e33333;text-decoration:none;font-size:19px;font-weight:700}.subcat-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}.subcat-card{height:190px;background:#fff;border:2px solid #fff;border-radius:12px;overflow:hidden;cursor:pointer;transition:.2s}.subcat-card:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(0,0,0,.18)}.subcat-img{height:127px;background:#cfcfcf;display:flex;align-items:center;justify-content:center}.subcat-img img{width:90px;height:90px;object-fit:contain}.subcat-card h3{height:63px;background:#fff;display:flex;align-items:center;justify-content:center;text-align:center;font-size:19px}
 .hero{width:86%;height:420px;margin:30px auto 25px;background:linear-gradient(90deg,#e00000,#f00000,#cf0000);overflow:hidden;position:relative;display:flex;align-items:center;padding:45px}.hero-text{color:#fff;width:45%;z-index:2}.hero-text h1{font-size:55px;line-height:1.2;margin-bottom:28px;font-weight:900}.hero-text p{font-size:32px;line-height:1.35;margin-bottom:28px}.hero-text button{background:#fff;color:#d90000;border:none;padding:17px 48px;border-radius:9px;font-size:25px;font-weight:900;cursor:pointer}.hero-img{position:absolute;right:0;bottom:0;width:58%;height:100%;background:url("https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=900&q=80") center/cover no-repeat;opacity:.95}.section{width:86%;margin:25px auto}.section h2{font-size:36px;font-weight:900;margin-bottom:20px}.products{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.product{background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.15)}.product img{width:100%;height:180px;object-fit:cover}.product-info{padding:15px}.product-info h3{font-size:17px;margin-bottom:8px}.price{color:#d60000;font-size:22px;font-weight:900}.product button{margin-top:12px;width:100%;padding:12px;border:none;border-radius:12px;background:#000;color:#fff;font-weight:bold;cursor:pointer}.product{position:relative;cursor:pointer}.product-badge{position:absolute;top:10px;left:10px;background:#e60023;color:#fff;padding:6px 9px;border-radius:20px;font-size:12px;font-weight:900;z-index:2}.old-price{font-size:14px;color:#777;text-decoration:line-through;margin-left:7px}.product-meta{font-size:13px;color:#666;margin-top:5px}.empty-products{grid-column:1/-1;background:#fff;border-radius:16px;padding:35px;text-align:center}.mobile-bottom{display:none}
-@media(max-width:768px){body{zoom: 75%; padding-top:220px}.header{padding:20px 18px 18px}.header-top{display:grid;grid-template-columns:1fr auto}.logo{font-size:44px}.header-icons a{display:none}.header-icons::after{content:"\f0f3";font-family:"Font Awesome 6 Free";font-weight:900;font-size:42px}.search-box{grid-column:1/3;max-width:100%;width:100%;height:62px}.promo-bar{padding-left:0;overflow-x:auto}.promo-bar::-webkit-scrollbar{display:none}.promo-bar a{min-width:160px}.hover-full{display:none}.hero{width:100%;height:300px;margin-top:20px;padding:25px}.hero-text{width:58%}.hero-text h1{font-size:32px}.hero-text p{font-size:21px}.hero-text button{font-size:18px;padding:12px 25px}.hero-img{width:58%}.section{width:100%;padding:25px}.products{grid-template-columns:repeat(2,1fr)}.product img{height:130px}.mobile-bottom{position:fixed;bottom:0;left:0;right:0;height:85px;background:#d9d9d9;display:flex;justify-content:space-around;align-items:center;z-index:9999}.mobile-bottom a{color:#000;text-decoration:none;font-size:34px}.discount{color:#e00068!important;font-weight:900;font-size:28px!important}}
+@media(max-width:768px){body{padding-top:220px}.header{padding:20px 18px 18px}.header-top{display:grid;grid-template-columns:1fr auto}.logo{font-size:44px}.header-icons a{display:none}.header-icons::after{content:"\f0f3";font-family:"Font Awesome 6 Free";font-weight:900;font-size:42px}.search-box{grid-column:1/3;max-width:100%;width:100%;height:62px}.promo-bar{padding-left:0;overflow-x:auto}.promo-bar::-webkit-scrollbar{display:none}.promo-bar a{min-width:160px}.hover-full{display:none}.hero{width:100%;height:300px;margin-top:20px;padding:25px}.hero-text{width:58%}.hero-text h1{font-size:32px}.hero-text p{font-size:21px}.hero-text button{font-size:18px;padding:12px 25px}.hero-img{width:58%}.section{width:100%;padding:25px}.products{grid-template-columns:repeat(2,1fr)}.product img{height:130px}.mobile-bottom{position:fixed;bottom:0;left:0;right:0;height:85px;background:#d9d9d9;display:flex;justify-content:space-around;align-items:center;z-index:9999}.mobile-bottom a{color:#000;text-decoration:none;font-size:34px}.discount{color:#e00068!important;font-weight:900;font-size:28px!important}}
 
 /* Menú desplegable de usuario */
 .user-menu-wrap{position:relative}
@@ -171,91 +171,256 @@ body{zoom: 75%; background:#d9d9d9;color:#000;padding-top:150px;padding-bottom:9
 }
 
 
+/* SOLO CAMBIO VISUAL: modelo móvil de la imagen. Las funciones permanecen iguales. */
+html{zoom:75%;}
+
 @media(max-width:768px){
-  body{background:#f5f5f5!important;padding-top:265px!important;padding-bottom:92px!important}
-  .header{padding:14px 16px!important;background:#fff!important;box-shadow:0 1px 6px rgba(0,0,0,.08)!important}
-  .header-top{display:grid!important;grid-template-columns:1fr auto!important;gap:14px!important;align-items:center!important}
-  .logo{font-size:42px!important;line-height:1!important;color:#a90000!important;letter-spacing:0!important}
-  .header-icons{display:flex!important;align-items:center!important;justify-content:flex-end!important}
+  html,body{width:100%;overflow-x:hidden}
+  body{
+    background:#fff!important;
+    padding-top:258px!important;
+    padding-bottom:96px!important;
+  }
+
+  .header{
+    padding:14px 18px 13px!important;
+    background:#fff!important;
+    box-shadow:none!important;
+  }
+  .header-top{
+    grid-template-columns:1fr 56px!important;
+    grid-template-areas:"logo user" "search search"!important;
+    gap:13px!important;
+  }
+  .logo{
+    grid-area:logo!important;
+    font-size:45px!important;
+    line-height:1!important;
+    color:#a70000!important;
+    letter-spacing:0!important;
+  }
+  .header-icons{
+    grid-area:user!important;
+    width:56px!important;
+    height:54px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+  }
   .header-icons>a,.header-icons>.user-menu-wrap{display:none!important}
-  .header-icons::after{content:"\f2bd"!important;font-family:"Font Awesome 6 Free"!important;font-weight:400!important;font-size:44px!important;color:#000!important}
-  .search-box{grid-column:1/3!important;width:100%!important;max-width:none!important;height:66px!important;border:2px solid #777!important;border-radius:34px!important;padding:0 22px!important;gap:16px!important;background:#fff!important}
+  .header-icons::after{
+    content:"\f2bd"!important;
+    font-family:"Font Awesome 6 Free"!important;
+    font-weight:400!important;
+    font-size:48px!important;
+    line-height:1!important;
+    color:#000!important;
+  }
+
+  .search-box{
+    grid-area:search!important;
+    width:100%!important;
+    max-width:none!important;
+    height:62px!important;
+    border:1.5px solid #777!important;
+    border-radius:32px!important;
+    padding:0 20px!important;
+    gap:13px!important;
+    background:#fff!important;
+  }
   .search-box input{font-size:20px!important}
   .search-box input::placeholder{color:#999!important}
-  .search-box i{font-size:25px!important;color:#222!important}
-  .promo-bar{margin-top:14px!important;padding-left:0!important;gap:12px!important;overflow-x:auto!important;scrollbar-width:none!important}
+  .search-box i{font-size:24px!important;color:#111!important}
+  .search-box .fa-microphone::before{content:"\f030"!important}
+
+  .promo-bar{
+    margin-top:13px!important;
+    padding-left:0!important;
+    gap:10px!important;
+    overflow-x:auto!important;
+    scrollbar-width:none!important;
+  }
   .promo-bar::-webkit-scrollbar{display:none!important}
-  .promo-bar a{min-width:max-content!important;padding:12px 24px!important;border-radius:28px!important;background:#e9e9e9!important;color:#111!important;font-size:17px!important;line-height:1.05!important}
-  .promo-bar .cat{background:#f8a2a8!important;min-width:176px!important}
+  .promo-bar a{
+    min-width:max-content!important;
+    padding:11px 20px!important;
+    border-radius:24px!important;
+    background:#ececec!important;
+    color:#111!important;
+    font-size:16px!important;
+    line-height:1.05!important;
+  }
+  .promo-bar .cat{
+    min-width:170px!important;
+    background:#f6a1a7!important;
+  }
   .hover-full{display:none!important}
-  .hero{width:calc(100% - 20px)!important;height:345px!important;margin:12px 10px 22px!important;border-radius:18px!important;padding:30px 28px!important;overflow:hidden!important;background:linear-gradient(90deg,#d40000,#ef0000,#bd0000)!important}
-  .hero-text{width:53%!important}
-  .hero-text h1{font-size:40px!important;line-height:1.15!important;margin-bottom:20px!important}
-  .hero-text p{font-size:25px!important;line-height:1.35!important;margin-bottom:24px!important}
-  .hero-text button{padding:15px 30px!important;border-radius:12px!important;font-size:20px!important}
-  .hero-img{width:55%!important;height:100%!important;right:0!important;background-position:center!important;border-radius:0 18px 18px 0!important}
-  .section{width:100%!important;margin:0!important;padding:0 10px 20px!important}
-  .section h2{font-size:38px!important;margin:0 0 18px!important}
-  .products{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}
-  .product{border-radius:18px!important;box-shadow:0 3px 12px rgba(0,0,0,.12)!important;background:#fff!important}
-  .product img{height:225px!important;object-fit:cover!important;border-radius:18px 18px 0 0!important}
-  .product-info{padding:10px 10px 14px!important;text-align:center!important}
-  .product-info h3{font-size:19px!important;line-height:1.2!important;margin-bottom:8px!important}
-  .price{font-size:24px!important;color:#c40000!important;margin-bottom:4px!important}
+
+  .hero{
+    width:calc(100% - 24px)!important;
+    height:300px!important;
+    margin:10px 12px 24px!important;
+    padding:28px 30px!important;
+    border-radius:14px!important;
+    background:linear-gradient(90deg,#c70000,#ee0000,#b70000)!important;
+  }
+  .hero-text{width:52%!important}
+  .hero-text h1{
+    font-size:35px!important;
+    line-height:1.15!important;
+    margin-bottom:17px!important;
+  }
+  .hero-text p{
+    font-size:22px!important;
+    line-height:1.35!important;
+    margin-bottom:20px!important;
+  }
+  .hero-text button{
+    font-size:18px!important;
+    padding:13px 26px!important;
+    border-radius:10px!important;
+  }
+  .hero-img{
+    width:55%!important;
+    height:100%!important;
+    right:0!important;
+    background-position:center!important;
+    border-radius:0 14px 14px 0!important;
+  }
+
+  .section{
+    width:100%!important;
+    margin:0!important;
+    padding:0 18px 18px!important;
+  }
+  .section h2{
+    font-size:30px!important;
+    margin:0 0 16px!important;
+  }
+  .products{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:12px!important;
+  }
+  .product{
+    position:relative!important;
+    border-radius:15px!important;
+    box-shadow:0 3px 12px rgba(0,0,0,.13)!important;
+    background:#fff!important;
+    overflow:hidden!important;
+  }
+  .product::before{
+    content:"Nuevo";
+    position:absolute;
+    top:8px;
+    left:8px;
+    z-index:4;
+    padding:5px 8px;
+    border-radius:6px;
+    background:#df0000;
+    color:#fff;
+    font-size:13px;
+    font-weight:900;
+  }
+  .product-badge{display:none!important}
+  .product img{
+    width:100%!important;
+    height:178px!important;
+    object-fit:cover!important;
+    border-radius:15px 15px 0 0!important;
+  }
+  .product-info{
+    padding:10px 13px 14px!important;
+    text-align:left!important;
+  }
+  .product-info h3{
+    font-size:17px!important;
+    line-height:1.2!important;
+    margin-bottom:5px!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+  }
+  .price{
+    font-size:23px!important;
+    color:#c90000!important;
+    margin:0!important;
+    font-weight:900!important;
+  }
+  .price::before{
+    content:"★★★★★   4.8";
+    display:block;
+    margin:4px 0 7px;
+    color:#424957;
+    font-size:14px;
+    letter-spacing:.5px;
+    font-weight:700;
+  }
+  .product-info::after{
+    content:"$26.09 por Ud., ≥ 3 Uds\A 🚚 Envío gratis";
+    white-space:pre-line;
+    display:block;
+    margin-top:7px;
+    color:#db1731;
+    font-size:13px;
+    font-weight:700;
+    line-height:2.65;
+  }
+  .product-info::after{
+    padding-top:0;
+  }
   .product-meta{display:none!important}
-  .product button{margin-top:8px!important;padding:11px!important;border-radius:22px!important;font-size:17px!important}
-  .product-badge{top:9px!important;left:8px!important;padding:5px 8px!important;font-size:13px!important}
-  .mobile-bottom{height:92px!important;background:#fff!important;display:flex!important;justify-content:space-around!important;align-items:center!important;padding:7px 4px 4px!important;border-top:1px solid #ddd!important;box-shadow:0 -3px 10px rgba(0,0,0,.08)!important}
-  .mobile-bottom a{font-size:28px!important;min-width:62px!important;height:72px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:5px!important;color:#222!important}
-  .mobile-bottom a::after{font-size:13px!important;font-family:Arial,sans-serif!important}
+  .product button,.add-cart{display:none!important}
+
+  .mobile-bottom{
+    height:92px!important;
+    background:#fff!important;
+    display:flex!important;
+    justify-content:space-around!important;
+    align-items:center!important;
+    padding:7px 4px 4px!important;
+    border-top:1px solid #ddd!important;
+    box-shadow:0 -3px 10px rgba(0,0,0,.08)!important;
+  }
+  .mobile-bottom a{
+    font-size:28px!important;
+    min-width:62px!important;
+    height:72px!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:5px!important;
+    color:#222!important;
+  }
+  .mobile-bottom a::after{
+    font-size:13px!important;
+    font-family:Arial,sans-serif!important;
+  }
   .mobile-bottom a:nth-child(1){color:#d00000!important}
   .mobile-bottom a:nth-child(1)::after{content:"Inicio"}
   .mobile-bottom a:nth-child(2)::after{content:"Mensajes"}
   .mobile-bottom a:nth-child(4)::after{content:"Cesta"}
   .mobile-bottom a:nth-child(5)::after{content:"Usuario"}
-  .mobile-bottom .discount{width:72px!important;min-width:72px!important;height:72px!important;border-radius:50%!important;background:#e5243f!important;color:#fff!important;font-size:23px!important;font-weight:900!important;display:flex!important;align-items:center!important;justify-content:center!important}
-  .mobile-bottom .discount::after{content:""!important}
-  .auth-modal{width:calc(100% - 24px)!important;max-height:88vh!important}
-}
-
-
-@media(max-width:768px){
-  .header-top{
-    grid-template-columns:1fr auto!important;
-    grid-template-areas:
-      "logo user"
-      "search search"!important;
-  }
-  .logo{
-    grid-area:logo!important;
-    align-self:center!important;
-  }
-  .search-box{
-    grid-area:search!important;
-  }
-  .header-icons{
-    grid-area:user!important;
+  .mobile-bottom .discount{
+    width:72px!important;
+    min-width:72px!important;
+    height:72px!important;
+    border-radius:50%!important;
+    background:#e5243f!important;
+    color:#fff!important;
+    font-size:23px!important;
+    font-weight:900!important;
     display:flex!important;
     align-items:center!important;
     justify-content:center!important;
-    width:54px!important;
-    height:54px!important;
   }
-  .header-icons::after{
-    content:"\f2bd"!important;
-    font-family:"Font Awesome 6 Free"!important;
-    font-weight:400!important;
-    font-size:47px!important;
-    line-height:1!important;
-    color:#000!important;
-    display:block!important;
-  }
+  .mobile-bottom .discount::after{content:""!important}
 }
 
 </style>
 </head>
 <body>
-<header class="header"><div class="header-top"><a href="index.html" class="logo">Alimarket</a><div class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input type="text" placeholder="Buscar productos"><i class="fa-solid fa-microphone"></i></div><div class="header-icons"><a href="favoritos.html"><i class="fa-solid fa-heart"></i> Favorito</a><a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i> Cesta</a><div class="user-menu-wrap" id="userMenuWrap">
+<header class="header"><div class="header-top"><a href="index.html" class="logo">Alimarket</a><div class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input type="text" placeholder=""><i class="fa-solid fa-microphone"></i></div><div class="header-icons"><a href="favoritos.html"><i class="fa-solid fa-heart"></i> Favorito</a><a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i> Cesta</a><div class="user-menu-wrap" id="userMenuWrap">
   <a href="usuario.html" class="user-menu-trigger" id="userMenuTrigger">
     <i class="fa-solid fa-user"></i> Usuario
   </a>
@@ -281,17 +446,17 @@ body{zoom: 75%; background:#d9d9d9;color:#000;padding-top:150px;padding-bottom:9
   </div>
 </div></div></div><nav class="promo-bar"><div class="categoria-hover"><a class="cat" href="#"><i class="fa-solid fa-bars"></i> Categorías</a><div class="hover-full"><main class="cat-page"><div class="cat-layout"><aside class="cat-sidebar" id="catSidebar"></aside><section class="cat-content"><div class="cat-banner"><div class="banner-icon" id="bannerIcon">🎧</div><div><h1 id="bannerTitle">Electronica</h1><p>Explora cientos productos populares y subcategorías.</p></div></div><div class="cat-title-row"><h2 id="sectionTitle">Electronica</h2><a href="categorias.html">Abrir página completa</a></div><div class="subcat-grid" id="subcatGrid"></div></section></div></main></div></div><a href="#">Ofertas promocional</a><a href="#">Nuevos</a><a href="#">Más vendido</a><a href="#">Cupones</a><a href="#">Envió gratis</a></nav></header>
 <section class="hero"><div class="hero-text"><h1>SuperOfertas<br>Hasta -70% dto.</h1><p>Miles de ofertas<br>por tiempo limitado</p><button type="button" onclick="location.href='crear_producto_conectado.html'">Crear producto</button></div><div class="hero-img"></div></section>
-<section class="section"><h2>Productos destacados</h2><div class="products" id="productsGrid"><div class="product"><img src="https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=700&q=85"><div class="product-info"><h3>Smartphone moderno</h3><div class="price">RD$ 8,500</div><button>Agregar</button></div></div><div class="product"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=700&q=85"><div class="product-info"><h3>Audífonos Bluetooth</h3><div class="price">RD$ 1,250</div><button>Agregar</button></div></div><div class="product"><img src="https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&w=700&q=85"><div class="product-info"><h3>Reloj elegante</h3><div class="price">RD$ 2,900</div><button>Agregar</button></div></div><div class="product"><img src="https://images.unsplash.com/photo-1579586337278-3befd40fd17a?auto=format&fit=crop&w=700&q=85"><div class="product-info"><h3>Smart Watch</h3><div class="price">RD$ 3,600</div><button>Agregar</button></div></div></div></section>
+<section class="section"><h2>Productos destacados</h2><div class="products" id="productsGrid"><div class="product"><img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=500&q=80"><div class="product-info"><h3>Smartphone moderno</h3><div class="price">RD$ 8,500</div><button>Agregar</button></div></div><div class="product"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80"><div class="product-info"><h3>Audífonos Bluetooth</h3><div class="price">RD$ 1,250</div><button>Agregar</button></div></div><div class="product"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80"><div class="product-info"><h3>Reloj elegante</h3><div class="price">RD$ 2,900</div><button>Agregar</button></div></div><div class="product"><img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=500&q=80"><div class="product-info"><h3>Smart Watch</h3><div class="price">RD$ 3,600</div><button>Agregar</button></div></div></div></section>
 <nav class="mobile-bottom"><a href="index.html"><i class="fa-solid fa-house"></i></a><a href="#"><i class="fa-solid fa-comments"></i></a><a href="#" class="discount">20%</a><a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i></a><a href="usuario.html"><i class="fa-solid fa-user"></i></a></nav>
 <script>
 
 const PRODUCTOS_KEY='productosPublicados';
 const CARRITO_KEY='carritoAliMarket';
 const productosPredeterminados=[
-  {id:'demo-1',name:'Smartphone moderno',price:8500,offerPrice:0,currency:'DOP',image:'https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=700&q=85',category:'Electrónica',totalStock:20},
-  {id:'demo-2',name:'Audífonos Bluetooth',price:1250,offerPrice:0,currency:'DOP',image:'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=700&q=85',category:'Electrónica',totalStock:15},
-  {id:'demo-3',name:'Reloj elegante',price:2900,offerPrice:0,currency:'DOP',image:'https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&w=700&q=85',category:'Moda',totalStock:12},
-  {id:'demo-4',name:'Smart Watch',price:3600,offerPrice:0,currency:'DOP',image:'https://images.unsplash.com/photo-1579586337278-3befd40fd17a?auto=format&fit=crop&w=700&q=85',category:'Electrónica',totalStock:18}
+  {id:'demo-1',name:'Smartphone moderno',price:8500,offerPrice:0,currency:'DOP',image:'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=500&q=80',category:'Electrónica',totalStock:20},
+  {id:'demo-2',name:'Audífonos Bluetooth',price:1250,offerPrice:0,currency:'DOP',image:'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80',category:'Electrónica',totalStock:15},
+  {id:'demo-3',name:'Reloj elegante',price:2900,offerPrice:0,currency:'DOP',image:'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80',category:'Moda',totalStock:12},
+  {id:'demo-4',name:'Smart Watch',price:3600,offerPrice:0,currency:'DOP',image:'https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=500&q=80',category:'Electrónica',totalStock:18}
 ];
 
 function escaparHTML(valor=''){
