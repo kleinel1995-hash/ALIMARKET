@@ -129,70 +129,1232 @@ body.variant-open{overflow:hidden}
 <div class="toast" id="toast"></div>
 
 <script>
-const PRODUCT={
-id:"iphone-14",name:"Teléfono Móvil Apple iPhone 14 5G Original Desbloqueado",currency:"USD",price:549.90,offerPrice:351.94,stock:8,
-colors:[
-{name:"Blanco",image:"https://dummyimage.com/500x500/f4f4f4/111&text=iPhone+Blanco",stock:8},
-{name:"Azul",image:"https://dummyimage.com/500x500/b8d8ef/111&text=iPhone+Azul",stock:7},
-{name:"Negro",image:"https://dummyimage.com/500x500/1c2427/ffffff&text=iPhone+Negro",stock:4},
-{name:"Amarillo",image:"https://dummyimage.com/500x500/f8dc4f/111&text=iPhone+Amarillo",stock:3},
-{name:"Púrpura",image:"https://dummyimage.com/500x500/c8b5df/111&text=iPhone+Purpura",stock:6}],
-sizes:[{name:"128GB",stock:8},{name:"256GB",stock:4}]
+const PRODUCTOS_KEY = "productosPublicados";
+const CART_KEY = "carritoAliMarket";
+const $ = selector => document.querySelector(selector);
+
+/* =====================================================
+   PRODUCTOS PREDETERMINADOS DEL INDEX
+===================================================== */
+const PRODUCTOS_PREDETERMINADOS = [
+  {
+    id: "demo-1",
+    name: "Smartphone moderno",
+    description: "Smartphone moderno con excelente rendimiento, cámara de alta calidad y conexión rápida.",
+    price: 8500,
+    offerPrice: 0,
+    currency: "DOP",
+    image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=85",
+    category: "Electrónica",
+    brand: "Genérica",
+    model: "Smartphone moderno",
+    condition: "Nuevo",
+    totalStock: 20
+  },
+  {
+    id: "demo-2",
+    name: "Audífonos Bluetooth",
+    description: "Audífonos Bluetooth inalámbricos con sonido envolvente y batería de larga duración.",
+    price: 1250,
+    offerPrice: 0,
+    currency: "DOP",
+    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=85",
+    category: "Electrónica",
+    brand: "Genérica",
+    model: "Bluetooth",
+    condition: "Nuevo",
+    totalStock: 15
+  },
+  {
+    id: "demo-3",
+    name: "Reloj elegante",
+    description: "Reloj elegante para hombres y mujeres, ideal para ocasiones especiales y uso diario.",
+    price: 2900,
+    offerPrice: 0,
+    currency: "DOP",
+    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=85",
+    category: "Moda",
+    brand: "Genérica",
+    model: "Reloj elegante",
+    condition: "Nuevo",
+    totalStock: 12
+  },
+  {
+    id: "demo-4",
+    name: "Smart Watch",
+    description: "Reloj inteligente con monitoreo deportivo, notificaciones y conexión Bluetooth.",
+    price: 3600,
+    offerPrice: 0,
+    currency: "DOP",
+    image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=900&q=85",
+    category: "Electrónica",
+    brand: "Genérica",
+    model: "Smart Watch",
+    condition: "Nuevo",
+    totalStock: 18
+  }
+];
+
+/* =====================================================
+   FUNCIONES DE LECTURA
+===================================================== */
+function obtenerIdProducto() {
+  const parametros = new URLSearchParams(window.location.search);
+  return parametros.get("id");
+}
+
+function obtenerProductosGuardados() {
+  try {
+    const productos = JSON.parse(
+      localStorage.getItem(PRODUCTOS_KEY) || "[]"
+    );
+
+    return Array.isArray(productos) ? productos : [];
+  } catch (error) {
+    console.error("No se pudieron leer los productos:", error);
+    return [];
+  }
+}
+
+function obtenerProductoActual() {
+  const idBuscado = obtenerIdProducto();
+
+  const guardados = obtenerProductosGuardados();
+
+  const todosLosProductos = [
+    ...guardados,
+    ...PRODUCTOS_PREDETERMINADOS
+  ];
+
+  let producto = todosLosProductos.find(
+    item => String(item.id) === String(idBuscado)
+  );
+
+  /*
+   Si se abre la página sin ID, utiliza el primer producto
+   publicado o el primer producto predeterminado.
+  */
+  if (!producto) {
+    producto =
+      guardados.find(item => item.status === "publicado") ||
+      guardados[0] ||
+      PRODUCTOS_PREDETERMINADOS[0];
+  }
+
+  return producto;
+}
+
+/* =====================================================
+   NORMALIZAR IMÁGENES
+===================================================== */
+function obtenerImagenDesdeValor(valor) {
+  if (!valor) return "";
+
+  if (typeof valor === "string") {
+    return valor;
+  }
+
+  if (typeof valor === "object") {
+    return (
+      valor.url ||
+      valor.src ||
+      valor.image ||
+      valor.imagen ||
+      valor.preview ||
+      ""
+    );
+  }
+
+  return "";
+}
+
+function obtenerImagenesProducto(producto) {
+  const imagenes = [];
+
+  const agregarImagen = valor => {
+    const imagen = obtenerImagenDesdeValor(valor);
+
+    if (imagen && !imagenes.includes(imagen)) {
+      imagenes.push(imagen);
+    }
+  };
+
+  agregarImagen(producto.image);
+  agregarImagen(producto.imagen);
+  agregarImagen(producto.mainImage);
+  agregarImagen(producto.imagenPrincipal);
+
+  if (Array.isArray(producto.images)) {
+    producto.images.forEach(agregarImagen);
+  }
+
+  if (Array.isArray(producto.imagenes)) {
+    producto.imagenes.forEach(agregarImagen);
+  }
+
+  if (Array.isArray(producto.photos)) {
+    producto.photos.forEach(agregarImagen);
+  }
+
+  if (!imagenes.length) {
+    imagenes.push(
+      "https://dummyimage.com/700x700/f1f1f1/333333&text=Producto"
+    );
+  }
+
+  return imagenes;
+}
+
+/* =====================================================
+   NORMALIZAR COLORES Y VARIANTES
+===================================================== */
+function obtenerColoresProducto(producto, imagenes) {
+  const posiblesColores =
+    producto.colors ||
+    producto.colores ||
+    producto.variantesColor ||
+    producto.colorOptions ||
+    [];
+
+  if (Array.isArray(posiblesColores) && posiblesColores.length) {
+    return posiblesColores.map((color, indice) => {
+      if (typeof color === "string") {
+        return {
+          name: color,
+          image: imagenes[indice] || imagenes[0],
+          stock: Number(producto.totalStock || producto.stock || 0)
+        };
+      }
+
+      return {
+        name:
+          color.name ||
+          color.nombre ||
+          color.color ||
+          `Color ${indice + 1}`,
+
+        image:
+          obtenerImagenDesdeValor(
+            color.image ||
+            color.imagen ||
+            color.url ||
+            color.photo
+          ) ||
+          imagenes[indice] ||
+          imagenes[0],
+
+        stock: Number(
+          color.stock ??
+          color.cantidad ??
+          producto.totalStock ??
+          producto.stock ??
+          0
+        )
+      };
+    });
+  }
+
+  /*
+   Cuando el producto tiene varias imágenes, cada imagen
+   se muestra como una opción de galería.
+  */
+  if (imagenes.length > 1) {
+    return imagenes.map((imagen, indice) => ({
+      name: indice === 0 ? "Principal" : `Opción ${indice + 1}`,
+      image: imagen,
+      stock: Number(producto.totalStock || producto.stock || 0)
+    }));
+  }
+
+  return [
+    {
+      name:
+        producto.color ||
+        producto.selectedColor ||
+        producto.colour ||
+        "Único",
+
+      image: imagenes[0],
+
+      stock: Number(
+        producto.totalStock ??
+        producto.stock ??
+        producto.quantity ??
+        0
+      )
+    }
+  ];
+}
+
+/* =====================================================
+   NORMALIZAR PAQUETES, TALLAS O CAPACIDADES
+===================================================== */
+function obtenerPaquetesProducto(producto) {
+  const posiblesPaquetes =
+    producto.sizes ||
+    producto.tamanos ||
+    producto.tallas ||
+    producto.capacities ||
+    producto.capacidades ||
+    producto.packages ||
+    producto.paquetes ||
+    producto.options ||
+    [];
+
+  if (Array.isArray(posiblesPaquetes) && posiblesPaquetes.length) {
+    return posiblesPaquetes.map((paquete, indice) => {
+      if (typeof paquete === "string") {
+        return {
+          name: paquete,
+          stock: Number(producto.totalStock || producto.stock || 0)
+        };
+      }
+
+      return {
+        name:
+          paquete.name ||
+          paquete.nombre ||
+          paquete.size ||
+          paquete.talla ||
+          paquete.capacity ||
+          paquete.capacidad ||
+          paquete.package ||
+          `Opción ${indice + 1}`,
+
+        stock: Number(
+          paquete.stock ??
+          paquete.cantidad ??
+          producto.totalStock ??
+          producto.stock ??
+          0
+        )
+      };
+    });
+  }
+
+  return [
+    {
+      name:
+        producto.size ||
+        producto.talla ||
+        producto.capacity ||
+        producto.capacidad ||
+        producto.package ||
+        producto.paquete ||
+        "Estándar",
+
+      stock: Number(
+        producto.totalStock ??
+        producto.stock ??
+        producto.quantity ??
+        0
+      )
+    }
+  ];
+}
+
+/* =====================================================
+   CREAR PRODUCTO COMPATIBLE CON LA PÁGINA
+===================================================== */
+function normalizarProducto(producto) {
+  const imagenes = obtenerImagenesProducto(producto);
+  const colores = obtenerColoresProducto(producto, imagenes);
+  const paquetes = obtenerPaquetesProducto(producto);
+
+  const precioNormal = Number(
+    producto.price ??
+    producto.precio ??
+    producto.regularPrice ??
+    0
+  );
+
+  const precioOferta = Number(
+    producto.offerPrice ??
+    producto.precioOferta ??
+    producto.salePrice ??
+    producto.discountPrice ??
+    0
+  );
+
+  return {
+    id: String(producto.id || `producto-${Date.now()}`),
+
+    name:
+      producto.name ||
+      producto.nombre ||
+      producto.title ||
+      producto.titulo ||
+      "Producto sin nombre",
+
+    currency: String(
+      producto.currency ||
+      producto.moneda ||
+      "USD"
+    ).split(" ")[0].toUpperCase(),
+
+    price: precioNormal,
+
+    offerPrice:
+      precioOferta > 0 && precioOferta < precioNormal
+        ? precioOferta
+        : precioNormal,
+
+    stock: Number(
+      producto.totalStock ??
+      producto.stock ??
+      producto.quantity ??
+      0
+    ),
+
+    colors: colores,
+    sizes: paquetes,
+    images: imagenes,
+
+    category:
+      producto.category ||
+      producto.categoria ||
+      "Sin categoría",
+
+    subcategory:
+      producto.subcategory ||
+      producto.subcategoria ||
+      "",
+
+    brand:
+      producto.brand ||
+      producto.marca ||
+      "No especificada",
+
+    model:
+      producto.model ||
+      producto.modelo ||
+      "No especificado",
+
+    condition:
+      producto.condition ||
+      producto.condicion ||
+      producto.estadoProducto ||
+      "Nuevo",
+
+    network:
+      producto.network ||
+      producto.red ||
+      "No especificada",
+
+    unlocked:
+      producto.unlocked ??
+      producto.desbloqueado ??
+      "No especificado",
+
+    warranty:
+      producto.warranty ||
+      producto.garantia ||
+      "No especificada",
+
+    description:
+      producto.description ||
+      producto.descripcion ||
+      producto.longDescription ||
+      producto.descripcionCompleta ||
+      "Este producto no tiene una descripción disponible.",
+
+    sold: Number(
+      producto.sold ||
+      producto.vendidos ||
+      producto.sales ||
+      0
+    ),
+
+    rating: Number(
+      producto.rating ||
+      producto.calificacion ||
+      4.8
+    ),
+
+    reviews: Number(
+      producto.reviews ||
+      producto.valoraciones ||
+      producto.opiniones ||
+      0
+    ),
+
+    seller:
+      producto.seller ||
+      producto.vendedor ||
+      producto.storeName ||
+      producto.nombreTienda ||
+      "AliMarket Vendedor Oficial",
+
+    shippingPrice: Number(
+      producto.shippingPrice ??
+      producto.precioEnvio ??
+      producto.envio ??
+      250
+    ),
+
+    delivery:
+      producto.delivery ||
+      producto.entrega ||
+      producto.deliveryTime ||
+      producto.tiempoEntrega ||
+      "Entrega estimada en 8 a 12 días"
+  };
+}
+
+const PRODUCT = normalizarProducto(obtenerProductoActual());
+
+let selectedColor = PRODUCT.colors[0];
+let selectedSize = PRODUCT.sizes[0];
+let quantity = 1;
+let mobileQuantity = 1;
+
+/* =====================================================
+   MONEDA
+===================================================== */
+function obtenerSimboloMoneda(codigo) {
+  const monedas = {
+    DOP: "RD$",
+    USD: "US$",
+    EUR: "€",
+    GBP: "£",
+    MXN: "MX$",
+    CAD: "CA$",
+    CNY: "¥"
+  };
+
+  return monedas[codigo] || `${codigo} `;
+}
+
+function money(valor) {
+  return (
+    obtenerSimboloMoneda(PRODUCT.currency) +
+    " " +
+    Number(valor || 0).toLocaleString("es-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })
+  );
+}
+
+function escaparHTML(valor = "") {
+  return String(valor).replace(
+    /[&<>"']/g,
+    caracter =>
+      ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      })[caracter]
+  );
+}
+
+/* =====================================================
+   STOCK
+===================================================== */
+function currentStock() {
+  const stockColor = Number(selectedColor.stock || PRODUCT.stock || 0);
+  const stockPaquete = Number(selectedSize.stock || PRODUCT.stock || 0);
+
+  if (stockColor <= 0 || stockPaquete <= 0) {
+    return 0;
+  }
+
+  return Math.min(stockColor, stockPaquete);
+}
+
+/* =====================================================
+   MENSAJE TOAST
+===================================================== */
+function toast(mensaje) {
+  const elemento = $("#toast");
+
+  elemento.textContent = mensaje;
+  elemento.classList.add("show");
+
+  clearTimeout(toast.timer);
+
+  toast.timer = setTimeout(() => {
+    elemento.classList.remove("show");
+  }, 2200);
+}
+
+/* =====================================================
+   GALERÍA PRINCIPAL
+===================================================== */
+function renderGallery() {
+  const contenedor = $("#thumbs");
+  contenedor.innerHTML = "";
+
+  PRODUCT.colors.forEach(color => {
+    const boton = document.createElement("button");
+
+    boton.className =
+      "thumb" +
+      (color.name === selectedColor.name ? " active" : "");
+
+    boton.innerHTML = `
+      <img
+        src="${color.image}"
+        alt="${escaparHTML(color.name)}"
+      >
+    `;
+
+    boton.onclick = () => {
+      selectedColor = color;
+      quantity = 1;
+      mobileQuantity = 1;
+      renderAllSelections();
+    };
+
+    contenedor.appendChild(boton);
+  });
+
+  $("#mainImage").src = selectedColor.image;
+  $("#mainImage").alt = PRODUCT.name;
+}
+
+/* =====================================================
+   OPCIONES DE ESCRITORIO
+===================================================== */
+function renderDesktopOptions() {
+  const colores = $("#desktopColors");
+  const paquetes = $("#desktopSizes");
+
+  colores.innerHTML = "";
+  paquetes.innerHTML = "";
+
+  PRODUCT.colors.forEach(color => {
+    const boton = document.createElement("button");
+
+    boton.className =
+      "option-btn" +
+      (color.name === selectedColor.name ? " active" : "");
+
+    boton.disabled = Number(color.stock) <= 0;
+
+    boton.innerHTML = `
+      <img
+        src="${color.image}"
+        alt="${escaparHTML(color.name)}"
+      >
+      <br>
+      ${escaparHTML(color.name)}
+    `;
+
+    boton.onclick = () => {
+      selectedColor = color;
+      quantity = 1;
+      mobileQuantity = 1;
+      renderAllSelections();
+    };
+
+    colores.appendChild(boton);
+  });
+
+  PRODUCT.sizes.forEach(paquete => {
+    const boton = document.createElement("button");
+
+    boton.className =
+      "size-btn" +
+      (paquete.name === selectedSize.name ? " active" : "");
+
+    boton.disabled = Number(paquete.stock) <= 0;
+    boton.textContent = paquete.name;
+
+    boton.onclick = () => {
+      selectedSize = paquete;
+      quantity = 1;
+      mobileQuantity = 1;
+      renderAllSelections();
+    };
+
+    paquetes.appendChild(boton);
+  });
+}
+
+/* =====================================================
+   GALERÍA DEL MODAL MÓVIL
+===================================================== */
+function renderVariantGallery() {
+  const galeria = $("#variantGalleryTrack");
+  galeria.innerHTML = "";
+
+  PRODUCT.colors.forEach(color => {
+    const elemento = document.createElement("div");
+
+    elemento.className = "variant-gallery-slide";
+
+    elemento.innerHTML = `
+      <img
+        src="${color.image}"
+        alt="${escaparHTML(color.name)}"
+      >
+    `;
+
+    elemento.onclick = () => {
+      selectedColor = color;
+      mobileQuantity = 1;
+      renderAllSelections();
+    };
+
+    galeria.appendChild(elemento);
+  });
+
+  requestAnimationFrame(() => {
+    const indice = PRODUCT.colors.findIndex(
+      color => color.name === selectedColor.name
+    );
+
+    galeria.scrollLeft = Math.max(
+      0,
+      indice * galeria.clientWidth * 0.72
+    );
+  });
+}
+
+/* =====================================================
+   OPCIONES MÓVILES
+===================================================== */
+function renderMobileOptions() {
+  const colores = $("#mobileColors");
+  const paquetes = $("#mobileSizes");
+
+  colores.innerHTML = "";
+  paquetes.innerHTML = "";
+
+  PRODUCT.colors.forEach(color => {
+    const boton = document.createElement("button");
+
+    boton.className =
+      "mobile-color-option" +
+      (color.name === selectedColor.name ? " active" : "");
+
+    boton.disabled = Number(color.stock) <= 0;
+
+    boton.innerHTML = `
+      <img
+        src="${color.image}"
+        alt="${escaparHTML(color.name)}"
+      >
+      <span>${escaparHTML(color.name)}</span>
+    `;
+
+    boton.onclick = () => {
+      selectedColor = color;
+      mobileQuantity = 1;
+      renderAllSelections();
+    };
+
+    colores.appendChild(boton);
+  });
+
+  PRODUCT.sizes.forEach(paquete => {
+    const boton = document.createElement("button");
+
+    boton.className =
+      "mobile-size-option" +
+      (paquete.name === selectedSize.name ? " active" : "");
+
+    boton.disabled = Number(paquete.stock) <= 0;
+    boton.textContent = paquete.name;
+
+    boton.onclick = () => {
+      selectedSize = paquete;
+      mobileQuantity = 1;
+      renderAllSelections();
+    };
+
+    paquetes.appendChild(boton);
+  });
+}
+
+/* =====================================================
+   ACTUALIZAR CANTIDAD MÓVIL
+===================================================== */
+function updateMobileQuantity() {
+  const stock = currentStock();
+
+  mobileQuantity = Math.max(
+    1,
+    Math.min(mobileQuantity, Math.max(stock, 1))
+  );
+
+  $("#mobileQuantity").textContent = mobileQuantity;
+  $("#mobileMinus").disabled = mobileQuantity <= 1;
+  $("#mobilePlus").disabled =
+    stock <= 0 || mobileQuantity >= stock;
+
+  const mensaje = $("#stockMessage");
+
+  if (stock <= 0) {
+    mensaje.textContent = "Agotado";
+    mensaje.style.color = "#d50000";
+    $("#continueButton").disabled = true;
+    $("#continueButton").textContent = "Producto agotado";
+  } else if (stock <= 5) {
+    mensaje.textContent = `Casi agotado · quedan ${stock}`;
+    mensaje.style.color = "#222";
+    $("#continueButton").disabled = false;
+    $("#continueButton").textContent = "Continuar";
+  } else {
+    mensaje.textContent = `${stock} unidades disponibles`;
+    mensaje.style.color = "#555";
+    $("#continueButton").disabled = false;
+    $("#continueButton").textContent = "Continuar";
+  }
+}
+
+/* =====================================================
+   DETALLES Y DESCRIPCIÓN
+===================================================== */
+function renderProductDetails() {
+  const detalle = document.querySelector(".detail-grid");
+
+  detalle.innerHTML = `
+    <div class="detail-cell">
+      <span>Marca</span>
+      <strong>${escaparHTML(PRODUCT.brand)}</strong>
+    </div>
+
+    <div class="detail-cell">
+      <span>Modelo</span>
+      <strong>${escaparHTML(PRODUCT.model)}</strong>
+    </div>
+
+    <div class="detail-cell">
+      <span>Condición</span>
+      <strong>${escaparHTML(PRODUCT.condition)}</strong>
+    </div>
+
+    <div class="detail-cell">
+      <span>Categoría</span>
+      <strong>${escaparHTML(PRODUCT.category)}</strong>
+    </div>
+
+    <div class="detail-cell">
+      <span>Red</span>
+      <strong>${escaparHTML(PRODUCT.network)}</strong>
+    </div>
+
+    <div class="detail-cell">
+      <span>Garantía</span>
+      <strong>${escaparHTML(PRODUCT.warranty)}</strong>
+    </div>
+  `;
+
+  const descripcion = document.querySelector(".description");
+
+  descripcion.innerHTML = `
+    <p>${escaparHTML(PRODUCT.description).replace(/\n/g, "<br>")}</p>
+
+    <p>
+      Selecciona la opción y la cantidad antes de agregar
+      el producto al carrito.
+    </p>
+  `;
+
+  const breadcrumb = document.querySelector(".breadcrumb");
+
+  breadcrumb.textContent =
+    `Inicio › ${PRODUCT.category}` +
+    (PRODUCT.subcategory
+      ? ` › ${PRODUCT.subcategory}`
+      : "");
+}
+
+/* =====================================================
+   INFORMACIÓN DEL VENDEDOR Y ENVÍO
+===================================================== */
+function renderSellerInformation() {
+  const vendedor = document.querySelector(".seller");
+
+  if (vendedor) {
+    vendedor.textContent = `Vendido por ${PRODUCT.seller}`;
+  }
+
+  const envios = document.querySelectorAll(".shipping");
+
+  if (envios[0]) {
+    envios[0].innerHTML = `
+      <i class="fa-solid fa-truck-fast"></i>
+
+      <div>
+        <b>
+          Envío:
+          ${
+            PRODUCT.shippingPrice > 0
+              ? money(PRODUCT.shippingPrice)
+              : "Gratis"
+          }
+        </b>
+        <br>
+        ${escaparHTML(PRODUCT.delivery)}
+      </div>
+    `;
+  }
+}
+
+/* =====================================================
+   RENDER GENERAL
+===================================================== */
+function renderAllSelections() {
+  document.title = `${PRODUCT.name} - AliMarket`;
+
+  $("#productName").textContent = PRODUCT.name;
+
+  const ventas = document.querySelector(".sales");
+  ventas.textContent = `${PRODUCT.sold} vendidos`;
+
+  const rating = document.querySelector(".rating");
+  rating.innerHTML = `
+    ★★★★★
+    <span style="color:#666">
+      ${PRODUCT.rating.toFixed(1)} ·
+      ${PRODUCT.reviews} valoraciones
+    </span>
+  `;
+
+  $("#currentPrice").textContent = money(PRODUCT.offerPrice);
+  $("#oldPrice").textContent =
+    PRODUCT.offerPrice < PRODUCT.price
+      ? money(PRODUCT.price)
+      : "";
+
+  const descuento =
+    PRODUCT.offerPrice < PRODUCT.price && PRODUCT.price > 0
+      ? Math.round(
+          (1 - PRODUCT.offerPrice / PRODUCT.price) * 100
+        )
+      : 0;
+
+  $("#discount").textContent =
+    descuento > 0 ? `-${descuento}% dto.` : "";
+
+  $("#sidePrice").textContent = money(PRODUCT.offerPrice);
+
+  $("#sideOldPrice").textContent =
+    PRODUCT.offerPrice < PRODUCT.price
+      ? money(PRODUCT.price)
+      : "";
+
+  $("#selectedColorLabel").textContent =
+    selectedColor.name;
+
+  $("#selectedSizeLabel").textContent =
+    selectedSize.name;
+
+  $("#selectionSummary").innerHTML = `
+    <b>Selección:</b>
+    ${escaparHTML(selectedColor.name)} ·
+    ${escaparHTML(selectedSize.name)}
+    · Stock: ${currentStock()}
+  `;
+
+  $("#variantHeaderImage").src = selectedColor.image;
+  $("#variantHeaderName").textContent = PRODUCT.name;
+
+  $("#variantHeaderSelection").textContent =
+    `Color: ${selectedColor.name}, ` +
+    `Paquete: ${selectedSize.name}`;
+
+  $("#variantPrice").textContent =
+    money(PRODUCT.offerPrice);
+
+  $("#variantOldPrice").textContent =
+    PRODUCT.offerPrice < PRODUCT.price
+      ? money(PRODUCT.price)
+      : "";
+
+  $("#mobileColorLabel").textContent =
+    selectedColor.name;
+
+  $("#mobileSizeLabel").textContent =
+    selectedSize.name;
+
+  quantity = Math.max(
+    1,
+    Math.min(quantity, Math.max(currentStock(), 1))
+  );
+
+  $("#quantity").value = quantity;
+
+  renderGallery();
+  renderDesktopOptions();
+  renderMobileOptions();
+  renderVariantGallery();
+  updateMobileQuantity();
+}
+
+/* =====================================================
+   MODAL DE VARIANTES
+===================================================== */
+function openVariantModal() {
+  mobileQuantity = quantity;
+
+  renderAllSelections();
+
+  $("#variantScroll").scrollTop = 0;
+  $("#variantSheet").classList.remove("compact");
+  $("#variantOverlay").classList.add("active");
+
+  document.body.classList.add("variant-open");
+}
+
+function closeVariantModal() {
+  $("#variantOverlay").classList.remove("active");
+  document.body.classList.remove("variant-open");
+
+  setTimeout(() => {
+    $("#variantScroll").scrollTop = 0;
+    $("#variantSheet").classList.remove("compact");
+  }, 300);
+}
+
+/* =====================================================
+   CARRITO
+===================================================== */
+function getCart() {
+  try {
+    const carrito = JSON.parse(
+      localStorage.getItem(CART_KEY) || "[]"
+    );
+
+    return Array.isArray(carrito) ? carrito : [];
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
+function saveCart(carrito) {
+  localStorage.setItem(
+    CART_KEY,
+    JSON.stringify(carrito)
+  );
+
+  updateCartCount();
+}
+
+function addToCart(amount) {
+  const stockDisponible = currentStock();
+
+  if (stockDisponible <= 0) {
+    toast("Esta opción está agotada");
+    return false;
+  }
+
+  const carrito = getCart();
+
+  const varianteId =
+    `${PRODUCT.id}-` +
+    `${selectedColor.name}-` +
+    `${selectedSize.name}`;
+
+  const existente = carrito.find(
+    item => item.id === varianteId
+  );
+
+  const cantidadExistente =
+    existente ? Number(existente.cantidad || 0) : 0;
+
+  const nuevaCantidad = cantidadExistente + Number(amount);
+
+  if (nuevaCantidad > stockDisponible) {
+    toast(
+      `Solo hay ${stockDisponible} unidades disponibles`
+    );
+
+    return false;
+  }
+
+  if (existente) {
+    existente.cantidad = nuevaCantidad;
+  } else {
+    carrito.push({
+      id: varianteId,
+      productId: PRODUCT.id,
+      name: PRODUCT.name,
+      price: PRODUCT.offerPrice,
+      oldPrice: PRODUCT.price,
+      currency: PRODUCT.currency,
+      image: selectedColor.image,
+      color: selectedColor.name,
+      size: selectedSize.name,
+      cantidad: Number(amount),
+      stock: stockDisponible,
+      seller: PRODUCT.seller
+    });
+  }
+
+  saveCart(carrito);
+  return true;
+}
+
+function updateCartCount() {
+  const total = getCart().reduce(
+    (suma, item) =>
+      suma + Number(item.cantidad || 0),
+    0
+  );
+
+  $("#cartCount").textContent = total;
+}
+
+/* =====================================================
+   ALERTA DE ÉXITO
+===================================================== */
+function showSuccess() {
+  $("#successOverlay").classList.add("active");
+}
+
+function closeSuccess() {
+  $("#successOverlay").classList.remove("active");
+}
+
+/* =====================================================
+   EVENTOS
+===================================================== */
+$("#variantScroll").addEventListener("scroll", () => {
+  $("#variantSheet").classList.toggle(
+    "compact",
+    $("#variantScroll").scrollTop > 90
+  );
+});
+
+$("#minus").onclick = () => {
+  quantity = Math.max(1, quantity - 1);
+  $("#quantity").value = quantity;
 };
-const CART_KEY="carritoAliMarket",$=s=>document.querySelector(s);
-let selectedColor=PRODUCT.colors[2],selectedSize=PRODUCT.sizes[0],quantity=1,mobileQuantity=1;
-function money(v){return "$"+Number(v).toLocaleString("es-US",{minimumFractionDigits:2,maximumFractionDigits:2})}
-function currentStock(){return Math.min(Number(selectedColor.stock||0),Number(selectedSize.stock||0))}
-function toast(m){const e=$("#toast");e.textContent=m;e.classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(()=>e.classList.remove("show"),2200)}
-function renderGallery(){
-const t=$("#thumbs");t.innerHTML="";
-PRODUCT.colors.forEach(c=>{const b=document.createElement("button");b.className="thumb"+(c.name===selectedColor.name?" active":"");b.innerHTML=`<img src="${c.image}" alt="${c.name}">`;b.onclick=()=>{selectedColor=c;renderAllSelections()};t.appendChild(b)});
-$("#mainImage").src=selectedColor.image;
-}
-function renderDesktopOptions(){
-const c=$("#desktopColors"),s=$("#desktopSizes");c.innerHTML="";s.innerHTML="";
-PRODUCT.colors.forEach(x=>{const b=document.createElement("button");b.className="option-btn"+(x.name===selectedColor.name?" active":"");b.innerHTML=`<img src="${x.image}" alt="${x.name}"><br>${x.name}`;b.onclick=()=>{selectedColor=x;renderAllSelections()};c.appendChild(b)});
-PRODUCT.sizes.forEach(x=>{const b=document.createElement("button");b.className="size-btn"+(x.name===selectedSize.name?" active":"");b.textContent=x.name;b.onclick=()=>{selectedSize=x;renderAllSelections()};s.appendChild(b)});
-}
-function renderVariantGallery(){
-const g=$("#variantGalleryTrack");g.innerHTML="";
-PRODUCT.colors.forEach(c=>{const d=document.createElement("div");d.className="variant-gallery-slide";d.innerHTML=`<img src="${c.image}" alt="${c.name}">`;g.appendChild(d)});
-g.scrollLeft=PRODUCT.colors.findIndex(c=>c.name===selectedColor.name)*g.clientWidth*.72;
-}
-function renderMobileOptions(){
-const c=$("#mobileColors"),s=$("#mobileSizes");c.innerHTML="";s.innerHTML="";
-PRODUCT.colors.forEach(x=>{const b=document.createElement("button");b.className="mobile-color-option"+(x.name===selectedColor.name?" active":"");b.disabled=Number(x.stock)<=0;b.innerHTML=`<img src="${x.image}" alt="${x.name}"><span>${x.name}</span>`;b.onclick=()=>{selectedColor=x;mobileQuantity=1;renderAllSelections()};c.appendChild(b)});
-PRODUCT.sizes.forEach(x=>{const b=document.createElement("button");b.className="mobile-size-option"+(x.name===selectedSize.name?" active":"");b.disabled=Number(x.stock)<=0;b.textContent=x.name;b.onclick=()=>{selectedSize=x;mobileQuantity=1;renderAllSelections()};s.appendChild(b)});
-}
-function updateMobileQuantity(){
-const stock=currentStock();mobileQuantity=Math.max(1,Math.min(mobileQuantity,Math.max(stock,1)));$("#mobileQuantity").textContent=mobileQuantity;$("#mobileMinus").disabled=mobileQuantity<=1;$("#mobilePlus").disabled=stock<=0||mobileQuantity>=stock;
-const m=$("#stockMessage");if(stock<=0){m.textContent="Agotado";m.style.color="#d50000"}else if(stock<=5){m.textContent=`Casi agotado · quedan ${stock}`;m.style.color="#222"}else{m.textContent=`${stock} unidades disponibles`;m.style.color="#555"}
-}
-function renderAllSelections(){
-$("#productName").textContent=PRODUCT.name;$("#currentPrice").textContent=money(PRODUCT.offerPrice);$("#oldPrice").textContent=money(PRODUCT.price);$("#discount").textContent="-"+Math.round((1-PRODUCT.offerPrice/PRODUCT.price)*100)+"% dto.";$("#sidePrice").textContent=money(PRODUCT.offerPrice);$("#sideOldPrice").textContent=money(PRODUCT.price);
-$("#selectedColorLabel").textContent=selectedColor.name;$("#selectedSizeLabel").textContent=selectedSize.name;$("#selectionSummary").innerHTML=`<b>Selección:</b> ${selectedColor.name} · ${selectedSize.name}`;
-$("#variantHeaderImage").src=selectedColor.image;$("#variantHeaderName").textContent=PRODUCT.name;$("#variantHeaderSelection").textContent=`Color: ${selectedColor.name}, Paquete: ${selectedSize.name}`;
-$("#variantPrice").textContent=money(PRODUCT.offerPrice);$("#variantOldPrice").textContent=money(PRODUCT.price);$("#mobileColorLabel").textContent=selectedColor.name;$("#mobileSizeLabel").textContent=selectedSize.name;
-renderGallery();renderDesktopOptions();renderMobileOptions();renderVariantGallery();updateMobileQuantity()
-}
-function openVariantModal(){
-mobileQuantity=quantity;renderAllSelections();$("#variantScroll").scrollTop=0;$("#variantSheet").classList.remove("compact");$("#variantOverlay").classList.add("active");document.body.classList.add("variant-open")
-}
-function closeVariantModal(){$("#variantOverlay").classList.remove("active");document.body.classList.remove("variant-open");setTimeout(()=>{$("#variantScroll").scrollTop=0;$("#variantSheet").classList.remove("compact")},300)}
-function getCart(){try{const v=JSON.parse(localStorage.getItem(CART_KEY)||"[]");return Array.isArray(v)?v:[]}catch{return[]}}
-function saveCart(c){localStorage.setItem(CART_KEY,JSON.stringify(c));updateCartCount()}
-function addToCart(amount){const cart=getCart(),id=`${PRODUCT.id}-${selectedColor.name}-${selectedSize.name}`,f=cart.find(i=>i.id===id);if(f)f.cantidad+=amount;else cart.push({id,productId:PRODUCT.id,name:PRODUCT.name,price:PRODUCT.offerPrice,oldPrice:PRODUCT.price,currency:PRODUCT.currency,image:selectedColor.image,color:selectedColor.name,size:selectedSize.name,cantidad:amount});saveCart(cart)}
-function updateCartCount(){$("#cartCount").textContent=getCart().reduce((s,i)=>s+Number(i.cantidad||0),0)}
-function showSuccess(){$("#successOverlay").classList.add("active")}function closeSuccess(){$("#successOverlay").classList.remove("active")}
-$("#variantScroll").addEventListener("scroll",()=>$("#variantSheet").classList.toggle("compact",$("#variantScroll").scrollTop>90));
-$("#minus").onclick=()=>{quantity=Math.max(1,quantity-1);$("#quantity").value=quantity};$("#plus").onclick=()=>{quantity=Math.min(currentStock(),quantity+1);$("#quantity").value=quantity};
-$("#addCart").onclick=()=>window.matchMedia("(max-width:760px)").matches?openVariantModal():(addToCart(quantity),showSuccess());
-$("#buyNow").onclick=()=>{addToCart(quantity);location.href="carrito.html"};$("#mobileAdd").onclick=openVariantModal;$("#variantClose").onclick=closeVariantModal;
-$("#variantOverlay").onclick=e=>{if(e.target===$("#variantOverlay"))closeVariantModal()};$("#mobileMinus").onclick=()=>{mobileQuantity=Math.max(1,mobileQuantity-1);updateMobileQuantity()};$("#mobilePlus").onclick=()=>{mobileQuantity=Math.min(currentStock(),mobileQuantity+1);updateMobileQuantity()};
-$("#continueButton").onclick=()=>{if(currentStock()<=0){toast("Esta opción está agotada");return}quantity=mobileQuantity;$("#quantity").value=quantity;addToCart(mobileQuantity);closeVariantModal();setTimeout(showSuccess,220)};
-$("#acceptSuccess").onclick=closeSuccess;$("#mobileCart").onclick=()=>location.href="carrito.html";$("#imageClose").onclick=()=>history.length>1?history.back():location.href="index.html";
-document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeVariantModal();closeSuccess()}});
-renderAllSelections();updateCartCount();
+
+$("#plus").onclick = () => {
+  const stock = currentStock();
+
+  if (stock <= 0) {
+    toast("Producto agotado");
+    return;
+  }
+
+  if (quantity >= stock) {
+    toast(`Solo hay ${stock} unidades disponibles`);
+    return;
+  }
+
+  quantity++;
+  $("#quantity").value = quantity;
+};
+
+$("#addCart").onclick = () => {
+  if (window.matchMedia("(max-width:760px)").matches) {
+    openVariantModal();
+    return;
+  }
+
+  if (addToCart(quantity)) {
+    showSuccess();
+  }
+};
+
+$("#buyNow").onclick = () => {
+  if (addToCart(quantity)) {
+    location.href = "carrito.html";
+  }
+};
+
+$("#mobileAdd").onclick = openVariantModal;
+$("#variantClose").onclick = closeVariantModal;
+
+$("#variantOverlay").onclick = evento => {
+  if (evento.target === $("#variantOverlay")) {
+    closeVariantModal();
+  }
+};
+
+$("#mobileMinus").onclick = () => {
+  mobileQuantity = Math.max(
+    1,
+    mobileQuantity - 1
+  );
+
+  updateMobileQuantity();
+};
+
+$("#mobilePlus").onclick = () => {
+  const stock = currentStock();
+
+  if (mobileQuantity >= stock) {
+    toast(`Solo hay ${stock} unidades disponibles`);
+    return;
+  }
+
+  mobileQuantity = Math.min(
+    stock,
+    mobileQuantity + 1
+  );
+
+  updateMobileQuantity();
+};
+
+$("#continueButton").onclick = () => {
+  if (currentStock() <= 0) {
+    toast("Esta opción está agotada");
+    return;
+  }
+
+  quantity = mobileQuantity;
+  $("#quantity").value = quantity;
+
+  if (!addToCart(mobileQuantity)) {
+    return;
+  }
+
+  closeVariantModal();
+
+  setTimeout(showSuccess, 220);
+};
+
+$("#acceptSuccess").onclick = closeSuccess;
+
+$("#mobileCart").onclick = () => {
+  location.href = "carrito.html";
+};
+
+$("#imageClose").onclick = () => {
+  if (history.length > 1) {
+    history.back();
+  } else {
+    location.href = "index.html";
+  }
+};
+
+document.addEventListener("keydown", evento => {
+  if (evento.key === "Escape") {
+    closeVariantModal();
+    closeSuccess();
+  }
+});
+
+/* =====================================================
+   ACTUALIZAR SI CAMBIA EL PRODUCTO GUARDADO
+===================================================== */
+window.addEventListener("storage", evento => {
+  if (evento.key === PRODUCTOS_KEY) {
+    location.reload();
+  }
+
+  if (evento.key === CART_KEY) {
+    updateCartCount();
+  }
+});
+
+/* =====================================================
+   INICIAR PÁGINA
+===================================================== */
+renderProductDetails();
+renderSellerInformation();
+renderAllSelections();
+updateCartCount();
 </script>
 </body>
 </html>
