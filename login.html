@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Iniciar sesión - AliMarket</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{
+  --red:#e00000;
+  --red-dark:#a90000;
+  --text:#111;
+  --muted:#777;
+  --line:#dedede;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:#fff}
+button,input{font:inherit}
+button,a{cursor:pointer}
+a{text-decoration:none;color:inherit}
+.auth-page{min-height:100vh;display:grid;grid-template-columns:minmax(430px,48%) 1fr}
+.visual-panel{
+  min-height:100vh;padding:54px 7%;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center
+}
+.register-visual{
+  background:
+    radial-gradient(circle at 82% 15%,rgba(255,255,255,.95) 0 9%,transparent 10%),
+    linear-gradient(145deg,#fff 0%,#fff3f3 55%,#ffd9d9 100%)
+}
+.login-visual{
+  color:#fff;
+  background:
+    radial-gradient(circle at 72% 40%,rgba(255,40,40,.4),transparent 31%),
+    linear-gradient(145deg,#5f0505 0%,#8d0707 48%,#e00000 100%)
+}
+.visual-copy{position:relative;z-index:3;max-width:550px}
+.visual-copy h1{font-size:44px;line-height:1.12;margin:0 0 22px;font-weight:900}
+.brand-word{font-family:Georgia,serif;font-size:1.32em;letter-spacing:.5px}
+.register-visual .brand-word{color:#b60000}
+.login-visual .brand-word{color:#ffd35a}
+.visual-copy p{font-size:20px;line-height:1.55;margin:0 0 34px;max-width:520px}
+.benefits{display:grid;gap:18px}
+.benefit{display:flex;align-items:center;gap:14px;font-size:16px;font-weight:700}
+.benefit i{width:26px;color:#ff3a3a;font-size:21px}
+.login-visual .benefit i{color:#ffcc32}
+.illustration{position:absolute;right:3%;bottom:5%;width:53%;max-width:520px;aspect-ratio:1.1;z-index:2}
+.platform{position:absolute;left:0;right:0;bottom:0;height:23%;border-radius:50%;background:linear-gradient(#ff8888,#d94444);box-shadow:0 20px 40px rgba(132,0,0,.25)}
+.login-visual .platform{background:linear-gradient(#ec2222,#790000)}
+.bag{
+  position:absolute;left:22%;bottom:19%;width:32%;height:44%;
+  background:linear-gradient(145deg,#ed1616,#a90000);
+  border-radius:8px 8px 16px 16px;box-shadow:0 18px 35px rgba(85,0,0,.35)
+}
+.bag:before{content:"";position:absolute;left:23%;right:23%;top:-24%;height:38%;border:9px solid #222;border-bottom:0;border-radius:50% 50% 0 0}
+.bag:after{content:"AliMarket";position:absolute;left:0;right:0;top:45%;text-align:center;color:#ffe08a;font:700 22px Georgia,serif}
+.cart{position:absolute;right:5%;bottom:22%;width:48%;height:39%;border:8px solid #858585;border-top:0;transform:skew(-4deg)}
+.cart:before{content:"";position:absolute;left:-9%;right:-7%;top:-15%;height:10px;background:#858585;border-radius:8px}
+.cart:after{content:"●   ●";position:absolute;left:13%;bottom:-30%;font-size:43px;letter-spacing:58px;color:#333}
+.box{position:absolute;background:#c99766;border-radius:5px;box-shadow:inset -12px -8px rgba(0,0,0,.09)}
+.box.one{width:25%;height:23%;right:12%;bottom:48%}
+.box.two{width:22%;height:18%;right:36%;bottom:48%}
+.discount-tag{
+  position:absolute;right:2%;top:19%;width:70px;height:55px;border-radius:12px;
+  background:#ef1f2c;color:#fff;display:flex;align-items:center;justify-content:center;
+  font-size:28px;font-weight:900;transform:rotate(12deg);box-shadow:0 9px 18px rgba(0,0,0,.18)
+}
+.form-panel{min-height:100vh;padding:48px clamp(28px,7vw,110px);display:flex;align-items:center;justify-content:center;background:#fff}
+.form-card{width:min(100%,720px)}
+.mobile-top{display:none}
+.form-card h2{font-size:42px;margin:0 0 8px}
+.subtitle{font-size:20px;color:#6b6b6b;margin:0 0 36px}
+.subtitle strong{color:#e00000}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.field{margin-bottom:22px}
+.field label{display:block;font-weight:800;margin:0 0 9px;font-size:16px}
+.input-wrap{position:relative}
+.input-wrap .left-icon{position:absolute;left:18px;top:50%;transform:translateY(-50%);color:#aaa;font-size:20px;pointer-events:none}
+.input-wrap input{width:100%;height:58px;border:1.5px solid var(--line);border-radius:10px;padding:0 52px;font-size:17px;outline:none;transition:.2s;background:#fff}
+.input-wrap input:focus{border-color:#e00000;box-shadow:0 0 0 3px rgba(224,0,0,.08)}
+.password-toggle{position:absolute;right:13px;top:50%;transform:translateY(-50%);width:38px;height:38px;border:0;background:transparent;color:#555;font-size:19px}
+.password-info{display:flex;justify-content:space-between;gap:10px;font-size:14px;margin-top:7px}
+.password-info .strength{color:#e34a4a;font-weight:800}
+.options{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:4px 0 24px}
+.check-line{display:flex;align-items:flex-start;gap:11px;font-weight:700;line-height:1.45}
+.custom-check{appearance:none;width:25px;height:25px;border:2px solid #ffb5b5;border-radius:6px;flex:0 0 auto;margin:0;position:relative}
+.custom-check:checked{background:#e00000;border-color:#e00000}
+.custom-check:checked:after{content:"✓";position:absolute;color:#fff;left:5px;top:0;font-weight:900}
+.red-link{color:#e00000;font-weight:800}
+.primary-btn{width:100%;height:58px;border:0;border-radius:8px;background:linear-gradient(90deg,#ef0000,#c90000);color:#fff;font-size:19px;font-weight:900;box-shadow:0 8px 18px rgba(210,0,0,.22)}
+.primary-btn:hover{filter:brightness(.94)}
+.divider{display:flex;align-items:center;gap:16px;color:#444;margin:34px 0 25px;font-weight:700}
+.divider:before,.divider:after{content:"";height:1px;background:#e5e5e5;flex:1}
+.social-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.social-btn{height:58px;border:1px solid #ddd;background:#fff;border-radius:9px;display:flex;align-items:center;justify-content:center;gap:13px;font-size:18px;font-weight:800}
+.social-btn:hover{background:#fafafa}
+.google{font-size:27px;font-weight:900;color:#4285f4}
+.facebook{width:30px;height:30px;background:#1877f2;color:white;border-radius:50%;display:grid;place-items:center;font-size:23px;font-weight:900}
+.switch-text{text-align:center;margin-top:35px;font-size:18px;font-weight:700}
+.alert{display:none;padding:13px 15px;border-radius:8px;margin-bottom:18px;font-weight:700}
+.alert.show{display:block}
+.alert.error{background:#ffe7e7;color:#9f0000}
+.alert.success{background:#e9f8ee;color:#126d34}
+.back-mobile{display:none}
+@media(max-width:900px){
+  .auth-page{display:block}
+  .visual-panel{display:none}
+  .form-panel{min-height:100vh;padding:18px 26px 38px;align-items:flex-start}
+  .form-card{max-width:620px}
+  .mobile-top{display:grid;grid-template-columns:48px 1fr 48px;align-items:center;margin-bottom:48px;padding-top:8px}
+  .mobile-logo{text-align:center;font:900 34px Georgia,serif}
+  .mobile-logo .ali{color:#d00000}
+  .back-mobile{display:grid;width:44px;height:44px;border:0;background:transparent;place-items:center;font-size:30px}
+  .form-card h2{font-size:36px}
+  .subtitle{font-size:19px;margin-bottom:38px}
+}
+@media(max-width:560px){
+  .form-panel{padding:13px 20px 32px}
+  .mobile-top{margin-bottom:36px}
+  .mobile-logo{font-size:31px}
+  .form-row{grid-template-columns:1fr;gap:0}
+  .field{margin-bottom:18px}
+  .field label{font-size:15px}
+  .input-wrap input{height:57px;font-size:16px;border-radius:9px}
+  .options{font-size:14px}
+  .primary-btn{height:57px}
+  .social-row{gap:12px}
+  .social-btn{font-size:16px}
+  .switch-text{font-size:16px;margin-top:30px}
+}
+</style>
+</head>
+<body>
+<main class="auth-page">
+  <section class="visual-panel login-visual">
+    <div class="visual-copy">
+      <h1>Bienvenido de vuelta<br>a <span class="brand-word">AliMarket</span></h1>
+      <p>Inicia sesión para continuar comprando con las mejores ofertas para ti.</p>
+      <div class="benefits">
+        <div class="benefit"><i class="fa-solid fa-truck"></i><span>Envío gratis en miles de productos</span></div>
+        <div class="benefit"><i class="fa-solid fa-shield-halved"></i><span>Pagos seguros y protegidos</span></div>
+        <div class="benefit"><i class="fa-solid fa-award"></i><span>Ofertas exclusivas para ti</span></div>
+      </div>
+    </div>
+    <div class="illustration"><div class="platform"></div><div class="bag"></div><div class="discount-tag">%</div></div>
+  </section>
+
+  <section class="form-panel">
+    <div class="form-card">
+      <div class="mobile-top">
+        <button class="back-mobile" onclick="history.length>1?history.back():location.href='index.html'"><i class="fa-solid fa-chevron-left"></i></button>
+        <div class="mobile-logo"><span class="ali">Ali</span>Market</div><span></span>
+      </div>
+
+      <h2>Iniciar sesión</h2>
+      <p class="subtitle">Accede a tu <strong>cuenta</strong></p>
+      <div class="alert" id="loginAlert"></div>
+
+      <form id="loginForm">
+        <div class="field">
+          <label for="loginEmail">Correo electrónico</label>
+          <div class="input-wrap">
+            <i class="fa-regular fa-envelope left-icon"></i>
+            <input id="loginEmail" type="email" placeholder="ejemplo@correo.com" required autocomplete="email">
+          </div>
+        </div>
+        <div class="field">
+          <label for="loginPassword">Contraseña</label>
+          <div class="input-wrap">
+            <i class="fa-solid fa-lock left-icon"></i>
+            <input id="loginPassword" type="password" placeholder="Ingresa tu contraseña" required autocomplete="current-password">
+            <button class="password-toggle" type="button" data-target="loginPassword"><i class="fa-regular fa-eye-slash"></i></button>
+          </div>
+        </div>
+        <div class="options">
+          <label class="check-line"><input class="custom-check" id="remember" type="checkbox"><span>Recordarme</span></label>
+          <a class="red-link" href="#" onclick="alert('Agrega aquí tu recuperación de contraseña')">¿Olvidaste tu contraseña?</a>
+        </div>
+        <button class="primary-btn" type="submit">Iniciar sesión</button>
+      </form>
+
+      <div class="divider">o continúa con</div>
+      <div class="social-row">
+        <button class="social-btn" type="button" data-social="Google"><span class="google">G</span> Google</button>
+        <button class="social-btn" type="button" data-social="Facebook"><span class="facebook">f</span> Facebook</button>
+      </div>
+      <p class="switch-text">¿No tienes cuenta? &nbsp;<a class="red-link" href="registro_unido.html">Crear cuenta</a></p>
+    </div>
+  </section>
+</main>
+<script>
+
+const USERS_KEY = "alimarketUsuarios";
+const SESSION_KEY = "alimarketSesion";
+
+function getUsers(){
+  try{
+    const data = JSON.parse(localStorage.getItem(USERS_KEY) || "[]");
+    return Array.isArray(data) ? data : [];
+  }catch{
+    return [];
+  }
+}
+function saveUsers(users){
+  localStorage.setItem(USERS_KEY, JSON.stringify(users));
+}
+function showAlert(id, message, type){
+  const box = document.getElementById(id);
+  if(!box) return;
+  box.textContent = message;
+  box.className = `alert show ${type}`;
+}
+document.querySelectorAll(".password-toggle").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const input=document.getElementById(btn.dataset.target);
+    const icon=btn.querySelector("i");
+    input.type=input.type==="password"?"text":"password";
+    icon.className=input.type==="password"?"fa-regular fa-eye-slash":"fa-regular fa-eye";
+  });
+});
+document.querySelectorAll("[data-social]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    alert(`Conexión con ${btn.dataset.social} pendiente de configurar con su API oficial.`);
+  });
+});
+
+const loginForm=document.getElementById("loginForm");
+loginForm.addEventListener("submit",event=>{
+  event.preventDefault();
+  const email=document.getElementById("loginEmail").value.trim().toLowerCase();
+  const password=document.getElementById("loginPassword").value;
+  const remember=document.getElementById("remember").checked;
+  const user=getUsers().find(u=>u.email===email && u.password===password);
+  if(!user){
+    showAlert("loginAlert","Correo electrónico o contraseña incorrectos.","error");
+    return;
+  }
+  const session={id:user.id,email:user.email,name:`${user.firstName} ${user.lastName}`,remember,loggedAt:new Date().toISOString()};
+  localStorage.setItem(SESSION_KEY,JSON.stringify(session));
+  showAlert("loginAlert",`Bienvenido, ${user.firstName}. Inicio de sesión correcto.`,"success");
+  setTimeout(()=>location.href="index.html",900);
+});
+</script>
+</body>
+</html>
