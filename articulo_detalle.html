@@ -1,681 +1,198 @@
-<!DOCTYPE html>  <html lang="es">  
-<head>  
-<meta charset="UTF-8">  
-<meta name="viewport" content="width=device-width,initial-scale=1.0">  
-<title>Detalle del producto - AliMarket</title>  
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">  
-<style>  
-:root{  
-  --red:#e60023;  
-  --line:#e7e7e7;  
-  --muted:#777;  
-}  
-*{box-sizing:border-box}  
-html,body{margin:0;font-family:Arial,sans-serif;color:#111;background:#f5f5f5}  
-button,input{font:inherit}  
-img{max-width:100%}  /* Header escritorio */
-.desktop-header{
-position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #eee;
-padding:15px 5%;
-}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Detalle del producto - AliMarket</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{--red:#e60023;--line:#e7e7e7;--muted:#777}
+*{box-sizing:border-box}
+html,body{margin:0;font-family:Arial,sans-serif;color:#111;background:#f5f5f5}
+button,input{font:inherit} img{max-width:100%}
+.desktop-header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #eee;padding:15px 5%}
 .header-row{display:flex;align-items:center;gap:20px}
 .logo{font:900 38px Georgia,serif;color:#b40000;text-decoration:none;letter-spacing:2px}
-.search-box{
-flex:1;height:45px;border:2px solid #777;border-radius:30px;
-display:flex;align-items:center;gap:10px;padding:0 16px
-}
+.search-box{flex:1;height:45px;border:2px solid #777;border-radius:30px;display:flex;align-items:center;gap:10px;padding:0 16px}
 .search-box input{flex:1;border:0;outline:0;background:transparent}
-.header-icons{display:flex;gap:18px}
-.header-icons a{color:#111;text-decoration:none;font-weight:700}
-.header-icons i{font-size:24px}
-.promo{display:flex;gap:10px;margin-top:14px;overflow:auto}
-.promo a{white-space:nowrap;text-decoration:none;color:#111;background:#ddd;padding:9px 18px;border-radius:20px;font-weight:700}
-.promo .category{background:#ff9da5}
-
-/* Página */
-.page{max-width:1450px;margin:auto;padding:28px 4% 90px}
-.breadcrumb{color:#777;margin-bottom:18px}
-.product-layout{
-display:grid;grid-template-columns:minmax(420px,1.1fr) minmax(380px,.9fr) 330px;
-gap:26px;align-items:start
-}
-.gallery{display:grid;grid-template-columns:76px 1fr;gap:14px}
-.thumbs{display:flex;flex-direction:column;gap:10px}
-.thumb{width:72px;height:72px;border:2px solid transparent;background:#fff;border-radius:8px;padding:3px;cursor:pointer}
-.thumb.active{border-color:#111}
-.thumb img{width:100%;height:100%;object-fit:contain}
-.main-image{height:580px;background:#fff;border-radius:14px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.main-image img{width:100%;height:100%;object-fit:contain}
-.image-close{
-display:none;position:absolute;right:14px;top:14px;width:46px;height:46px;border:0;border-radius:50%;
-background:rgba(255,255,255,.94);font-size:24px;z-index:3
-}
-
-.info{background:#fff;border-radius:14px;padding:24px}
-.info h1{font-size:25px;line-height:1.3;margin:0 0 8px}
-.sales,.rating,.tax{color:#666;margin:8px 0}
-.rating{color:#f39a00}
-.price-row{display:flex;gap:13px;align-items:center;flex-wrap:wrap;margin:15px 0}
-.current-price{font-size:42px;font-weight:900;color:var(--red)}
-.old-price{text-decoration:line-through;color:#888;font-size:19px}
-.discount{color:var(--red);font-weight:800}
+.header-icons{display:flex;gap:18px}.header-icons a{color:#111;text-decoration:none;font-weight:700}.header-icons i{font-size:24px}
+.promo{display:flex;gap:10px;margin-top:14px;overflow:auto}.promo a{white-space:nowrap;text-decoration:none;color:#111;background:#ddd;padding:9px 18px;border-radius:20px;font-weight:700}.promo .category{background:#ff9da5}
+.page{max-width:1450px;margin:auto;padding:28px 4% 90px}.breadcrumb{color:#777;margin-bottom:18px}
+.product-layout{display:grid;grid-template-columns:minmax(420px,1.1fr) minmax(380px,.9fr) 330px;gap:26px;align-items:start}
+.gallery{display:grid;grid-template-columns:76px 1fr;gap:14px}.thumbs{display:flex;flex-direction:column;gap:10px}
+.thumb{width:72px;height:72px;border:2px solid transparent;background:#fff;border-radius:8px;padding:3px;cursor:pointer}.thumb.active{border-color:#111}.thumb img{width:100%;height:100%;object-fit:contain}
+.main-image{height:580px;background:#fff;border-radius:14px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}.main-image img{width:100%;height:100%;object-fit:contain}
+.image-close{display:none;position:absolute;right:14px;top:14px;width:46px;height:46px;border:0;border-radius:50%;background:rgba(255,255,255,.94);font-size:24px;z-index:3}
+.info{background:#fff;border-radius:14px;padding:24px}.info h1{font-size:25px;line-height:1.3;margin:0 0 8px}.sales,.rating,.tax{color:#666;margin:8px 0}.rating{color:#f39a00}
+.price-row{display:flex;gap:13px;align-items:center;flex-wrap:wrap;margin:15px 0}.current-price{font-size:42px;font-weight:900;color:var(--red)}.old-price{text-decoration:line-through;color:#888;font-size:19px}.discount{color:var(--red);font-weight:800}
 .coupon{background:#fff0f3;color:#c00020;padding:12px;border-radius:8px;font-weight:800;margin:18px 0}
-.option-title{font-size:18px;font-weight:900;margin:22px 0 10px}
-.option-list{display:flex;gap:10px;flex-wrap:wrap}
-.option-btn{
-min-width:78px;min-height:54px;border:1px solid #bbb;background:#fff;border-radius:5px;padding:7px;cursor:pointer
-}
-.option-btn.active{border:3px solid #111}
-.option-btn img{width:58px;height:58px;object-fit:contain}
-.size-btn{min-width:104px;padding:13px 18px;border:1px solid #aaa;background:#fff;border-radius:6px;font-size:17px;cursor:pointer}
-.size-btn.active{border:3px solid #111;font-weight:800}
+.option-title{font-size:18px;font-weight:900;margin:22px 0 10px}.option-list{display:flex;gap:10px;flex-wrap:wrap}
+.option-btn{min-width:78px;min-height:54px;border:1px solid #bbb;background:#fff;border-radius:5px;padding:7px;cursor:pointer}.option-btn.active{border:3px solid #111}.option-btn img{width:58px;height:58px;object-fit:contain}
+.size-btn{min-width:104px;padding:13px 18px;border:1px solid #aaa;background:#fff;border-radius:6px;font-size:17px;cursor:pointer}.size-btn.active{border:3px solid #111;font-weight:800}
 .selection{margin-top:15px;padding:12px;background:#f5f5f5;border-radius:8px}
+.buy-card{position:sticky;top:130px;background:#fff;border:1px solid #ddd;border-radius:12px;padding:20px;box-shadow:0 5px 18px rgba(0,0,0,.08)}
+.buy-card .current-price{font-size:32px}.seller{padding:15px 0;border-top:1px solid #eee;border-bottom:1px solid #eee;font-weight:800}.service{margin-top:18px;color:#14772a;font-weight:900}
+.shipping{display:flex;gap:10px;margin:16px 0;line-height:1.45}.qty-row{display:flex;align-items:center;justify-content:space-between;margin:20px 0}.qty-control{display:flex;border:1px solid #bbb;border-radius:8px;overflow:hidden}.qty-control button,.qty-control input{width:42px;height:40px;border:0;text-align:center;background:#fff}
+.action{width:100%;padding:15px;border-radius:8px;font-weight:900;font-size:17px;margin-top:10px;cursor:pointer}.buy-now{background:var(--red);border:0;color:#fff}.add-cart{background:#fff;border:1px solid #111}
+.content-section{background:#fff;margin-top:18px;border-radius:14px;padding:26px}.detail-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line)}.detail-cell{display:grid;grid-template-columns:45% 55%;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}.detail-cell span,.detail-cell strong{padding:14px}.detail-cell span{background:#f7f7f7}.description{font-size:18px;line-height:1.65}
+.mobile-bottom-buy,.mobile-variant-overlay{display:none}
+.success-overlay{position:fixed;inset:0;z-index:60000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:.25s;pointer-events:none}.success-overlay.active{opacity:1;visibility:visible}
+.success-box{pointer-events:auto;width:min(92%,480px);padding:38px 26px;background:rgba(17,20,22,.97);color:#fff;border-radius:26px;text-align:center;box-shadow:0 25px 80px rgba(0,0,0,.6);transform:scale(.8);transition:.3s}.success-overlay.active .success-box{transform:scale(1)}
+.success-icon{width:110px;height:110px;border:6px solid #5df15f;border-radius:50%;margin:0 auto 22px;display:flex;align-items:center;justify-content:center;color:#5df15f;font-size:54px;box-shadow:0 0 28px rgba(93,241,95,.55)}
+.success-box h2{font-size:34px;margin:0 0 12px}.success-box p{color:#ccc;font-size:18px}.success-box button{width:100%;padding:16px;border:1px solid #5df15f;border-radius:14px;background:#12b850;color:#fff;font-size:20px;font-weight:900}
+.toast{position:fixed;left:50%;bottom:105px;z-index:70000;transform:translate(-50%,20px);background:#111;color:#fff;padding:12px 18px;border-radius:9px;opacity:0;transition:.25s}.toast.show{opacity:1;transform:translate(-50%,0)}
 
-.buy-card{
-position:sticky;top:130px;background:#fff;border:1px solid #ddd;border-radius:12px;padding:20px;
-box-shadow:0 5px 18px rgba(0,0,0,.08)
-}
-.buy-card .current-price{font-size:32px}
-.seller{padding:15px 0;border-top:1px solid #eee;border-bottom:1px solid #eee;font-weight:800}
-.service{margin-top:18px;color:#14772a;font-weight:900}
-.shipping{display:flex;gap:10px;margin:16px 0;line-height:1.45}
-.qty-row{display:flex;align-items:center;justify-content:space-between;margin:20px 0}
-.qty-control{display:flex;border:1px solid #bbb;border-radius:8px;overflow:hidden}
-.qty-control button,.qty-control input{width:42px;height:40px;border:0;text-align:center;background:#fff}
-.action{width:100%;padding:15px;border-radius:8px;font-weight:900;font-size:17px;margin-top:10px;cursor:pointer}
-.buy-now{background:var(--red);border:0;color:#fff}
-.add-cart{background:#fff;border:1px solid #111}
-
-.content-section{background:#fff;margin-top:18px;border-radius:14px;padding:26px}
-.content-section h2{margin-top:0}
-.detail-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line)}
-.detail-cell{display:grid;grid-template-columns:45% 55%;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
-.detail-cell span,.detail-cell strong{padding:14px}
-.detail-cell span{background:#f7f7f7}
-.description{font-size:18px;line-height:1.65}
-
-/* Barra inferior móvil */
-.mobile-bottom-buy{display:none}
-
-/* Modal móvil de variantes */
-.mobile-variant-overlay{display:none}
-
-/* Alerta de éxito */
-.success-overlay{
-position:fixed;inset:0;z-index:60000;display:flex;align-items:center;justify-content:center;padding:20px;
-opacity:0;visibility:hidden;transition:.25s;pointer-events:none
-}
-.success-overlay.active{opacity:1;visibility:visible}
-.success-box{
-pointer-events:auto;width:min(92%,480px);padding:38px 26px;background:rgba(17,20,22,.97);
-color:#fff;border-radius:26px;text-align:center;box-shadow:0 25px 80px rgba(0,0,0,.6);
-transform:scale(.8);transition:.3s
-}
-.success-overlay.active .success-box{transform:scale(1)}
-.success-icon{
-width:110px;height:110px;border:6px solid #5df15f;border-radius:50%;margin:0 auto 22px;
-display:flex;align-items:center;justify-content:center;color:#5df15f;font-size:54px;
-box-shadow:0 0 28px rgba(93,241,95,.55)
-}
-.success-box h2{font-size:34px;margin:0 0 12px}
-.success-box p{color:#ccc;font-size:18px}
-.success-box button{
-width:100%;padding:16px;border:1px solid #5df15f;border-radius:14px;background:#12b850;
-color:#fff;font-size:20px;font-weight:900
-}
-
-.toast{
-position:fixed;left:50%;bottom:105px;z-index:70000;transform:translate(-50%,20px);
-background:#111;color:#fff;padding:12px 18px;border-radius:9px;opacity:0;transition:.25s
-}
-.toast.show{opacity:1;transform:translate(-50%,0)}
-
-@media(max-width:1100px){
-.product-layout{grid-template-columns:1fr 1fr}
-.buy-card{grid-column:1/-1;position:static}
-}
+@media(max-width:1100px){.product-layout{grid-template-columns:1fr 1fr}.buy-card{grid-column:1/-1;position:static}}
 
 @media(max-width:760px){
-body{background:#f2f3f5;padding-bottom:88px}
-.desktop-header,.breadcrumb{display:none}
-.page{padding:0 0 22px}
-.product-layout{display:block}
-.gallery{display:flex;flex-direction:column;background:#fff}
-.main-image{order:1;height:520px;border-radius:0}
-.image-close{display:flex;align-items:center;justify-content:center}
-.thumbs{order:2;flex-direction:row;overflow-x:auto;padding:12px 14px}
-.thumb{flex:0 0 70px}
-.info{border-radius:0;padding:18px;margin-top:10px}
-.info h1{font-size:21px}
-.current-price{font-size:38px}
-.buy-card{
-border:0;border-radius:0;box-shadow:none;margin-top:10px;
-padding:18px
-}
-.buy-card .price-row,.buy-card .tax,.buy-card .qty-row,.buy-card .action{display:none}
-.content-section{border-radius:0;margin-top:10px;padding:22px 17px}
-.detail-grid{grid-template-columns:1fr}
-.detail-cell{grid-template-columns:42% 58%}
-.mobile-bottom-buy{
-position:fixed;left:0;right:0;bottom:0;height:82px;background:#fff;border-top:1px solid #ddd;
-z-index:20000;display:grid;grid-template-columns:55px 55px 55px 1fr;align-items:center;gap:5px;padding:9px 12px
-}
-.mobile-bottom-buy button{height:54px;border:0;background:#fff;font-size:22px;position:relative}
-.mobile-bottom-buy .mobile-add{background:#ed0033;color:#fff;border-radius:30px;font-size:19px;font-weight:900}
-.cart-badge{
-position:absolute;right:0;top:0;min-width:22px;height:22px;border-radius:12px;background:#e60023;color:#fff;
-display:flex;align-items:center;justify-content:center;font-size:12px
-}
+body{background:#f2f3f5;padding-bottom:88px}.desktop-header,.breadcrumb{display:none}.page{padding:0 0 22px}.product-layout{display:block}
+.gallery{display:flex;flex-direction:column;background:#fff}.main-image{order:1;height:520px;border-radius:0}.image-close{display:flex;align-items:center;justify-content:center}
+.thumbs{order:2;flex-direction:row;overflow-x:auto;padding:12px 14px}.thumb{flex:0 0 70px}.info{border-radius:0;padding:18px;margin-top:10px}.info h1{font-size:21px}
+.current-price{font-size:38px}.buy-card{border:0;border-radius:0;box-shadow:none;margin-top:10px;padding:18px}.buy-card .price-row,.buy-card .tax,.buy-card .qty-row,.buy-card .action{display:none}
+.content-section{border-radius:0;margin-top:10px;padding:22px 17px}.detail-grid{grid-template-columns:1fr}.detail-cell{grid-template-columns:42% 58%}
+.mobile-bottom-buy{position:fixed;left:0;right:0;bottom:0;height:82px;background:#fff;border-top:1px solid #ddd;z-index:20000;display:grid;grid-template-columns:55px 55px 55px 1fr;align-items:center;gap:5px;padding:9px 12px}
+.mobile-bottom-buy button{height:54px;border:0;background:#fff;font-size:22px;position:relative}.mobile-bottom-buy .mobile-add{background:#ed0033;color:#fff;border-radius:30px;font-size:19px;font-weight:900}
+.cart-badge{position:absolute;right:0;top:0;min-width:22px;height:22px;border-radius:12px;background:#e60023;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px}
 
-.mobile-variant-overlay{
-position:fixed;inset:0;z-index:50000;display:flex;align-items:flex-end;background:rgba(0,0,0,.62);
-opacity:0;visibility:hidden;transition:.25s
-}
+/* MODAL ESTILO ALIEXPRESS */
+.mobile-variant-overlay{position:fixed;inset:0;z-index:50000;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.62);opacity:0;visibility:hidden;transition:.25s}
 .mobile-variant-overlay.active{opacity:1;visibility:visible}
-.mobile-variant-sheet{
-width:100%;height:min(79vh,820px);max-height:92vh;background:#fff;border-radius:28px 28px 0 0;
-display:flex;flex-direction:column;overflow:hidden;transform:translateY(100%);transition:.3s
-}
+.mobile-variant-sheet{position:relative;width:100%;height:79vh;max-height:92vh;background:#fff;border-radius:28px 28px 0 0;overflow:hidden;transform:translateY(100%);transition:.3s}
 .mobile-variant-overlay.active .mobile-variant-sheet{transform:translateY(0)}
-.variant-header{
-min-height:110px;display:grid;grid-template-columns:64px minmax(0,1fr) 48px;gap:12px;align-items:center;
-padding:15px 17px;border-bottom:1px solid #eee
-}
-.variant-header img{width:62px;height:72px;object-fit:contain;background:#f5f5f5;border-radius:7px}
-.variant-header-info{min-width:0}
-.variant-header-info strong{display:block;font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.variant-header-info span{display:block;margin-top:7px;color:#999;line-height:1.3}
-.variant-close{width:46px;height:46px;border:0;border-radius:50%;background:#f3f3f3;font-size:25px}
-.variant-content{flex:1;overflow-y:auto;padding:22px 19px 145px}
-.variant-price{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:28px}
-.variant-price strong{font-size:39px}
-.variant-price del{font-size:19px;color:#999}
-.mobile-group{margin-bottom:29px}
-.mobile-group h3{font-size:21px;margin:0 0 15px}
-.mobile-color-list{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px}
-.mobile-color-option{
-flex:0 0 122px;border:2px solid transparent;background:#f7f7f7;border-radius:5px;overflow:hidden;padding:0
-}
-.mobile-color-option.active{border-color:#111;background:#fff}
-.mobile-color-option img{display:block;width:100%;height:115px;object-fit:contain;background:#fff}
-.mobile-color-option span{display:block;padding:10px 6px;text-align:center;font-size:16px}
-.mobile-size-list{display:flex;gap:12px;flex-wrap:wrap}
-.mobile-size-option{
-min-width:108px;min-height:55px;padding:11px 17px;border:1px solid #aaa;border-radius:7px;background:#fff;font-size:19px
-}
-.mobile-size-option.active{border:3px solid #111;font-weight:800}
-.mobile-qty{
-width:190px;height:58px;border:3px solid #111;border-radius:35px;display:grid;grid-template-columns:58px 1fr 58px;
-align-items:center;overflow:hidden
-}
-.mobile-qty button{height:100%;border:0;background:#fff;font-size:31px}
-.mobile-qty span{text-align:center;font-size:22px}
-.stock-message{margin-top:15px;font-size:17px}
-.variant-footer{
-position:absolute;left:0;right:0;bottom:0;padding:18px 19px 24px;border-top:1px solid #eee;background:#fff
-}
-.variant-footer button{
-width:100%;min-height:66px;border:3px solid #111;border-radius:40px;background:#fff;font-size:21px;font-weight:900
-}
+.variant-close{position:absolute;right:16px;top:14px;z-index:80;width:52px;height:52px;border:0;border-radius:50%;background:rgba(245,245,245,.97);font-size:29px}
+.variant-scroll{height:100%;overflow-y:auto;overflow-x:hidden;padding-bottom:120px;scrollbar-width:none}.variant-scroll::-webkit-scrollbar{display:none}
+.variant-compact-header{position:sticky;top:0;z-index:50;height:0;overflow:hidden;display:flex;align-items:center;gap:12px;padding:0 18px;background:#fff;border-bottom:1px solid transparent;opacity:0;transition:.25s}
+.mobile-variant-sheet.compact .variant-compact-header{height:108px;opacity:1;border-bottom-color:#e7e7e7}
+.variant-compact-header img{width:54px;height:68px;object-fit:contain;flex:0 0 auto}
+.variant-compact-info{min-width:0;padding-right:45px}.variant-compact-info strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:16px}.variant-compact-info span{display:block;margin-top:7px;color:#999;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.variant-large-gallery{height:490px;overflow:hidden;background:#fff;border-bottom:1px solid #eee;transition:height .28s,opacity .2s}
+.mobile-variant-sheet.compact .variant-large-gallery{height:0;opacity:0}
+.variant-gallery-track{height:100%;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}.variant-gallery-track::-webkit-scrollbar{display:none}
+.variant-gallery-slide{min-width:72%;height:100%;border-right:8px solid #f1f4f6;scroll-snap-align:start;display:flex;align-items:center;justify-content:center;background:#fff}
+.variant-gallery-slide img{width:88%;height:88%;object-fit:contain}
+.variant-content{padding:24px 19px 40px}.variant-price{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:26px}.variant-price strong{font-size:39px}.variant-price del{font-size:19px;color:#999}
+.mobile-group{margin-bottom:28px}.mobile-group h3{font-size:21px;margin:0 0 15px}
+.mobile-color-list{display:flex;gap:12px;overflow-x:auto;padding:2px 2px 8px;scrollbar-width:none}.mobile-color-list::-webkit-scrollbar{display:none}
+.mobile-color-option{flex:0 0 122px;height:150px;border:2px solid transparent;background:#f7f7f7;border-radius:4px;overflow:hidden;padding:5px}
+.mobile-color-option.active{border:3px solid #111;background:#fff}.mobile-color-option img{display:block;width:100%;height:108px;object-fit:contain;background:#fff}.mobile-color-option span{display:block;padding:8px 4px;text-align:center;font-size:16px}
+.mobile-size-list{display:flex;gap:12px;flex-wrap:wrap}.mobile-size-option{min-width:108px;min-height:55px;padding:11px 17px;border:1px solid #aaa;border-radius:7px;background:#fff;font-size:19px}.mobile-size-option.active{border:3px solid #111;font-weight:800}
+.mobile-qty{width:190px;height:58px;border:3px solid #111;border-radius:35px;display:grid;grid-template-columns:58px 1fr 58px;align-items:center;overflow:hidden}.mobile-qty button{height:100%;border:0;background:#fff;font-size:31px}.mobile-qty span{text-align:center;font-size:22px}.stock-message{margin-top:15px;font-size:17px}
+.variant-footer{position:absolute;left:0;right:0;bottom:0;z-index:60;padding:18px 19px 24px;border-top:1px solid #eee;background:#fff}.variant-footer button{width:100%;min-height:66px;border:3px solid #111;border-radius:40px;background:#fff;font-size:21px;font-weight:900}
 body.variant-open{overflow:hidden}
 }
+@media(max-width:390px){.variant-large-gallery{height:420px}.mobile-color-option{flex-basis:108px;height:140px}.mobile-color-option img{height:98px}}
 </style>
+</head>
+<body>
+<header class="desktop-header">
+<div class="header-row"><a class="logo" href="index.html">AliMarket</a><div class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input placeholder="Buscar productos"><i class="fa-solid fa-microphone"></i></div><div class="header-icons"><a href="#"><i class="fa-regular fa-heart"></i> Favorito</a><a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i> Cesta</a><a href="#"><i class="fa-regular fa-user"></i> Usuario</a></div></div>
+<nav class="promo"><a class="category" href="#"><i class="fa-solid fa-bars"></i> Categorías</a><a href="#">Ofertas promocionales</a><a href="#">Nuevos</a><a href="#">Más vendidos</a><a href="#">Cupones</a><a href="#">Envío gratis</a></nav>
+</header>
 
-</head>  
-<body>  <header class="desktop-header">  
-  <div class="header-row">  
-    <a class="logo" href="index.html">AliMarket</a>  
-    <div class="search-box">  
-      <i class="fa-solid fa-magnifying-glass"></i>  
-      <input id="desktopSearch" placeholder="Buscar productos">  
-      <i class="fa-solid fa-microphone"></i>  
-    </div>  
-    <div class="header-icons">  
-      <a href="#"><i class="fa-regular fa-heart"></i> Favorito</a>  
-      <a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i> Cesta</a>  
-      <a href="#"><i class="fa-regular fa-user"></i> Usuario</a>  
-    </div>  
-  </div>  
-  <nav class="promo">  
-    <a class="category" href="#"><i class="fa-solid fa-bars"></i> Categorías</a>  
-    <a href="#">Ofertas promocionales</a>  
-    <a href="#">Nuevos</a>  
-    <a href="#">Más vendidos</a>  
-    <a href="#">Cupones</a>  
-    <a href="#">Envío gratis</a>  
-  </nav>  
-</header>  <main class="page">  
-  <div class="breadcrumb">Inicio › Electrónica › Teléfonos</div>    <section class="product-layout">  
-    <div class="gallery">  
-      <div class="thumbs" id="thumbs"></div>  
-      <div class="main-image">  
-        <button class="image-close" id="imageClose"><i class="fa-solid fa-xmark"></i></button>  
-        <img id="mainImage" alt="Producto">  
-      </div>  
-    </div>  <div class="info">  
-  <h1 id="productName"></h1>  
-  <div class="sales">124 vendidos</div>  
-  <div class="rating">★★★★★ <span style="color:#666">4.8 · 126 valoraciones</span></div>  
+<main class="page">
+<div class="breadcrumb">Inicio › Electrónica › Teléfonos</div>
+<section class="product-layout">
+<div class="gallery"><div class="thumbs" id="thumbs"></div><div class="main-image"><button class="image-close" id="imageClose"><i class="fa-solid fa-xmark"></i></button><img id="mainImage" alt="Producto"></div></div>
+<div class="info"><h1 id="productName"></h1><div class="sales">124 vendidos</div><div class="rating">★★★★★ <span style="color:#666">4.8 · 126 valoraciones</span></div><div class="price-row"><div class="current-price" id="currentPrice"></div><div class="old-price" id="oldPrice"></div><div class="discount" id="discount"></div></div><div class="tax">Precio mostrado antes de impuestos.</div><div class="coupon"><i class="fa-solid fa-tag"></i> Descuentos disponibles</div><div class="option-title">Color: <span id="selectedColorLabel"></span></div><div class="option-list" id="desktopColors"></div><div class="option-title">Paquete: <span id="selectedSizeLabel"></span></div><div class="option-list" id="desktopSizes"></div><div class="selection" id="selectionSummary"></div></div>
+<aside class="buy-card"><div class="price-row"><div class="current-price" id="sidePrice"></div><div class="old-price" id="sideOldPrice"></div></div><div class="tax">Precio mostrado antes de impuestos.</div><div class="seller">Vendido por AliMarket Vendedor Oficial</div><div class="service">Compromiso de servicio</div><div class="shipping"><i class="fa-solid fa-truck-fast"></i><div><b>Envío: RD$ 250.00</b><br>Entrega estimada en 8 a 12 días</div></div><div class="shipping"><i class="fa-solid fa-rotate-left"></i><div><b>Devolución gratuita</b><br>Dentro del plazo permitido</div></div><div class="shipping"><i class="fa-solid fa-shield-halved"></i><div><b>Pago seguro</b><br>Tus datos están protegidos</div></div><div class="qty-row"><b>Cantidad</b><div class="qty-control"><button id="minus">−</button><input id="quantity" value="1" readonly><button id="plus">+</button></div></div><button class="action buy-now" id="buyNow">Comprar ahora</button><button class="action add-cart" id="addCart">Agregar al carrito</button></aside>
+</section>
+<section class="content-section"><h2>Detalles</h2><div class="detail-grid"><div class="detail-cell"><span>Marca</span><strong>Apple</strong></div><div class="detail-cell"><span>Modelo</span><strong>iPhone 14</strong></div><div class="detail-cell"><span>Condición</span><strong>Nuevo</strong></div><div class="detail-cell"><span>Red</span><strong>5G</strong></div><div class="detail-cell"><span>Desbloqueado</span><strong>Sí</strong></div><div class="detail-cell"><span>Garantía</span><strong>12 meses</strong></div></div></section>
+<section class="content-section"><h2>Descripción completa</h2><div class="description"><p>Teléfono móvil Apple iPhone 14 5G original desbloqueado, disponible en diferentes colores y capacidades.</p><p>Selecciona el color, la capacidad y la cantidad antes de agregar el producto al carrito.</p></div></section>
+</main>
 
-  <div class="price-row">  
-    <div class="current-price" id="currentPrice"></div>  
-    <div class="old-price" id="oldPrice"></div>  
-    <div class="discount" id="discount"></div>  
-  </div>  
+<nav class="mobile-bottom-buy"><button><i class="fa-solid fa-medal"></i></button><button><i class="fa-regular fa-message"></i></button><button id="mobileCart"><i class="fa-solid fa-cart-shopping"></i><span class="cart-badge" id="cartCount">0</span></button><button class="mobile-add" id="mobileAdd">Agregar al carrito</button></nav>
 
-  <div class="tax">Precio mostrado antes de impuestos.</div>  
-  <div class="coupon"><i class="fa-solid fa-tag"></i> Descuentos disponibles</div>  
+<div class="mobile-variant-overlay" id="variantOverlay">
+<section class="mobile-variant-sheet" id="variantSheet">
+<button class="variant-close" id="variantClose"><i class="fa-solid fa-xmark"></i></button>
+<div class="variant-scroll" id="variantScroll">
+<header class="variant-compact-header">
+<img id="variantHeaderImage" alt="Producto">
+<div class="variant-compact-info"><strong id="variantHeaderName"></strong><span id="variantHeaderSelection"></span></div>
+</header>
+<div class="variant-large-gallery">
+<div class="variant-gallery-track" id="variantGalleryTrack"></div>
+</div>
+<div class="variant-content">
+<div class="variant-price"><strong id="variantPrice"></strong><del id="variantOldPrice"></del></div>
+<section class="mobile-group"><h3>Color: <span id="mobileColorLabel"></span></h3><div class="mobile-color-list" id="mobileColors"></div></section>
+<section class="mobile-group"><h3>Paquete: <span id="mobileSizeLabel"></span></h3><div class="mobile-size-list" id="mobileSizes"></div></section>
+<section class="mobile-group"><h3>Cant</h3><div class="mobile-qty"><button id="mobileMinus">−</button><span id="mobileQuantity">1</span><button id="mobilePlus">+</button></div><p class="stock-message" id="stockMessage"></p></section>
+<div style="height:160px"></div>
+</div>
+</div>
+<footer class="variant-footer"><button id="continueButton">Continuar</button></footer>
+</section>
+</div>
 
-  <div class="option-title">Color: <span id="selectedColorLabel"></span></div>  
-  <div class="option-list" id="desktopColors"></div>  
+<div class="success-overlay" id="successOverlay"><div class="success-box"><div class="success-icon"><i class="fa-solid fa-check"></i></div><h2>¡Agregado satisfactoriamente!</h2><p>El producto se ha agregado al carrito.</p><button id="acceptSuccess"><i class="fa-solid fa-check"></i> Aceptar</button></div></div>
+<div class="toast" id="toast"></div>
 
-  <div class="option-title">Paquete: <span id="selectedSizeLabel"></span></div>  
-  <div class="option-list" id="desktopSizes"></div>  
-
-  <div class="selection" id="selectionSummary"></div>  
-</div>  
-
-<aside class="buy-card">  
-  <div class="price-row">  
-    <div class="current-price" id="sidePrice"></div>  
-    <div class="old-price" id="sideOldPrice"></div>  
-  </div>  
-  <div class="tax">Precio mostrado antes de impuestos.</div>  
-  <div class="seller">Vendido por AliMarket Vendedor Oficial</div>  
-  <div class="service">Compromiso de servicio</div>  
-  <div class="shipping"><i class="fa-solid fa-truck-fast"></i><div><b>Envío: RD$ 250.00</b><br>Entrega estimada en 8 a 12 días</div></div>  
-  <div class="shipping"><i class="fa-solid fa-rotate-left"></i><div><b>Devolución gratuita</b><br>Dentro del plazo permitido</div></div>  
-  <div class="shipping"><i class="fa-solid fa-shield-halved"></i><div><b>Pago seguro</b><br>Tus datos están protegidos</div></div>  
-
-  <div class="qty-row">  
-    <b>Cantidad</b>  
-    <div class="qty-control">  
-      <button id="minus">−</button>  
-      <input id="quantity" value="1" readonly>  
-      <button id="plus">+</button>  
-    </div>  
-  </div>  
-
-  <button class="action buy-now" id="buyNow">Comprar ahora</button>  
-  <button class="action add-cart" id="addCart">Agregar al carrito</button>  
-</aside>
-
-  </section>    <section class="content-section">  
-    <h2>Detalles</h2>  
-    <div class="detail-grid">  
-      <div class="detail-cell"><span>Marca</span><strong>Apple</strong></div>  
-      <div class="detail-cell"><span>Modelo</span><strong>iPhone 14</strong></div>  
-      <div class="detail-cell"><span>Condición</span><strong>Nuevo</strong></div>  
-      <div class="detail-cell"><span>Red</span><strong>5G</strong></div>  
-      <div class="detail-cell"><span>Desbloqueado</span><strong>Sí</strong></div>  
-      <div class="detail-cell"><span>Garantía</span><strong>12 meses</strong></div>  
-    </div>  
-  </section>    <section class="content-section">  
-    <h2>Descripción completa</h2>  
-    <div class="description">  
-      <p>Teléfono móvil Apple iPhone 14 5G original desbloqueado, disponible en diferentes colores y capacidades.</p>  
-      <p>Selecciona el color, la capacidad y la cantidad antes de agregar el producto al carrito.</p>  
-    </div>  
-  </section>  
-</main>  <nav class="mobile-bottom-buy">  
-  <button><i class="fa-solid fa-medal"></i></button>  
-  <button><i class="fa-regular fa-message"></i></button>  
-  <button id="mobileCart"><i class="fa-solid fa-cart-shopping"></i><span class="cart-badge" id="cartCount">0</span></button>  
-  <button class="mobile-add" id="mobileAdd">Agregar al carrito</button>  
-</nav>  <!-- Ventana móvil de variantes -->  <div class="mobile-variant-overlay" id="variantOverlay">  
-  <section class="mobile-variant-sheet">  
-    <header class="variant-header">  
-      <img id="variantHeaderImage" alt="Producto">  
-      <div class="variant-header-info">  
-        <strong id="variantHeaderName"></strong>  
-        <span id="variantHeaderSelection"></span>  
-      </div>  
-      <button class="variant-close" id="variantClose"><i class="fa-solid fa-xmark"></i></button>  
-    </header>  <div class="variant-content">  
-  <div class="variant-price">  
-    <strong id="variantPrice"></strong>  
-    <del id="variantOldPrice"></del>  
-  </div>  
-
-  <section class="mobile-group">  
-    <h3>Color: <span id="mobileColorLabel"></span></h3>  
-    <div class="mobile-color-list" id="mobileColors"></div>  
-  </section>  
-
-  <section class="mobile-group">  
-    <h3>Paquete: <span id="mobileSizeLabel"></span></h3>  
-    <div class="mobile-size-list" id="mobileSizes"></div>  
-  </section>  
-
-  <section class="mobile-group">  
-    <h3>Cant</h3>  
-    <div class="mobile-qty">  
-      <button id="mobileMinus">−</button>  
-      <span id="mobileQuantity">1</span>  
-      <button id="mobilePlus">+</button>  
-    </div>  
-    <p class="stock-message" id="stockMessage"></p>  
-  </section>  
-</div>  
-
-<footer class="variant-footer">  
-  <button id="continueButton">Continuar</button>  
-</footer>
-
-  </section>  
-</div>  <!-- Alerta -->  <div class="success-overlay" id="successOverlay">  
-  <div class="success-box">  
-    <div class="success-icon"><i class="fa-solid fa-check"></i></div>  
-    <h2>¡Agregado satisfactoriamente!</h2>  
-    <p>El producto se ha agregado al carrito.</p>  
-    <button id="acceptSuccess"><i class="fa-solid fa-check"></i> Aceptar</button>  
-  </div>  
-</div>  <div class="toast" id="toast"></div>  <script>  
-const PRODUCT = {  
-  id: "iphone-14",  
-  name: "Teléfono Móvil Apple iPhone 14 5G Original Desbloqueado",  
-  currency: "USD",  
-  price: 549.90,  
-  offerPrice: 351.94,  
-  stock: 8,  
-  colors: [  
-    {name:"Blanco", image:"https://dummyimage.com/500x500/f4f4f4/111&text=iPhone+Blanco", stock:8},  
-    {name:"Azul", image:"https://dummyimage.com/500x500/b8d8ef/111&text=iPhone+Azul", stock:7},  
-    {name:"Negro", image:"https://dummyimage.com/500x500/1c2427/ffffff&text=iPhone+Negro", stock:4},  
-    {name:"Amarillo", image:"https://dummyimage.com/500x500/f8dc4f/111&text=iPhone+Amarillo", stock:3},  
-    {name:"Púrpura", image:"https://dummyimage.com/500x500/c8b5df/111&text=iPhone+Purpura", stock:6}  
-  ],  
-  sizes: [  
-    {name:"128GB", stock:8},  
-    {name:"256GB", stock:4}  
-  ]  
-};  
-  
-const CART_KEY = "carritoAliMarket";  
-const $ = selector => document.querySelector(selector);  
-  
-let selectedColor = PRODUCT.colors[2];  
-let selectedSize = PRODUCT.sizes[0];  
-let quantity = 1;  
-let mobileQuantity = 1;  
-  
-function money(value){  
-  return "$" + Number(value).toLocaleString("es-US",{  
-    minimumFractionDigits:2,  
-    maximumFractionDigits:2  
-  });  
-}  
-  
-function currentStock(){  
-  return Math.min(Number(selectedColor.stock || 0), Number(selectedSize.stock || 0));  
-}  
-  
-function toast(message){  
-  const element = $("#toast");  
-  element.textContent = message;  
-  element.classList.add("show");  
-  clearTimeout(toast.timer);  
-  toast.timer = setTimeout(()=>element.classList.remove("show"),2200);  
-}  
-  
-function renderGallery(){  
-  const thumbs = $("#thumbs");  
-  thumbs.innerHTML = "";  
-  
-  PRODUCT.colors.forEach((color,index)=>{  
-    const button = document.createElement("button");  
-    button.className = "thumb" + (color.name === selectedColor.name ? " active" : "");  
-    button.innerHTML = `<img src="${color.image}" alt="${color.name}">`;  
-    button.onclick = ()=>{  
-      selectedColor = color;  
-      $("#mainImage").src = color.image;  
-      renderAllSelections();  
-    };  
-    thumbs.appendChild(button);  
-  });  
-  
-  $("#mainImage").src = selectedColor.image;  
-}  
-  
-function renderDesktopOptions(){  
-  const colors = $("#desktopColors");  
-  const sizes = $("#desktopSizes");  
-  colors.innerHTML = "";  
-  sizes.innerHTML = "";  
-  
-  PRODUCT.colors.forEach(color=>{  
-    const button = document.createElement("button");  
-    button.className = "option-btn" + (color.name === selectedColor.name ? " active" : "");  
-    button.innerHTML = `<img src="${color.image}" alt="${color.name}"><br>${color.name}`;  
-    button.onclick = ()=>{  
-      selectedColor = color;  
-      renderAllSelections();  
-    };  
-    colors.appendChild(button);  
-  });  
-  
-  PRODUCT.sizes.forEach(size=>{  
-    const button = document.createElement("button");  
-    button.className = "size-btn" + (size.name === selectedSize.name ? " active" : "");  
-    button.textContent = size.name;  
-    button.onclick = ()=>{  
-      selectedSize = size;  
-      renderAllSelections();  
-    };  
-    sizes.appendChild(button);  
-  });  
-}  
-  
-function renderMobileOptions(){  
-  const colors = $("#mobileColors");  
-  const sizes = $("#mobileSizes");  
-  colors.innerHTML = "";  
-  sizes.innerHTML = "";  
-  
-  PRODUCT.colors.forEach(color=>{  
-    const button = document.createElement("button");  
-    button.className = "mobile-color-option" + (color.name === selectedColor.name ? " active" : "");  
-    button.disabled = Number(color.stock) <= 0;  
-    button.innerHTML = `<img src="${color.image}" alt="${color.name}"><span>${color.name}</span>`;  
-    button.onclick = ()=>{  
-      selectedColor = color;  
-      mobileQuantity = 1;  
-      renderAllSelections();  
-    };  
-    colors.appendChild(button);  
-  });  
-  
-  PRODUCT.sizes.forEach(size=>{  
-    const button = document.createElement("button");  
-    button.className = "mobile-size-option" + (size.name === selectedSize.name ? " active" : "");  
-    button.disabled = Number(size.stock) <= 0;  
-    button.textContent = size.name;  
-    button.onclick = ()=>{  
-      selectedSize = size;  
-      mobileQuantity = 1;  
-      renderAllSelections();  
-    };  
-    sizes.appendChild(button);  
-  });  
-}  
-  
-function updateMobileQuantity(){  
-  const stock = currentStock();  
-  mobileQuantity = Math.max(1, Math.min(mobileQuantity, Math.max(stock,1)));  
-  $("#mobileQuantity").textContent = mobileQuantity;  
-  $("#mobileMinus").disabled = mobileQuantity <= 1;  
-  $("#mobilePlus").disabled = stock <= 0 || mobileQuantity >= stock;  
-  
-  const message = $("#stockMessage");  
-  if(stock <= 0){  
-    message.textContent = "Agotado";  
-    message.style.color = "#d50000";  
-  }else if(stock <= 5){  
-    message.textContent = `Casi agotado · quedan ${stock}`;  
-    message.style.color = "#222";  
-  }else{  
-    message.textContent = `${stock} unidades disponibles`;  
-    message.style.color = "#555";  
-  }  
-}  
-  
-function renderAllSelections(){  
-  $("#productName").textContent = PRODUCT.name;  
-  $("#currentPrice").textContent = money(PRODUCT.offerPrice);  
-  $("#oldPrice").textContent = money(PRODUCT.price);  
-  $("#discount").textContent = "-" + Math.round((1 - PRODUCT.offerPrice / PRODUCT.price) * 100) + "% dto.";  
-  $("#sidePrice").textContent = money(PRODUCT.offerPrice);  
-  $("#sideOldPrice").textContent = money(PRODUCT.price);  
-  
-  $("#selectedColorLabel").textContent = selectedColor.name;  
-  $("#selectedSizeLabel").textContent = selectedSize.name;  
-  $("#selectionSummary").innerHTML = `<b>Selección:</b> ${selectedColor.name} · ${selectedSize.name}`;  
-  
-  $("#variantHeaderImage").src = selectedColor.image;  
-  $("#variantHeaderName").textContent = PRODUCT.name;  
-  $("#variantHeaderSelection").textContent = `Color: ${selectedColor.name}, Paquete: ${selectedSize.name}`;  
-  $("#variantPrice").textContent = money(PRODUCT.offerPrice);  
-  $("#variantOldPrice").textContent = money(PRODUCT.price);  
-  $("#mobileColorLabel").textContent = selectedColor.name;  
-  $("#mobileSizeLabel").textContent = selectedSize.name;  
-  
-  renderGallery();  
-  renderDesktopOptions();  
-  renderMobileOptions();  
-  updateMobileQuantity();  
-}  
-  
-function openVariantModal(){  
-  mobileQuantity = quantity;  
-  renderAllSelections();  
-  $("#variantOverlay").classList.add("active");  
-  document.body.classList.add("variant-open");  
-}  
-  
-function closeVariantModal(){  
-  $("#variantOverlay").classList.remove("active");  
-  document.body.classList.remove("variant-open");  
-}  
-  
-function getCart(){  
-  try{  
-    const value = JSON.parse(localStorage.getItem(CART_KEY) || "[]");  
-    return Array.isArray(value) ? value : [];  
-  }catch{  
-    return [];  
-  }  
-}  
-  
-function saveCart(cart){  
-  localStorage.setItem(CART_KEY, JSON.stringify(cart));  
-  updateCartCount();  
-}  
-  
-function addToCart(amount){  
-  const cart = getCart();  
-  const id = `${PRODUCT.id}-${selectedColor.name}-${selectedSize.name}`;  
-  const found = cart.find(item => item.id === id);  
-  
-  if(found){  
-    found.cantidad += amount;  
-  }else{  
-    cart.push({  
-      id,  
-      productId: PRODUCT.id,  
-      name: PRODUCT.name,  
-      price: PRODUCT.offerPrice,  
-      oldPrice: PRODUCT.price,  
-      currency: PRODUCT.currency,  
-      image: selectedColor.image,  
-      color: selectedColor.name,  
-      size: selectedSize.name,  
-      cantidad: amount  
-    });  
-  }  
-  
-  saveCart(cart);  
-}  
-  
-function updateCartCount(){  
-  const count = getCart().reduce((sum,item)=>sum + Number(item.cantidad || 0),0);  
-  $("#cartCount").textContent = count;  
-}  
-  
-function showSuccess(){  
-  $("#successOverlay").classList.add("active");  
-}  
-  
-function closeSuccess(){  
-  $("#successOverlay").classList.remove("active");  
-}  
-  
-$("#minus").onclick = ()=>{  
-  quantity = Math.max(1, quantity - 1);  
-  $("#quantity").value = quantity;  
-};  
-  
-$("#plus").onclick = ()=>{  
-  quantity = Math.min(currentStock(), quantity + 1);  
-  $("#quantity").value = quantity;  
-};  
-  
-$("#addCart").onclick = ()=>{  
-  if(window.matchMedia("(max-width:760px)").matches){  
-    openVariantModal();  
-  }else{  
-    addToCart(quantity);  
-    showSuccess();  
-  }  
-};  
-  
-$("#buyNow").onclick = ()=>{  
-  addToCart(quantity);  
-  location.href = "carrito.html";  
-};  
-  
-$("#mobileAdd").onclick = openVariantModal;  
-$("#variantClose").onclick = closeVariantModal;  
-  
-$("#variantOverlay").onclick = event=>{  
-  if(event.target === $("#variantOverlay")) closeVariantModal();  
-};  
-  
-$("#mobileMinus").onclick = ()=>{  
-  mobileQuantity = Math.max(1, mobileQuantity - 1);  
-  updateMobileQuantity();  
-};  
-  
-$("#mobilePlus").onclick = ()=>{  
-  mobileQuantity = Math.min(currentStock(), mobileQuantity + 1);  
-  updateMobileQuantity();  
-};  
-  
-$("#continueButton").onclick = ()=>{  
-  if(currentStock() <= 0){  
-    toast("Esta opción está agotada");  
-    return;  
-  }  
-  
-  quantity = mobileQuantity;  
-  $("#quantity").value = quantity;  
-  addToCart(mobileQuantity);  
-  closeVariantModal();  
-  
-  setTimeout(showSuccess, 220);  
-};  
-  
-$("#acceptSuccess").onclick = closeSuccess;  
-$("#mobileCart").onclick = ()=>location.href = "carrito.html";  
-$("#imageClose").onclick = ()=>history.length > 1 ? history.back() : location.href = "index.html";  
-  
-document.addEventListener("keydown",event=>{  
-  if(event.key === "Escape"){  
-    closeVariantModal();  
-    closeSuccess();  
-  }  
-});  
-  
-renderAllSelections();  
-updateCartCount();  
-</script>  </body>  
-</html>  
+<script>
+const PRODUCT={
+id:"iphone-14",name:"Teléfono Móvil Apple iPhone 14 5G Original Desbloqueado",currency:"USD",price:549.90,offerPrice:351.94,stock:8,
+colors:[
+{name:"Blanco",image:"https://dummyimage.com/500x500/f4f4f4/111&text=iPhone+Blanco",stock:8},
+{name:"Azul",image:"https://dummyimage.com/500x500/b8d8ef/111&text=iPhone+Azul",stock:7},
+{name:"Negro",image:"https://dummyimage.com/500x500/1c2427/ffffff&text=iPhone+Negro",stock:4},
+{name:"Amarillo",image:"https://dummyimage.com/500x500/f8dc4f/111&text=iPhone+Amarillo",stock:3},
+{name:"Púrpura",image:"https://dummyimage.com/500x500/c8b5df/111&text=iPhone+Purpura",stock:6}],
+sizes:[{name:"128GB",stock:8},{name:"256GB",stock:4}]
+};
+const CART_KEY="carritoAliMarket",$=s=>document.querySelector(s);
+let selectedColor=PRODUCT.colors[2],selectedSize=PRODUCT.sizes[0],quantity=1,mobileQuantity=1;
+function money(v){return "$"+Number(v).toLocaleString("es-US",{minimumFractionDigits:2,maximumFractionDigits:2})}
+function currentStock(){return Math.min(Number(selectedColor.stock||0),Number(selectedSize.stock||0))}
+function toast(m){const e=$("#toast");e.textContent=m;e.classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(()=>e.classList.remove("show"),2200)}
+function renderGallery(){
+const t=$("#thumbs");t.innerHTML="";
+PRODUCT.colors.forEach(c=>{const b=document.createElement("button");b.className="thumb"+(c.name===selectedColor.name?" active":"");b.innerHTML=`<img src="${c.image}" alt="${c.name}">`;b.onclick=()=>{selectedColor=c;renderAllSelections()};t.appendChild(b)});
+$("#mainImage").src=selectedColor.image;
+}
+function renderDesktopOptions(){
+const c=$("#desktopColors"),s=$("#desktopSizes");c.innerHTML="";s.innerHTML="";
+PRODUCT.colors.forEach(x=>{const b=document.createElement("button");b.className="option-btn"+(x.name===selectedColor.name?" active":"");b.innerHTML=`<img src="${x.image}" alt="${x.name}"><br>${x.name}`;b.onclick=()=>{selectedColor=x;renderAllSelections()};c.appendChild(b)});
+PRODUCT.sizes.forEach(x=>{const b=document.createElement("button");b.className="size-btn"+(x.name===selectedSize.name?" active":"");b.textContent=x.name;b.onclick=()=>{selectedSize=x;renderAllSelections()};s.appendChild(b)});
+}
+function renderVariantGallery(){
+const g=$("#variantGalleryTrack");g.innerHTML="";
+PRODUCT.colors.forEach(c=>{const d=document.createElement("div");d.className="variant-gallery-slide";d.innerHTML=`<img src="${c.image}" alt="${c.name}">`;g.appendChild(d)});
+g.scrollLeft=PRODUCT.colors.findIndex(c=>c.name===selectedColor.name)*g.clientWidth*.72;
+}
+function renderMobileOptions(){
+const c=$("#mobileColors"),s=$("#mobileSizes");c.innerHTML="";s.innerHTML="";
+PRODUCT.colors.forEach(x=>{const b=document.createElement("button");b.className="mobile-color-option"+(x.name===selectedColor.name?" active":"");b.disabled=Number(x.stock)<=0;b.innerHTML=`<img src="${x.image}" alt="${x.name}"><span>${x.name}</span>`;b.onclick=()=>{selectedColor=x;mobileQuantity=1;renderAllSelections()};c.appendChild(b)});
+PRODUCT.sizes.forEach(x=>{const b=document.createElement("button");b.className="mobile-size-option"+(x.name===selectedSize.name?" active":"");b.disabled=Number(x.stock)<=0;b.textContent=x.name;b.onclick=()=>{selectedSize=x;mobileQuantity=1;renderAllSelections()};s.appendChild(b)});
+}
+function updateMobileQuantity(){
+const stock=currentStock();mobileQuantity=Math.max(1,Math.min(mobileQuantity,Math.max(stock,1)));$("#mobileQuantity").textContent=mobileQuantity;$("#mobileMinus").disabled=mobileQuantity<=1;$("#mobilePlus").disabled=stock<=0||mobileQuantity>=stock;
+const m=$("#stockMessage");if(stock<=0){m.textContent="Agotado";m.style.color="#d50000"}else if(stock<=5){m.textContent=`Casi agotado · quedan ${stock}`;m.style.color="#222"}else{m.textContent=`${stock} unidades disponibles`;m.style.color="#555"}
+}
+function renderAllSelections(){
+$("#productName").textContent=PRODUCT.name;$("#currentPrice").textContent=money(PRODUCT.offerPrice);$("#oldPrice").textContent=money(PRODUCT.price);$("#discount").textContent="-"+Math.round((1-PRODUCT.offerPrice/PRODUCT.price)*100)+"% dto.";$("#sidePrice").textContent=money(PRODUCT.offerPrice);$("#sideOldPrice").textContent=money(PRODUCT.price);
+$("#selectedColorLabel").textContent=selectedColor.name;$("#selectedSizeLabel").textContent=selectedSize.name;$("#selectionSummary").innerHTML=`<b>Selección:</b> ${selectedColor.name} · ${selectedSize.name}`;
+$("#variantHeaderImage").src=selectedColor.image;$("#variantHeaderName").textContent=PRODUCT.name;$("#variantHeaderSelection").textContent=`Color: ${selectedColor.name}, Paquete: ${selectedSize.name}`;
+$("#variantPrice").textContent=money(PRODUCT.offerPrice);$("#variantOldPrice").textContent=money(PRODUCT.price);$("#mobileColorLabel").textContent=selectedColor.name;$("#mobileSizeLabel").textContent=selectedSize.name;
+renderGallery();renderDesktopOptions();renderMobileOptions();renderVariantGallery();updateMobileQuantity()
+}
+function openVariantModal(){
+mobileQuantity=quantity;renderAllSelections();$("#variantScroll").scrollTop=0;$("#variantSheet").classList.remove("compact");$("#variantOverlay").classList.add("active");document.body.classList.add("variant-open")
+}
+function closeVariantModal(){$("#variantOverlay").classList.remove("active");document.body.classList.remove("variant-open");setTimeout(()=>{$("#variantScroll").scrollTop=0;$("#variantSheet").classList.remove("compact")},300)}
+function getCart(){try{const v=JSON.parse(localStorage.getItem(CART_KEY)||"[]");return Array.isArray(v)?v:[]}catch{return[]}}
+function saveCart(c){localStorage.setItem(CART_KEY,JSON.stringify(c));updateCartCount()}
+function addToCart(amount){const cart=getCart(),id=`${PRODUCT.id}-${selectedColor.name}-${selectedSize.name}`,f=cart.find(i=>i.id===id);if(f)f.cantidad+=amount;else cart.push({id,productId:PRODUCT.id,name:PRODUCT.name,price:PRODUCT.offerPrice,oldPrice:PRODUCT.price,currency:PRODUCT.currency,image:selectedColor.image,color:selectedColor.name,size:selectedSize.name,cantidad:amount});saveCart(cart)}
+function updateCartCount(){$("#cartCount").textContent=getCart().reduce((s,i)=>s+Number(i.cantidad||0),0)}
+function showSuccess(){$("#successOverlay").classList.add("active")}function closeSuccess(){$("#successOverlay").classList.remove("active")}
+$("#variantScroll").addEventListener("scroll",()=>$("#variantSheet").classList.toggle("compact",$("#variantScroll").scrollTop>90));
+$("#minus").onclick=()=>{quantity=Math.max(1,quantity-1);$("#quantity").value=quantity};$("#plus").onclick=()=>{quantity=Math.min(currentStock(),quantity+1);$("#quantity").value=quantity};
+$("#addCart").onclick=()=>window.matchMedia("(max-width:760px)").matches?openVariantModal():(addToCart(quantity),showSuccess());
+$("#buyNow").onclick=()=>{addToCart(quantity);location.href="carrito.html"};$("#mobileAdd").onclick=openVariantModal;$("#variantClose").onclick=closeVariantModal;
+$("#variantOverlay").onclick=e=>{if(e.target===$("#variantOverlay"))closeVariantModal()};$("#mobileMinus").onclick=()=>{mobileQuantity=Math.max(1,mobileQuantity-1);updateMobileQuantity()};$("#mobilePlus").onclick=()=>{mobileQuantity=Math.min(currentStock(),mobileQuantity+1);updateMobileQuantity()};
+$("#continueButton").onclick=()=>{if(currentStock()<=0){toast("Esta opción está agotada");return}quantity=mobileQuantity;$("#quantity").value=quantity;addToCart(mobileQuantity);closeVariantModal();setTimeout(showSuccess,220)};
+$("#acceptSuccess").onclick=closeSuccess;$("#mobileCart").onclick=()=>location.href="carrito.html";$("#imageClose").onclick=()=>history.length>1?history.back():location.href="index.html";
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeVariantModal();closeSuccess()}});
+renderAllSelections();updateCartCount();
+</script>
+</body>
+</html>
