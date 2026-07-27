@@ -791,9 +791,74 @@ $('#deleteSelected').onclick=()=>{
   cart=cart.filter((item,index)=>!selected.has(String(item.id||index)));
   selected.clear();saveCart();render();toast('Artículos eliminados');
 };
+function hayUsuarioLogueado(){
+  const clavesSesion=[
+    'usuarioLogueado',
+    'usuarioActual',
+    'alimarketUser',
+    'currentUser',
+    'userLoggedIn',
+    'isLoggedIn',
+    'authToken',
+    'token'
+  ];
+
+  return clavesSesion.some(clave=>{
+    const valor=localStorage.getItem(clave);
+
+    if(
+      valor===null ||
+      valor==='' ||
+      valor==='false' ||
+      valor==='null' ||
+      valor==='undefined'
+    ){
+      return false;
+    }
+
+    try{
+      const dato=JSON.parse(valor);
+
+      if(dato===false || dato===null) return false;
+
+      if(typeof dato==='object'){
+        return Boolean(
+          dato.id ||
+          dato.email ||
+          dato.nombre ||
+          dato.name ||
+          dato.usuario ||
+          dato.token ||
+          dato.loggedIn===true ||
+          dato.isLoggedIn===true
+        );
+      }
+
+      return Boolean(dato);
+    }catch(error){
+      return valor.trim().length>0;
+    }
+  });
+}
+
 $('#checkoutBtn').onclick=()=>{
   const chosen=cart.filter((item,index)=>selected.has(String(item.id||index)));
+
+  if(!chosen.length){
+    toast('Selecciona uno o más artículos');
+    return;
+  }
+
   localStorage.setItem('checkoutAliMarket',JSON.stringify(chosen));
+
+  const esVersionMovil=window.matchMedia('(max-width: 768px)').matches;
+
+  if(esVersionMovil && !hayUsuarioLogueado()){
+    localStorage.setItem('alimarketRedirectDespuesLogin','checkout.html');
+    location.href='login.html?redirect=checkout.html';
+    return;
+  }
+
   location.href='checkout.html';
 };
 
