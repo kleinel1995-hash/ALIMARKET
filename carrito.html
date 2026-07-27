@@ -7,7 +7,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{zoom:75%;background:#d9d9d9;color:#000;padding-top:150px;padding-bottom:90px}
 .header{position:fixed;top:0;left:0;width:100%;background:#fff;z-index:9999;padding:18px 70px 28px}
 .header-top{display:flex;align-items:center;gap:22px}
 .logo{font-family:Georgia,serif;font-size:43px;font-weight:bold;color:#b40000;text-decoration:none;letter-spacing:3px}
@@ -270,31 +269,372 @@ body{background:#f4f4f4;color:#181818;padding-top:155px;padding-bottom:40px}
   .mobile-bottom .discount::after{content:""!important}
 }
 
+
+/* =========================================================
+   HEADER EXACTAMENTE IGUAL AL DETALLE DEL PRODUCTO
+========================================================= */
+.desktop-header{
+  position:sticky !important;
+  top:0 !important;
+  left:auto !important;
+  width:100% !important;
+  z-index:9999 !important;
+  background:#fff !important;
+  border-bottom:1px solid #eee !important;
+  padding:18px 2.2% 10px !important;
+}
+
+.desktop-header .header-row{
+  display:grid !important;
+  grid-template-columns:auto minmax(320px,1fr) auto !important;
+  align-items:center !important;
+  gap:34px !important;
+  width:100% !important;
+}
+
+.desktop-header .logo{
+  font:900 44px Georgia,serif !important;
+  color:#c60020 !important;
+  text-decoration:none !important;
+  letter-spacing:-2px !important;
+  white-space:nowrap !important;
+}
+
+.desktop-header .search-box{
+  width:100% !important;
+  max-width:none !important;
+  height:50px !important;
+  border:2px solid #777 !important;
+  border-radius:28px !important;
+  display:flex !important;
+  align-items:center !important;
+  gap:12px !important;
+  padding:0 18px !important;
+  background:#fff !important;
+}
+
+.desktop-header .search-box input{
+  flex:1 !important;
+  width:auto !important;
+  min-width:0 !important;
+  border:0 !important;
+  outline:0 !important;
+  background:transparent !important;
+  font-size:16px !important;
+}
+
+.desktop-header .search-box i{
+  color:#111 !important;
+  font-size:20px !important;
+}
+
+.desktop-header .header-icons{
+  display:flex !important;
+  align-items:center !important;
+  gap:28px !important;
+  white-space:nowrap !important;
+}
+
+.desktop-header .header-icons a{
+  color:#111 !important;
+  text-decoration:none !important;
+  font-weight:700 !important;
+  display:flex !important;
+  align-items:center !important;
+  gap:8px !important;
+  font-size:16px !important;
+}
+
+.desktop-header .header-icons i{
+  font-size:27px !important;
+}
+
+.desktop-header .promo{
+  display:flex !important;
+  align-items:center !important;
+  gap:14px !important;
+  margin-top:16px !important;
+  padding-left:0 !important;
+  overflow-x:auto !important;
+  scrollbar-width:none !important;
+}
+
+.desktop-header .promo::-webkit-scrollbar{
+  display:none !important;
+}
+
+.desktop-header .promo a{
+  min-width:0 !important;
+  white-space:nowrap !important;
+  text-decoration:none !important;
+  color:#111 !important;
+  background:#f4f4f5 !important;
+  padding:11px 22px !important;
+  border-radius:24px !important;
+  font-weight:700 !important;
+  font-size:16px !important;
+  text-align:center !important;
+}
+
+.desktop-header .promo .category{
+  background:#ffd7dc !important;
+  color:#bc001d !important;
+  border-radius:8px !important;
+  padding:14px 25px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:10px !important;
+}
+
+/* El header sticky ocupa su propio espacio: se elimina el espacio
+   que usaba el header fijo anterior del carrito. */
+body{
+  padding-top:0 !important;
+}
+
+/* La tarjeta resumen se mantiene debajo del nuevo header. */
+.cart-summary{
+  top:175px !important;
+}
+
+@media(max-width:1250px){
+  .desktop-header .header-row{
+    gap:20px !important;
+  }
+
+  .desktop-header .header-icons{
+    gap:16px !important;
+  }
+}
+
+@media(max-width:1050px){
+  .desktop-header .header-row{
+    grid-template-columns:auto 1fr !important;
+  }
+
+  .desktop-header .header-icons{
+    grid-column:1/-1 !important;
+    justify-content:flex-end !important;
+  }
+}
+
+@media(max-width:760px){
+  .desktop-header{
+    display:none !important;
+  }
+
+  body{
+    padding-top:0 !important;
+  }
+}
+
+
+/* =========================================================
+   ESTADO DE CARRITO VACÍO IGUAL A LA IMAGEN
+========================================================= */
+.empty-cart{
+  min-height:620px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:70px 20px;
+  background:#fff;
+}
+
+.empty-cart i{
+  font-size:105px;
+  color:#2f3a4b;
+  margin-bottom:28px;
+}
+
+.empty-cart h2{
+  margin:0 0 14px;
+  font-size:44px;
+  line-height:1.15;
+  color:#273142;
+  font-weight:900;
+}
+
+.empty-cart p{
+  margin:0;
+  font-size:24px;
+  color:#6f7785;
+}
+
+.continue-shopping{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:330px;
+  min-height:72px;
+  margin-top:34px;
+  padding:18px 34px;
+  background:#273142;
+  color:#fff;
+  border-radius:40px;
+  text-decoration:none;
+  font-size:25px;
+  font-weight:900;
+  transition:.2s;
+}
+
+.continue-shopping:hover{
+  background:#111827;
+  transform:translateY(-2px);
+}
+
+@media(max-width:700px){
+  .empty-cart{
+    min-height:70vh;
+    padding:50px 18px;
+  }
+
+  .empty-cart i{
+    font-size:88px;
+  }
+
+  .empty-cart h2{
+    font-size:37px;
+  }
+
+  .empty-cart p{
+    font-size:21px;
+  }
+
+  .continue-shopping{
+    min-width:280px;
+    min-height:66px;
+    font-size:22px;
+  }
+}
+
+
+/* ESTADO VACÍO VISIBLE A PANTALLA COMPLETA */
+.cart-page.empty-mode{
+  display:block !important;
+  width:min(1500px,94%) !important;
+}
+
+.cart-page.empty-mode .cart-main{
+  width:100% !important;
+  min-height:680px !important;
+}
+
+.cart-page.empty-mode .cart-toolbar,
+.cart-page.empty-mode .cart-summary{
+  display:none !important;
+}
+
+.cart-page.empty-mode .empty-cart{
+  width:100% !important;
+  min-height:590px !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  text-align:center !important;
+  padding:70px 20px !important;
+}
+
+.cart-page.empty-mode .empty-cart i{
+  display:block !important;
+  font-size:105px !important;
+  color:#2f3a4b !important;
+  margin-bottom:26px !important;
+}
+
+.cart-page.empty-mode .empty-cart h2{
+  display:block !important;
+  margin:0 0 14px !important;
+  font-size:44px !important;
+  line-height:1.15 !important;
+  color:#273142 !important;
+  font-weight:900 !important;
+}
+
+.cart-page.empty-mode .empty-cart p{
+  display:block !important;
+  margin:0 !important;
+  font-size:24px !important;
+  color:#6f7785 !important;
+}
+
+.cart-page.empty-mode .continue-shopping{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  min-width:330px !important;
+  min-height:72px !important;
+  margin-top:34px !important;
+  padding:18px 34px !important;
+  background:#273142 !important;
+  color:#fff !important;
+  border-radius:40px !important;
+  text-decoration:none !important;
+  font-size:25px !important;
+  font-weight:900 !important;
+}
+
+@media(max-width:700px){
+  .cart-page.empty-mode{
+    width:100% !important;
+    padding:12px !important;
+  }
+
+  .cart-page.empty-mode .cart-main{
+    min-height:72vh !important;
+  }
+
+  .cart-page.empty-mode .empty-cart{
+    min-height:68vh !important;
+    padding:45px 15px !important;
+  }
+
+  .cart-page.empty-mode .empty-cart i{
+    font-size:88px !important;
+  }
+
+  .cart-page.empty-mode .empty-cart h2{
+    font-size:37px !important;
+  }
+
+  .cart-page.empty-mode .empty-cart p{
+    font-size:21px !important;
+  }
+
+  .cart-page.empty-mode .continue-shopping{
+    min-width:280px !important;
+    min-height:66px !important;
+    font-size:22px !important;
+  }
+}
+
+
+/* ICONO DEL CARRITO VACÍO */
+.empty-cart-icon{
+  display:block !important;
+  font-size:110px !important;
+  line-height:1 !important;
+  color:#374151 !important;
+  margin-bottom:26px !important;
+}
+
+@media(max-width:700px){
+  .empty-cart-icon{
+    font-size:88px !important;
+  }
+}
+
 </style>
 </head>
 <body>
-<header class="header"><div class="header-top"><a href="index.html" class="logo">Alimarket</a><div class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input type="text" placeholder=""><i class="fa-solid fa-microphone"></i></div><div class="header-icons"><a href="favoritos.html"><i class="fa-solid fa-heart"></i> Favorito</a><a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i> Cesta</a><div class="user-menu-wrap" id="userMenuWrap">
-  <a href="usuario.html" class="user-menu-trigger" id="userMenuTrigger">
-    <i class="fa-solid fa-user"></i> Usuario
-  </a>
-  <div class="user-dropdown" id="userDropdown">
-    <button type="button" class="user-login-btn" onclick="location.href='login.html'">Iniciar sesión</button>
-    <a href="registro.html" class="user-register">Registrarse</a>
-    <div class="user-divider"></div>
-    <div class="user-menu-list">
-      <a href="pedidos.html" class="user-menu-item"><i class="fa-regular fa-clipboard"></i><span>Mis pedidos</span></a>
-      <a href="monedas.html" class="user-menu-item"><i class="fa-solid fa-coins"></i><span>Mis monedas</span></a>
-      <a href="mensajes.html" class="user-menu-item"><i class="fa-regular fa-message"></i><span>Centro de mensajes</span></a>
-      <a href="formas_pago.html" class="user-menu-item"><i class="fa-regular fa-credit-card"></i><span>Forma de pago</span></a>
-      <a href="favoritos.html" class="user-menu-item"><i class="fa-regular fa-heart"></i><span>Lista de deseos</span></a>
-      <a href="cupones.html" class="user-menu-item"><i class="fa-solid fa-ticket"></i><span>Mis cupones</span></a>
-      <a href="configuracion.html" class="user-menu-item"><i class="fa-solid fa-gear"></i><span>Configuración</span></a>
-      <a href="business.html" class="user-menu-item"><i class="fa-solid fa-briefcase"></i><span>AliMarket Business</span></a>
-      <a href="dropshipping.html" class="user-menu-item"><i class="fa-solid fa-boxes-stacked"></i><span>Centro de dropshipping</span></a>
-      <a href="vendedor.html" class="user-menu-item"><i class="fa-solid fa-store"></i><span>Invitación a vendedor</span></a>
-    </div>
-  </div>
-</div></div></div><nav class="promo-bar"><div class="categoria-hover"><a class="cat" href="#"><i class="fa-solid fa-bars"></i> Categorías</a><div class="hover-full"><main class="cat-page"><div class="cat-layout"><aside class="cat-sidebar" id="catSidebar"></aside><section class="cat-content"><div class="cat-banner"><div class="banner-icon" id="bannerIcon">🎧</div><div><h1 id="bannerTitle">Electronica</h1><p>Explora cientos productos populares y subcategorías.</p></div></div><div class="cat-title-row"><h2 id="sectionTitle">Electronica</h2><a href="categorias.html">Abrir página completa</a></div><div class="subcat-grid" id="subcatGrid"></div></section></div></main></div></div><a href="#">Ofertas promocional</a><a href="#">Nuevos</a><a href="#">Más vendido</a><a href="#">Cupones</a><a href="#">Envió gratis</a></nav></header>
+<header class="desktop-header">
+<div class="header-row"><a class="logo" href="index.html">AliMarket</a><div class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input placeholder="Buscar productos"><i class="fa-solid fa-microphone"></i></div><div class="header-icons"><a href="#"><i class="fa-regular fa-heart"></i> Favorito</a><a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i> Cesta</a><a href="#"><i class="fa-regular fa-user"></i> Usuario</a></div></div>
+<nav class="promo"><a class="category" href="#"><i class="fa-solid fa-bars"></i> Categorías</a><a href="#">Ofertas promocionales</a><a href="#">Nuevos</a><a href="#">Más vendidos</a><a href="#">Cupones</a><a href="#">Envío gratis</a></nav>
+</header>
 <main class="cart-page">
   <section class="cart-main">
     <h1 class="cart-title"><span class="desktop-cart-title">Cesta</span><span class="mobile-cart-title">Carrito</span> (<span id="cartCount">0</span>)</h1>
@@ -457,8 +797,6 @@ $('#checkoutBtn').onclick=()=>{
   location.href='checkout.html';
 };
 
-const categorias=[{nombre:"Electronica",icono:"🎧",subs:["Auriculares","Smartwatch","Camaras","Drones","Consolas","Audio","Parlantes","Microfonos","TV Box","Cargadores","Bluetooth","Luces-LED"]},{nombre:"Telefonos",icono:"📱",subs:["Samsung","iPhone","Xiaomi","Motorola","Huawei","Tecno","Infinix","Cargadores","Cables","Protectores","Pantallas","Accesorios"]},{nombre:"Computadoras",icono:"💻",subs:["Laptop","PC Gamer","Mouse","Teclados","Monitores","Discos SSD","Memorias","Impresoras","Router","USB","Cámaras web","Bocinas"]},{nombre:"Moda Mujer",icono:"👗",subs:["Vestidos","Blusas","Jeans","Zapatos","Carteras","Relojes","Perfumes","Faldas","Maquillaje","Pulseras","Collares","Sandalias"]},{nombre:"Moda Hombre",icono:"👕",subs:["Polos","Jeans","Tenis","Gorras","Relojes","Camisas","Correas","Perfumes","Billeteras","Shorts","Abrigos","Sandalias"]},{nombre:"Hogar y Jardin",icono:"🏠",subs:["Cocina","Muebles","Decoración","Herramientas","Jardín","Luces","Baño","Organizadores","Camas","Cortinas","Sillas","Mesas"]},{nombre:"Belleza y Salud",icono:"💄",subs:["Cuidado facial","Cabello","Perfumes","Maquillaje","Barbería","Vitaminas","Masajes","Cremas","Aceites","Uñas","Cepillos","Máquinas"]},{nombre:"Deportes",icono:"⚽",subs:["Pelotas","Tenis","Ropa deportiva","Gym","Bicicletas","Guantes","Pesas","Gorras","Mochilas","Botellas","Caminadoras","Accesorios"]},{nombre:"Juguetes",icono:"🧸",subs:["Carritos","Muñecas","Peluches","Drones niños","Bloques","Educativos","Bicicletas","Piscinas","Pistolas agua","Robots","Juegos mesa","Figuras"]},{nombre:"Automotriz",icono:"🚗",subs:["Luces LED","Aceites","Baterías","Radios","Bocinas","Forros","Cámaras","Sensores","Herramientas","Aros","Gomas","Accesorios"]},{nombre:"Herramientas",icono:"🛠️",subs:["Taladros","Martillos","Destornilladores","Sierras","Llaves","Compresores","Pintura","Cajas","Eléctricas","Medidores","Soldadoras","Cortadoras"]},{nombre:"Officina y Escuela",icono:"📚",subs:["Cuadernos","Lápices","Mochilas","Calculadoras","Sillas","Escritorios","Impresoras","Papelería","Carpetas","Marcadores","Reglas","Libros"]}];
-const sidebar=document.getElementById("catSidebar"),grid=document.getElementById("subcatGrid"),bannerTitle=document.getElementById("bannerTitle"),bannerIcon=document.getElementById("bannerIcon"),sectionTitle=document.getElementById("sectionTitle");function renderSidebar(){sidebar.innerHTML="";categorias.forEach((cat,index)=>{const item=document.createElement("div");item.className="cat-item"+(index===0?" active":"");item.innerHTML=`<div class="cat-left"><span class="cat-icon">${cat.icono}</span><span>${cat.nombre}</span></div><span>›</span>`;item.onmouseenter=()=>selectCat(index);item.onclick=()=>selectCat(index);sidebar.appendChild(item)})}function selectCat(index){document.querySelectorAll(".cat-item").forEach(el=>el.classList.remove("active"));document.querySelectorAll(".cat-item")[index].classList.add("active");const cat=categorias[index];bannerTitle.innerText=cat.nombre;bannerIcon.innerText=cat.icono;sectionTitle.innerText=cat.nombre;grid.innerHTML="";cat.subs.forEach(sub=>{const card=document.createElement("div");card.className="subcat-card";card.innerHTML=`<div class="subcat-img"><img src="https://cdn-icons-png.flaticon.com/512/1048/1048949.png"></div><h3>${sub}</h3>`;grid.appendChild(card)})}renderSidebar();selectCat(0);
 const userMenuWrap=document.getElementById('userMenuWrap');
 const userMenuTrigger=document.getElementById('userMenuTrigger');
 if(userMenuWrap&&userMenuTrigger){
