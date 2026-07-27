@@ -202,7 +202,7 @@ a{text-decoration:none;color:inherit}
 
         <button class="primary-btn" type="submit">Crear cuenta</button>
       </form>
-      <p class="switch-text">¿Ya tienes cuenta? &nbsp;<a class="red-link" href="login_unido.html">Iniciar sesión</a></p>
+      <p class="switch-text">¿Ya tienes cuenta? &nbsp;<a class="red-link" href="login.html">Iniciar sesión</a></p>
     </div>
   </section>
 </main>
