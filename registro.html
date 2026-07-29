@@ -207,92 +207,181 @@ a{text-decoration:none;color:inherit}
   </section>
 </main>
 <script>
-
 const USERS_KEY = "alimarketUsuarios";
-const SESSION_KEY = "alimarketSesion";
 
-function getUsers(){
+function obtenerUsuarios(){
   try{
-    const data = JSON.parse(localStorage.getItem(USERS_KEY) || "[]");
-    return Array.isArray(data) ? data : [];
-  }catch{
+    const usuarios = JSON.parse(localStorage.getItem(USERS_KEY) || "[]");
+    return Array.isArray(usuarios) ? usuarios : [];
+  }catch(error){
+    console.error("Error leyendo usuarios:", error);
     return [];
   }
 }
-function saveUsers(users){
-  localStorage.setItem(USERS_KEY, JSON.stringify(users));
+
+function guardarUsuarios(usuarios){
+  localStorage.setItem(USERS_KEY, JSON.stringify(usuarios));
 }
-function showAlert(id, message, type){
-  const box = document.getElementById(id);
-  if(!box) return;
-  box.textContent = message;
-  box.className = `alert show ${type}`;
+
+function mostrarAlerta(mensaje, tipo){
+  const alerta = document.getElementById("registerAlert");
+
+  alerta.textContent = mensaje;
+  alerta.className = `alert show ${tipo}`;
+
+  alerta.scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
 }
-document.querySelectorAll(".password-toggle").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    const input=document.getElementById(btn.dataset.target);
-    const icon=btn.querySelector("i");
-    input.type=input.type==="password"?"text":"password";
-    icon.className=input.type==="password"?"fa-regular fa-eye-slash":"fa-regular fa-eye";
+
+/* Mostrar y ocultar contraseñas */
+document.querySelectorAll(".password-toggle").forEach(boton=>{
+  boton.addEventListener("click",()=>{
+    const input = document.getElementById(boton.dataset.target);
+    const icono = boton.querySelector("i");
+
+    if(!input) return;
+
+    input.type = input.type === "password" ? "text" : "password";
+
+    icono.className =
+      input.type === "password"
+        ? "fa-regular fa-eye-slash"
+        : "fa-regular fa-eye";
   });
 });
-document.querySelectorAll("[data-social]").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    alert(`Conexión con ${btn.dataset.social} pendiente de configurar con su API oficial.`);
-  });
+
+/* Seguridad de contraseña */
+const formulario = document.getElementById("registerForm");
+const passwordInput = document.getElementById("registerPassword");
+const strengthText = document.getElementById("strengthText");
+
+passwordInput.addEventListener("input",()=>{
+  const password = passwordInput.value;
+
+  let texto = "Seguridad: Débil";
+  let color = "#e34a4a";
+
+  if(
+    password.length >= 8 &&
+    /[A-Za-z]/.test(password) &&
+    /\d/.test(password)
+  ){
+    texto = "Seguridad: Media";
+    color = "#d48400";
+  }
+
+  if(
+    password.length >= 10 &&
+    /[A-Z]/.test(password) &&
+    /[a-z]/.test(password) &&
+    /\d/.test(password) &&
+    /[^A-Za-z0-9]/.test(password)
+  ){
+    texto = "Seguridad: Fuerte";
+    color = "#14863b";
+  }
+
+  strengthText.textContent = texto;
+  strengthText.style.color = color;
 });
 
-const registerForm=document.getElementById("registerForm");
-const password=document.getElementById("registerPassword");
-const strength=document.getElementById("strengthText");
+/* Registrar usuario en localStorage */
+formulario.addEventListener("submit", evento=>{
+  evento.preventDefault();
 
-password.addEventListener("input",()=>{
-  const value=password.value;
-  let text="Seguridad: Débil";
-  let color="#e34a4a";
-  if(value.length>=8 && /[A-Za-z]/.test(value) && /\d/.test(value)){
-    text="Seguridad: Media"; color="#d48400";
-  }
-  if(value.length>=10 && /[A-Z]/.test(value) && /[a-z]/.test(value) && /\d/.test(value) && /[^A-Za-z0-9]/.test(value)){
-    text="Seguridad: Fuerte"; color="#14863b";
-  }
-  strength.textContent=text;
-  strength.style.color=color;
-});
+  const firstName = document.getElementById("firstName").value.trim();
+  const lastName = document.getElementById("lastName").value.trim();
+  const email = document
+    .getElementById("registerEmail")
+    .value
+    .trim()
+    .toLowerCase();
 
-registerForm.addEventListener("submit",event=>{
-  event.preventDefault();
-  const firstName=document.getElementById("firstName").value.trim();
-  const lastName=document.getElementById("lastName").value.trim();
-  const email=document.getElementById("registerEmail").value.trim().toLowerCase();
-  const pass=password.value;
-  const confirm=document.getElementById("confirmPassword").value;
-  const terms=document.getElementById("terms").checked;
+  const password = document.getElementById("registerPassword").value;
+  const confirmPassword = document.getElementById("confirmPassword").value;
+  const terms = document.getElementById("terms").checked;
 
-  if(pass.length<8 || !/[A-Za-z]/.test(pass) || !/\d/.test(pass)){
-    showAlert("registerAlert","La contraseña debe tener al menos 8 caracteres, letras y números.","error");
+  if(!firstName || !lastName || !email){
+    mostrarAlerta(
+      "Completa todos los campos obligatorios.",
+      "error"
+    );
     return;
   }
-  if(pass!==confirm){
-    showAlert("registerAlert","Las contraseñas no coinciden.","error");
+
+  if(
+    password.length < 8 ||
+    !/[A-Za-z]/.test(password) ||
+    !/\d/.test(password)
+  ){
+    mostrarAlerta(
+      "La contraseña debe tener al menos 8 caracteres, letras y números.",
+      "error"
+    );
     return;
   }
+
+  if(password !== confirmPassword){
+    mostrarAlerta(
+      "Las contraseñas no coinciden.",
+      "error"
+    );
+    return;
+  }
+
   if(!terms){
-    showAlert("registerAlert","Debes aceptar los términos y la política de privacidad.","error");
+    mostrarAlerta(
+      "Debes aceptar los términos y la política de privacidad.",
+      "error"
+    );
     return;
   }
-  const users=getUsers();
-  if(users.some(u=>u.email===email)){
-    showAlert("registerAlert","Ya existe una cuenta con ese correo electrónico.","error");
-    return;
-  }
-  users.push({
-    id:crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
-    firstName,lastName,email,password:pass,createdAt:new Date().toISOString()
+
+  const usuarios = obtenerUsuarios();
+
+  const correoExiste = usuarios.some(usuario=>{
+    return String(usuario.email).toLowerCase() === email;
   });
-  saveUsers(users);
-  showAlert("registerAlert","Cuenta creada satisfactoriamente. Redirigiendo...","success");
-  setTimeout(()=>location.href="login_unido.html",900);
+
+  if(correoExiste){
+    mostrarAlerta(
+      "Ya existe una cuenta registrada con ese correo electrónico.",
+      "error"
+    );
+    return;
+  }
+
+  const nuevoUsuario = {
+    id:
+      typeof crypto !== "undefined" && crypto.randomUUID
+        ? crypto.randomUUID()
+        : `usuario-${Date.now()}`,
+
+    firstName,
+    lastName,
+    email,
+    password,
+    createdAt: new Date().toISOString()
+  };
+
+  usuarios.push(nuevoUsuario);
+  guardarUsuarios(usuarios);
+
+  mostrarAlerta(
+    "Cuenta creada satisfactoriamente.",
+    "success"
+  );
+
+  formulario.reset();
+
+  strengthText.textContent = "Seguridad: Débil";
+  strengthText.style.color = "#e34a4a";
+
+  setTimeout(()=>{
+    location.href = "login_unido.html";
+  },1000);
 });
 </script>
 </body>
