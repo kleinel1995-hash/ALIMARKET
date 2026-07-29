@@ -10,17 +10,33 @@
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.1/dist/mobilenet.min.js"></script>
 
 <style>
+:root{
+  --red:#d60000;
+  --soft-red:#ffb4b8;
+  --green:#09873f;
+  --line:#e7e7e7;
+}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 html,body{width:100%;min-height:100%;overflow-x:hidden}
-body{background:#d9d9d9;color:#000;padding-top:150px;padding-bottom:90px}
+body{background:#d9d9d9;color:#111;padding-top:150px;padding-bottom:90px}
 button,input{font:inherit}
 button{cursor:pointer}
+img{display:block;max-width:100%}
 
-/* HEADER */
-.header{position:fixed;top:0;left:0;width:100%;background:#fff;z-index:9000;padding:18px 70px 28px}
+/* ================= HEADER DESKTOP ================= */
+.header{
+  position:fixed;top:0;left:0;width:100%;background:#fff;z-index:9000;
+  padding:18px 70px 28px;transition:.28s ease
+}
 .header-top{display:flex;align-items:center;gap:22px}
-.logo{font-family:Georgia,serif;font-size:43px;font-weight:bold;color:#b40000;text-decoration:none;letter-spacing:3px}
-.search-box{flex:1;height:43px;border:2px solid #777;border-radius:30px;display:flex;align-items:center;padding:0 15px;gap:10px;max-width:720px}
+.logo{
+  font-family:Georgia,serif;font-size:43px;font-weight:bold;color:#b40000;
+  text-decoration:none;letter-spacing:3px;white-space:nowrap
+}
+.search-box{
+  flex:1;height:43px;border:2px solid #777;border-radius:30px;
+  display:flex;align-items:center;padding:0 15px;gap:10px;max-width:720px;background:#fff
+}
 .search-box input{border:none;outline:none;width:100%;font-size:16px;background:transparent}
 .search-box i{color:#555;font-size:18px}
 .search-box button{border:0;background:transparent;display:grid;place-items:center}
@@ -28,38 +44,74 @@ button{cursor:pointer}
 .camera-search-btn{width:43px;height:43px;border-radius:50%;transition:.2s}
 .camera-search-btn:hover{background:#f1f1f1}
 .header-icons{display:flex;align-items:center;gap:24px}
-.header-icons a{text-decoration:none;color:#000;font-weight:900;display:flex;align-items:center;gap:9px;font-size:19px}
+.header-icons a{
+  text-decoration:none;color:#000;font-weight:900;display:flex;
+  align-items:center;gap:9px;font-size:19px
+}
 .header-icons i{font-size:30px}
-.promo-bar{margin-top:18px;display:flex;align-items:center;gap:12px;padding-left:48px;overflow:auto;scrollbar-width:none}
+.promo-bar{
+  margin-top:18px;display:flex;align-items:center;gap:12px;padding-left:48px;
+  overflow:auto;scrollbar-width:none
+}
 .promo-bar::-webkit-scrollbar{display:none}
-.promo-bar a{min-width:max-content;background:#d8d8d8;color:#000;text-decoration:none;font-weight:900;text-align:center;padding:10px 18px;border-radius:18px;font-size:14px}
+.promo-bar a{
+  min-width:max-content;background:#d8d8d8;color:#000;text-decoration:none;
+  font-weight:900;text-align:center;padding:10px 18px;border-radius:18px;font-size:14px
+}
 .promo-bar .cat{background:#fa8d94;display:flex;align-items:center;justify-content:center;gap:10px}
 
-/* HERO Y PRODUCTOS */
-.hero{width:86%;height:420px;margin:30px auto 25px;background:linear-gradient(90deg,#e00000,#f00000,#cf0000);overflow:hidden;position:relative;display:flex;align-items:center;padding:45px}
+/* ================= HERO Y PRODUCTOS DESKTOP ================= */
+.hero{
+  width:86%;height:420px;margin:30px auto 25px;
+  background:linear-gradient(90deg,#7d0000,#e00000,#a80000);
+  overflow:hidden;position:relative;display:flex;align-items:center;padding:45px;border-radius:18px
+}
 .hero-text{color:#fff;width:45%;z-index:2}
 .hero-text h1{font-size:55px;line-height:1.2;margin-bottom:28px;font-weight:900}
 .hero-text p{font-size:32px;line-height:1.35;margin-bottom:28px}
-.hero-text button{background:#fff;color:#d90000;border:none;padding:17px 48px;border-radius:9px;font-size:25px;font-weight:900}
-.hero-img{position:absolute;right:0;bottom:0;width:58%;height:100%;background:url("https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=900&q=80") center/cover no-repeat}
+.hero-text button{
+  background:#fff;color:#d90000;border:none;padding:17px 48px;
+  border-radius:12px;font-size:25px;font-weight:900
+}
+.hero-img{
+  position:absolute;right:0;bottom:0;width:58%;height:100%;
+  background:
+    linear-gradient(90deg,rgba(143,0,0,.18),rgba(143,0,0,0)),
+    url("https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=1100&q=85")
+    center/cover no-repeat
+}
+.hero-dots{display:none}
 .section{width:86%;margin:25px auto}
 .section h2{font-size:36px;font-weight:900;margin-bottom:20px}
 .products{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-.product{background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.15);position:relative;cursor:pointer}
-.product img{width:100%;height:180px;object-fit:cover}
+.product{
+  background:#fff;border-radius:18px;overflow:hidden;
+  box-shadow:0 4px 12px rgba(0,0,0,.15);position:relative;cursor:pointer
+}
+.product-image-wrap{position:relative;overflow:hidden;background:#f2f2f2}
+.product img{width:100%;height:210px;object-fit:cover}
+.product-badge{
+  position:absolute;top:10px;left:10px;background:#d50000;color:#fff;
+  border-radius:7px;padding:7px 10px;font-size:13px;font-weight:900;z-index:2
+}
 .product-info{padding:15px}
 .product-info h3{font-size:17px;margin-bottom:8px}
 .price{color:#d60000;font-size:22px;font-weight:900}
-.product button{margin-top:12px;width:100%;padding:12px;border:none;border-radius:12px;background:#000;color:#fff;font-weight:bold}
+.product button{
+  margin-top:12px;width:100%;padding:12px;border:none;border-radius:12px;
+  background:#000;color:#fff;font-weight:bold
+}
 .product-meta{font-size:13px;color:#666;margin-top:5px}
+.rating-row{display:flex;align-items:center;gap:7px;margin:7px 0;color:#444;font-size:14px}
+.rating-stars{color:#1f2937;letter-spacing:1px}
+.shipping{display:flex;align-items:center;gap:7px;color:var(--green);font-size:14px;font-weight:800;margin-top:9px}
 .old-price{font-size:14px;color:#777;text-decoration:line-through;margin-left:7px}
 .empty-products{grid-column:1/-1;background:#fff;border-radius:16px;padding:35px;text-align:center}
 .mobile-bottom{display:none}
 
-/* CÁMARA PANTALLA COMPLETA */
+/* ================= CÁMARA ================= */
 .camera-screen{
-  position:fixed;inset:0;z-index:30000;background:#000;display:none;
-  color:#fff;overflow:hidden
+  position:fixed;inset:0;z-index:30000;background:#000;display:none;color:#fff;overflow:hidden
 }
 .camera-screen.show{display:block}
 .camera-video,.camera-photo{
@@ -74,19 +126,22 @@ button{cursor:pointer}
 }
 .camera-top-group{display:flex;align-items:center;gap:12px}
 .camera-icon-btn{
-  width:46px;height:46px;border:0;border-radius:50%;
-  color:#fff;background:rgba(0,0,0,.25);font-size:24px;
-  display:grid;place-items:center
+  width:46px;height:46px;border:0;border-radius:50%;color:#fff;
+  background:rgba(0,0,0,.25);font-size:24px;display:grid;place-items:center
 }
 .scan-line{
   position:absolute;left:0;right:0;top:43%;height:3px;
   background:linear-gradient(90deg,transparent,#ff2846,transparent);
   box-shadow:0 0 15px #ff2846;z-index:2;animation:scan 2.1s ease-in-out infinite
 }
-@keyframes scan{0%,100%{transform:translateY(-90px);opacity:.35}50%{transform:translateY(90px);opacity:1}}
+@keyframes scan{
+  0%,100%{transform:translateY(-90px);opacity:.35}
+  50%{transform:translateY(90px);opacity:1}
+}
 .camera-guide{
-  position:absolute;left:8%;right:8%;top:20%;bottom:31%;border:1px solid rgba(255,255,255,.32);
-  border-radius:22px;z-index:1;pointer-events:none
+  position:absolute;left:8%;right:8%;top:20%;bottom:31%;
+  border:1px solid rgba(255,255,255,.32);border-radius:22px;
+  z-index:1;pointer-events:none
 }
 .camera-bottom{
   position:absolute;left:0;right:0;bottom:0;z-index:4;
@@ -102,20 +157,27 @@ button{cursor:pointer}
 }
 .shutter::after{content:"";width:69px;height:69px;border-radius:50%;background:#fff}
 .album-panel{
-  background:rgba(25,25,25,.95);border-radius:20px 20px 0 0;margin:0 -18px -16px;
-  padding:20px 18px calc(15px + env(safe-area-inset-bottom))
+  background:rgba(25,25,25,.95);border-radius:20px 20px 0 0;
+  margin:0 -18px -16px;padding:20px 18px calc(15px + env(safe-area-inset-bottom))
 }
-.album-title{display:flex;align-items:center;justify-content:space-between;font-size:24px;font-weight:900;margin-bottom:14px}
+.album-title{
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:24px;font-weight:900;margin-bottom:14px
+}
 .album-row{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none}
 .album-row::-webkit-scrollbar{display:none}
 .album-thumb,.album-picker{
-  min-width:96px;width:96px;height:96px;border-radius:9px;overflow:hidden;border:0;background:#333;color:#fff
+  min-width:96px;width:96px;height:96px;border-radius:9px;
+  overflow:hidden;border:0;background:#333;color:#fff
 }
 .album-thumb img{width:100%;height:100%;object-fit:cover}
-.album-picker{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;font-weight:800}
+.album-picker{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:8px;font-weight:800
+}
 .album-picker i{font-size:26px}
 
-/* RESULTADOS */
+/* ================= RESULTADOS IA ================= */
 .ai-results-screen{
   position:fixed;inset:0;z-index:31000;background:#fff;display:none;overflow:auto;color:#111
 }
@@ -124,85 +186,363 @@ button{cursor:pointer}
   position:sticky;top:0;z-index:2;background:#fff;border-bottom:1px solid #e7e7e7;
   display:flex;align-items:center;gap:15px;padding:14px 16px
 }
-.results-header button{border:0;background:#f2f2f2;width:42px;height:42px;border-radius:50%;font-size:20px}
+.results-header button{
+  border:0;background:#f2f2f2;width:42px;height:42px;border-radius:50%;font-size:20px
+}
 .results-header h2{font-size:22px}
 .results-photo{width:100%;max-height:390px;object-fit:contain;background:#f3f3f3}
 .ai-loading{display:none;align-items:center;justify-content:center;gap:12px;padding:22px;font-weight:900}
 .ai-loading.show{display:flex}
-.loader{width:25px;height:25px;border:3px solid #ffd0d0;border-top-color:#d00000;border-radius:50%;animation:spin .7s linear infinite}
+.loader{
+  width:25px;height:25px;border:3px solid #ffd0d0;border-top-color:#d00000;
+  border-radius:50%;animation:spin .7s linear infinite
+}
 @keyframes spin{to{transform:rotate(360deg)}}
 .ai-search-results{display:grid;gap:12px;padding:16px}
 .ai-result-card{
-  display:grid;grid-template-columns:88px minmax(0,1fr) 25px;gap:13px;align-items:center;
-  padding:11px;border:1px solid #e1e1e1;border-radius:14px;background:#fff
+  display:grid;grid-template-columns:88px minmax(0,1fr) 25px;gap:13px;
+  align-items:center;padding:11px;border:1px solid #e1e1e1;
+  border-radius:14px;background:#fff;cursor:pointer
 }
 .ai-result-card img{width:88px;height:88px;object-fit:cover;border-radius:10px}
 .ai-result-name{font-weight:900;font-size:18px;margin-bottom:6px}
 .ai-result-category{color:#777;margin-bottom:7px}
 .ai-result-price{color:#d00000;font-size:20px;font-weight:900}
-.ai-no-results{margin:16px;padding:28px;border-radius:13px;background:#f5f5f5;text-align:center;color:#666}
+.ai-no-results{
+  margin:16px;padding:28px;border-radius:13px;background:#f5f5f5;
+  text-align:center;color:#666
+}
 
-/* RESPONSIVE */
+/* ================= VERSIÓN MÓVIL COMO LA IMAGEN ================= */
 @media(max-width:768px){
-  body{zoom:75%;background:#fff;padding-top:258px;padding-bottom:96px}
-  .header{padding:14px 18px 13px}
-  .header-top{display:grid;grid-template-columns:1fr 56px;grid-template-areas:"logo user" "search search";gap:13px}
-  .logo{grid-area:logo;font-size:45px;line-height:1;color:#a70000;letter-spacing:0}
-  .header-icons{grid-area:user;width:56px;height:54px;display:flex;align-items:center;justify-content:center}
+  html,body{background:#fff}
+  body{
+    padding-top:244px;
+    padding-bottom:94px;
+    transition:padding-top .3s ease
+  }
+
+  .header{
+    padding:12px 16px 14px;
+    box-shadow:none;
+    transition:padding .3s ease,box-shadow .3s ease
+  }
+
+  .header-top{
+    display:grid;
+    grid-template-columns:1fr 54px;
+    grid-template-areas:
+      "logo user"
+      "search search";
+    gap:13px;
+  }
+
+  .logo{
+    grid-area:logo;
+    font-size:39px;
+    line-height:54px;
+    letter-spacing:0;
+    color:#a40000;
+    max-height:54px;
+    opacity:1;
+    overflow:hidden;
+    transform:translateY(0);
+    transition:max-height .3s ease,opacity .2s ease,transform .3s ease
+  }
+
+  .header-icons{
+    grid-area:user;
+    width:54px;
+    height:54px;
+    max-height:54px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    opacity:1;
+    overflow:hidden;
+    transform:translateY(0);
+    transition:max-height .3s ease,opacity .2s ease,transform .3s ease
+  }
+
   .header-icons a{display:none}
-  .header-icons::after{content:"\f2bd";font-family:"Font Awesome 6 Free";font-weight:400;font-size:48px;color:#000}
-  .search-box{grid-area:search;width:100%;max-width:none;height:62px;border:1.5px solid #777;border-radius:32px;padding:0 20px;gap:13px}
-  .search-box input{font-size:20px}
-  .search-box i{font-size:24px;color:#111}
-  .promo-bar{margin-top:13px;padding-left:0;gap:10px}
-  .promo-bar a{padding:11px 20px;border-radius:24px;background:#ececec;font-size:16px}
-  .promo-bar .cat{background:#f6a1a7}
-  .hero{width:calc(100% - 24px);height:300px;margin:10px 12px 24px;padding:28px 30px;border-radius:14px}
-  .hero-text{width:52%}
-  .hero-text h1{font-size:35px;margin-bottom:17px}
-  .hero-text p{font-size:22px;margin-bottom:20px}
-  .hero-text button{font-size:18px;padding:13px 26px}
-  .hero-img{width:55%;border-radius:0 14px 14px 0}
-  .section{width:100%;margin:0;padding:0 18px 18px}
-  .section h2{font-size:30px;margin-bottom:16px}
-  .products{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-  .product{border-radius:15px}
-  .product img{height:178px}
-  .product-info{padding:10px 13px 14px}
-  .product-info h3{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .price{font-size:23px}
+  .header-icons::after{
+    content:"\f2bd";
+    font-family:"Font Awesome 6 Free";
+    font-weight:400;
+    font-size:42px;
+    color:#111
+  }
+
+  .search-box{
+    grid-area:search;
+    width:100%;
+    max-width:none;
+    height:58px;
+    padding:0 17px;
+    border:1.6px solid #b8b8b8;
+    border-radius:31px;
+    gap:12px
+  }
+
+  .search-box input{
+    font-size:18px;
+    color:#111;
+    min-width:0
+  }
+
+  .search-box input::placeholder{color:#9d9d9d}
+  .search-box i{font-size:23px;color:#111}
+  .search-icon-btn{width:31px}
+  .camera-search-btn{width:42px;height:42px}
+
+  /* Categorías tipo píldora */
+  .promo-bar{
+    margin-top:14px;
+    padding:0 2px;
+    gap:10px;
+    overflow-x:auto;
+  }
+
+  .promo-bar a{
+    min-width:128px;
+    padding:14px 19px;
+    border-radius:28px;
+    background:#f2f2f2;
+    font-size:16px;
+    font-weight:800;
+  }
+
+  .promo-bar .cat{
+    min-width:128px;
+    background:#ffb6ba;
+  }
+
+  .promo-bar .cat i{display:none}
+  .promo-bar .cat{font-size:0}
+  .promo-bar .cat::after{content:"Todas";font-size:16px}
+
+  .promo-bar a:nth-child(n+6){display:none}
+  .promo-bar a:nth-child(2){font-size:0}
+  .promo-bar a:nth-child(2)::after{content:"Electrónica";font-size:16px}
+  .promo-bar a:nth-child(3){font-size:0}
+  .promo-bar a:nth-child(3)::after{content:"Moda";font-size:16px}
+  .promo-bar a:nth-child(4){font-size:0}
+  .promo-bar a:nth-child(4)::after{content:"Hogar";font-size:16px}
+  .promo-bar a:nth-child(5){font-size:0}
+  .promo-bar a:nth-child(5)::after{content:"Belleza";font-size:16px}
+
+  /* Al mover el contenido hacia arriba, se esconden logo y usuario */
+  body.header-compact{padding-top:174px}
+  body.header-compact .header{
+    padding-top:8px;
+    box-shadow:0 3px 14px rgba(0,0,0,.11)
+  }
+  body.header-compact .header-top{
+    grid-template-columns:1fr;
+    grid-template-areas:"search";
+    gap:0
+  }
+  body.header-compact .logo,
+  body.header-compact .header-icons{
+    max-height:0;
+    height:0;
+    opacity:0;
+    transform:translateY(-30px);
+    pointer-events:none
+  }
+  body.header-compact .promo-bar{margin-top:10px}
+
+  .hero{
+    width:calc(100% - 32px);
+    height:330px;
+    margin:16px 16px 27px;
+    padding:35px 28px;
+    border-radius:18px;
+    background:linear-gradient(100deg,#7a0000 0%,#d90000 55%,#7a0000 100%);
+  }
+
+  .hero-text{width:54%;z-index:2}
+  .hero-text h1{
+    font-size:35px;
+    line-height:1.16;
+    margin-bottom:19px;
+  }
+  .hero-text p{
+    font-size:21px;
+    line-height:1.45;
+    margin-bottom:22px;
+  }
+  .hero-text button{
+    font-size:18px;
+    padding:14px 25px;
+    border-radius:12px;
+  }
+
+  .hero-img{
+    width:58%;
+    right:-3%;
+    background-position:center;
+    border-radius:0 18px 18px 0;
+  }
+
+  .hero-dots{
+    display:flex;
+    position:absolute;
+    left:50%;
+    bottom:18px;
+    transform:translateX(-50%);
+    gap:10px;
+    z-index:4
+  }
+
+  .hero-dots span{
+    width:14px;height:14px;border-radius:50%;
+    background:rgba(255,255,255,.35)
+  }
+  .hero-dots span:first-child{background:#fff}
+
+  .section{
+    width:100%;
+    margin:0;
+    padding:0 16px 18px
+  }
+
+  .section h2{
+    font-size:27px;
+    margin:0 0 16px 5px
+  }
+
+  .products{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:14px
+  }
+
+  .product{
+    border-radius:15px;
+    border:1px solid #ededed;
+    box-shadow:0 3px 10px rgba(0,0,0,.12)
+  }
+
+  .product img{height:196px;object-fit:cover}
+  .product-info{padding:12px 14px 15px}
+  .product-info h3{
+    font-size:17px;
+    line-height:1.25;
+    margin-bottom:6px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis
+  }
+
+  .rating-row{font-size:14px;margin:6px 0}
+  .price{font-size:23px;line-height:1.2}
+  .shipping{font-size:14px;margin-top:9px}
   .product-meta,.product button{display:none}
-  .mobile-bottom{position:fixed;bottom:0;left:0;right:0;height:92px;background:#fff;display:flex;justify-content:space-around;align-items:center;border-top:1px solid #ddd;z-index:8999}
-  .mobile-bottom a{font-size:28px;min-width:62px;height:72px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:#222;text-decoration:none}
-  .mobile-bottom a::after{font-size:13px}
+
+  .mobile-bottom{
+    position:fixed;
+    bottom:0;left:0;right:0;
+    height:88px;
+    background:#fff;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    border-top:1px solid #ddd;
+    box-shadow:0 -3px 12px rgba(0,0,0,.08);
+    z-index:8999
+  }
+
+  .mobile-bottom a{
+    font-size:26px;
+    min-width:62px;
+    height:72px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:5px;
+    color:#111;
+    text-decoration:none
+  }
+
+  .mobile-bottom a::after{font-size:13px;font-family:Arial,sans-serif}
   .mobile-bottom a:nth-child(1){color:#d00000}
   .mobile-bottom a:nth-child(1)::after{content:"Inicio"}
   .mobile-bottom a:nth-child(2)::after{content:"Mensajes"}
   .mobile-bottom a:nth-child(4)::after{content:"Cesta"}
   .mobile-bottom a:nth-child(5)::after{content:"Usuario"}
-  .mobile-bottom .discount{width:72px;min-width:72px;height:72px;border-radius:50%;background:#e5243f;color:#fff;font-size:23px;font-weight:900;display:flex;align-items:center;justify-content:center}
+
+  .mobile-bottom .discount{
+    position:relative;
+    width:70px;
+    min-width:70px;
+    height:70px;
+    border-radius:50%;
+    background:#dc0a24;
+    color:#fff;
+    font-size:22px;
+    font-weight:900;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    clip-path:polygon(
+      50% 0%,61% 8%,75% 5%,83% 17%,96% 23%,94% 38%,100% 50%,
+      92% 62%,95% 77%,82% 84%,75% 96%,61% 92%,50% 100%,
+      39% 92%,25% 96%,18% 84%,5% 77%,8% 62%,0% 50%,
+      6% 38%,4% 23%,17% 17%,25% 5%,39% 8%
+    )
+  }
+
   .mobile-bottom .discount::after{content:""}
+
+  /* Mantener cámara y resultados a pantalla completa */
+  .camera-screen,.ai-results-screen{
+    width:100%;
+    height:100%;
+  }
+}
+
+@media(max-width:430px){
+  .product img{height:175px}
+  .hero{height:300px}
+  .hero-text h1{font-size:31px}
+  .hero-text p{font-size:19px}
 }
 </style>
 </head>
 
 <body>
+
 <header class="header">
   <div class="header-top">
-    <a href="#" class="logo">Alimarket</a>
+    <a href="index.html" class="logo">Alimarket</a>
 
     <form class="search-box" id="mainSearchForm">
-      <button class="search-icon-btn" type="submit" aria-label="Buscar"><i class="fa-solid fa-magnifying-glass"></i></button>
-      <input id="mainSearchInput" type="search" placeholder="Buscar productos en AliMarket" autocomplete="off">
-      <button class="camera-search-btn" id="openCameraSearch" type="button" aria-label="Buscar con cámara">
+      <button class="search-icon-btn" type="submit" aria-label="Buscar">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+
+      <input
+        id="mainSearchInput"
+        type="search"
+        placeholder="Buscar productos"
+        autocomplete="off"
+      >
+
+      <button
+        class="camera-search-btn"
+        id="openCameraSearch"
+        type="button"
+        aria-label="Buscar con cámara"
+      >
         <i class="fa-solid fa-camera"></i>
       </button>
     </form>
 
     <div class="header-icons">
-      <a href="#"><i class="fa-solid fa-heart"></i> Favorito</a>
-      <a href="#"><i class="fa-solid fa-cart-shopping"></i> Cesta</a>
-      <a href="#"><i class="fa-solid fa-user"></i> Usuario</a>
+      <a href="favoritos.html"><i class="fa-solid fa-heart"></i> Favorito</a>
+      <a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i> Cesta</a>
+      <a href="usuario.html"><i class="fa-solid fa-user"></i> Usuario</a>
     </div>
   </div>
 
@@ -220,9 +560,14 @@ button{cursor:pointer}
   <div class="hero-text">
     <h1>SuperOfertas<br>Hasta -70% dto.</h1>
     <p>Miles de ofertas<br>por tiempo limitado</p>
-    <button type="button">Crear producto</button>
+    <button type="button">Ver ofertas</button>
   </div>
+
   <div class="hero-img"></div>
+
+  <div class="hero-dots" aria-hidden="true">
+    <span></span><span></span><span></span>
+  </div>
 </section>
 
 <section class="section">
@@ -231,14 +576,14 @@ button{cursor:pointer}
 </section>
 
 <nav class="mobile-bottom">
-  <a href="#"><i class="fa-solid fa-house"></i></a>
-  <a href="#"><i class="fa-solid fa-comments"></i></a>
+  <a href="index.html"><i class="fa-solid fa-house"></i></a>
+  <a href="mensajes.html"><i class="fa-regular fa-comment-dots"></i></a>
   <a href="#" class="discount">20%</a>
   <a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i></a>
-  <a href="#"><i class="fa-solid fa-user"></i></a>
+  <a href="usuario.html"><i class="fa-regular fa-user"></i></a>
 </nav>
 
-<!-- CÁMARA EN PANTALLA COMPLETA -->
+<!-- CÁMARA -->
 <section class="camera-screen" id="cameraScreen" aria-hidden="true">
   <video class="camera-video" id="cameraVideo" autoplay playsinline muted></video>
   <img class="camera-photo" id="cameraPhoto" alt="Foto capturada">
@@ -253,6 +598,7 @@ button{cursor:pointer}
       <button class="camera-icon-btn" id="switchCamera" type="button" aria-label="Cambiar cámara">
         <i class="fa-solid fa-camera-rotate"></i>
       </button>
+
       <button class="camera-icon-btn" id="cameraHelp" type="button" aria-label="Ayuda">
         <i class="fa-regular fa-circle-question"></i>
       </button>
@@ -295,10 +641,12 @@ button{cursor:pointer}
   <input id="albumInput" type="file" accept="image/*" multiple hidden>
 </section>
 
-<!-- RESULTADOS -->
+<!-- RESULTADOS IA -->
 <section class="ai-results-screen" id="resultsScreen">
   <div class="results-header">
-    <button id="closeResults" type="button"><i class="fa-solid fa-chevron-left"></i></button>
+    <button id="closeResults" type="button">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
     <h2>Productos parecidos</h2>
   </div>
 
@@ -319,70 +667,110 @@ const CAMERA_HISTORY_KEY = "alimarketCameraHistory";
 
 const productosPredeterminados = [
   {
-    id:"demo-1",name:"Smartphone moderno",price:8500,offerPrice:0,currency:"DOP",
-    image:"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=500&q=80",
-    category:"Electrónica",totalStock:20,
+    id:"demo-1",
+    name:"Smartphone moderno",
+    price:8500,
+    offerPrice:0,
+    currency:"DOP",
+    image:"https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=700&q=85",
+    category:"Electrónica",
+    totalStock:20,
     description:"Celular teléfono inteligente smartphone móvil con cámara iphone android."
   },
   {
-    id:"demo-2",name:"Audífonos Bluetooth",price:1250,offerPrice:0,currency:"DOP",
-    image:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80",
-    category:"Electrónica",totalStock:15,
+    id:"demo-2",
+    name:"Audífonos Bluetooth",
+    price:1250,
+    offerPrice:0,
+    currency:"DOP",
+    image:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=700&q=85",
+    category:"Electrónica",
+    totalStock:15,
     description:"Audífonos auriculares inalámbricos Bluetooth headphone."
   },
   {
-    id:"demo-3",name:"Reloj elegante",price:2900,offerPrice:0,currency:"DOP",
-    image:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80",
-    category:"Moda",totalStock:12,
+    id:"demo-3",
+    name:"Reloj elegante",
+    price:2900,
+    offerPrice:0,
+    currency:"DOP",
+    image:"https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=700&q=85",
+    category:"Moda",
+    totalStock:12,
     description:"Reloj analógico elegante para vestir watch."
   },
   {
-    id:"demo-4",name:"Smart Watch",price:3600,offerPrice:0,currency:"DOP",
-    image:"https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=500&q=80",
-    category:"Electrónica",totalStock:18,
+    id:"demo-4",
+    name:"Smart Watch",
+    price:3600,
+    offerPrice:0,
+    currency:"DOP",
+    image:"https://images.unsplash.com/photo-1579586337278-3befd40fd17a?auto=format&fit=crop&w=700&q=85",
+    category:"Electrónica",
+    totalStock:18,
     description:"Reloj inteligente digital smartwatch deportivo."
   }
 ];
 
 function escaparHTML(valor=""){
   return String(valor).replace(/[&<>"']/g,c=>({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
   }[c]));
 }
 
 function normalizarTexto(texto=""){
-  return String(texto).normalize("NFD").replace(/[\u0300-\u036f]/g,"")
-    .toLowerCase().replace(/[^a-z0-9ñ\s]/g," ").replace(/\s+/g," ").trim();
+  return String(texto)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g,"")
+    .toLowerCase()
+    .replace(/[^a-z0-9ñ\s]/g," ")
+    .replace(/\s+/g," ")
+    .trim();
 }
 
 function productosGuardados(){
   try{
     const lista=JSON.parse(localStorage.getItem(PRODUCTOS_KEY)||"[]");
-    return Array.isArray(lista)?lista.filter(p=>p&&p.status==="publicado"):[];
-  }catch{return []}
+    return Array.isArray(lista)
+      ? lista.filter(p=>p && p.status==="publicado")
+      : [];
+  }catch{
+    return [];
+  }
 }
 
-function obtenerTodosLosProductos(){return [...productosGuardados(),...productosPredeterminados]}
+function obtenerTodosLosProductos(){
+  return [...productosGuardados(),...productosPredeterminados];
+}
 
 function obtenerImagenProducto(p){
-  if(p.image)return p.image;
-  if(p.imagen)return p.imagen;
+  if(p.image) return p.image;
+  if(p.imagen) return p.imagen;
+
   const imgs=p.images||p.imagenes||[];
-  if(Array.isArray(imgs)&&imgs.length){
+
+  if(Array.isArray(imgs) && imgs.length){
     const x=imgs[0];
-    return typeof x==="string"?x:(x.url||x.src||x.image||x.imagen||"");
+    return typeof x==="string"
+      ? x
+      : (x.url||x.src||x.image||x.imagen||"");
   }
+
   return "https://via.placeholder.com/500x400?text=AliMarket";
 }
 
 function precioActivo(p){
   const oferta=Number(p.offerPrice)||0;
-  return oferta>0?oferta:(Number(p.price)||0);
+  return oferta>0 ? oferta : (Number(p.price)||0);
 }
 
 function monedaProducto(p){
   const codigo=String(p.currency||"DOP").split(" ")[0];
-  return codigo==="DOP"?"RD$":codigo==="EUR"?"€":"US$";
+  return codigo==="DOP" ? "RD$" : codigo==="EUR" ? "€" : "US$";
 }
 
 function textoProducto(p){
@@ -393,36 +781,144 @@ function textoProducto(p){
 }
 
 function buscarProductos(consulta){
-  const palabras=normalizarTexto(consulta).split(" ").filter(x=>x.length>1);
-  return obtenerTodosLosProductos().map(producto=>{
-    const texto=textoProducto(producto);
-    let puntos=0;
-    palabras.forEach(p=>{
-      if(texto.includes(p))puntos+=5;
-      if(normalizarTexto(producto.name||"").includes(p))puntos+=10;
-    });
-    return{producto,puntos};
-  }).filter(x=>x.puntos>0).sort((a,b)=>b.puntos-a.puntos);
+  const palabras=normalizarTexto(consulta)
+    .split(" ")
+    .filter(x=>x.length>1);
+
+  return obtenerTodosLosProductos()
+    .map(producto=>{
+      const texto=textoProducto(producto);
+      let puntos=0;
+
+      palabras.forEach(p=>{
+        if(texto.includes(p)) puntos+=5;
+        if(normalizarTexto(producto.name||"").includes(p)) puntos+=10;
+      });
+
+      return {producto,puntos};
+    })
+    .filter(x=>x.puntos>0)
+    .sort((a,b)=>b.puntos-a.puntos);
 }
 
 function renderProductos(lista=obtenerTodosLosProductos()){
   const grid=document.getElementById("productsGrid");
+
   if(!lista.length){
     grid.innerHTML='<div class="empty-products"><h3>No hay productos publicados</h3></div>';
     return;
   }
 
-  grid.innerHTML=lista.map((p,i)=>`
-    <article class="product" data-id="${escaparHTML(p.id||"producto-"+i)}">
-      <img src="${escaparHTML(obtenerImagenProducto(p))}" alt="${escaparHTML(p.name||"Producto")}">
-      <div class="product-info">
-        <h3>${escaparHTML(p.name||"Producto")}</h3>
-        <div class="price">${monedaProducto(p)} ${precioActivo(p).toLocaleString("es-US",{minimumFractionDigits:2,maximumFractionDigits:2})}</div>
-        <div class="product-meta">${escaparHTML(p.category||"Sin categoría")} · Stock: ${Number(p.totalStock)||0}</div>
-        <button type="button">Agregar</button>
-      </div>
-    </article>
-  `).join("");
+  grid.innerHTML=lista.map((p,i)=>{
+    const id=String(p.id||("producto-"+i));
+
+    return `
+      <article
+        class="product"
+        data-id="${escaparHTML(id)}"
+        role="link"
+        tabindex="0"
+        aria-label="Ver ${escaparHTML(p.name||"producto")}"
+      >
+        <div class="product-image-wrap">
+          <span class="product-badge">Nuevo</span>
+
+          <img
+            src="${escaparHTML(obtenerImagenProducto(p))}"
+            alt="${escaparHTML(p.name||"Producto")}"
+            onerror="this.onerror=null;this.src='https://via.placeholder.com/500x400?text=AliMarket'"
+          >
+        </div>
+
+        <div class="product-info">
+          <h3>${escaparHTML(p.name||"Producto")}</h3>
+
+          <div class="rating-row">
+            <span class="rating-stars">★★★★★</span>
+            <span>4.8</span>
+          </div>
+
+          <div class="price">
+            ${monedaProducto(p)}
+            ${precioActivo(p).toLocaleString("es-US",{
+              minimumFractionDigits:0,
+              maximumFractionDigits:0
+            })}
+          </div>
+
+          <div class="shipping">
+            <i class="fa-solid fa-truck-fast"></i>
+            Envío gratis
+          </div>
+
+          <div class="product-meta">
+            ${escaparHTML(p.category||"Sin categoría")} · Stock: ${Number(p.totalStock)||0}
+          </div>
+
+          <button type="button" class="add-cart">Agregar</button>
+        </div>
+      </article>
+    `;
+  }).join("");
+
+  grid.querySelectorAll(".product").forEach(card=>{
+    const abrirDetalle=()=>{
+      location.href=`articulo_detalle.html?id=${encodeURIComponent(card.dataset.id)}`;
+    };
+
+    card.addEventListener("click",event=>{
+      if(event.target.closest(".add-cart")) return;
+      abrirDetalle();
+    });
+
+    card.addEventListener("keydown",event=>{
+      if(event.key==="Enter" || event.key===" "){
+        event.preventDefault();
+        abrirDetalle();
+      }
+    });
+  });
+
+  grid.querySelectorAll(".add-cart").forEach((button,index)=>{
+    button.addEventListener("click",event=>{
+      event.stopPropagation();
+
+      const producto=lista[index];
+      let carrito=[];
+
+      try{
+        carrito=JSON.parse(localStorage.getItem(CARRITO_KEY)||"[]");
+        if(!Array.isArray(carrito)) carrito=[];
+      }catch{
+        carrito=[];
+      }
+
+      const existente=carrito.find(item=>String(item.id)===String(producto.id));
+
+      if(existente){
+        existente.cantidad=(Number(existente.cantidad)||1)+1;
+      }else{
+        carrito.push({
+          id:producto.id,
+          name:producto.name,
+          price:precioActivo(producto),
+          currency:String(producto.currency||"DOP").split(" ")[0],
+          image:obtenerImagenProducto(producto),
+          cantidad:1
+        });
+      }
+
+      localStorage.setItem(CARRITO_KEY,JSON.stringify(carrito));
+
+      button.textContent="Agregado ✓";
+      button.style.background="#d00000";
+
+      setTimeout(()=>{
+        button.textContent="Agregar";
+        button.style.background="#000";
+      },1200);
+    });
+  });
 }
 
 renderProductos();
@@ -434,16 +930,54 @@ const productsTitle=document.getElementById("productsTitle");
 
 mainSearchForm.addEventListener("submit",e=>{
   e.preventDefault();
+
   const q=mainSearchInput.value.trim();
+
   if(!q){
     productsTitle.textContent="Productos destacados";
     renderProductos();
     return;
   }
+
   const resultados=buscarProductos(q).map(x=>x.producto);
   productsTitle.textContent=`Resultados para: ${q}`;
   renderProductos(resultados);
 });
+
+/* OCULTAR SOLO LOGO E ICONO DE USUARIO AL DESPLAZAR LA PÁGINA HACIA ARRIBA */
+let ultimoScroll=window.scrollY;
+let animacionScroll=false;
+
+function controlarHeaderMovil(){
+  if(window.innerWidth>768){
+    document.body.classList.remove("header-compact");
+    ultimoScroll=window.scrollY;
+    animacionScroll=false;
+    return;
+  }
+
+  const actual=Math.max(0,window.scrollY);
+  const diferencia=actual-ultimoScroll;
+
+  if(actual<25){
+    document.body.classList.remove("header-compact");
+  }else if(diferencia>6){
+    document.body.classList.add("header-compact");
+  }else if(diferencia<-6){
+    document.body.classList.remove("header-compact");
+  }
+
+  ultimoScroll=actual;
+  animacionScroll=false;
+}
+
+window.addEventListener("scroll",()=>{
+  if(animacionScroll) return;
+  animacionScroll=true;
+  requestAnimationFrame(controlarHeaderMovil);
+},{passive:true});
+
+window.addEventListener("resize",controlarHeaderMovil);
 
 /* CÁMARA */
 const cameraScreen=document.getElementById("cameraScreen");
@@ -480,17 +1014,29 @@ async function abrirCamara(){
 
 async function iniciarCamara(){
   detenerCamara();
+
   try{
+    if(!navigator.mediaDevices?.getUserMedia){
+      throw new Error("Este navegador no permite utilizar la cámara.");
+    }
+
     stream=await navigator.mediaDevices.getUserMedia({
-      video:{facingMode:{ideal:facingMode},width:{ideal:1920},height:{ideal:1080}},
+      video:{
+        facingMode:{ideal:facingMode},
+        width:{ideal:1920},
+        height:{ideal:1080}
+      },
       audio:false
     });
+
     cameraVideo.srcObject=stream;
     cameraVideo.style.display="block";
     cameraPhoto.style.display="none";
+    await cameraVideo.play().catch(()=>{});
+
   }catch(error){
     console.error(error);
-    alert("No se pudo abrir la cámara. Revisa los permisos del navegador.");
+    alert(error.message||"No se pudo abrir la cámara. Revisa los permisos del navegador.");
   }
 }
 
@@ -512,7 +1058,7 @@ openCameraSearch.addEventListener("click",abrirCamara);
 closeCamera.addEventListener("click",cerrarCamara);
 
 switchCamera.addEventListener("click",async()=>{
-  facingMode=facingMode==="environment"?"user":"environment";
+  facingMode=facingMode==="environment" ? "user" : "environment";
   await iniciarCamara();
 });
 
@@ -521,10 +1067,11 @@ cameraHelp.addEventListener("click",()=>{
 });
 
 captureButton.addEventListener("click",()=>{
-  if(!cameraVideo.videoWidth)return;
+  if(!cameraVideo.videoWidth) return;
 
   cameraCanvas.width=cameraVideo.videoWidth;
   cameraCanvas.height=cameraVideo.videoHeight;
+
   const ctx=cameraCanvas.getContext("2d");
 
   if(facingMode==="user"){
@@ -533,7 +1080,9 @@ captureButton.addEventListener("click",()=>{
   }
 
   ctx.drawImage(cameraVideo,0,0,cameraCanvas.width,cameraCanvas.height);
+
   const dataUrl=cameraCanvas.toDataURL("image/jpeg",0.88);
+
   guardarHistorial(dataUrl);
   analizarImagen(dataUrl);
 });
@@ -543,15 +1092,22 @@ albumPicker.addEventListener("click",()=>albumInput.click());
 
 albumInput.addEventListener("change",e=>{
   const archivos=[...(e.target.files||[])];
-  if(!archivos.length)return;
+
+  if(!archivos.length) return;
 
   archivos.forEach((archivo,index)=>{
-    if(!archivo.type.startsWith("image/"))return;
+    if(!archivo.type.startsWith("image/")) return;
+
     const reader=new FileReader();
+
     reader.onload=()=>{
       guardarHistorial(reader.result);
-      if(index===0)analizarImagen(reader.result);
+
+      if(index===0){
+        analizarImagen(reader.result);
+      }
     };
+
     reader.readAsDataURL(archivo);
   });
 
@@ -559,49 +1115,66 @@ albumInput.addEventListener("change",e=>{
 });
 
 toggleHistory.addEventListener("click",()=>{
-  document.getElementById("albumPanel").scrollIntoView({behavior:"smooth",block:"end"});
+  document.getElementById("albumPanel").scrollIntoView({
+    behavior:"smooth",
+    block:"end"
+  });
 });
 
 function obtenerHistorial(){
   try{
     const data=JSON.parse(localStorage.getItem(CAMERA_HISTORY_KEY)||"[]");
-    return Array.isArray(data)?data:[];
-  }catch{return []}
+    return Array.isArray(data) ? data : [];
+  }catch{
+    return [];
+  }
 }
 
 function guardarHistorial(dataUrl){
   let history=obtenerHistorial();
+
   history=[dataUrl,...history.filter(x=>x!==dataUrl)].slice(0,8);
+
   try{
     localStorage.setItem(CAMERA_HISTORY_KEY,JSON.stringify(history));
   }catch{
     history=history.slice(0,4);
     localStorage.setItem(CAMERA_HISTORY_KEY,JSON.stringify(history));
   }
+
   renderHistorial();
 }
 
 function renderHistorial(){
   const history=obtenerHistorial();
+
   albumRow.querySelectorAll(".album-thumb").forEach(el=>el.remove());
 
   history.forEach(src=>{
     const button=document.createElement("button");
+
     button.type="button";
     button.className="album-thumb";
     button.innerHTML=`<img src="${src}" alt="Imagen reciente">`;
-    button.addEventListener("click",()=>analizarImagen(src));
+
+    button.addEventListener("click",()=>{
+      analizarImagen(src);
+    });
+
     albumRow.insertBefore(button,albumPicker);
   });
 }
 
 async function cargarModeloIA(){
-  if(modeloIA)return modeloIA;
-  if(typeof tf==="undefined"||typeof mobilenet==="undefined"){
+  if(modeloIA) return modeloIA;
+
+  if(typeof tf==="undefined" || typeof mobilenet==="undefined"){
     throw new Error("No se cargó la inteligencia artificial.");
   }
+
   await tf.ready();
   modeloIA=await mobilenet.load({version:2,alpha:1});
+
   return modeloIA;
 }
 
@@ -627,10 +1200,23 @@ function traducirDeteccion(texto=""){
   };
 
   let resultado=normalizarTexto(texto);
+
   Object.entries(mapa).forEach(([en,es])=>{
-    if(resultado.includes(normalizarTexto(en)))resultado+=" "+es;
+    if(resultado.includes(normalizarTexto(en))){
+      resultado+=" "+es;
+    }
   });
+
   return normalizarTexto(resultado);
+}
+
+async function esperarImagen(imagen){
+  if(imagen.complete && imagen.naturalWidth>0) return;
+
+  await new Promise((resolve,reject)=>{
+    imagen.onload=resolve;
+    imagen.onerror=()=>reject(new Error("No se pudo abrir la imagen."));
+  });
 }
 
 async function analizarImagen(src){
@@ -640,27 +1226,31 @@ async function analizarImagen(src){
   aiLoading.classList.add("show");
 
   try{
-    await new Promise((resolve,reject)=>{
-      resultsPhoto.onload=resolve;
-      resultsPhoto.onerror=reject;
-      if(resultsPhoto.complete)resolve();
-    });
+    await esperarImagen(resultsPhoto);
 
     const modelo=await cargarModeloIA();
     const predicciones=await modelo.classify(resultsPhoto,7);
 
-    if(!predicciones.length)throw new Error("No se pudo reconocer el producto.");
+    if(!predicciones.length){
+      throw new Error("No se pudo reconocer el producto.");
+    }
 
     const texto=predicciones.map(x=>x.className).join(" ");
     const consulta=traducirDeteccion(texto);
-    const productos=buscarProductos(consulta).map(x=>x.producto).slice(0,12);
+
+    const productos=buscarProductos(consulta)
+      .map(x=>x.producto)
+      .slice(0,12);
 
     mostrarResultados(productos);
+
   }catch(error){
     console.error(error);
+
     aiSearchResults.innerHTML=`
       <div class="ai-no-results">
-        <i class="fa-solid fa-triangle-exclamation" style="font-size:35px;margin-bottom:10px"></i><br>
+        <i class="fa-solid fa-triangle-exclamation"
+           style="font-size:35px;margin-bottom:10px"></i><br>
         ${escaparHTML(error.message||"No se pudo analizar la imagen.")}
       </div>
     `;
@@ -673,7 +1263,8 @@ function mostrarResultados(productos){
   if(!productos.length){
     aiSearchResults.innerHTML=`
       <div class="ai-no-results">
-        <i class="fa-solid fa-magnifying-glass" style="font-size:35px;margin-bottom:10px"></i><br>
+        <i class="fa-solid fa-magnifying-glass"
+           style="font-size:35px;margin-bottom:10px"></i><br>
         No encontramos productos parecidos.
       </div>
     `;
@@ -681,20 +1272,46 @@ function mostrarResultados(productos){
   }
 
   aiSearchResults.innerHTML=productos.map(p=>`
-    <article class="ai-result-card" data-id="${escaparHTML(p.id||"")}">
-      <img src="${escaparHTML(obtenerImagenProducto(p))}" alt="${escaparHTML(p.name||"Producto")}">
+    <article
+      class="ai-result-card"
+      data-id="${escaparHTML(p.id||"")}"
+      role="link"
+      tabindex="0"
+    >
+      <img
+        src="${escaparHTML(obtenerImagenProducto(p))}"
+        alt="${escaparHTML(p.name||"Producto")}"
+      >
+
       <div>
         <div class="ai-result-name">${escaparHTML(p.name||"Producto")}</div>
         <div class="ai-result-category">${escaparHTML(p.category||"AliMarket")}</div>
-        <div class="ai-result-price">${monedaProducto(p)} ${precioActivo(p).toLocaleString("es-US",{minimumFractionDigits:2,maximumFractionDigits:2})}</div>
+
+        <div class="ai-result-price">
+          ${monedaProducto(p)}
+          ${precioActivo(p).toLocaleString("es-US",{
+            minimumFractionDigits:2,
+            maximumFractionDigits:2
+          })}
+        </div>
       </div>
+
       <i class="fa-solid fa-chevron-right" style="color:#d00000"></i>
     </article>
   `).join("");
 
   aiSearchResults.querySelectorAll(".ai-result-card").forEach(card=>{
-    card.addEventListener("click",()=>{
+    const abrirDetalle=()=>{
       location.href=`articulo_detalle.html?id=${encodeURIComponent(card.dataset.id)}`;
+    };
+
+    card.addEventListener("click",abrirDetalle);
+
+    card.addEventListener("keydown",event=>{
+      if(event.key==="Enter" || event.key===" "){
+        event.preventDefault();
+        abrirDetalle();
+      }
     });
   });
 }
@@ -704,10 +1321,13 @@ closeResults.addEventListener("click",()=>{
 });
 
 document.addEventListener("visibilitychange",()=>{
-  if(document.hidden && cameraScreen.classList.contains("show"))detenerCamara();
+  if(document.hidden && cameraScreen.classList.contains("show")){
+    detenerCamara();
+  }
 });
 
 window.addEventListener("beforeunload",detenerCamara);
 </script>
+
 </body>
 </html>
