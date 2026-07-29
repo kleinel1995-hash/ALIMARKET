@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Mi cuenta - AliMarket</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{--red:#e00000;--dark:#a90000;--text:#111;--muted:#777;--line:#e5e5e5;--soft:#f6f6f6;--green:#16833d}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:#f4f4f4}
+button,input{font:inherit}button,a{cursor:pointer}a{text-decoration:none;color:inherit}
+.page{width:min(1180px,92%);margin:0 auto 110px;padding-top:28px;display:grid;grid-template-columns:290px minmax(0,1fr);gap:24px}
+.sidebar,.content-card{background:#fff;border-radius:18px;box-shadow:0 5px 18px rgba(0,0,0,.08)}
+.sidebar{padding:22px 16px;height:max-content;position:sticky;top:28px}
+.profile-mini{text-align:center;padding:8px 8px 22px;border-bottom:1px solid var(--line)}
+.avatar{width:92px;height:92px;margin:0 auto 13px;border-radius:50%;background:linear-gradient(145deg,#ef2020,#a50000);color:#fff;display:grid;place-items:center;font-size:40px;font-weight:900;border:5px solid #ffe3e3}
+.profile-mini h2{margin:0 0 5px;font-size:22px}.profile-mini p{margin:0;color:var(--muted);font-size:14px;overflow-wrap:anywhere}
+.menu{display:grid;gap:5px;margin-top:16px}
+.menu-item{width:100%;border:0;background:transparent;padding:14px 13px;border-radius:11px;display:flex;align-items:center;gap:13px;text-align:left;font-size:16px;color:#222}
+.menu-item i{width:25px;text-align:center;font-size:20px}
+.menu-item:hover,.menu-item.active{background:#fff0f0;color:#d00000;font-weight:800}
+.menu-item.logout{color:#a00000;margin-top:8px}
+.content-card{padding:28px}.content-section{display:none}.content-section.active{display:block}
+.section-title{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
+.section-title h1{margin:0;font-size:30px}.section-title p{margin:6px 0 0;color:var(--muted)}
+.edit-btn{border:0;border-radius:25px;padding:12px 20px;background:#111;color:#fff;font-weight:800}
+.info-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.info-box{border:1px solid var(--line);border-radius:13px;padding:17px;background:#fff}
+.info-box span{display:block;color:var(--muted);font-size:13px;margin-bottom:7px}.info-box strong{font-size:17px;overflow-wrap:anywhere}
+.status{display:inline-flex;align-items:center;gap:7px;color:var(--green);background:#e8f7ed;padding:7px 11px;border-radius:20px;font-size:13px;font-weight:900}
+.dashboard-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:26px}
+.stat{border-radius:15px;padding:20px;background:linear-gradient(145deg,#fff,#f7f7f7);border:1px solid var(--line)}
+.stat i{font-size:25px;color:#d00000;margin-bottom:14px}.stat strong{display:block;font-size:27px}.stat span{color:var(--muted);font-size:14px}
+.empty-state{padding:45px 20px;border:1px dashed #ccc;border-radius:15px;text-align:center;color:var(--muted)}
+.empty-state i{display:block;font-size:45px;color:#bbb;margin-bottom:14px}
+.quick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.quick-card{border:1px solid var(--line);border-radius:14px;padding:20px;background:#fff;transition:.2s}
+.quick-card:hover{transform:translateY(-3px);box-shadow:0 8px 18px rgba(0,0,0,.08)}
+.quick-card i{font-size:27px;color:#d00000;margin-bottom:13px}.quick-card h3{margin:0 0 7px}.quick-card p{margin:0;color:var(--muted);font-size:14px}
+
+.logout-card{
+  width:100%;
+  text-align:left;
+  cursor:pointer;
+  font:inherit;
+  color:inherit
+}
+.logout-card i,.logout-card h3{color:#a00000}
+
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.48);display:none;align-items:center;justify-content:center;padding:18px;z-index:3000}
+.modal-overlay.show{display:flex}.modal{width:min(520px,96vw);background:#fff;border-radius:18px;padding:26px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.modal h2{margin:0 0 22px}.close-modal{position:absolute;top:14px;right:14px;width:38px;height:38px;border:0;border-radius:50%;background:#f2f2f2;font-size:20px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{margin-bottom:16px}.field label{display:block;font-weight:800;margin-bottom:7px}
+.field input{width:100%;height:50px;border:1px solid #ddd;border-radius:10px;padding:0 14px;outline:none}
+.field input:focus{border-color:#d00000;box-shadow:0 0 0 3px rgba(208,0,0,.08)}
+.save-btn{width:100%;height:52px;border:0;border-radius:26px;background:linear-gradient(90deg,#e00000,#a90000);color:#fff;font-weight:900;font-size:17px}
+.alert{display:none;padding:12px;border-radius:9px;margin-bottom:15px;font-weight:800}.alert.show{display:block}.alert.success{background:#e8f7ed;color:#176b33}.alert.error{background:#ffe7e7;color:#9f0000}
+.mobile-bottom{display:none}
+@media(max-width:850px){
+.page{display:block;width:100%;margin:0 0 90px;padding-top:0}
+.sidebar{position:static;border-radius:0;box-shadow:none;padding:24px 18px 14px}
+.profile-mini{display:flex;align-items:center;text-align:left;gap:14px}
+.avatar{width:72px;height:72px;margin:0;font-size:30px;flex:0 0 auto}
+.menu{grid-template-columns:repeat(4,1fr);overflow-x:auto;padding-bottom:4px}
+.menu-item{min-width:115px;flex-direction:column;justify-content:center;text-align:center;gap:7px;font-size:13px}
+.menu-item.logout{display:none}.content-card{border-radius:0;box-shadow:none;padding:22px 18px}
+.dashboard-grid{grid-template-columns:repeat(2,1fr)}.quick-grid{grid-template-columns:1fr}
+.mobile-bottom{position:fixed;left:0;right:0;bottom:0;height:82px;background:#fff;border-top:1px solid #ddd;display:flex;align-items:center;justify-content:space-around;z-index:2000}
+.mobile-bottom a,.mobile-bottom button{width:20%;border:0;background:transparent;color:#222;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;font-size:12px}
+.mobile-bottom i{font-size:24px}.mobile-bottom .active{color:#d00000;font-weight:900}}
+@media(max-width:540px){.info-grid,.form-row{grid-template-columns:1fr}.section-title{align-items:flex-start}.section-title h1{font-size:26px}.edit-btn{padding:10px 15px}}
+</style>
+</head>
+<body>
+<main class="page">
+<aside class="sidebar">
+<div class="profile-mini"><div class="avatar" id="avatarInitials">AM</div><div><h2 id="sidebarName">Usuario AliMarket</h2><p id="sidebarEmail">correo@ejemplo.com</p></div></div>
+<nav class="menu">
+<button class="menu-item active" data-section="homeSection"><i class="fa-solid fa-house"></i><span>Resumen</span></button>
+<button class="menu-item" data-section="profileSection"><i class="fa-regular fa-user"></i><span>Mi perfil</span></button>
+<button class="menu-item" data-section="ordersSection"><i class="fa-regular fa-clipboard"></i><span>Mis pedidos</span></button>
+<button class="menu-item" data-section="favoritesSection"><i class="fa-regular fa-heart"></i><span>Favoritos</span></button>
+<button class="menu-item" data-section="paymentsSection"><i class="fa-regular fa-credit-card"></i><span>Forma de pago</span></button>
+<button class="menu-item" data-section="couponsSection"><i class="fa-solid fa-ticket"></i><span>Mis cupones</span></button>
+<button class="menu-item" data-section="settingsSection"><i class="fa-solid fa-gear"></i><span>Configuración</span></button>
+<button class="menu-item logout" id="logoutButton"><i class="fa-solid fa-right-from-bracket"></i><span>Cerrar sesión</span></button>
+</nav></aside>
+<section class="content-card">
+<div class="content-section active" id="homeSection">
+<div class="section-title"><div><h1>Hola, <span id="welcomeName">Usuario</span></h1><p>Administra tu cuenta y revisa tu actividad en AliMarket.</p></div><span class="status"><i class="fa-solid fa-circle-check"></i> Cuenta activa</span></div>
+<div class="dashboard-grid"><div class="stat"><i class="fa-regular fa-clipboard"></i><strong id="ordersCount">0</strong><span>Pedidos</span></div><div class="stat"><i class="fa-regular fa-heart"></i><strong id="favoritesCount">0</strong><span>Favoritos</span></div><div class="stat"><i class="fa-solid fa-ticket"></i><strong>0</strong><span>Cupones</span></div><div class="stat"><i class="fa-solid fa-coins"></i><strong>0</strong><span>Monedas</span></div></div>
+<h2>Accesos rápidos</h2><div class="quick-grid"><a class="quick-card" href="pedidos.html"><i class="fa-solid fa-box"></i><h3>Mis pedidos</h3><p>Consulta el estado y el historial de tus compras.</p></a><a class="quick-card" href="favoritos.html"><i class="fa-regular fa-heart"></i><h3>Lista de deseos</h3><p>Revisa los productos que guardaste.</p></a><a class="quick-card" href="formas_pago.html"><i class="fa-regular fa-credit-card"></i><h3>Forma de pago</h3><p>Administra tus métodos de pago guardados.</p></a></div>
+</div>
+<div class="content-section" id="profileSection"><div class="section-title"><div><h1>Mi perfil</h1><p>Información guardada durante el registro.</p></div><button class="edit-btn" id="openEditModal" type="button"><i class="fa-solid fa-pen"></i> Editar</button></div><div class="info-grid"><div class="info-box"><span>Nombre</span><strong id="profileFirstName">—</strong></div><div class="info-box"><span>Apellido</span><strong id="profileLastName">—</strong></div><div class="info-box"><span>Correo electrónico</span><strong id="profileEmail">—</strong></div><div class="info-box"><span>Fecha de registro</span><strong id="profileCreatedAt">—</strong></div></div></div>
+<div class="content-section" id="ordersSection"><div class="section-title"><div><h1>Mis pedidos</h1><p>Pedidos realizados con tu cuenta.</p></div></div><div class="empty-state"><i class="fa-solid fa-box-open"></i><h3>Todavía no tienes pedidos</h3><p>Cuando realices una compra aparecerá aquí.</p></div></div>
+<div class="content-section" id="favoritesSection"><div class="section-title"><div><h1>Favoritos</h1><p>Productos guardados en tu lista de deseos.</p></div></div><div class="empty-state"><i class="fa-regular fa-heart"></i><h3>No tienes productos favoritos</h3><p>Guarda productos para encontrarlos rápidamente.</p></div></div>
+<div class="content-section" id="paymentsSection"><div class="section-title"><div><h1>Forma de pago</h1><p>Administra tus métodos de pago.</p></div></div><div class="empty-state"><i class="fa-regular fa-credit-card"></i><h3>No hay métodos guardados</h3><p>Agrega un método de pago durante el checkout.</p></div></div>
+<div class="content-section" id="couponsSection"><div class="section-title"><div><h1>Mis cupones</h1><p>Cupones disponibles para tu cuenta.</p></div></div><div class="empty-state"><i class="fa-solid fa-ticket"></i><h3>No tienes cupones disponibles</h3><p>Las promociones aparecerán aquí.</p></div></div>
+<div class="content-section" id="settingsSection"><div class="section-title"><div><h1>Configuración</h1><p>Opciones de tu cuenta AliMarket.</p></div></div><div class="quick-grid"><div class="quick-card"><i class="fa-solid fa-lock"></i><h3>Seguridad</h3><p>Actualiza tu contraseña y opciones de acceso.</p></div><div class="quick-card"><i class="fa-regular fa-bell"></i><h3>Notificaciones</h3><p>Configura los avisos que deseas recibir.</p></div><div class="quick-card"><i class="fa-solid fa-location-dot"></i><h3>Direcciones</h3><p>Administra tus direcciones de entrega.</p></div>
+        <button class="quick-card logout-card" id="settingsLogout" type="button">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <h3>Cerrar sesión</h3>
+          <p>Salir de tu cuenta de AliMarket.</p>
+        </button></div></div>
+</section></main>
+<nav class="mobile-bottom"><a href="index.html"><i class="fa-solid fa-house"></i><span>Inicio</span></a><a href="mensajes.html"><i class="fa-regular fa-comment-dots"></i><span>Mensajes</span></a><a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i><span>Cesta</span></a><a href="usuario.html" class="active"><i class="fa-regular fa-user"></i><span>Usuario</span></a></nav>
+<div class="modal-overlay" id="editOverlay"><div class="modal"><button class="close-modal" id="closeEditModal" type="button">×</button><h2>Editar perfil</h2><div class="alert" id="editAlert"></div><form id="editForm"><div class="form-row"><div class="field"><label for="editFirstName">Nombre</label><input id="editFirstName" required></div><div class="field"><label for="editLastName">Apellido</label><input id="editLastName" required></div></div><div class="field"><label for="editEmail">Correo electrónico</label><input id="editEmail" type="email" required></div><button class="save-btn" type="submit">Guardar cambios</button></form></div></div>
+<script>
+const USERS_KEY="alimarketUsuarios",SESSION_KEY="alimarketSesion",ORDERS_KEY="pedidosAliMarket",FAVORITES_KEY="favoritosAliMarket";let currentUser=null;
+function getUsers(){try{const d=JSON.parse(localStorage.getItem(USERS_KEY)||"[]");return Array.isArray(d)?d:[]}catch{return[]}}
+function saveUsers(u){localStorage.setItem(USERS_KEY,JSON.stringify(u))}
+function getSession(){try{return JSON.parse(localStorage.getItem(SESSION_KEY)||"null")}catch{return null}}
+function getArray(k){try{const d=JSON.parse(localStorage.getItem(k)||"[]");return Array.isArray(d)?d:[]}catch{return[]}}
+function findCurrentUser(){const users=getUsers(),session=getSession();if(session?.id){const u=users.find(x=>String(x.id)===String(session.id));if(u)return u}if(session?.email){const u=users.find(x=>String(x.email).toLowerCase()===String(session.email).toLowerCase());if(u)return u}return users.length?users[users.length-1]:null}
+function initials(a="",b=""){return(a.trim().charAt(0)+b.trim().charAt(0)).toUpperCase()||"AM"}
+function formatDate(v){if(!v)return"No disponible";const d=new Date(v);return Number.isNaN(d.getTime())?"No disponible":d.toLocaleDateString("es-US",{year:"numeric",month:"long",day:"numeric"})}
+function renderUser(){currentUser=findCurrentUser();if(!currentUser){sidebarName.textContent="Invitado";sidebarEmail.textContent="No has iniciado sesión";welcomeName.textContent="Invitado";avatarInitials.textContent="AM";profileFirstName.textContent="—";profileLastName.textContent="—";profileEmail.textContent="—";profileCreatedAt.textContent="—";return}const name=`${currentUser.firstName||""} ${currentUser.lastName||""}`.trim();sidebarName.textContent=name||"Usuario AliMarket";sidebarEmail.textContent=currentUser.email||"Sin correo";welcomeName.textContent=currentUser.firstName||"Usuario";avatarInitials.textContent=initials(currentUser.firstName,currentUser.lastName);profileFirstName.textContent=currentUser.firstName||"—";profileLastName.textContent=currentUser.lastName||"—";profileEmail.textContent=currentUser.email||"—";profileCreatedAt.textContent=formatDate(currentUser.createdAt);const orders=getArray(ORDERS_KEY).filter(o=>!o.userId||String(o.userId)===String(currentUser.id)||String(o.email||"").toLowerCase()===String(currentUser.email||"").toLowerCase());ordersCount.textContent=orders.length;favoritesCount.textContent=getArray(FAVORITES_KEY).length}
+document.querySelectorAll(".menu-item[data-section]").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".menu-item[data-section]").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".content-section").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.getElementById(b.dataset.section)?.classList.add("active")}));
+const editOverlay=document.getElementById("editOverlay"),editAlert=document.getElementById("editAlert");
+openEditModal.addEventListener("click",()=>{if(!currentUser){location.href="registro.html";return}editFirstName.value=currentUser.firstName||"";editLastName.value=currentUser.lastName||"";editEmail.value=currentUser.email||"";editAlert.className="alert";editOverlay.classList.add("show");document.body.style.overflow="hidden"});
+function closeEdit(){editOverlay.classList.remove("show");document.body.style.overflow=""}
+closeEditModal.addEventListener("click",closeEdit);editOverlay.addEventListener("click",e=>{if(e.target===editOverlay)closeEdit()});
+editForm.addEventListener("submit",e=>{e.preventDefault();if(!currentUser)return;const firstName=editFirstName.value.trim(),lastName=editLastName.value.trim(),email=editEmail.value.trim().toLowerCase(),users=getUsers();if(users.some(u=>String(u.id)!==String(currentUser.id)&&String(u.email||"").toLowerCase()===email)){editAlert.textContent="Ese correo ya pertenece a otra cuenta.";editAlert.className="alert show error";return}const i=users.findIndex(u=>String(u.id)===String(currentUser.id));if(i<0)return;users[i]={...users[i],firstName,lastName,email,updatedAt:new Date().toISOString()};saveUsers(users);const s=getSession();if(s)localStorage.setItem(SESSION_KEY,JSON.stringify({...s,id:users[i].id,email,name:`${firstName} ${lastName}`.trim()}));editAlert.textContent="Perfil actualizado satisfactoriamente.";editAlert.className="alert show success";renderUser();setTimeout(closeEdit,800)});
+function logout(){localStorage.removeItem(SESSION_KEY);location.href="login_unido.html"}
+logoutButton.addEventListener("click",logout);
+const settingsLogout=document.getElementById("settingsLogout");
+if(settingsLogout)settingsLogout.addEventListener("click",logout);
+renderUser();
+</script>
+</body>
+</html>
