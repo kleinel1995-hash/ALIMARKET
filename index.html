@@ -559,7 +559,624 @@ if(userMenuWrap&&userMenuTrigger){
     if(!userMenuWrap.contains(event.target))userMenuWrap.classList.remove('open');
   });
 }
+/* =================================================
+   BÚSQUEDA DE ARTÍCULOS POR CÁMARA CON INTELIGENCIA
+================================================= */
 
+const mainSearchForm = document.getElementById("mainSearchForm");
+const mainSearchInput = document.getElementById("mainSearchInput");
+
+const openCameraSearch = document.getElementById("openCameraSearch");
+const closeCameraSearch = document.getElementById("closeCameraSearch");
+const aiCameraOverlay = document.getElementById("aiCameraOverlay");
+const aiCameraInput = document.getElementById("aiCameraInput");
+const aiCameraPreview = document.getElementById("aiCameraPreview");
+const aiCameraLoading = document.getElementById("aiCameraLoading");
+const aiLoadingText = document.getElementById("aiLoadingText");
+const aiDetected = document.getElementById("aiDetected");
+const aiSearchResults = document.getElementById("aiSearchResults");
+
+let alimarketAIModel = null;
+
+function abrirBuscadorCamara(){
+  aiCameraOverlay.classList.add("show");
+  aiCameraOverlay.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+}
+
+function cerrarBuscadorCamara(){
+  aiCameraOverlay.classList.remove("show");
+  aiCameraOverlay.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+}
+
+openCameraSearch.addEventListener("click",abrirBuscadorCamara);
+closeCameraSearch.addEventListener("click",cerrarBuscadorCamara);
+
+aiCameraOverlay.addEventListener("click",event=>{
+  if(event.target === aiCameraOverlay){
+    cerrarBuscadorCamara();
+  }
+});
+
+document.addEventListener("keydown",event=>{
+  if(event.key === "Escape" && aiCameraOverlay.classList.contains("show")){
+    cerrarBuscadorCamara();
+  }
+});
+
+/* Unifica productos creados y productos de demostración */
+
+function obtenerTodosLosProductos(){
+  return [
+    ...productosGuardados(),
+    ...productosPredeterminados
+  ];
+}
+
+function normalizarTextoIA(texto=""){
+  return String(texto)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g,"")
+    .toLowerCase()
+    .replace(/[^a-z0-9ñ\s]/g," ")
+    .replace(/\s+/g," ")
+    .trim();
+}
+
+/* Traduce etiquetas comunes de MobileNet al español */
+
+function traducirDeteccionIA(texto=""){
+  const traducciones = {
+    "cellular telephone":"celular telefono smartphone movil iphone android",
+    "mobile phone":"celular telefono smartphone movil",
+    "smartphone":"celular telefono smartphone movil",
+    "telephone":"telefono celular movil",
+
+    "digital watch":"reloj digital smartwatch reloj inteligente",
+    "watch":"reloj smartwatch reloj inteligente",
+    "analog clock":"reloj analogico",
+
+    "headphone":"audifonos auriculares",
+    "headphones":"audifonos auriculares",
+    "earphone":"audifonos auriculares bluetooth",
+    "loudspeaker":"bocina altavoz parlante",
+
+    "laptop":"laptop computadora portatil notebook",
+    "notebook":"laptop computadora portatil",
+    "desktop computer":"computadora pc escritorio",
+    "computer keyboard":"teclado computadora",
+    "mouse":"mouse raton computadora",
+    "monitor":"monitor pantalla computadora",
+
+    "television":"televisor television pantalla smart tv",
+    "remote control":"control remoto",
+
+    "running shoe":"tenis zapatos deportivos zapatillas calzado",
+    "shoe":"zapato tenis zapatilla calzado",
+    "sandal":"sandalia calzado",
+    "slipper":"zapatilla calzado",
+
+    "handbag":"cartera bolso mujer",
+    "backpack":"mochila bolso",
+    "wallet":"billetera cartera",
+
+    "sunglasses":"lentes gafas anteojos",
+    "perfume":"perfume fragancia",
+
+    "camera":"camara fotografia video",
+    "digital camera":"camara digital fotografia",
+
+    "jersey":"camiseta ropa",
+    "t-shirt":"camiseta tshirt ropa",
+    "shirt":"camisa ropa",
+    "dress":"vestido ropa mujer",
+    "jean":"pantalon jeans ropa",
+    "jacket":"chaqueta abrigo ropa",
+
+    "toy":"juguete ninos",
+    "teddy":"peluche juguete",
+    "doll":"muneca juguete",
+
+    "car":"carro automovil vehiculo",
+    "sports car":"carro automovil vehiculo",
+    "motorcycle":"motocicleta motor vehiculo",
+    "bicycle":"bicicleta deporte",
+
+    "drill":"taladro herramienta",
+    "hammer":"martillo herramienta",
+    "screwdriver":"destornillador herramienta",
+
+    "chair":"silla mueble hogar",
+    "table":"mesa mueble hogar",
+    "sofa":"sofa mueble hogar",
+    "bed":"cama dormitorio hogar",
+
+    "bottle":"botella termo vaso",
+    "water bottle":"botella termo",
+    "cup":"taza vaso",
+    "mug":"taza vaso",
+
+    "refrigerator":"nevera refrigerador electrodomestico",
+    "microwave":"microondas electrodomestico",
+    "washing machine":"lavadora electrodomestico"
+  };
+
+  let resultado = normalizarTextoIA(texto);
+
+  Object.entries(traducciones).forEach(([ingles,espanol])=>{
+    if(resultado.includes(normalizarTextoIA(ingles))){
+      resultado += ` ${espanol}`;
+    }
+  });
+
+  return normalizarTextoIA(resultado);
+}
+
+function obtenerTextoProductoIA(producto){
+  const variantes = Array.isArray(producto.variants)
+    ? producto.variants.map(variante=>{
+        if(typeof variante === "string") return variante;
+
+        return [
+          variante.name,
+          variante.nombre,
+          variante.color,
+          variante.size,
+          variante.tamano,
+          variante.tamaño,
+          variante.sku
+        ].filter(Boolean).join(" ");
+      }).join(" ")
+    : "";
+
+  const etiquetas = Array.isArray(producto.tags)
+    ? producto.tags.join(" ")
+    : producto.tags || "";
+
+  return normalizarTextoIA([
+    producto.name,
+    producto.nombre,
+    producto.title,
+    producto.titulo,
+    producto.description,
+    producto.descripcion,
+    producto.shortDescription,
+    producto.category,
+    producto.categoria,
+    producto.subcategory,
+    producto.subcategoria,
+    producto.brand,
+    producto.marca,
+    producto.model,
+    producto.modelo,
+    producto.color,
+    producto.material,
+    etiquetas,
+    producto.keywords,
+    producto.palabrasClave,
+    variantes
+  ].filter(Boolean).join(" "));
+}
+
+function calcularCoincidenciaIA(producto,consulta){
+  const textoProducto = obtenerTextoProductoIA(producto);
+  const consultaNormalizada = traducirDeteccionIA(consulta);
+
+  const palabras = [...new Set(
+    consultaNormalizada
+      .split(" ")
+      .filter(palabra=>palabra.length > 2)
+  )];
+
+  const nombre = normalizarTextoIA(
+    producto.name ||
+    producto.nombre ||
+    producto.title ||
+    producto.titulo ||
+    ""
+  );
+
+  const categoria = normalizarTextoIA([
+    producto.category,
+    producto.categoria,
+    producto.subcategory,
+    producto.subcategoria
+  ].filter(Boolean).join(" "));
+
+  let puntuacion = 0;
+
+  if(textoProducto.includes(consultaNormalizada)){
+    puntuacion += 35;
+  }
+
+  palabras.forEach(palabra=>{
+    if(textoProducto.includes(palabra)) puntuacion += 5;
+    if(nombre.includes(palabra)) puntuacion += 12;
+    if(categoria.includes(palabra)) puntuacion += 8;
+  });
+
+  return puntuacion;
+}
+
+function obtenerImagenProductoIA(producto){
+  if(producto.image) return producto.image;
+  if(producto.imagen) return producto.imagen;
+  if(producto.photo) return producto.photo;
+  if(producto.foto) return producto.foto;
+
+  const imagenes =
+    producto.images ||
+    producto.imagenes ||
+    producto.photos ||
+    producto.fotos ||
+    [];
+
+  if(Array.isArray(imagenes) && imagenes.length){
+    const primera = imagenes[0];
+
+    if(typeof primera === "string"){
+      return primera;
+    }
+
+    return (
+      primera.url ||
+      primera.src ||
+      primera.image ||
+      primera.imagen ||
+      ""
+    );
+  }
+
+  return "https://via.placeholder.com/300x300?text=AliMarket";
+}
+
+function precioFormateadoIA(producto){
+  const {simbolo} = monedaProducto(producto);
+  const precio = precioActivo(producto);
+
+  return `${simbolo} ${Number(precio || 0).toLocaleString("es-US",{
+    minimumFractionDigits:2,
+    maximumFractionDigits:2
+  })}`;
+}
+
+function mostrarResultadosIA(resultados,consulta){
+  if(!resultados.length){
+    aiSearchResults.innerHTML = `
+      <div class="ai-no-results">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        No encontramos artículos parecidos a
+        <strong>${escaparHTML(consulta)}</strong>.
+      </div>
+    `;
+    return;
+  }
+
+  aiSearchResults.innerHTML = resultados.map(({producto})=>{
+    const id =
+      producto.id ||
+      producto.productId ||
+      producto.codigo ||
+      producto.sku ||
+      "";
+
+    const nombre =
+      producto.name ||
+      producto.nombre ||
+      producto.title ||
+      producto.titulo ||
+      "Producto";
+
+    const categoria =
+      producto.category ||
+      producto.categoria ||
+      producto.subcategory ||
+      producto.subcategoria ||
+      "AliMarket";
+
+    return `
+      <article
+        class="ai-result-card"
+        data-product-id="${escaparHTML(id)}"
+      >
+        <img
+          src="${escaparHTML(obtenerImagenProductoIA(producto))}"
+          alt="${escaparHTML(nombre)}"
+          onerror="this.onerror=null;this.src='https://via.placeholder.com/300x300?text=AliMarket'"
+        >
+
+        <div>
+          <div class="ai-result-name">
+            ${escaparHTML(nombre)}
+          </div>
+
+          <div class="ai-result-category">
+            ${escaparHTML(categoria)}
+          </div>
+
+          <div class="ai-result-price">
+            ${precioFormateadoIA(producto)}
+          </div>
+        </div>
+
+        <i class="fa-solid fa-chevron-right"></i>
+      </article>
+    `;
+  }).join("");
+
+  aiSearchResults.querySelectorAll(".ai-result-card").forEach(card=>{
+    card.addEventListener("click",()=>{
+      const productoId = card.dataset.productId;
+
+      if(!productoId) return;
+
+      localStorage.setItem(
+        "alimarketProductoSeleccionado",
+        productoId
+      );
+
+      location.href =
+        `articulo_detalle.html?id=${encodeURIComponent(productoId)}`;
+    });
+  });
+}
+
+function buscarProductosConIA(consulta){
+  const productos = obtenerTodosLosProductos();
+
+  const resultados = productos
+    .map(producto=>({
+      producto,
+      puntuacion:calcularCoincidenciaIA(producto,consulta)
+    }))
+    .filter(resultado=>resultado.puntuacion > 0)
+    .sort((a,b)=>b.puntuacion-a.puntuacion)
+    .slice(0,12);
+
+  mostrarResultadosIA(resultados,consulta);
+}
+
+/* Búsqueda normal escrita */
+
+mainSearchForm.addEventListener("submit",event=>{
+  event.preventDefault();
+
+  const consulta = mainSearchInput.value.trim();
+
+  if(!consulta){
+    mainSearchInput.focus();
+    return;
+  }
+
+  const productos = obtenerTodosLosProductos();
+
+  const resultados = productos
+    .map(producto=>({
+      producto,
+      puntuacion:calcularCoincidenciaIA(producto,consulta)
+    }))
+    .filter(resultado=>resultado.puntuacion > 0)
+    .sort((a,b)=>b.puntuacion-a.puntuacion);
+
+  renderizarBusquedaPrincipal(resultados,consulta);
+});
+
+function renderizarBusquedaPrincipal(resultados,consulta){
+  const gridProductos = document.getElementById("productsGrid");
+  const tituloSeccion = document.querySelector(".section h2");
+
+  tituloSeccion.textContent = `Resultados para: ${consulta}`;
+
+  if(!resultados.length){
+    gridProductos.innerHTML = `
+      <div class="empty-products">
+        <h3>No encontramos productos relacionados</h3>
+        <p>Prueba con otro nombre, marca o categoría.</p>
+      </div>
+    `;
+    return;
+  }
+
+  gridProductos.innerHTML = resultados.map(({producto},index)=>{
+    const id =
+      producto.id ||
+      producto.productId ||
+      `resultado-${index}`;
+
+    const nombre =
+      producto.name ||
+      producto.nombre ||
+      "Producto";
+
+    const imagen = obtenerImagenProductoIA(producto);
+    const {simbolo} = monedaProducto(producto);
+    const precio = precioActivo(producto);
+    const oferta = Number(producto.offerPrice)||0;
+    const normal = Number(producto.price)||0;
+
+    return `
+      <article
+        class="product"
+        data-detail="articulo_detalle.html?id=${encodeURIComponent(id)}"
+      >
+        <img
+          src="${escaparHTML(imagen)}"
+          alt="${escaparHTML(nombre)}"
+          onerror="this.onerror=null;this.src='https://via.placeholder.com/500x400?text=AliMarket'"
+        >
+
+        <div class="product-info">
+          <h3>${escaparHTML(nombre)}</h3>
+
+          <div class="price">
+            ${simbolo}
+            ${Number(precio).toLocaleString("es-US",{
+              minimumFractionDigits:2,
+              maximumFractionDigits:2
+            })}
+
+            ${
+              oferta > 0 && oferta < normal
+                ? `<span class="old-price">${simbolo} ${normal.toLocaleString("es-US",{
+                    minimumFractionDigits:2,
+                    maximumFractionDigits:2
+                  })}</span>`
+                : ""
+            }
+          </div>
+
+          <div class="product-meta">
+            ${escaparHTML(producto.category || "Sin categoría")}
+          </div>
+
+          <button type="button">Ver producto</button>
+        </div>
+      </article>
+    `;
+  }).join("");
+
+  gridProductos.querySelectorAll(".product").forEach(card=>{
+    card.addEventListener("click",()=>{
+      location.href = card.dataset.detail;
+    });
+  });
+}
+
+/* Cargar MobileNet */
+
+async function cargarModeloAliMarketIA(){
+  if(alimarketAIModel){
+    return alimarketAIModel;
+  }
+
+  aiCameraLoading.classList.add("show");
+  aiLoadingText.textContent =
+    "Cargando inteligencia artificial...";
+
+  if(typeof tf === "undefined" || typeof mobilenet === "undefined"){
+    throw new Error(
+      "No se cargaron las librerías de inteligencia artificial."
+    );
+  }
+
+  await tf.ready();
+
+  alimarketAIModel = await mobilenet.load({
+    version:2,
+    alpha:1
+  });
+
+  return alimarketAIModel;
+}
+
+/* Analizar la fotografía */
+
+aiCameraInput.addEventListener("change",event=>{
+  const archivo = event.target.files?.[0];
+
+  if(!archivo) return;
+
+  if(!archivo.type.startsWith("image/")){
+    alert("Selecciona una fotografía válida.");
+    aiCameraInput.value = "";
+    return;
+  }
+
+  if(archivo.size > 10 * 1024 * 1024){
+    alert("La fotografía no debe superar los 10 MB.");
+    aiCameraInput.value = "";
+    return;
+  }
+
+  const urlTemporal = URL.createObjectURL(archivo);
+
+  aiCameraPreview.src = urlTemporal;
+  aiCameraPreview.style.display = "block";
+  aiDetected.classList.remove("show");
+  aiSearchResults.innerHTML = "";
+
+  aiCameraPreview.onload = async()=>{
+    try{
+      const modelo = await cargarModeloAliMarketIA();
+
+      aiCameraLoading.classList.add("show");
+      aiLoadingText.textContent =
+        "Identificando el artículo de la fotografía...";
+
+      const predicciones = await modelo.classify(
+        aiCameraPreview,
+        7
+      );
+
+      if(!predicciones.length){
+        throw new Error(
+          "La inteligencia artificial no pudo reconocer el artículo."
+        );
+      }
+
+      const textoDetectado = predicciones
+        .map(prediccion=>prediccion.className)
+        .join(" ");
+
+      const consultaTraducida =
+        traducirDeteccionIA(textoDetectado);
+
+      aiDetected.innerHTML = `
+        <strong>
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          La inteligencia artificial detectó:
+        </strong>
+
+        <br>
+
+        ${predicciones.slice(0,5).map(prediccion=>{
+          const porcentaje =
+            Math.round(prediccion.probability * 100);
+
+          return `
+            ${escaparHTML(prediccion.className)}
+            — ${porcentaje}%
+          `;
+        }).join("<br>")}
+      `;
+
+      aiDetected.classList.add("show");
+
+      mainSearchInput.value = consultaTraducida;
+
+      buscarProductosConIA(consultaTraducida);
+
+    }catch(error){
+      console.error(error);
+
+      aiSearchResults.innerHTML = `
+        <div class="ai-no-results">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          ${escaparHTML(
+            error.message ||
+            "No se pudo analizar la fotografía."
+          )}
+        </div>
+      `;
+    }finally{
+      aiCameraLoading.classList.remove("show");
+      URL.revokeObjectURL(urlTemporal);
+    }
+  };
+
+  aiCameraPreview.onerror = ()=>{
+    aiCameraLoading.classList.remove("show");
+    URL.revokeObjectURL(urlTemporal);
+
+    aiSearchResults.innerHTML = `
+      <div class="ai-no-results">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        No se pudo abrir la fotografía seleccionada.
+      </div>
+    `;
+  };
+});
 </script>
 
 <div class="auth-overlay" id="authOverlay" aria-hidden="true">
