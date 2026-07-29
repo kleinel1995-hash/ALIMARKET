@@ -1,1267 +1,1227 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AliMarket</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#d9d9d9;color:#000;padding-top:150px;padding-bottom:90px}
-.header{position:fixed;top:0;left:0;width:100%;background:#fff;z-index:9999;padding:18px 70px 28px}
-.header-top{display:flex;align-items:center;gap:22px}.logo{font-family:Georgia,serif;font-size:43px;font-weight:bold;color:#b40000;text-decoration:none;letter-spacing:3px}
-.search-box{flex:1;height:43px;border:2px solid #777;border-radius:30px;display:flex;align-items:center;padding:0 15px;gap:10px;max-width:720px}.search-box input{border:none;outline:none;width:100%;font-size:16px;background:transparent}.search-box i{color:#555;font-size:18px}
-.header-icons{display:flex;align-items:center;gap:24px}.header-icons a{text-decoration:none;color:#000;font-weight:900;display:flex;align-items:center;gap:9px;font-size:19px}.header-icons i{font-size:30px}
-.promo-bar{margin-top:18px;display:flex;align-items:center;gap:12px;padding-left:48px}.promo-bar a{min-width:165px;background:#d8d8d8;color:#000;text-decoration:none;font-weight:900;text-align:center;padding:10px 18px;border-radius:18px;font-size:14px}.promo-bar .cat{background:#fa8d94;display:flex;align-items:center;justify-content:center;gap:10px}.categoria-hover{position:relative}
-.hover-full{position:fixed;top:145px;left:0;width:100%;height:calc(100vh - 145px);background:#d9d9d9;z-index:9998;padding:25px 70px;opacity:0;visibility:hidden;transform:translateY(15px);transition:.25s;overflow:auto}.categoria-hover:hover .hover-full,.hover-full:hover{opacity:1;visibility:visible;transform:translateY(0)}
-.cat-page{width:100%;max-width:1500px;margin:auto}.cat-layout{display:grid;grid-template-columns:290px 1fr;gap:24px}.cat-sidebar{background:#fff;border-radius:16px;padding:17px 18px;min-height:670px}.cat-item{height:55px;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:21px;font-weight:600;cursor:pointer;padding:0 8px;border-radius:12px}.cat-item:hover,.cat-item.active{background:#fff1f1;color:#e00000}.cat-left{display:flex;align-items:center;gap:12px}.cat-icon{width:28px;text-align:center;font-size:23px}.cat-content{padding-top:0}.cat-banner{height:132px;background:linear-gradient(90deg,#4b0000,#e50000,#ff2727);border-radius:14px;display:flex;align-items:center;gap:25px;padding:25px 32px;color:#fff;margin-bottom:20px}.cat-banner .banner-icon{font-size:66px}.cat-banner h1{font-size:36px;margin-bottom:8px}.cat-banner p{font-size:18px;font-weight:700}.cat-title-row{display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #fff;padding:0 8px 15px;margin-bottom:20px}.cat-title-row h2{font-size:34px;font-weight:900}.cat-title-row a{color:#e33333;text-decoration:none;font-size:19px;font-weight:700}.subcat-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}.subcat-card{height:190px;background:#fff;border:2px solid #fff;border-radius:12px;overflow:hidden;cursor:pointer;transition:.2s}.subcat-card:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(0,0,0,.18)}.subcat-img{height:127px;background:#cfcfcf;display:flex;align-items:center;justify-content:center}.subcat-img img{width:90px;height:90px;object-fit:contain}.subcat-card h3{height:63px;background:#fff;display:flex;align-items:center;justify-content:center;text-align:center;font-size:19px}
-.hero{width:86%;height:420px;margin:30px auto 25px;background:linear-gradient(90deg,#e00000,#f00000,#cf0000);overflow:hidden;position:relative;display:flex;align-items:center;padding:45px}.hero-text{color:#fff;width:45%;z-index:2}.hero-text h1{font-size:55px;line-height:1.2;margin-bottom:28px;font-weight:900}.hero-text p{font-size:32px;line-height:1.35;margin-bottom:28px}.hero-text button{background:#fff;color:#d90000;border:none;padding:17px 48px;border-radius:9px;font-size:25px;font-weight:900;cursor:pointer}.hero-img{position:absolute;right:0;bottom:0;width:58%;height:100%;background:url("https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=900&q=80") center/cover no-repeat;opacity:.95}.section{width:86%;margin:25px auto}.section h2{font-size:36px;font-weight:900;margin-bottom:20px}.products{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.product{background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.15)}.product img{width:100%;height:180px;object-fit:cover}.product-info{padding:15px}.product-info h3{font-size:17px;margin-bottom:8px}.price{color:#d60000;font-size:22px;font-weight:900}.product button{margin-top:12px;width:100%;padding:12px;border:none;border-radius:12px;background:#000;color:#fff;font-weight:bold;cursor:pointer}.product{position:relative;cursor:pointer}.product-badge{position:absolute;top:10px;left:10px;background:#e60023;color:#fff;padding:6px 9px;border-radius:20px;font-size:12px;font-weight:900;z-index:2}.old-price{font-size:14px;color:#777;text-decoration:line-through;margin-left:7px}.product-meta{font-size:13px;color:#666;margin-top:5px}.empty-products{grid-column:1/-1;background:#fff;border-radius:16px;padding:35px;text-align:center}.mobile-bottom{display:none}
-@media(max-width:768px){body{padding-top:220px}.header{padding:20px 18px 18px}.header-top{display:grid;grid-template-columns:1fr auto}.logo{font-size:44px}.header-icons a{display:none}.header-icons::after{content:"\f0f3";font-family:"Font Awesome 6 Free";font-weight:900;font-size:42px}.search-box{grid-column:1/3;max-width:100%;width:100%;height:62px}.promo-bar{padding-left:0;overflow-x:auto}.promo-bar::-webkit-scrollbar{display:none}.promo-bar a{min-width:160px}.hover-full{display:none}.hero{width:100%;height:300px;margin-top:20px;padding:25px}.hero-text{width:58%}.hero-text h1{font-size:32px}.hero-text p{font-size:21px}.hero-text button{font-size:18px;padding:12px 25px}.hero-img{width:58%}.section{width:100%;padding:25px}.products{grid-template-columns:repeat(2,1fr)}.product img{height:130px}.mobile-bottom{position:fixed;bottom:0;left:0;right:0;height:85px;background:#d9d9d9;display:flex;justify-content:space-around;align-items:center;z-index:9999}.mobile-bottom a{color:#000;text-decoration:none;font-size:34px}.discount{color:#e00068!important;font-weight:900;font-size:28px!important}}
-
-/* Menú desplegable de usuario */
-.user-menu-wrap{position:relative}
-.user-menu-trigger{cursor:pointer}
-.user-dropdown{
-  position:absolute;
-  top:calc(100% + 14px);
-  right:0;
-  width:360px;
-  max-height:610px;
-  overflow-y:auto;
-  background:#fff;
-  border:1px solid #e3e3e3;
-  border-radius:20px;
-  box-shadow:0 12px 35px rgba(0,0,0,.18);
-  padding:18px 18px 16px;
-  opacity:0;
-  visibility:hidden;
-  transform:translateY(10px);
-  transition:.2s ease;
-  z-index:10050;
-}
-.user-menu-wrap:hover .user-dropdown,
-.user-menu-wrap.open .user-dropdown{
-  opacity:1;
-  visibility:visible;
-  transform:none;
-}
-.user-dropdown::before{
-  content:"";
-  position:absolute;
-  top:-10px;
-  right:34px;
-  width:18px;
-  height:18px;
-  background:#fff;
-  border-left:1px solid #e3e3e3;
-  border-top:1px solid #e3e3e3;
-  transform:rotate(45deg);
-}
-.user-login-btn{
-  display:block;
-  width:100%;
-  padding:18px 20px;
-  border:0;
-  border-radius:40px;
-  background:#111827;
-  color:#fff;
-  font-size:22px;
-  font-weight:800;
-  text-align:center;
-  cursor:pointer;
-}
-.user-register{
-  display:block;
-  text-align:center;
-  margin:12px 0 18px;
-  font-size:18px;
-  font-weight:700;
-  color:#222;
-}
-.user-divider{height:1px;background:#e5e5e5;margin:6px 0 14px}
-.user-menu-list{display:flex;flex-direction:column}
-.user-menu-item{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  padding:16px 10px;
-  color:#222;
-  text-decoration:none;
-  font-size:20px;
-  border-radius:10px;
-  transition:.18s;
-}
-.user-menu-item:hover{background:#f4f4f4}
-.user-menu-item i{
-  width:26px;
-  text-align:center;
-  font-size:22px;
-  color:#333;
-}
-.user-dropdown::-webkit-scrollbar{width:8px}
-.user-dropdown::-webkit-scrollbar-thumb{background:#7c7c7c;border-radius:10px}
-.user-dropdown::-webkit-scrollbar-track{background:#f2f2f2;border-radius:10px}
-@media(max-width:768px){
-  .user-dropdown{
-    position:fixed;
-    top:88px;
-    right:12px;
-    left:12px;
-    width:auto;
-    max-height:calc(100vh - 110px);
-  }
-  .user-dropdown::before{display:none}
-}
-
-
-/* Ventanas modales de acceso */
-.auth-overlay{
-  position:fixed;inset:0;background:rgba(0,0,0,.48);
-  display:none;align-items:center;justify-content:center;
-  padding:20px;z-index:20000
-}
-.auth-overlay.show{display:flex}
-.auth-modal{
-  width:min(470px,96vw);max-height:90vh;overflow:auto;
-  background:#fff;border-radius:22px;box-shadow:0 24px 70px rgba(0,0,0,.3);
-  padding:30px;position:relative
-}
-.auth-close{
-  position:absolute;right:18px;top:14px;width:38px;height:38px;
-  border:0;background:#f1f1f1;border-radius:50%;font-size:22px;cursor:pointer
-}
-.auth-modal h2{font-size:30px;margin:8px 0 6px}
-.auth-modal .subtitle{color:#6b7280;margin-bottom:22px}
-.auth-tabs{display:flex;gap:8px;background:#f2f2f2;padding:5px;border-radius:12px;margin-bottom:22px}
-.auth-tab{flex:1;border:0;background:transparent;padding:12px;border-radius:9px;font-weight:800;cursor:pointer}
-.auth-tab.active{background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.08)}
-.auth-panel{display:none}
-.auth-panel.active{display:block}
-.auth-field{margin-bottom:16px}
-.auth-field label{display:block;font-weight:800;margin-bottom:7px}
-.auth-input-wrap{position:relative}
-.auth-input-wrap i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#6b7280}
-.auth-input-wrap input{
-  width:100%;height:50px;border:1px solid #dfe3e8;border-radius:10px;
-  padding:0 44px;font-size:16px;outline:none
-}
-.auth-input-wrap input:focus{border-color:#333;box-shadow:0 0 0 3px rgba(0,0,0,.05)}
-.auth-eye{
-  position:absolute;right:10px;top:50%;transform:translateY(-50%);
-  border:0;background:transparent;cursor:pointer;font-size:16px
-}
-.auth-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.auth-options{display:flex;justify-content:space-between;gap:12px;align-items:center;margin:8px 0 18px}
-.auth-link-btn{border:0;background:transparent;color:#b40000;font-weight:800;cursor:pointer}
-.auth-submit{
-  width:100%;border:0;border-radius:28px;padding:15px;
-  background:linear-gradient(90deg,#e60023,#b40000);
-  color:#fff;font-size:18px;font-weight:900;cursor:pointer
-}
-.auth-message{display:none;margin-bottom:14px;padding:12px;border-radius:9px;font-weight:700}
-.auth-message.success{display:block;background:#e8f7ed;color:#176b33}
-.auth-message.error{display:block;background:#ffe9e9;color:#a00000}
-.auth-small{font-size:13px;color:#666;margin-top:6px}
-.logout-item{display:none}
-.user-menu-wrap.logged-in .logout-item{display:flex}
-.user-menu-wrap.logged-in .guest-only{display:none}
-@media(max-width:600px){
-  .auth-modal{padding:24px 18px;border-radius:16px}
-  .auth-row{grid-template-columns:1fr}
-}
-
-
-/* SOLO CAMBIO VISUAL: modelo móvil de la imagen. Las funciones permanecen iguales. */
-html{zoom:75%;}
-
-@media(max-width:768px){
-  html,body{width:100%;overflow-x:hidden}
-  body{
-    background:#fff!important;
-    padding-top:258px!important;
-    padding-bottom:96px!important;
-  }
-
-  .header{
-    padding:14px 18px 13px!important;
-    background:#fff!important;
-    box-shadow:none!important;
-  }
-  .header-top{
-    grid-template-columns:1fr 56px!important;
-    grid-template-areas:"logo user" "search search"!important;
-    gap:13px!important;
-  }
-  .logo{
-    grid-area:logo!important;
-    font-size:45px!important;
-    line-height:1!important;
-    color:#a70000!important;
-    letter-spacing:0!important;
-  }
-  .header-icons{
-    grid-area:user!important;
-    width:56px!important;
-    height:54px!important;
-    display:flex!important;
-    align-items:center!important;
-    justify-content:center!important;
-  }
-  .header-icons>a,.header-icons>.user-menu-wrap{display:none!important}
-  .header-icons::after{
-    content:"\f2bd"!important;
-    font-family:"Font Awesome 6 Free"!important;
-    font-weight:400!important;
-    font-size:48px!important;
-    line-height:1!important;
-    color:#000!important;
-  }
-
-  .search-box{
-    grid-area:search!important;
-    width:100%!important;
-    max-width:none!important;
-    height:62px!important;
-    border:1.5px solid #777!important;
-    border-radius:32px!important;
-    padding:0 20px!important;
-    gap:13px!important;
-    background:#fff!important;
-  }
-  .search-box input{font-size:20px!important}
-  .search-box input::placeholder{color:#999!important}
-  .search-box i{font-size:24px!important;color:#111!important}
-  .search-box .fa-microphone::before{content:"\f030"!important}
-
-  .promo-bar{
-    margin-top:13px!important;
-    padding-left:0!important;
-    gap:10px!important;
-    overflow-x:auto!important;
-    scrollbar-width:none!important;
-  }
-  .promo-bar::-webkit-scrollbar{display:none!important}
-  .promo-bar a{
-    min-width:max-content!important;
-    padding:11px 20px!important;
-    border-radius:24px!important;
-    background:#ececec!important;
-    color:#111!important;
-    font-size:16px!important;
-    line-height:1.05!important;
-  }
-  .promo-bar .cat{
-    min-width:170px!important;
-    background:#f6a1a7!important;
-  }
-  .hover-full{display:none!important}
-
-  .hero{
-    width:calc(100% - 24px)!important;
-    height:300px!important;
-    margin:10px 12px 24px!important;
-    padding:28px 30px!important;
-    border-radius:14px!important;
-    background:linear-gradient(90deg,#c70000,#ee0000,#b70000)!important;
-  }
-  .hero-text{width:52%!important}
-  .hero-text h1{
-    font-size:35px!important;
-    line-height:1.15!important;
-    margin-bottom:17px!important;
-  }
-  .hero-text p{
-    font-size:22px!important;
-    line-height:1.35!important;
-    margin-bottom:20px!important;
-  }
-  .hero-text button{
-    font-size:18px!important;
-    padding:13px 26px!important;
-    border-radius:10px!important;
-  }
-  .hero-img{
-    width:55%!important;
-    height:100%!important;
-    right:0!important;
-    background-position:center!important;
-    border-radius:0 14px 14px 0!important;
-  }
-
-  .section{
-    width:100%!important;
-    margin:0!important;
-    padding:0 18px 18px!important;
-  }
-  .section h2{
-    font-size:30px!important;
-    margin:0 0 16px!important;
-  }
-  .products{
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
-    gap:12px!important;
-  }
-  .product{
-    position:relative!important;
-    border-radius:15px!important;
-    box-shadow:0 3px 12px rgba(0,0,0,.13)!important;
-    background:#fff!important;
-    overflow:hidden!important;
-  }
-  .product::before{
-    content:"Nuevo";
-    position:absolute;
-    top:8px;
-    left:8px;
-    z-index:4;
-    padding:5px 8px;
-    border-radius:6px;
-    background:#df0000;
-    color:#fff;
-    font-size:13px;
-    font-weight:900;
-  }
-  .product-badge{display:none!important}
-  .product img{
-    width:100%!important;
-    height:178px!important;
-    object-fit:cover!important;
-    border-radius:15px 15px 0 0!important;
-  }
-  .product-info{
-    padding:10px 13px 14px!important;
-    text-align:left!important;
-  }
-  .product-info h3{
-    font-size:17px!important;
-    line-height:1.2!important;
-    margin-bottom:5px!important;
-    white-space:nowrap!important;
-    overflow:hidden!important;
-    text-overflow:ellipsis!important;
-  }
-  .price{
-    font-size:23px!important;
-    color:#c90000!important;
-    margin:0!important;
-    font-weight:900!important;
-  }
-  .price::before{
-    content:"★★★★★   4.8";
-    display:block;
-    margin:4px 0 7px;
-    color:#424957;
-    font-size:14px;
-    letter-spacing:.5px;
-    font-weight:700;
-  }
-  .product-info::after{
-    content:"$26.09 por Ud., ≥ 3 Uds\A 🚚 Envío gratis";
-    white-space:pre-line;
-    display:block;
-    margin-top:7px;
-    color:#db1731;
-    font-size:13px;
-    font-weight:700;
-    line-height:2.65;
-  }
-  .product-info::after{
-    padding-top:0;
-  }
-  .product-meta{display:none!important}
-  .product button,.add-cart{display:none!important}
-
-  .mobile-bottom{
-    height:92px!important;
-    background:#fff!important;
-    display:flex!important;
-    justify-content:space-around!important;
-    align-items:center!important;
-    padding:7px 4px 4px!important;
-    border-top:1px solid #ddd!important;
-    box-shadow:0 -3px 10px rgba(0,0,0,.08)!important;
-  }
-  .mobile-bottom a{
-    font-size:28px!important;
-    min-width:62px!important;
-    height:72px!important;
-    display:flex!important;
-    flex-direction:column!important;
-    align-items:center!important;
-    justify-content:center!important;
-    gap:5px!important;
-    color:#222!important;
-  }
-  .mobile-bottom a::after{
-    font-size:13px!important;
-    font-family:Arial,sans-serif!important;
-  }
-  .mobile-bottom a:nth-child(1){color:#d00000!important}
-  .mobile-bottom a:nth-child(1)::after{content:"Inicio"}
-  .mobile-bottom a:nth-child(2)::after{content:"Mensajes"}
-  .mobile-bottom a:nth-child(4)::after{content:"Cesta"}
-  .mobile-bottom a:nth-child(5)::after{content:"Usuario"}
-  .mobile-bottom .discount{
-    width:72px!important;
-    min-width:72px!important;
-    height:72px!important;
-    border-radius:50%!important;
-    background:#e5243f!important;
-    color:#fff!important;
-    font-size:23px!important;
-    font-weight:900!important;
-    display:flex!important;
-    align-items:center!important;
-    justify-content:center!important;
-  }
-  .mobile-bottom .discount::after{content:""!important}
-}
-
-</style>
-</head>
-<body>
-<header class="header"><div class="header-top"><a href="index.html" class="logo">Alimarket</a><div class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input type="text" placeholder=""><i class="fa-solid fa-microphone"></i></div><div class="header-icons"><a href="favoritos.html"><i class="fa-solid fa-heart"></i> Favorito</a><a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i> Cesta</a><div class="user-menu-wrap" id="userMenuWrap">
-  <a href="usuario.html" class="user-menu-trigger" id="userMenuTrigger">
-    <i class="fa-solid fa-user"></i> Usuario
-  </a>
-  <div class="user-dropdown" id="userDropdown">
-    <button type="button" class="user-login-btn guest-only" id="openLoginModal">Iniciar sesión</button>
-    <button type="button" class="user-register auth-link-btn guest-only" id="openRegisterModal">Registrarse</button>
-    <div class="user-divider"></div>
-    <div class="user-menu-list">
-      <a href="pedidos.html" class="user-menu-item"><i class="fa-regular fa-clipboard"></i><span>Mis pedidos</span></a>
-      <a href="monedas.html" class="user-menu-item"><i class="fa-solid fa-coins"></i><span>Mis monedas</span></a>
-      <a href="mensajes.html" class="user-menu-item"><i class="fa-regular fa-message"></i><span>Centro de mensajes</span></a>
-      <a href="formas_pago.html" class="user-menu-item"><i class="fa-regular fa-credit-card"></i><span>Forma de pago</span></a>
-      <a href="favoritos.html" class="user-menu-item"><i class="fa-regular fa-heart"></i><span>Lista de deseos</span></a>
-      <a href="cupones.html" class="user-menu-item"><i class="fa-solid fa-ticket"></i><span>Mis cupones</span></a>
-      <a href="configuracion.html" class="user-menu-item"><i class="fa-solid fa-gear"></i><span>Configuración</span></a>
-      <a href="business.html" class="user-menu-item"><i class="fa-solid fa-briefcase"></i><span>AliMarket Business</span></a>
-      <a href="dropshipping.html" class="user-menu-item"><i class="fa-solid fa-boxes-stacked"></i><span>Centro de dropshipping</span></a>
-      <a href="vendedor.html" class="user-menu-item"><i class="fa-solid fa-store"></i><span>Invitación a vendedor</span></a>
-      <button type="button" class="user-menu-item logout-item" id="logoutMenuItem" style="width:100%;border:0;background:transparent;cursor:pointer">
-        <i class="fa-solid fa-right-from-bracket"></i><span>Cerrar sesión</span>
-      </button>
-    </div>
-  </div>
-</div></div></div><nav class="promo-bar"><div class="categoria-hover"><a class="cat" href="#"><i class="fa-solid fa-bars"></i> Categorías</a><div class="hover-full"><main class="cat-page"><div class="cat-layout"><aside class="cat-sidebar" id="catSidebar"></aside><section class="cat-content"><div class="cat-banner"><div class="banner-icon" id="bannerIcon">🎧</div><div><h1 id="bannerTitle">Electronica</h1><p>Explora cientos productos populares y subcategorías.</p></div></div><div class="cat-title-row"><h2 id="sectionTitle">Electronica</h2><a href="categorias.html">Abrir página completa</a></div><div class="subcat-grid" id="subcatGrid"></div></section></div></main></div></div><a href="#">Ofertas promocional</a><a href="#">Nuevos</a><a href="#">Más vendido</a><a href="#">Cupones</a><a href="#">Envió gratis</a></nav></header>
-<section class="hero"><div class="hero-text"><h1>SuperOfertas<br>Hasta -70% dto.</h1><p>Miles de ofertas<br>por tiempo limitado</p><button type="button" onclick="location.href='crear_producto_conectado.html'">Crear producto</button></div><div class="hero-img"></div></section>
-<section class="section"><h2>Productos destacados</h2><div class="products" id="productsGrid"><div class="product"><img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=500&q=80"><div class="product-info"><h3>Smartphone moderno</h3><div class="price">RD$ 8,500</div><button>Agregar</button></div></div><div class="product"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80"><div class="product-info"><h3>Audífonos Bluetooth</h3><div class="price">RD$ 1,250</div><button>Agregar</button></div></div><div class="product"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80"><div class="product-info"><h3>Reloj elegante</h3><div class="price">RD$ 2,900</div><button>Agregar</button></div></div><div class="product"><img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=500&q=80"><div class="product-info"><h3>Smart Watch</h3><div class="price">RD$ 3,600</div><button>Agregar</button></div></div></div></section>
-<nav class="mobile-bottom"><a href="index.html"><i class="fa-solid fa-house"></i></a><a href="#"><i class="fa-solid fa-comments"></i></a><a href="#" class="discount">20%</a><a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i></a><a href="usuario.html"><i class="fa-solid fa-user"></i></a></nav>
-<script>
-
-const PRODUCTOS_KEY='productosPublicados';
-const CARRITO_KEY='carritoAliMarket';
-const productosPredeterminados=[
-  {id:'demo-1',name:'Smartphone moderno',price:8500,offerPrice:0,currency:'DOP',image:'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=500&q=80',category:'Electrónica',totalStock:20},
-  {id:'demo-2',name:'Audífonos Bluetooth',price:1250,offerPrice:0,currency:'DOP',image:'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80',category:'Electrónica',totalStock:15},
-  {id:'demo-3',name:'Reloj elegante',price:2900,offerPrice:0,currency:'DOP',image:'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80',category:'Moda',totalStock:12},
-  {id:'demo-4',name:'Smart Watch',price:3600,offerPrice:0,currency:'DOP',image:'https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=500&q=80',category:'Electrónica',totalStock:18}
-];
-
-function escaparHTML(valor=''){
-  return String(valor).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
-}
-function monedaProducto(p){
-  const codigo=(p.currency||'USD').split(' ')[0];
-  const simbolo=codigo==='DOP'?'RD$':codigo==='EUR'?'€':'US$';
-  return {codigo,simbolo};
-}
-function precioActivo(p){
-  const oferta=Number(p.offerPrice)||0;
-  return oferta>0?oferta:Number(p.price)||0;
-}
-function productosGuardados(){
-  try{
-    const lista=JSON.parse(localStorage.getItem(PRODUCTOS_KEY)||'[]');
-    return Array.isArray(lista)?lista.filter(p=>p && p.status==='publicado'):[];
-  }catch(e){
-    console.error(e);
-    return [];
-  }
-}
-function renderProductos(){
-  const grid=document.getElementById('productsGrid');
-  const creados=productosGuardados();
-  const lista=[...creados,...productosPredeterminados];
-  if(!lista.length){
-    grid.innerHTML='<div class="empty-products"><h3>No hay productos publicados</h3></div>';
-    return;
-  }
-
-  grid.innerHTML=lista.map((p,index)=>{
-    const {simbolo}=monedaProducto(p);
-    const precio=precioActivo(p);
-    const oferta=Number(p.offerPrice)||0;
-    const normal=Number(p.price)||0;
-    const imagen=p.image || (Array.isArray(p.images) && p.images[0] && (p.images[0].url||p.images[0])) || 'https://via.placeholder.com/500x400?text=Producto';
-    const nuevo=index<creados.length;
-    return `<article class="product" data-id="${escaparHTML(p.id||'producto-'+index)}" data-detail="articulo_detalle.html?id=${encodeURIComponent(p.id||'producto-'+index)}">
-      ${nuevo?'<span class="product-badge">Nuevo</span>':''}
-      <img src="${imagen}" alt="${escaparHTML(p.name||'Producto')}" onerror="this.src='https://via.placeholder.com/500x400?text=Producto'">
-      <div class="product-info">
-        <h3>${escaparHTML(p.name||'Producto sin nombre')}</h3>
-        <div class="price">${simbolo} ${precio.toLocaleString('es-DO',{minimumFractionDigits:2,maximumFractionDigits:2})}
-          ${oferta>0 && oferta<normal?`<span class="old-price">${simbolo} ${normal.toLocaleString('es-DO',{minimumFractionDigits:2,maximumFractionDigits:2})}</span>`:''}
-        </div>
-        <div class="product-meta">${escaparHTML(p.category||'Sin categoría')} · Stock: ${Number(p.totalStock)||0}</div>
-        <button type="button" class="add-cart" data-index="${index}">Agregar</button>
-      </div>
-    </article>`;
-  }).join('');
-
-  grid.querySelectorAll('.product').forEach(card=>{
-    card.addEventListener('click',e=>{
-      if(e.target.closest('.add-cart')) return;
-      location.href=card.dataset.detail;
-    });
-  });
-
-  grid.querySelectorAll('.add-cart').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      const producto=lista[Number(btn.dataset.index)];
-      const carrito=JSON.parse(localStorage.getItem(CARRITO_KEY)||'[]');
-      const existente=carrito.find(x=>x.id===producto.id);
-      if(existente) existente.cantidad=(existente.cantidad||1)+1;
-      else carrito.push({
-        id:producto.id,
-        name:producto.name,
-        price:precioActivo(producto),
-        currency:(producto.currency||'USD').split(' ')[0],
-        image:producto.image || (producto.images?.[0]?.url||''),
-        cantidad:1
-      });
-      localStorage.setItem(CARRITO_KEY,JSON.stringify(carrito));
-      btn.innerText='Agregado ✓';
-      btn.style.background='#d60000';
-      setTimeout(()=>{btn.innerText='Agregar';btn.style.background='#000'},1200);
-    });
-  });
-}
-renderProductos();
-window.addEventListener('storage',e=>{
-  if(e.key===PRODUCTOS_KEY)renderProductos();
-});
-
-const categorias=[{nombre:"Electronica",icono:"🎧",subs:["Auriculares","Smartwatch","Camaras","Drones","Consolas","Audio","Parlantes","Microfonos","TV Box","Cargadores","Bluetooth","Luces-LED"]},{nombre:"Telefonos",icono:"📱",subs:["Samsung","iPhone","Xiaomi","Motorola","Huawei","Tecno","Infinix","Cargadores","Cables","Protectores","Pantallas","Accesorios"]},{nombre:"Computadoras",icono:"💻",subs:["Laptop","PC Gamer","Mouse","Teclados","Monitores","Discos SSD","Memorias","Impresoras","Router","USB","Cámaras web","Bocinas"]},{nombre:"Moda Mujer",icono:"👗",subs:["Vestidos","Blusas","Jeans","Zapatos","Carteras","Relojes","Perfumes","Faldas","Maquillaje","Pulseras","Collares","Sandalias"]},{nombre:"Moda Hombre",icono:"👕",subs:["Polos","Jeans","Tenis","Gorras","Relojes","Camisas","Correas","Perfumes","Billeteras","Shorts","Abrigos","Sandalias"]},{nombre:"Hogar y Jardin",icono:"🏠",subs:["Cocina","Muebles","Decoración","Herramientas","Jardín","Luces","Baño","Organizadores","Camas","Cortinas","Sillas","Mesas"]},{nombre:"Belleza y Salud",icono:"💄",subs:["Cuidado facial","Cabello","Perfumes","Maquillaje","Barbería","Vitaminas","Masajes","Cremas","Aceites","Uñas","Cepillos","Máquinas"]},{nombre:"Deportes",icono:"⚽",subs:["Pelotas","Tenis","Ropa deportiva","Gym","Bicicletas","Guantes","Pesas","Gorras","Mochilas","Botellas","Caminadoras","Accesorios"]},{nombre:"Juguetes",icono:"🧸",subs:["Carritos","Muñecas","Peluches","Drones niños","Bloques","Educativos","Bicicletas","Piscinas","Pistolas agua","Robots","Juegos mesa","Figuras"]},{nombre:"Automotriz",icono:"🚗",subs:["Luces LED","Aceites","Baterías","Radios","Bocinas","Forros","Cámaras","Sensores","Herramientas","Aros","Gomas","Accesorios"]},{nombre:"Herramientas",icono:"🛠️",subs:["Taladros","Martillos","Destornilladores","Sierras","Llaves","Compresores","Pintura","Cajas","Eléctricas","Medidores","Soldadoras","Cortadoras"]},{nombre:"Officina y Escuela",icono:"📚",subs:["Cuadernos","Lápices","Mochilas","Calculadoras","Sillas","Escritorios","Impresoras","Papelería","Carpetas","Marcadores","Reglas","Libros"]}];
-const sidebar=document.getElementById("catSidebar"),grid=document.getElementById("subcatGrid"),bannerTitle=document.getElementById("bannerTitle"),bannerIcon=document.getElementById("bannerIcon"),sectionTitle=document.getElementById("sectionTitle");function renderSidebar(){sidebar.innerHTML="";categorias.forEach((cat,index)=>{const item=document.createElement("div");item.className="cat-item"+(index===0?" active":"");item.innerHTML=`<div class="cat-left"><span class="cat-icon">${cat.icono}</span><span>${cat.nombre}</span></div><span>›</span>`;item.onmouseenter=()=>selectCat(index);item.onclick=()=>selectCat(index);sidebar.appendChild(item)})}function selectCat(index){document.querySelectorAll(".cat-item").forEach(el=>el.classList.remove("active"));document.querySelectorAll(".cat-item")[index].classList.add("active");const cat=categorias[index];bannerTitle.innerText=cat.nombre;bannerIcon.innerText=cat.icono;sectionTitle.innerText=cat.nombre;grid.innerHTML="";cat.subs.forEach(sub=>{const card=document.createElement("div");card.className="subcat-card";card.innerHTML=`<div class="subcat-img"><img src="https://cdn-icons-png.flaticon.com/512/1048/1048949.png"></div><h3>${sub}</h3>`;grid.appendChild(card)})}renderSidebar();selectCat(0);
-
-const userMenuWrap=document.getElementById('userMenuWrap');
-const userMenuTrigger=document.getElementById('userMenuTrigger');
-if(userMenuWrap&&userMenuTrigger){
-  userMenuTrigger.addEventListener('click',event=>{
-    if(window.innerWidth<=768){
-      event.preventDefault();
-      userMenuWrap.classList.toggle('open');
-    }
-  });
-  document.addEventListener('click',event=>{
-    if(!userMenuWrap.contains(event.target))userMenuWrap.classList.remove('open');
-  });
-}
-/* =================================================
-   BÚSQUEDA DE ARTÍCULOS POR CÁMARA CON INTELIGENCIA
-================================================= */
-
-const mainSearchForm = document.getElementById("mainSearchForm");
-const mainSearchInput = document.getElementById("mainSearchInput");
-
-const openCameraSearch = document.getElementById("openCameraSearch");
-const closeCameraSearch = document.getElementById("closeCameraSearch");
-const aiCameraOverlay = document.getElementById("aiCameraOverlay");
-const aiCameraInput = document.getElementById("aiCameraInput");
-const aiCameraPreview = document.getElementById("aiCameraPreview");
-const aiCameraLoading = document.getElementById("aiCameraLoading");
-const aiLoadingText = document.getElementById("aiLoadingText");
-const aiDetected = document.getElementById("aiDetected");
-const aiSearchResults = document.getElementById("aiSearchResults");
-
-let alimarketAIModel = null;
-
-function abrirBuscadorCamara(){
-  aiCameraOverlay.classList.add("show");
-  aiCameraOverlay.setAttribute("aria-hidden","false");
-  document.body.style.overflow = "hidden";
-}
-
-function cerrarBuscadorCamara(){
-  aiCameraOverlay.classList.remove("show");
-  aiCameraOverlay.setAttribute("aria-hidden","true");
-  document.body.style.overflow = "";
-}
-
-openCameraSearch.addEventListener("click",abrirBuscadorCamara);
-closeCameraSearch.addEventListener("click",cerrarBuscadorCamara);
-
-aiCameraOverlay.addEventListener("click",event=>{
-  if(event.target === aiCameraOverlay){
-    cerrarBuscadorCamara();
-  }
-});
-
-document.addEventListener("keydown",event=>{
-  if(event.key === "Escape" && aiCameraOverlay.classList.contains("show")){
-    cerrarBuscadorCamara();
-  }
-});
-
-/* Unifica productos creados y productos de demostración */
-
-function obtenerTodosLosProductos(){
-  return [
-    ...productosGuardados(),
-    ...productosPredeterminados
-  ];
-}
-
-function normalizarTextoIA(texto=""){
-  return String(texto)
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g,"")
-    .toLowerCase()
-    .replace(/[^a-z0-9ñ\s]/g," ")
-    .replace(/\s+/g," ")
-    .trim();
-}
-
-/* Traduce etiquetas comunes de MobileNet al español */
-
-function traducirDeteccionIA(texto=""){
-  const traducciones = {
-    "cellular telephone":"celular telefono smartphone movil iphone android",
-    "mobile phone":"celular telefono smartphone movil",
-    "smartphone":"celular telefono smartphone movil",
-    "telephone":"telefono celular movil",
-
-    "digital watch":"reloj digital smartwatch reloj inteligente",
-    "watch":"reloj smartwatch reloj inteligente",
-    "analog clock":"reloj analogico",
-
-    "headphone":"audifonos auriculares",
-    "headphones":"audifonos auriculares",
-    "earphone":"audifonos auriculares bluetooth",
-    "loudspeaker":"bocina altavoz parlante",
-
-    "laptop":"laptop computadora portatil notebook",
-    "notebook":"laptop computadora portatil",
-    "desktop computer":"computadora pc escritorio",
-    "computer keyboard":"teclado computadora",
-    "mouse":"mouse raton computadora",
-    "monitor":"monitor pantalla computadora",
-
-    "television":"televisor television pantalla smart tv",
-    "remote control":"control remoto",
-
-    "running shoe":"tenis zapatos deportivos zapatillas calzado",
-    "shoe":"zapato tenis zapatilla calzado",
-    "sandal":"sandalia calzado",
-    "slipper":"zapatilla calzado",
-
-    "handbag":"cartera bolso mujer",
-    "backpack":"mochila bolso",
-    "wallet":"billetera cartera",
-
-    "sunglasses":"lentes gafas anteojos",
-    "perfume":"perfume fragancia",
-
-    "camera":"camara fotografia video",
-    "digital camera":"camara digital fotografia",
-
-    "jersey":"camiseta ropa",
-    "t-shirt":"camiseta tshirt ropa",
-    "shirt":"camisa ropa",
-    "dress":"vestido ropa mujer",
-    "jean":"pantalon jeans ropa",
-    "jacket":"chaqueta abrigo ropa",
-
-    "toy":"juguete ninos",
-    "teddy":"peluche juguete",
-    "doll":"muneca juguete",
-
-    "car":"carro automovil vehiculo",
-    "sports car":"carro automovil vehiculo",
-    "motorcycle":"motocicleta motor vehiculo",
-    "bicycle":"bicicleta deporte",
-
-    "drill":"taladro herramienta",
-    "hammer":"martillo herramienta",
-    "screwdriver":"destornillador herramienta",
-
-    "chair":"silla mueble hogar",
-    "table":"mesa mueble hogar",
-    "sofa":"sofa mueble hogar",
-    "bed":"cama dormitorio hogar",
-
-    "bottle":"botella termo vaso",
-    "water bottle":"botella termo",
-    "cup":"taza vaso",
-    "mug":"taza vaso",
-
-    "refrigerator":"nevera refrigerador electrodomestico",
-    "microwave":"microondas electrodomestico",
-    "washing machine":"lavadora electrodomestico"
-  };
-
-  let resultado = normalizarTextoIA(texto);
-
-  Object.entries(traducciones).forEach(([ingles,espanol])=>{
-    if(resultado.includes(normalizarTextoIA(ingles))){
-      resultado += ` ${espanol}`;
-    }
-  });
-
-  return normalizarTextoIA(resultado);
-}
-
-function obtenerTextoProductoIA(producto){
-  const variantes = Array.isArray(producto.variants)
-    ? producto.variants.map(variante=>{
-        if(typeof variante === "string") return variante;
-
-        return [
-          variante.name,
-          variante.nombre,
-          variante.color,
-          variante.size,
-          variante.tamano,
-          variante.tamaño,
-          variante.sku
-        ].filter(Boolean).join(" ");
-      }).join(" ")
-    : "";
-
-  const etiquetas = Array.isArray(producto.tags)
-    ? producto.tags.join(" ")
-    : producto.tags || "";
-
-  return normalizarTextoIA([
-    producto.name,
-    producto.nombre,
-    producto.title,
-    producto.titulo,
-    producto.description,
-    producto.descripcion,
-    producto.shortDescription,
-    producto.category,
-    producto.categoria,
-    producto.subcategory,
-    producto.subcategoria,
-    producto.brand,
-    producto.marca,
-    producto.model,
-    producto.modelo,
-    producto.color,
-    producto.material,
-    etiquetas,
-    producto.keywords,
-    producto.palabrasClave,
-    variantes
-  ].filter(Boolean).join(" "));
-}
-
-function calcularCoincidenciaIA(producto,consulta){
-  const textoProducto = obtenerTextoProductoIA(producto);
-  const consultaNormalizada = traducirDeteccionIA(consulta);
-
-  const palabras = [...new Set(
-    consultaNormalizada
-      .split(" ")
-      .filter(palabra=>palabra.length > 2)
-  )];
-
-  const nombre = normalizarTextoIA(
-    producto.name ||
-    producto.nombre ||
-    producto.title ||
-    producto.titulo ||
-    ""
-  );
-
-  const categoria = normalizarTextoIA([
-    producto.category,
-    producto.categoria,
-    producto.subcategory,
-    producto.subcategoria
-  ].filter(Boolean).join(" "));
-
-  let puntuacion = 0;
-
-  if(textoProducto.includes(consultaNormalizada)){
-    puntuacion += 35;
-  }
-
-  palabras.forEach(palabra=>{
-    if(textoProducto.includes(palabra)) puntuacion += 5;
-    if(nombre.includes(palabra)) puntuacion += 12;
-    if(categoria.includes(palabra)) puntuacion += 8;
-  });
-
-  return puntuacion;
-}
-
-function obtenerImagenProductoIA(producto){
-  if(producto.image) return producto.image;
-  if(producto.imagen) return producto.imagen;
-  if(producto.photo) return producto.photo;
-  if(producto.foto) return producto.foto;
-
-  const imagenes =
-    producto.images ||
-    producto.imagenes ||
-    producto.photos ||
-    producto.fotos ||
-    [];
-
-  if(Array.isArray(imagenes) && imagenes.length){
-    const primera = imagenes[0];
-
-    if(typeof primera === "string"){
-      return primera;
-    }
-
-    return (
-      primera.url ||
-      primera.src ||
-      primera.image ||
-      primera.imagen ||
-      ""
-    );
-  }
-
-  return "https://via.placeholder.com/300x300?text=AliMarket";
-}
-
-function precioFormateadoIA(producto){
-  const {simbolo} = monedaProducto(producto);
-  const precio = precioActivo(producto);
-
-  return `${simbolo} ${Number(precio || 0).toLocaleString("es-US",{
-    minimumFractionDigits:2,
-    maximumFractionDigits:2
-  })}`;
-}
-
-function mostrarResultadosIA(resultados,consulta){
-  if(!resultados.length){
-    aiSearchResults.innerHTML = `
-      <div class="ai-no-results">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        No encontramos artículos parecidos a
-        <strong>${escaparHTML(consulta)}</strong>.
-      </div>
-    `;
-    return;
-  }
-
-  aiSearchResults.innerHTML = resultados.map(({producto})=>{
-    const id =
-      producto.id ||
-      producto.productId ||
-      producto.codigo ||
-      producto.sku ||
-      "";
-
-    const nombre =
-      producto.name ||
-      producto.nombre ||
-      producto.title ||
-      producto.titulo ||
-      "Producto";
-
-    const categoria =
-      producto.category ||
-      producto.categoria ||
-      producto.subcategory ||
-      producto.subcategoria ||
-      "AliMarket";
-
-    return `
-      <article
-        class="ai-result-card"
-        data-product-id="${escaparHTML(id)}"
-      >
-        <img
-          src="${escaparHTML(obtenerImagenProductoIA(producto))}"
-          alt="${escaparHTML(nombre)}"
-          onerror="this.onerror=null;this.src='https://via.placeholder.com/300x300?text=AliMarket'"
-        >
-
-        <div>
-          <div class="ai-result-name">
-            ${escaparHTML(nombre)}
-          </div>
-
-          <div class="ai-result-category">
-            ${escaparHTML(categoria)}
-          </div>
-
-          <div class="ai-result-price">
-            ${precioFormateadoIA(producto)}
-          </div>
-        </div>
-
-        <i class="fa-solid fa-chevron-right"></i>
-      </article>
-    `;
-  }).join("");
-
-  aiSearchResults.querySelectorAll(".ai-result-card").forEach(card=>{
-    card.addEventListener("click",()=>{
-      const productoId = card.dataset.productId;
-
-      if(!productoId) return;
-
-      localStorage.setItem(
-        "alimarketProductoSeleccionado",
-        productoId
-      );
-
-      location.href =
-        `articulo_detalle.html?id=${encodeURIComponent(productoId)}`;
-    });
-  });
-}
-
-function buscarProductosConIA(consulta){
-  const productos = obtenerTodosLosProductos();
-
-  const resultados = productos
-    .map(producto=>({
-      producto,
-      puntuacion:calcularCoincidenciaIA(producto,consulta)
-    }))
-    .filter(resultado=>resultado.puntuacion > 0)
-    .sort((a,b)=>b.puntuacion-a.puntuacion)
-    .slice(0,12);
-
-  mostrarResultadosIA(resultados,consulta);
-}
-
-/* Búsqueda normal escrita */
-
-mainSearchForm.addEventListener("submit",event=>{
-  event.preventDefault();
-
-  const consulta = mainSearchInput.value.trim();
-
-  if(!consulta){
-    mainSearchInput.focus();
-    return;
-  }
-
-  const productos = obtenerTodosLosProductos();
-
-  const resultados = productos
-    .map(producto=>({
-      producto,
-      puntuacion:calcularCoincidenciaIA(producto,consulta)
-    }))
-    .filter(resultado=>resultado.puntuacion > 0)
-    .sort((a,b)=>b.puntuacion-a.puntuacion);
-
-  renderizarBusquedaPrincipal(resultados,consulta);
-});
-
-function renderizarBusquedaPrincipal(resultados,consulta){
-  const gridProductos = document.getElementById("productsGrid");
-  const tituloSeccion = document.querySelector(".section h2");
-
-  tituloSeccion.textContent = `Resultados para: ${consulta}`;
-
-  if(!resultados.length){
-    gridProductos.innerHTML = `
-      <div class="empty-products">
-        <h3>No encontramos productos relacionados</h3>
-        <p>Prueba con otro nombre, marca o categoría.</p>
-      </div>
-    `;
-    return;
-  }
-
-  gridProductos.innerHTML = resultados.map(({producto},index)=>{
-    const id =
-      producto.id ||
-      producto.productId ||
-      `resultado-${index}`;
-
-    const nombre =
-      producto.name ||
-      producto.nombre ||
-      "Producto";
-
-    const imagen = obtenerImagenProductoIA(producto);
-    const {simbolo} = monedaProducto(producto);
-    const precio = precioActivo(producto);
-    const oferta = Number(producto.offerPrice)||0;
-    const normal = Number(producto.price)||0;
-
-    return `
-      <article
-        class="product"
-        data-detail="articulo_detalle.html?id=${encodeURIComponent(id)}"
-      >
-        <img
-          src="${escaparHTML(imagen)}"
-          alt="${escaparHTML(nombre)}"
-          onerror="this.onerror=null;this.src='https://via.placeholder.com/500x400?text=AliMarket'"
-        >
-
-        <div class="product-info">
-          <h3>${escaparHTML(nombre)}</h3>
-
-          <div class="price">
-            ${simbolo}
-            ${Number(precio).toLocaleString("es-US",{
-              minimumFractionDigits:2,
-              maximumFractionDigits:2
-            })}
-
-            ${
-              oferta > 0 && oferta < normal
-                ? `<span class="old-price">${simbolo} ${normal.toLocaleString("es-US",{
-                    minimumFractionDigits:2,
-                    maximumFractionDigits:2
-                  })}</span>`
-                : ""
-            }
-          </div>
-
-          <div class="product-meta">
-            ${escaparHTML(producto.category || "Sin categoría")}
-          </div>
-
-          <button type="button">Ver producto</button>
-        </div>
-      </article>
-    `;
-  }).join("");
-
-  gridProductos.querySelectorAll(".product").forEach(card=>{
-    card.addEventListener("click",()=>{
-      location.href = card.dataset.detail;
-    });
-  });
-}
-
-/* Cargar MobileNet */
-
-async function cargarModeloAliMarketIA(){
-  if(alimarketAIModel){
-    return alimarketAIModel;
-  }
-
-  aiCameraLoading.classList.add("show");
-  aiLoadingText.textContent =
-    "Cargando inteligencia artificial...";
-
-  if(typeof tf === "undefined" || typeof mobilenet === "undefined"){
-    throw new Error(
-      "No se cargaron las librerías de inteligencia artificial."
-    );
-  }
-
-  await tf.ready();
-
-  alimarketAIModel = await mobilenet.load({
-    version:2,
-    alpha:1
-  });
-
-  return alimarketAIModel;
-}
-
-/* Analizar la fotografía */
-
-aiCameraInput.addEventListener("change",event=>{
-  const archivo = event.target.files?.[0];
-
-  if(!archivo) return;
-
-  if(!archivo.type.startsWith("image/")){
-    alert("Selecciona una fotografía válida.");
-    aiCameraInput.value = "";
-    return;
-  }
-
-  if(archivo.size > 10 * 1024 * 1024){
-    alert("La fotografía no debe superar los 10 MB.");
-    aiCameraInput.value = "";
-    return;
-  }
-
-  const urlTemporal = URL.createObjectURL(archivo);
-
-  aiCameraPreview.src = urlTemporal;
-  aiCameraPreview.style.display = "block";
-  aiDetected.classList.remove("show");
-  aiSearchResults.innerHTML = "";
-
-  aiCameraPreview.onload = async()=>{
-    try{
-      const modelo = await cargarModeloAliMarketIA();
-
-      aiCameraLoading.classList.add("show");
-      aiLoadingText.textContent =
-        "Identificando el artículo de la fotografía...";
-
-      const predicciones = await modelo.classify(
-        aiCameraPreview,
-        7
-      );
-
-      if(!predicciones.length){
-        throw new Error(
-          "La inteligencia artificial no pudo reconocer el artículo."
-        );
-      }
-
-      const textoDetectado = predicciones
-        .map(prediccion=>prediccion.className)
-        .join(" ");
-
-      const consultaTraducida =
-        traducirDeteccionIA(textoDetectado);
-
-      aiDetected.innerHTML = `
-        <strong>
-          <i class="fa-solid fa-wand-magic-sparkles"></i>
-          La inteligencia artificial detectó:
-        </strong>
-
-        <br>
-
-        ${predicciones.slice(0,5).map(prediccion=>{
-          const porcentaje =
-            Math.round(prediccion.probability * 100);
-
-          return `
-            ${escaparHTML(prediccion.className)}
-            — ${porcentaje}%
-          `;
-        }).join("<br>")}
-      `;
-
-      aiDetected.classList.add("show");
-
-      mainSearchInput.value = consultaTraducida;
-
-      buscarProductosConIA(consultaTraducida);
-
-    }catch(error){
-      console.error(error);
-
-      aiSearchResults.innerHTML = `
-        <div class="ai-no-results">
-          <i class="fa-solid fa-triangle-exclamation"></i>
-          ${escaparHTML(
-            error.message ||
-            "No se pudo analizar la fotografía."
-          )}
-        </div>
-      `;
-    }finally{
-      aiCameraLoading.classList.remove("show");
-      URL.revokeObjectURL(urlTemporal);
-    }
-  };
-
-  aiCameraPreview.onerror = ()=>{
-    aiCameraLoading.classList.remove("show");
-    URL.revokeObjectURL(urlTemporal);
-
-    aiSearchResults.innerHTML = `
-      <div class="ai-no-results">
-        <i class="fa-solid fa-triangle-exclamation"></i>
-        No se pudo abrir la fotografía seleccionada.
-      </div>
-    `;
-  };
-});
-</script>
-
-<div class="auth-overlay" id="authOverlay" aria-hidden="true">
-  <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
-    <button class="auth-close" id="authClose" type="button">×</button>
-    <div class="auth-tabs">
-      <button class="auth-tab active" data-panel="loginPanel" type="button">Iniciar sesión</button>
-      <button class="auth-tab" data-panel="registerPanel" type="button">Registrarse</button>
-    </div>
-
-    <section class="auth-panel active" id="loginPanel">
-      <h2 id="authTitle">Iniciar sesión</h2>
-      <p class="subtitle">Accede a tus pedidos, favoritos y métodos de pago.</p>
-      <div class="auth-message" id="loginMessage"></div>
-      <form id="modalLoginForm">
-        <div class="auth-field">
-          <label>Correo electrónico</label>
-          <div class="auth-input-wrap">
-            <i class="fa-regular fa-envelope"></i>
-            <input id="modalLoginEmail" type="email" required placeholder="correo@ejemplo.com">
-          </div>
-        </div>
-        <div class="auth-field">
-          <label>Contraseña</label>
-          <div class="auth-input-wrap">
-            <i class="fa-solid fa-lock"></i>
-            <input id="modalLoginPassword" type="password" required placeholder="Tu contraseña">
-            <button type="button" class="auth-eye" data-target="modalLoginPassword"><i class="fa-regular fa-eye"></i></button>
-          </div>
-        </div>
-        <div class="auth-options">
-          <label><input id="modalRemember" type="checkbox"> Recordarme</label>
-          <button type="button" class="auth-link-btn" id="modalForgot">¿Olvidaste tu contraseña?</button>
-        </div>
-        <button class="auth-submit" type="submit">Iniciar sesión</button>
-      </form>
-    </section>
-
-    <section class="auth-panel" id="registerPanel">
-      <h2>Crear cuenta</h2>
-      <p class="subtitle">Completa tus datos para registrarte.</p>
-      <div class="auth-message" id="registerMessage"></div>
-      <form id="modalRegisterForm">
-        <div class="auth-row">
-          <div class="auth-field">
-            <label>Nombre</label>
-            <div class="auth-input-wrap"><i class="fa-regular fa-user"></i><input id="modalFirstName" required></div>
-          </div>
-          <div class="auth-field">
-            <label>Apellido</label>
-            <div class="auth-input-wrap"><i class="fa-regular fa-user"></i><input id="modalLastName" required></div>
-          </div>
-        </div>
-        <div class="auth-field">
-          <label>Correo electrónico</label>
-          <div class="auth-input-wrap"><i class="fa-regular fa-envelope"></i><input id="modalRegisterEmail" type="email" required></div>
-        </div>
-        <div class="auth-field">
-          <label>Teléfono</label>
-          <div class="auth-input-wrap"><i class="fa-solid fa-phone"></i><input id="modalPhone" type="tel" required placeholder="809-000-0000"></div>
-        </div>
-        <div class="auth-field">
-          <label>Contraseña</label>
-          <div class="auth-input-wrap">
-            <i class="fa-solid fa-lock"></i>
-            <input id="modalRegisterPassword" type="password" required minlength="6">
-            <button type="button" class="auth-eye" data-target="modalRegisterPassword"><i class="fa-regular fa-eye"></i></button>
-          </div>
-        </div>
-        <div class="auth-field">
-          <label>Confirmar contraseña</label>
-          <div class="auth-input-wrap">
-            <i class="fa-solid fa-lock"></i>
-            <input id="modalConfirmPassword" type="password" required minlength="6">
-            <button type="button" class="auth-eye" data-target="modalConfirmPassword"><i class="fa-regular fa-eye"></i></button>
-          </div>
-        </div>
-        <label style="display:flex;gap:8px;align-items:center;margin-bottom:18px">
-          <input id="modalTerms" type="checkbox"> Acepto los términos y condiciones
-        </label>
-        <button class="auth-submit" type="submit">Crear cuenta</button>
-      </form>
-    </section>
-  </div>
+<!DOCTYPE html>  <html lang="es">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>AliMarket</title>  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.1/dist/mobilenet.min.js"></script>  <style>  
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}  
+body{background:#d9d9d9;color:#000;padding-top:150px;padding-bottom:90px}  
+.header{position:fixed;top:0;left:0;width:100%;background:#fff;z-index:9999;padding:18px 70px 28px}  
+.header-top{display:flex;align-items:center;gap:22px}  
+.logo{font-family:Georgia,serif;font-size:43px;font-weight:bold;color:#b40000;text-decoration:none;letter-spacing:3px}  
+.search-box{flex:1;height:43px;border:2px solid #777;border-radius:30px;display:flex;align-items:center;padding:0 15px;gap:10px;max-width:720px}  
+.search-box input{border:none;outline:none;width:100%;font-size:16px;background:transparent}  
+.search-box i{color:#555;font-size:18px}  
+.search-box button{border:0;background:transparent;padding:0;display:grid;place-items:center;flex:0 0 auto;cursor:pointer}  
+.search-icon-btn{width:30px;height:38px}  
+.camera-search-btn{width:43px;height:43px;border-radius:50%;transition:.2s}  
+.camera-search-btn:hover{background:#f1f1f1;color:#d00000}  
+.header-icons{display:flex;align-items:center;gap:24px}  
+.header-icons a{text-decoration:none;color:#000;font-weight:900;display:flex;align-items:center;gap:9px;font-size:19px}  
+.header-icons i{font-size:30px}  
+.promo-bar{margin-top:18px;display:flex;align-items:center;gap:12px;padding-left:48px}  
+.promo-bar a{min-width:165px;background:#d8d8d8;color:#000;text-decoration:none;font-weight:900;text-align:center;padding:10px 18px;border-radius:18px;font-size:14px}  
+.promo-bar .cat{background:#fa8d94;display:flex;align-items:center;justify-content:center;gap:10px}  
+.categoria-hover{position:relative}  
+.hover-full{position:fixed;top:145px;left:0;width:100%;height:calc(100vh - 145px);background:#d9d9d9;z-index:9998;padding:25px 70px;opacity:0;visibility:hidden;transform:translateY(15px);transition:.25s;overflow:auto}  
+.categoria-hover:hover .hover-full,.hover-full:hover{opacity:1;visibility:visible;transform:translateY(0)}  
+.cat-page{width:100%;max-width:1500px;margin:auto}  
+.cat-layout{display:grid;grid-template-columns:290px 1fr;gap:24px}  
+.cat-sidebar{background:#fff;border-radius:16px;padding:17px 18px;min-height:670px}  
+.cat-item{height:55px;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:21px;font-weight:600;cursor:pointer;padding:0 8px;border-radius:12px}  
+.cat-item:hover,.cat-item.active{background:#fff1f1;color:#e00000}  
+.cat-left{display:flex;align-items:center;gap:12px}  
+.cat-icon{width:28px;text-align:center;font-size:23px}  
+.cat-content{padding-top:0}  
+.cat-banner{height:132px;background:linear-gradient(90deg,#4b0000,#e50000,#ff2727);border-radius:14px;display:flex;align-items:center;gap:25px;padding:25px 32px;color:#fff;margin-bottom:20px}  
+.cat-banner .banner-icon{font-size:66px}  
+.cat-banner h1{font-size:36px;margin-bottom:8px}  
+.cat-banner p{font-size:18px;font-weight:700}  
+.cat-title-row{display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #fff;padding:0 8px 15px;margin-bottom:20px}  
+.cat-title-row h2{font-size:34px;font-weight:900}  
+.cat-title-row a{color:#e33333;text-decoration:none;font-size:19px;font-weight:700}  
+.subcat-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}  
+.subcat-card{height:190px;background:#fff;border:2px solid #fff;border-radius:12px;overflow:hidden;cursor:pointer;transition:.2s}  
+.subcat-card:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(0,0,0,.18)}  
+.subcat-img{height:127px;background:#cfcfcf;display:flex;align-items:center;justify-content:center}  
+.subcat-img img{width:90px;height:90px;object-fit:contain}  
+.subcat-card h3{height:63px;background:#fff;display:flex;align-items:center;justify-content:center;text-align:center;font-size:19px}  
+.hero{width:86%;height:420px;margin:30px auto 25px;background:linear-gradient(90deg,#e00000,#f00000,#cf0000);overflow:hidden;position:relative;display:flex;align-items:center;padding:45px}  
+.hero-text{color:#fff;width:45%;z-index:2}  
+.hero-text h1{font-size:55px;line-height:1.2;margin-bottom:28px;font-weight:900}  
+.hero-text p{font-size:32px;line-height:1.35;margin-bottom:28px}  
+.hero-text button{background:#fff;color:#d90000;border:none;padding:17px 48px;border-radius:9px;font-size:25px;font-weight:900;cursor:pointer}  
+.hero-img{position:absolute;right:0;bottom:0;width:58%;height:100%;background:url("https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=900&q=80") center/cover no-repeat;opacity:.95}  
+.section{width:86%;margin:25px auto}  
+.section h2{font-size:36px;font-weight:900;margin-bottom:20px}  
+.products{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}  
+.product{background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.15);position:relative;cursor:pointer}  
+.product img{width:100%;height:180px;object-fit:cover}  
+.product-info{padding:15px}  
+.product-info h3{font-size:17px;margin-bottom:8px}  
+.price{color:#d60000;font-size:22px;font-weight:900}  
+.product button{margin-top:12px;width:100%;padding:12px;border:none;border-radius:12px;background:#000;color:#fff;font-weight:bold;cursor:pointer}  
+.product-badge{position:absolute;top:10px;left:10px;background:#e60023;color:#fff;padding:6px 9px;border-radius:20px;font-size:12px;font-weight:900;z-index:2}  
+.old-price{font-size:14px;color:#777;text-decoration:line-through;margin-left:7px}  
+.product-meta{font-size:13px;color:#666;margin-top:5px}  
+.empty-products{grid-column:1/-1;background:#fff;border-radius:16px;padding:35px;text-align:center}  
+.mobile-bottom{display:none}  
+  
+/* Menú desplegable de usuario */  
+.user-menu-wrap{position:relative}  
+.user-menu-trigger{cursor:pointer}  
+.user-dropdown{  
+  position:absolute;top:calc(100% + 14px);right:0;width:360px;max-height:610px;overflow-y:auto;  
+  background:#fff;border:1px solid #e3e3e3;border-radius:20px;box-shadow:0 12px 35px rgba(0,0,0,.18);  
+  padding:18px 18px 16px;opacity:0;visibility:hidden;transform:translateY(10px);transition:.2s ease;z-index:10050  
+}  
+.user-menu-wrap:hover .user-dropdown,.user-menu-wrap.open .user-dropdown{opacity:1;visibility:visible;transform:none}  
+.user-dropdown::before{content:"";position:absolute;top:-10px;right:34px;width:18px;height:18px;background:#fff;border-left:1px solid #e3e3e3;border-top:1px solid #e3e3e3;transform:rotate(45deg)}  
+.user-login-btn{display:block;width:100%;padding:18px 20px;border:0;border-radius:40px;background:#111827;color:#fff;font-size:22px;font-weight:800;text-align:center;cursor:pointer}  
+.user-register{display:block;text-align:center;margin:12px 0 18px;font-size:18px;font-weight:700;color:#222}  
+.user-divider{height:1px;background:#e5e5e5;margin:6px 0 14px}  
+.user-menu-list{display:flex;flex-direction:column}  
+.user-menu-item{display:flex;align-items:center;gap:14px;padding:16px 10px;color:#222;text-decoration:none;font-size:20px;border-radius:10px;transition:.18s}  
+.user-menu-item:hover{background:#f4f4f4}  
+.user-menu-item i{width:26px;text-align:center;font-size:22px;color:#333}  
+.user-dropdown::-webkit-scrollbar{width:8px}  
+.user-dropdown::-webkit-scrollbar-thumb{background:#7c7c7c;border-radius:10px}  
+.user-dropdown::-webkit-scrollbar-track{background:#f2f2f2;border-radius:10px}  
+  
+/* Ventanas modales de acceso */  
+.auth-overlay{position:fixed;inset:0;background:rgba(0,0,0,.48);display:none;align-items:center;justify-content:center;padding:20px;z-index:20000}  
+.auth-overlay.show{display:flex}  
+.auth-modal{width:min(470px,96vw);max-height:90vh;overflow:auto;background:#fff;border-radius:22px;box-shadow:0 24px 70px rgba(0,0,0,.3);padding:30px;position:relative}  
+.auth-close{position:absolute;right:18px;top:14px;width:38px;height:38px;border:0;background:#f1f1f1;border-radius:50%;font-size:22px;cursor:pointer}  
+.auth-modal h2{font-size:30px;margin:8px 0 6px}  
+.auth-modal .subtitle{color:#6b7280;margin-bottom:22px}  
+.auth-tabs{display:flex;gap:8px;background:#f2f2f2;padding:5px;border-radius:12px;margin-bottom:22px}  
+.auth-tab{flex:1;border:0;background:transparent;padding:12px;border-radius:9px;font-weight:800;cursor:pointer}  
+.auth-tab.active{background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.08)}  
+.auth-panel{display:none}  
+.auth-panel.active{display:block}  
+.auth-field{margin-bottom:16px}  
+.auth-field label{display:block;font-weight:800;margin-bottom:7px}  
+.auth-input-wrap{position:relative}  
+.auth-input-wrap i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#6b7280}  
+.auth-input-wrap input{width:100%;height:50px;border:1px solid #dfe3e8;border-radius:10px;padding:0 44px;font-size:16px;outline:none}  
+.auth-input-wrap input:focus{border-color:#333;box-shadow:0 0 0 3px rgba(0,0,0,.05)}  
+.auth-eye{position:absolute;right:10px;top:50%;transform:translateY(-50%);border:0;background:transparent;cursor:pointer;font-size:16px}  
+.auth-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}  
+.auth-options{display:flex;justify-content:space-between;gap:12px;align-items:center;margin:8px 0 18px}  
+.auth-link-btn{border:0;background:transparent;color:#b40000;font-weight:800;cursor:pointer}  
+.auth-submit{width:100%;border:0;border-radius:28px;padding:15px;background:linear-gradient(90deg,#e60023,#b40000);color:#fff;font-size:18px;font-weight:900;cursor:pointer}  
+.auth-message{display:none;margin-bottom:14px;padding:12px;border-radius:9px;font-weight:700}  
+.auth-message.success{display:block;background:#e8f7ed;color:#176b33}  
+.auth-message.error{display:block;background:#ffe9e9;color:#a00000}  
+.logout-item{display:none}  
+.user-menu-wrap.logged-in .logout-item{display:flex}  
+.user-menu-wrap.logged-in .guest-only{display:none}  
+  
+/* Cámara IA */  
+.ai-camera-overlay{  
+  position:fixed;inset:0;z-index:30000;display:none;align-items:center;justify-content:center;  
+  padding:20px;background:rgba(0,0,0,.72)  
+}  
+.ai-camera-overlay.show{display:flex}  
+.ai-camera-modal{  
+  position:relative;width:min(700px,96vw);max-height:92vh;overflow-y:auto;padding:28px;  
+  border-radius:22px;background:#fff;box-shadow:0 25px 80px rgba(0,0,0,.4)  
+}  
+.ai-camera-close{  
+  position:absolute;top:16px;right:16px;width:42px;height:42px;border:0;border-radius:50%;  
+  background:#f1f1f1;font-size:23px;cursor:pointer  
+}  
+.ai-camera-modal h2{margin:0 50px 7px 0;font-size:28px}  
+.ai-camera-description{margin:0 0 22px;color:#666;line-height:1.5}  
+.ai-upload-label{  
+  min-height:190px;padding:25px;border:2px dashed #e86c6c;border-radius:17px;background:#fff6f6;  
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;text-align:center;cursor:pointer  
+}  
+.ai-upload-label>i{font-size:48px;color:#d00000}  
+.ai-upload-label strong{font-size:18px}  
+.ai-upload-label span{color:#777;font-size:14px}  
+.ai-image-preview{display:none;width:100%;max-height:300px;margin-top:17px;border-radius:14px;object-fit:contain;background:#f2f2f2}  
+.ai-loading{display:none;align-items:center;gap:11px;margin-top:17px;padding:14px;border-radius:11px;background:#fff0f0;color:#980000;font-weight:800}  
+.ai-loading.show{display:flex}  
+.ai-loader{width:23px;height:23px;border:3px solid #ffc3c3;border-top-color:#d00000;border-radius:50%;animation:aiSpin .7s linear infinite}  
+@keyframes aiSpin{to{transform:rotate(360deg)}}  
+.ai-detected{display:none;margin-top:16px;padding:14px;border-radius:11px;background:#f4f4f4;line-height:1.55}  
+.ai-detected.show{display:block}  
+.ai-search-results{display:grid;gap:12px;margin-top:18px}  
+.ai-result-card{  
+  display:grid;grid-template-columns:86px minmax(0,1fr) 25px;gap:13px;align-items:center;  
+  padding:10px;border:1px solid #e1e1e1;border-radius:13px;background:#fff;cursor:pointer  
+}  
+.ai-result-card:hover{border-color:#d00000;box-shadow:0 5px 15px rgba(0,0,0,.08)}  
+.ai-result-card img{width:86px;height:86px;object-fit:cover;border-radius:10px;background:#eee}  
+.ai-result-name{margin-bottom:6px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}  
+.ai-result-category{margin-bottom:7px;color:#777;font-size:13px}  
+.ai-result-price{color:#d00000;font-size:17px;font-weight:900}  
+.ai-result-card>i{color:#d00000}  
+.ai-no-results{padding:28px 18px;border-radius:13px;background:#f5f5f5;color:#666;text-align:center;line-height:1.5}  
+.ai-no-results i{display:block;margin-bottom:10px;color:#aaa;font-size:37px}  
+  
+/* Responsive */  
+@media(max-width:768px){  
+  html,body{width:100%;overflow-x:hidden}  
+  body{background:#fff!important;padding-top:258px!important;padding-bottom:96px!important}  
+  .header{padding:14px 18px 13px!important;background:#fff!important;box-shadow:none!important}  
+  .header-top{display:grid!important;grid-template-columns:1fr 56px!important;grid-template-areas:"logo user" "search search"!important;gap:13px!important}  
+  .logo{grid-area:logo!important;font-size:45px!important;line-height:1!important;color:#a70000!important;letter-spacing:0!important}  
+  .header-icons{grid-area:user!important;width:56px!important;height:54px!important;display:flex!important;align-items:center!important;justify-content:center!important}  
+  .header-icons>a,.header-icons>.user-menu-wrap{display:none!important}  
+  .header-icons::after{content:"\f2bd"!important;font-family:"Font Awesome 6 Free"!important;font-weight:400!important;font-size:48px!important;line-height:1!important;color:#000!important}  
+  .search-box{grid-area:search!important;width:100%!important;max-width:none!important;height:62px!important;border:1.5px solid #777!important;border-radius:32px!important;padding:0 20px!important;gap:13px!important;background:#fff!important}  
+  .search-box input{font-size:20px!important}  
+  .search-box input::placeholder{color:#999!important}  
+  .search-box i{font-size:24px!important;color:#111!important}  
+  .search-box .camera-search-btn{width:44px!important;height:44px!important}  
+  .promo-bar{margin-top:13px!important;padding-left:0!important;gap:10px!important;overflow-x:auto!important;scrollbar-width:none!important}  
+  .promo-bar::-webkit-scrollbar{display:none!important}  
+  .promo-bar a{min-width:max-content!important;padding:11px 20px!important;border-radius:24px!important;background:#ececec!important;color:#111!important;font-size:16px!important;line-height:1.05!important}  
+  .promo-bar .cat{min-width:170px!important;background:#f6a1a7!important}  
+  .hover-full{display:none!important}  
+  .hero{width:calc(100% - 24px)!important;height:300px!important;margin:10px 12px 24px!important;padding:28px 30px!important;border-radius:14px!important;background:linear-gradient(90deg,#c70000,#ee0000,#b70000)!important}  
+  .hero-text{width:52%!important}  
+  .hero-text h1{font-size:35px!important;line-height:1.15!important;margin-bottom:17px!important}  
+  .hero-text p{font-size:22px!important;line-height:1.35!important;margin-bottom:20px!important}  
+  .hero-text button{font-size:18px!important;padding:13px 26px!important;border-radius:10px!important}  
+  .hero-img{width:55%!important;height:100%!important;right:0!important;background-position:center!important;border-radius:0 14px 14px 0!important}  
+  .section{width:100%!important;margin:0!important;padding:0 18px 18px!important}  
+  .section h2{font-size:30px!important;margin:0 0 16px!important}  
+  .products{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}  
+  .product{border-radius:15px!important;box-shadow:0 3px 12px rgba(0,0,0,.13)!important}  
+  .product img{width:100%!important;height:178px!important;object-fit:cover!important}  
+  .product-info{padding:10px 13px 14px!important;text-align:left!important}  
+  .product-info h3{font-size:17px!important;line-height:1.2!important;margin-bottom:5px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}  
+  .price{font-size:23px!important;color:#c90000!important}  
+  .product-meta{display:none!important}  
+  .product button,.add-cart{display:none!important}  
+  .mobile-bottom{position:fixed;bottom:0;left:0;right:0;height:92px!important;background:#fff!important;display:flex!important;justify-content:space-around!important;align-items:center!important;padding:7px 4px 4px!important;border-top:1px solid #ddd!important;box-shadow:0 -3px 10px rgba(0,0,0,.08)!important;z-index:9999}  
+  .mobile-bottom a{font-size:28px!important;min-width:62px!important;height:72px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:5px!important;color:#222!important;text-decoration:none}  
+  .mobile-bottom a::after{font-size:13px!important;font-family:Arial,sans-serif!important}  
+  .mobile-bottom a:nth-child(1){color:#d00000!important}  
+  .mobile-bottom a:nth-child(1)::after{content:"Inicio"}  
+  .mobile-bottom a:nth-child(2)::after{content:"Mensajes"}  
+  .mobile-bottom a:nth-child(4)::after{content:"Cesta"}  
+  .mobile-bottom a:nth-child(5)::after{content:"Usuario"}  
+  .mobile-bottom .discount{width:72px!important;min-width:72px!important;height:72px!important;border-radius:50%!important;background:#e5243f!important;color:#fff!important;font-size:23px!important;font-weight:900!important;display:flex!important;align-items:center!important;justify-content:center!important}  
+  .mobile-bottom .discount::after{content:""!important}  
+  .user-dropdown{position:fixed;top:88px;right:12px;left:12px;width:auto;max-height:calc(100vh - 110px)}  
+  .user-dropdown::before{display:none}  
+  .ai-camera-modal{padding:23px 16px;border-radius:17px}  
+  .ai-camera-modal h2{font-size:24px}  
+  .ai-result-card{grid-template-columns:72px minmax(0,1fr) 20px}  
+  .ai-result-card img{width:72px;height:72px}  
+}  
+  
+@media(max-width:600px){  
+  .auth-modal{padding:24px 18px;border-radius:16px}  
+  .auth-row{grid-template-columns:1fr}  
+}  
+</style>  </head>  <body>  <header class="header">  
+  <div class="header-top">  
+    <a href="index.html" class="logo">Alimarket</a>  <form class="search-box" id="mainSearchForm">  
+  <button class="search-icon-btn" type="submit" aria-label="Buscar">  
+    <i class="fa-solid fa-magnifying-glass"></i>  
+  </button>  
+
+  <input  
+    id="mainSearchInput"  
+    type="search"  
+    placeholder="Buscar productos en AliMarket"  
+    autocomplete="off"  
+  >  
+
+  <button  
+    class="camera-search-btn"  
+    id="openCameraSearch"  
+    type="button"  
+    aria-label="Buscar producto con fotografía"  
+  >  
+    <i class="fa-solid fa-camera"></i>  
+  </button>  
+</form>  
+
+<div class="header-icons">  
+  <a href="favoritos.html"><i class="fa-solid fa-heart"></i> Favorito</a>  
+  <a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i> Cesta</a>  
+
+  <div class="user-menu-wrap" id="userMenuWrap">  
+    <a href="usuario.html" class="user-menu-trigger" id="userMenuTrigger">  
+      <i class="fa-solid fa-user"></i> Usuario  
+    </a>  
+
+    <div class="user-dropdown" id="userDropdown">  
+      <button type="button" class="user-login-btn guest-only" id="openLoginModal">Iniciar sesión</button>  
+      <button type="button" class="user-register auth-link-btn guest-only" id="openRegisterModal">Registrarse</button>  
+
+      <div class="user-divider"></div>  
+
+      <div class="user-menu-list">  
+        <a href="pedidos.html" class="user-menu-item"><i class="fa-regular fa-clipboard"></i><span>Mis pedidos</span></a>  
+        <a href="monedas.html" class="user-menu-item"><i class="fa-solid fa-coins"></i><span>Mis monedas</span></a>  
+        <a href="mensajes.html" class="user-menu-item"><i class="fa-regular fa-message"></i><span>Centro de mensajes</span></a>  
+        <a href="formas_pago.html" class="user-menu-item"><i class="fa-regular fa-credit-card"></i><span>Forma de pago</span></a>  
+        <a href="favoritos.html" class="user-menu-item"><i class="fa-regular fa-heart"></i><span>Lista de deseos</span></a>  
+        <a href="cupones.html" class="user-menu-item"><i class="fa-solid fa-ticket"></i><span>Mis cupones</span></a>  
+        <a href="configuracion.html" class="user-menu-item"><i class="fa-solid fa-gear"></i><span>Configuración</span></a>  
+        <a href="business.html" class="user-menu-item"><i class="fa-solid fa-briefcase"></i><span>AliMarket Business</span></a>  
+        <a href="dropshipping.html" class="user-menu-item"><i class="fa-solid fa-boxes-stacked"></i><span>Centro de dropshipping</span></a>  
+        <a href="vendedor.html" class="user-menu-item"><i class="fa-solid fa-store"></i><span>Invitación a vendedor</span></a>  
+
+        <button type="button" class="user-menu-item logout-item" id="logoutMenuItem" style="width:100%;border:0;background:transparent;cursor:pointer">  
+          <i class="fa-solid fa-right-from-bracket"></i><span>Cerrar sesión</span>  
+        </button>  
+      </div>  
+    </div>  
+  </div>  
 </div>
 
-</body>
-</html>
+  </div>    <nav class="promo-bar">  
+    <div class="categoria-hover">  
+      <a class="cat" href="#"><i class="fa-solid fa-bars"></i> Categorías</a>  <div class="hover-full">  
+    <main class="cat-page">  
+      <div class="cat-layout">  
+        <aside class="cat-sidebar" id="catSidebar"></aside>  
+
+        <section class="cat-content">  
+          <div class="cat-banner">  
+            <div class="banner-icon" id="bannerIcon">🎧</div>  
+            <div>  
+              <h1 id="bannerTitle">Electrónica</h1>  
+              <p>Explora cientos de productos populares y subcategorías.</p>  
+            </div>  
+          </div>  
+
+          <div class="cat-title-row">  
+            <h2 id="sectionTitle">Electrónica</h2>  
+            <a href="categorias.html">Abrir página completa</a>  
+          </div>  
+
+          <div class="subcat-grid" id="subcatGrid"></div>  
+        </section>  
+      </div>  
+    </main>  
+  </div>  
+</div>  
+
+<a href="#">Ofertas promocionales</a>  
+<a href="#">Nuevos</a>  
+<a href="#">Más vendidos</a>  
+<a href="#">Cupones</a>  
+<a href="#">Envío gratis</a>
+
+  </nav>  
+</header>  <section class="hero">  
+  <div class="hero-text">  
+    <h1>SuperOfertas<br>Hasta -70% dto.</h1>  
+    <p>Miles de ofertas<br>por tiempo limitado</p>  
+    <button type="button" onclick="location.href='crear_producto_conectado.html'">Crear producto</button>  
+  </div>  
+  <div class="hero-img"></div>  
+</section>  <section class="section">  
+  <h2 id="productsTitle">Productos destacados</h2>  
+  <div class="products" id="productsGrid"></div>  
+</section>  <nav class="mobile-bottom">  
+  <a href="index.html"><i class="fa-solid fa-house"></i></a>  
+  <a href="#"><i class="fa-solid fa-comments"></i></a>  
+  <a href="#" class="discount">20%</a>  
+  <a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i></a>  
+  <a href="usuario.html"><i class="fa-solid fa-user"></i></a>  
+</nav>  <!-- MODAL DE CÁMARA IA -->  <div class="ai-camera-overlay" id="aiCameraOverlay" aria-hidden="true">  
+  <section class="ai-camera-modal" role="dialog" aria-modal="true" aria-labelledby="aiCameraTitle">  
+    <button class="ai-camera-close" id="closeCameraSearch" type="button" aria-label="Cerrar">  
+      <i class="fa-solid fa-xmark"></i>  
+    </button>  <h2 id="aiCameraTitle">Buscar producto con IA</h2>  
+
+<p class="ai-camera-description">  
+  Toma una fotografía o selecciona una imagen. La inteligencia artificial identificará el artículo y buscará productos parecidos.  
+</p>  
+
+<label class="ai-upload-label" for="aiCameraInput">  
+  <i class="fa-solid fa-camera-retro"></i>  
+  <strong>Tomar o seleccionar una fotografía</strong>  
+  <span>JPG, PNG o WEBP. Tamaño máximo: 10 MB.</span>  
+
+  <input  
+    id="aiCameraInput"  
+    type="file"  
+    accept="image/*"  
+    capture="environment"  
+    hidden  
+  >  
+</label>  
+
+<img class="ai-image-preview" id="aiCameraPreview" alt="Fotografía seleccionada">  
+
+<div class="ai-loading" id="aiCameraLoading">  
+  <span class="ai-loader"></span>  
+  <span id="aiLoadingText">Analizando la fotografía...</span>  
+</div>  
+
+<div class="ai-detected" id="aiDetected"></div>  
+<div class="ai-search-results" id="aiSearchResults"></div>
+
+  </section>  
+</div>  <!-- MODAL LOGIN/REGISTRO -->  <div class="auth-overlay" id="authOverlay" aria-hidden="true">  
+  <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">  
+    <button class="auth-close" id="authClose" type="button">×</button>  <div class="auth-tabs">  
+  <button class="auth-tab active" data-panel="loginPanel" type="button">Iniciar sesión</button>  
+  <button class="auth-tab" data-panel="registerPanel" type="button">Registrarse</button>  
+</div>  
+
+<section class="auth-panel active" id="loginPanel">  
+  <h2 id="authTitle">Iniciar sesión</h2>  
+  <p class="subtitle">Accede a tus pedidos, favoritos y métodos de pago.</p>  
+  <div class="auth-message" id="loginMessage"></div>  
+
+  <form id="modalLoginForm">  
+    <div class="auth-field">  
+      <label>Correo electrónico</label>  
+      <div class="auth-input-wrap">  
+        <i class="fa-regular fa-envelope"></i>  
+        <input id="modalLoginEmail" type="email" required placeholder="correo@ejemplo.com">  
+      </div>  
+    </div>  
+
+    <div class="auth-field">  
+      <label>Contraseña</label>  
+      <div class="auth-input-wrap">  
+        <i class="fa-solid fa-lock"></i>  
+        <input id="modalLoginPassword" type="password" required placeholder="Tu contraseña">  
+        <button type="button" class="auth-eye" data-target="modalLoginPassword">  
+          <i class="fa-regular fa-eye"></i>  
+        </button>  
+      </div>  
+    </div>  
+
+    <div class="auth-options">  
+      <label><input id="modalRemember" type="checkbox"> Recordarme</label>  
+      <button type="button" class="auth-link-btn" id="modalForgot">¿Olvidaste tu contraseña?</button>  
+    </div>  
+
+    <button class="auth-submit" type="submit">Iniciar sesión</button>  
+  </form>  
+</section>  
+
+<section class="auth-panel" id="registerPanel">  
+  <h2>Crear cuenta</h2>  
+  <p class="subtitle">Completa tus datos para registrarte.</p>  
+  <div class="auth-message" id="registerMessage"></div>  
+
+  <form id="modalRegisterForm">  
+    <div class="auth-row">  
+      <div class="auth-field">  
+        <label>Nombre</label>  
+        <div class="auth-input-wrap">  
+          <i class="fa-regular fa-user"></i>  
+          <input id="modalFirstName" required>  
+        </div>  
+      </div>  
+
+      <div class="auth-field">  
+        <label>Apellido</label>  
+        <div class="auth-input-wrap">  
+          <i class="fa-regular fa-user"></i>  
+          <input id="modalLastName" required>  
+        </div>  
+      </div>  
+    </div>  
+
+    <div class="auth-field">  
+      <label>Correo electrónico</label>  
+      <div class="auth-input-wrap">  
+        <i class="fa-regular fa-envelope"></i>  
+        <input id="modalRegisterEmail" type="email" required>  
+      </div>  
+    </div>  
+
+    <div class="auth-field">  
+      <label>Teléfono</label>  
+      <div class="auth-input-wrap">  
+        <i class="fa-solid fa-phone"></i>  
+        <input id="modalPhone" type="tel" required placeholder="809-000-0000">  
+      </div>  
+    </div>  
+
+    <div class="auth-field">  
+      <label>Contraseña</label>  
+      <div class="auth-input-wrap">  
+        <i class="fa-solid fa-lock"></i>  
+        <input id="modalRegisterPassword" type="password" required minlength="6">  
+        <button type="button" class="auth-eye" data-target="modalRegisterPassword">  
+          <i class="fa-regular fa-eye"></i>  
+        </button>  
+      </div>  
+    </div>  
+
+    <div class="auth-field">  
+      <label>Confirmar contraseña</label>  
+      <div class="auth-input-wrap">  
+        <i class="fa-solid fa-lock"></i>  
+        <input id="modalConfirmPassword" type="password" required minlength="6">  
+        <button type="button" class="auth-eye" data-target="modalConfirmPassword">  
+          <i class="fa-regular fa-eye"></i>  
+        </button>  
+      </div>  
+    </div>  
+
+    <label style="display:flex;gap:8px;align-items:center;margin-bottom:18px">  
+      <input id="modalTerms" type="checkbox"> Acepto los términos y condiciones  
+    </label>  
+
+    <button class="auth-submit" type="submit">Crear cuenta</button>  
+  </form>  
+</section>
+
+  </div>  
+</div>  <script>  
+const PRODUCTOS_KEY = "productosPublicados";  
+const CARRITO_KEY = "carritoAliMarket";  
+const USUARIOS_KEY = "alimarketUsuarios";  
+const SESION_KEY = "alimarketSesion";  
+  
+const productosPredeterminados = [  
+  {  
+    id:"demo-1",  
+    name:"Smartphone moderno",  
+    price:8500,  
+    offerPrice:0,  
+    currency:"DOP",  
+    image:"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=500&q=80",  
+    category:"Electrónica",  
+    totalStock:20,  
+    description:"Celular teléfono inteligente smartphone móvil con cámara."  
+  },  
+  {  
+    id:"demo-2",  
+    name:"Audífonos Bluetooth",  
+    price:1250,  
+    offerPrice:0,  
+    currency:"DOP",  
+    image:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80",  
+    category:"Electrónica",  
+    totalStock:15,  
+    description:"Audífonos auriculares inalámbricos Bluetooth."  
+  },  
+  {  
+    id:"demo-3",  
+    name:"Reloj elegante",  
+    price:2900,  
+    offerPrice:0,  
+    currency:"DOP",  
+    image:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80",  
+    category:"Moda",  
+    totalStock:12,  
+    description:"Reloj analógico elegante para vestir."  
+  },  
+  {  
+    id:"demo-4",  
+    name:"Smart Watch",  
+    price:3600,  
+    offerPrice:0,  
+    currency:"DOP",  
+    image:"https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=500&q=80",  
+    category:"Electrónica",  
+    totalStock:18,  
+    description:"Reloj inteligente digital smartwatch deportivo."  
+  }  
+];  
+  
+function escaparHTML(valor=""){  
+  return String(valor).replace(/[&<>"']/g,c=>({  
+    "&":"&amp;",  
+    "<":"&lt;",  
+    ">":"&gt;",  
+    '"':"&quot;",  
+    "'":"&#039;"  
+  }[c]));  
+}  
+  
+function monedaProducto(producto){  
+  const codigo = String(producto.currency || "DOP").split(" ")[0];  
+  const simbolo = codigo === "DOP" ? "RD$" : codigo === "EUR" ? "€" : "US$";  
+  return {codigo,simbolo};  
+}  
+  
+function precioActivo(producto){  
+  const oferta = Number(producto.offerPrice) || 0;  
+  return oferta > 0 ? oferta : Number(producto.price) || 0;  
+}  
+  
+function productosGuardados(){  
+  try{  
+    const lista = JSON.parse(localStorage.getItem(PRODUCTOS_KEY) || "[]");  
+    return Array.isArray(lista)  
+      ? lista.filter(producto=>producto && producto.status === "publicado")  
+      : [];  
+  }catch(error){  
+    console.error(error);  
+    return [];  
+  }  
+}  
+  
+function obtenerTodosLosProductos(){  
+  return [...productosGuardados(),...productosPredeterminados];  
+}  
+  
+function obtenerImagenProducto(producto){  
+  if(producto.image) return producto.image;  
+  if(producto.imagen) return producto.imagen;  
+  
+  const imagenes = producto.images || producto.imagenes || [];  
+  
+  if(Array.isArray(imagenes) && imagenes.length){  
+    const primera = imagenes[0];  
+    if(typeof primera === "string") return primera;  
+    return primera.url || primera.src || primera.image || primera.imagen || "";  
+  }  
+  
+  return "https://via.placeholder.com/500x400?text=AliMarket";  
+}  
+  
+function renderProductos(lista = obtenerTodosLosProductos()){  
+  const grid = document.getElementById("productsGrid");  
+  
+  if(!lista.length){  
+    grid.innerHTML = '<div class="empty-products"><h3>No hay productos publicados</h3></div>';  
+    return;  
+  }  
+  
+  const creados = productosGuardados();  
+  
+  grid.innerHTML = lista.map((producto,index)=>{  
+    const {simbolo} = monedaProducto(producto);  
+    const precio = precioActivo(producto);  
+    const oferta = Number(producto.offerPrice) || 0;  
+    const normal = Number(producto.price) || 0;  
+    const imagen = obtenerImagenProducto(producto);  
+    const nuevo = creados.some(item=>item.id === producto.id);  
+  
+    return `  
+      <article  
+        class="product"  
+        data-id="${escaparHTML(producto.id || "producto-"+index)}"  
+        data-detail="articulo_detalle.html?id=${encodeURIComponent(producto.id || "producto-"+index)}"  
+      >  
+        ${nuevo ? '<span class="product-badge">Nuevo</span>' : ""}  
+  
+        <img  
+          src="${escaparHTML(imagen)}"  
+          alt="${escaparHTML(producto.name || "Producto")}"  
+          onerror="this.onerror=null;this.src='https://via.placeholder.com/500x400?text=Producto'"  
+        >  
+  
+        <div class="product-info">  
+          <h3>${escaparHTML(producto.name || "Producto sin nombre")}</h3>  
+  
+          <div class="price">  
+            ${simbolo} ${precio.toLocaleString("es-US",{minimumFractionDigits:2,maximumFractionDigits:2})}  
+            ${  
+              oferta > 0 && oferta < normal  
+                ? `<span class="old-price">${simbolo} ${normal.toLocaleString("es-US",{minimumFractionDigits:2,maximumFractionDigits:2})}</span>`  
+                : ""  
+            }  
+          </div>  
+  
+          <div class="product-meta">  
+            ${escaparHTML(producto.category || "Sin categoría")} · Stock: ${Number(producto.totalStock) || 0}  
+          </div>  
+  
+          <button type="button" class="add-cart" data-index="${index}">Agregar</button>  
+        </div>  
+      </article>  
+    `;  
+  }).join("");  
+  
+  grid.querySelectorAll(".product").forEach(card=>{  
+    card.addEventListener("click",event=>{  
+      if(event.target.closest(".add-cart")) return;  
+      location.href = card.dataset.detail;  
+    });  
+  });  
+  
+  grid.querySelectorAll(".add-cart").forEach(btn=>{  
+    btn.addEventListener("click",()=>{  
+      const producto = lista[Number(btn.dataset.index)];  
+      let carrito = [];  
+  
+      try{  
+        carrito = JSON.parse(localStorage.getItem(CARRITO_KEY) || "[]");  
+        if(!Array.isArray(carrito)) carrito = [];  
+      }catch{  
+        carrito = [];  
+      }  
+  
+      const existente = carrito.find(item=>item.id === producto.id);  
+  
+      if(existente){  
+        existente.cantidad = (existente.cantidad || 1) + 1;  
+      }else{  
+        carrito.push({  
+          id:producto.id,  
+          name:producto.name,  
+          price:precioActivo(producto),  
+          currency:(producto.currency || "DOP").split(" ")[0],  
+          image:obtenerImagenProducto(producto),  
+          cantidad:1  
+        });  
+      }  
+  
+      localStorage.setItem(CARRITO_KEY,JSON.stringify(carrito));  
+  
+      btn.textContent = "Agregado ✓";  
+      btn.style.background = "#d60000";  
+  
+      setTimeout(()=>{  
+        btn.textContent = "Agregar";  
+        btn.style.background = "#000";  
+      },1200);  
+    });  
+  });  
+}  
+  
+renderProductos();  
+  
+window.addEventListener("storage",event=>{  
+  if(event.key === PRODUCTOS_KEY) renderProductos();  
+});  
+  
+/* Categorías */  
+const categorias = [  
+  {nombre:"Electrónica",icono:"🎧",subs:["Auriculares","Smartwatch","Cámaras","Drones","Consolas","Audio","Parlantes","Micrófonos","TV Box","Cargadores","Bluetooth","Luces LED"]},  
+  {nombre:"Teléfonos",icono:"📱",subs:["Samsung","iPhone","Xiaomi","Motorola","Huawei","Tecno","Infinix","Cargadores","Cables","Protectores","Pantallas","Accesorios"]},  
+  {nombre:"Computadoras",icono:"💻",subs:["Laptop","PC Gamer","Mouse","Teclados","Monitores","Discos SSD","Memorias","Impresoras","Router","USB","Cámaras web","Bocinas"]},  
+  {nombre:"Moda Mujer",icono:"👗",subs:["Vestidos","Blusas","Jeans","Zapatos","Carteras","Relojes","Perfumes","Faldas","Maquillaje","Pulseras","Collares","Sandalias"]},  
+  {nombre:"Moda Hombre",icono:"👕",subs:["Polos","Jeans","Tenis","Gorras","Relojes","Camisas","Correas","Perfumes","Billeteras","Shorts","Abrigos","Sandalias"]},  
+  {nombre:"Hogar y Jardín",icono:"🏠",subs:["Cocina","Muebles","Decoración","Herramientas","Jardín","Luces","Baño","Organizadores","Camas","Cortinas","Sillas","Mesas"]}  
+];  
+  
+const sidebar = document.getElementById("catSidebar");  
+const subcatGrid = document.getElementById("subcatGrid");  
+const bannerTitle = document.getElementById("bannerTitle");  
+const bannerIcon = document.getElementById("bannerIcon");  
+const sectionTitle = document.getElementById("sectionTitle");  
+  
+function renderSidebar(){  
+  sidebar.innerHTML = "";  
+  
+  categorias.forEach((categoria,index)=>{  
+    const item = document.createElement("div");  
+    item.className = "cat-item" + (index === 0 ? " active" : "");  
+    item.innerHTML = `  
+      <div class="cat-left">  
+        <span class="cat-icon">${categoria.icono}</span>  
+        <span>${categoria.nombre}</span>  
+      </div>  
+      <span>›</span>  
+    `;  
+  
+    item.addEventListener("mouseenter",()=>seleccionarCategoria(index));  
+    item.addEventListener("click",()=>seleccionarCategoria(index));  
+    sidebar.appendChild(item);  
+  });  
+}  
+  
+function seleccionarCategoria(index){  
+  document.querySelectorAll(".cat-item").forEach(item=>item.classList.remove("active"));  
+  document.querySelectorAll(".cat-item")[index]?.classList.add("active");  
+  
+  const categoria = categorias[index];  
+  
+  bannerTitle.textContent = categoria.nombre;  
+  bannerIcon.textContent = categoria.icono;  
+  sectionTitle.textContent = categoria.nombre;  
+  
+  subcatGrid.innerHTML = categoria.subs.map(subcategoria=>`  
+    <div class="subcat-card">  
+      <div class="subcat-img">  
+        <img src="https://cdn-icons-png.flaticon.com/512/1048/1048949.png" alt="">  
+      </div>  
+      <h3>${escaparHTML(subcategoria)}</h3>  
+    </div>  
+  `).join("");  
+}  
+  
+renderSidebar();  
+seleccionarCategoria(0);  
+  
+/* Menú usuario */  
+const userMenuWrap = document.getElementById("userMenuWrap");  
+const userMenuTrigger = document.getElementById("userMenuTrigger");  
+  
+if(userMenuWrap && userMenuTrigger){  
+  userMenuTrigger.addEventListener("click",event=>{  
+    if(window.innerWidth <= 768){  
+      event.preventDefault();  
+      userMenuWrap.classList.toggle("open");  
+    }  
+  });  
+  
+  document.addEventListener("click",event=>{  
+    if(!userMenuWrap.contains(event.target)){  
+      userMenuWrap.classList.remove("open");  
+    }  
+  });  
+}  
+  
+/* Login y registro */  
+const authOverlay = document.getElementById("authOverlay");  
+const authClose = document.getElementById("authClose");  
+const openLoginModal = document.getElementById("openLoginModal");  
+const openRegisterModal = document.getElementById("openRegisterModal");  
+  
+function abrirAuth(panelId){  
+  authOverlay.classList.add("show");  
+  authOverlay.setAttribute("aria-hidden","false");  
+  document.body.style.overflow = "hidden";  
+  
+  document.querySelectorAll(".auth-tab").forEach(tab=>{  
+    tab.classList.toggle("active",tab.dataset.panel === panelId);  
+  });  
+  
+  document.querySelectorAll(".auth-panel").forEach(panel=>{  
+    panel.classList.toggle("active",panel.id === panelId);  
+  });  
+}  
+  
+function cerrarAuth(){  
+  authOverlay.classList.remove("show");  
+  authOverlay.setAttribute("aria-hidden","true");  
+  document.body.style.overflow = "";  
+}  
+  
+openLoginModal?.addEventListener("click",()=>abrirAuth("loginPanel"));  
+openRegisterModal?.addEventListener("click",()=>abrirAuth("registerPanel"));  
+authClose?.addEventListener("click",cerrarAuth);  
+  
+document.querySelectorAll(".auth-tab").forEach(tab=>{  
+  tab.addEventListener("click",()=>abrirAuth(tab.dataset.panel));  
+});  
+  
+authOverlay.addEventListener("click",event=>{  
+  if(event.target === authOverlay) cerrarAuth();  
+});  
+  
+document.querySelectorAll(".auth-eye").forEach(button=>{  
+  button.addEventListener("click",()=>{  
+    const input = document.getElementById(button.dataset.target);  
+    if(!input) return;  
+  
+    input.type = input.type === "password" ? "text" : "password";  
+    button.querySelector("i").className =  
+      input.type === "password"  
+        ? "fa-regular fa-eye"  
+        : "fa-regular fa-eye-slash";  
+  });  
+});  
+  
+function obtenerUsuarios(){  
+  try{  
+    const usuarios = JSON.parse(localStorage.getItem(USUARIOS_KEY) || "[]");  
+    return Array.isArray(usuarios) ? usuarios : [];  
+  }catch{  
+    return [];  
+  }  
+}  
+  
+function mostrarMensaje(id,mensaje,tipo){  
+  const elemento = document.getElementById(id);  
+  elemento.textContent = mensaje;  
+  elemento.className = `auth-message ${tipo}`;  
+}  
+  
+document.getElementById("modalRegisterForm").addEventListener("submit",event=>{  
+  event.preventDefault();  
+  
+  const nombre = document.getElementById("modalFirstName").value.trim();  
+  const apellido = document.getElementById("modalLastName").value.trim();  
+  const email = document.getElementById("modalRegisterEmail").value.trim().toLowerCase();  
+  const telefono = document.getElementById("modalPhone").value.trim();  
+  const password = document.getElementById("modalRegisterPassword").value;  
+  const confirmar = document.getElementById("modalConfirmPassword").value;  
+  const terminos = document.getElementById("modalTerms").checked;  
+  
+  if(password !== confirmar){  
+    mostrarMensaje("registerMessage","Las contraseñas no coinciden.","error");  
+    return;  
+  }  
+  
+  if(!terminos){  
+    mostrarMensaje("registerMessage","Debes aceptar los términos y condiciones.","error");  
+    return;  
+  }  
+  
+  const usuarios = obtenerUsuarios();  
+  
+  if(usuarios.some(usuario=>usuario.email === email)){  
+    mostrarMensaje("registerMessage","Ese correo ya está registrado.","error");  
+    return;  
+  }  
+  
+  usuarios.push({  
+    id:"user-"+Date.now(),  
+    firstName:nombre,  
+    lastName:apellido,  
+    email,  
+    phone:telefono,  
+    password,  
+    createdAt:new Date().toISOString()  
+  });  
+  
+  localStorage.setItem(USUARIOS_KEY,JSON.stringify(usuarios));  
+  mostrarMensaje("registerMessage","Cuenta creada correctamente.","success");  
+  
+  setTimeout(()=>abrirAuth("loginPanel"),800);  
+});  
+  
+document.getElementById("modalLoginForm").addEventListener("submit",event=>{  
+  event.preventDefault();  
+  
+  const email = document.getElementById("modalLoginEmail").value.trim().toLowerCase();  
+  const password = document.getElementById("modalLoginPassword").value;  
+  
+  const usuario = obtenerUsuarios().find(item=>item.email === email && item.password === password);  
+  
+  if(!usuario){  
+    mostrarMensaje("loginMessage","Correo o contraseña incorrectos.","error");  
+    return;  
+  }  
+  
+  localStorage.setItem(SESION_KEY,JSON.stringify({  
+    id:usuario.id,  
+    email:usuario.email,  
+    name:`${usuario.firstName} ${usuario.lastName}`.trim(),  
+    loggedAt:new Date().toISOString()  
+  }));  
+  
+  userMenuWrap.classList.add("logged-in");  
+  mostrarMensaje("loginMessage",`Bienvenido, ${usuario.firstName}.`,"success");  
+  
+  setTimeout(cerrarAuth,800);  
+});  
+  
+document.getElementById("logoutMenuItem").addEventListener("click",()=>{  
+  localStorage.removeItem(SESION_KEY);  
+  userMenuWrap.classList.remove("logged-in");  
+});  
+  
+if(localStorage.getItem(SESION_KEY)){  
+  userMenuWrap.classList.add("logged-in");  
+}  
+  
+/* Búsqueda normal */  
+const mainSearchForm = document.getElementById("mainSearchForm");  
+const mainSearchInput = document.getElementById("mainSearchInput");  
+const productsTitle = document.getElementById("productsTitle");  
+  
+function normalizarTexto(texto=""){  
+  return String(texto)  
+    .normalize("NFD")  
+    .replace(/[\u0300-\u036f]/g,"")  
+    .toLowerCase()  
+    .replace(/[^a-z0-9ñ\s]/g," ")  
+    .replace(/\s+/g," ")  
+    .trim();  
+}  
+  
+function textoProducto(producto){  
+  return normalizarTexto([  
+    producto.name,  
+    producto.nombre,  
+    producto.title,  
+    producto.description,  
+    producto.descripcion,  
+    producto.category,  
+    producto.categoria,  
+    producto.subcategory,  
+    producto.brand,  
+    producto.marca,  
+    producto.model,  
+    producto.modelo,  
+    producto.tags,  
+    producto.keywords  
+  ].filter(Boolean).join(" "));  
+}  
+  
+function buscarProductos(consulta){  
+  const palabras = normalizarTexto(consulta).split(" ").filter(palabra=>palabra.length > 1);  
+  
+  return obtenerTodosLosProductos()  
+    .map(producto=>{  
+      const texto = textoProducto(producto);  
+      let puntuacion = 0;  
+  
+      palabras.forEach(palabra=>{  
+        if(texto.includes(palabra)) puntuacion += 5;  
+        if(normalizarTexto(producto.name || "").includes(palabra)) puntuacion += 10;  
+      });  
+  
+      return {producto,puntuacion};  
+    })  
+    .filter(resultado=>resultado.puntuacion > 0)  
+    .sort((a,b)=>b.puntuacion-a.puntuacion);  
+}  
+  
+mainSearchForm.addEventListener("submit",event=>{  
+  event.preventDefault();  
+  
+  const consulta = mainSearchInput.value.trim();  
+  
+  if(!consulta){  
+    productsTitle.textContent = "Productos destacados";  
+    renderProductos();  
+    return;  
+  }  
+  
+  const resultados = buscarProductos(consulta);  
+  productsTitle.textContent = `Resultados para: ${consulta}`;  
+  renderProductos(resultados.map(resultado=>resultado.producto));  
+});  
+  
+/* Cámara con inteligencia artificial */  
+const openCameraSearch = document.getElementById("openCameraSearch");  
+const closeCameraSearch = document.getElementById("closeCameraSearch");  
+const aiCameraOverlay = document.getElementById("aiCameraOverlay");  
+const aiCameraInput = document.getElementById("aiCameraInput");  
+const aiCameraPreview = document.getElementById("aiCameraPreview");  
+const aiCameraLoading = document.getElementById("aiCameraLoading");  
+const aiLoadingText = document.getElementById("aiLoadingText");  
+const aiDetected = document.getElementById("aiDetected");  
+const aiSearchResults = document.getElementById("aiSearchResults");  
+  
+let modeloIA = null;  
+  
+function abrirBuscadorCamara(){  
+  aiCameraOverlay.classList.add("show");  
+  aiCameraOverlay.setAttribute("aria-hidden","false");  
+  document.body.style.overflow = "hidden";  
+}  
+  
+function cerrarBuscadorCamara(){  
+  aiCameraOverlay.classList.remove("show");  
+  aiCameraOverlay.setAttribute("aria-hidden","true");  
+  document.body.style.overflow = "";  
+}  
+  
+openCameraSearch.addEventListener("click",abrirBuscadorCamara);  
+closeCameraSearch.addEventListener("click",cerrarBuscadorCamara);  
+  
+aiCameraOverlay.addEventListener("click",event=>{  
+  if(event.target === aiCameraOverlay) cerrarBuscadorCamara();  
+});  
+  
+document.addEventListener("keydown",event=>{  
+  if(event.key === "Escape"){  
+    cerrarBuscadorCamara();  
+    cerrarAuth();  
+  }  
+});  
+  
+function traducirDeteccion(texto=""){  
+  const traducciones = {  
+    "cellular telephone":"celular telefono smartphone movil iphone android",  
+    "mobile phone":"celular telefono smartphone movil",  
+    "smartphone":"celular telefono smartphone movil",  
+    "telephone":"telefono celular movil",  
+    "digital watch":"reloj digital smartwatch reloj inteligente",  
+    "watch":"reloj smartwatch reloj inteligente",  
+    "analog clock":"reloj analogico",  
+    "headphone":"audifonos auriculares",  
+    "headphones":"audifonos auriculares",  
+    "earphone":"audifonos auriculares bluetooth",  
+    "loudspeaker":"bocina altavoz parlante",  
+    "laptop":"laptop computadora portatil notebook",  
+    "notebook":"laptop computadora portatil",  
+    "desktop computer":"computadora pc escritorio",  
+    "computer keyboard":"teclado computadora",  
+    "mouse":"mouse raton computadora",  
+    "monitor":"monitor pantalla computadora",  
+    "television":"televisor television pantalla smart tv",  
+    "remote control":"control remoto",  
+    "running shoe":"tenis zapatos deportivos zapatillas calzado",  
+    "shoe":"zapato tenis zapatilla calzado",  
+    "sandal":"sandalia calzado",  
+    "handbag":"cartera bolso mujer",  
+    "backpack":"mochila bolso",  
+    "wallet":"billetera cartera",  
+    "sunglasses":"lentes gafas anteojos",  
+    "camera":"camara fotografia video",  
+    "jersey":"camiseta ropa",  
+    "shirt":"camisa ropa",  
+    "dress":"vestido ropa mujer",  
+    "jacket":"chaqueta abrigo ropa",  
+    "toy":"juguete niños",  
+    "teddy":"peluche juguete",  
+    "doll":"muñeca juguete",  
+    "car":"carro automovil vehiculo",  
+    "motorcycle":"motocicleta motor vehiculo",  
+    "bicycle":"bicicleta deporte",  
+    "drill":"taladro herramienta",  
+    "hammer":"martillo herramienta",  
+    "screwdriver":"destornillador herramienta",  
+    "chair":"silla mueble hogar",  
+    "table":"mesa mueble hogar",  
+    "sofa":"sofa mueble hogar",  
+    "bed":"cama dormitorio hogar",  
+    "bottle":"botella termo vaso",  
+    "water bottle":"botella termo",  
+    "cup":"taza vaso",  
+    "mug":"taza vaso",  
+    "refrigerator":"nevera refrigerador electrodomestico",  
+    "microwave":"microondas electrodomestico",  
+    "washing machine":"lavadora electrodomestico"  
+  };  
+  
+  let resultado = normalizarTexto(texto);  
+  
+  Object.entries(traducciones).forEach(([ingles,espanol])=>{  
+    if(resultado.includes(normalizarTexto(ingles))){  
+      resultado += ` ${espanol}`;  
+    }  
+  });  
+  
+  return normalizarTexto(resultado);  
+}  
+  
+async function cargarModeloIA(){  
+  if(modeloIA) return modeloIA;  
+  
+  if(typeof tf === "undefined" || typeof mobilenet === "undefined"){  
+    throw new Error("No se cargaron las librerías de inteligencia artificial.");  
+  }  
+  
+  aiCameraLoading.classList.add("show");  
+  aiLoadingText.textContent = "Cargando inteligencia artificial...";  
+  
+  await tf.ready();  
+  modeloIA = await mobilenet.load({version:2,alpha:1});  
+  
+  return modeloIA;  
+}  
+  
+function mostrarResultadosCamara(productos,consulta){  
+  if(!productos.length){  
+    aiSearchResults.innerHTML = `  
+      <div class="ai-no-results">  
+        <i class="fa-solid fa-magnifying-glass"></i>  
+        No encontramos artículos parecidos a <strong>${escaparHTML(consulta)}</strong>.  
+      </div>  
+    `;  
+    return;  
+  }  
+  
+  aiSearchResults.innerHTML = productos.map(producto=>{  
+    const {simbolo} = monedaProducto(producto);  
+  
+    return `  
+      <article class="ai-result-card" data-id="${escaparHTML(producto.id || "")}">  
+        <img  
+          src="${escaparHTML(obtenerImagenProducto(producto))}"  
+          alt="${escaparHTML(producto.name || "Producto")}"  
+          onerror="this.onerror=null;this.src='https://via.placeholder.com/300x300?text=AliMarket'"  
+        >  
+  
+        <div>  
+          <div class="ai-result-name">${escaparHTML(producto.name || "Producto")}</div>  
+          <div class="ai-result-category">${escaparHTML(producto.category || "AliMarket")}</div>  
+          <div class="ai-result-price">  
+            ${simbolo} ${precioActivo(producto).toLocaleString("es-US",{minimumFractionDigits:2,maximumFractionDigits:2})}  
+          </div>  
+        </div>  
+  
+        <i class="fa-solid fa-chevron-right"></i>  
+      </article>  
+    `;  
+  }).join("");  
+  
+  aiSearchResults.querySelectorAll(".ai-result-card").forEach(card=>{  
+    card.addEventListener("click",()=>{  
+      location.href = `articulo_detalle.html?id=${encodeURIComponent(card.dataset.id)}`;  
+    });  
+  });  
+}  
+  
+aiCameraInput.addEventListener("change",event=>{  
+  const archivo = event.target.files?.[0];  
+  
+  if(!archivo) return;  
+  
+  if(!archivo.type.startsWith("image/")){  
+    alert("Selecciona una imagen válida.");  
+    aiCameraInput.value = "";  
+    return;  
+  }  
+  
+  if(archivo.size > 10 * 1024 * 1024){  
+    alert("La imagen no debe superar los 10 MB.");  
+    aiCameraInput.value = "";  
+    return;  
+  }  
+  
+  const urlTemporal = URL.createObjectURL(archivo);  
+  
+  aiCameraPreview.src = urlTemporal;  
+  aiCameraPreview.style.display = "block";  
+  aiDetected.classList.remove("show");  
+  aiSearchResults.innerHTML = "";  
+  
+  aiCameraPreview.onload = async()=>{  
+    try{  
+      const modelo = await cargarModeloIA();  
+  
+      aiCameraLoading.classList.add("show");  
+      aiLoadingText.textContent = "Identificando el artículo...";  
+  
+      const predicciones = await modelo.classify(aiCameraPreview,7);  
+  
+      if(!predicciones.length){  
+        throw new Error("No se pudo reconocer el artículo.");  
+      }  
+  
+      const textoDetectado = predicciones.map(item=>item.className).join(" ");  
+      const consulta = traducirDeteccion(textoDetectado);  
+      const resultados = buscarProductos(consulta).map(item=>item.producto).slice(0,12);  
+  
+      aiDetected.innerHTML = `  
+        <strong><i class="fa-solid fa-wand-magic-sparkles"></i> La inteligencia artificial detectó:</strong><br>  
+        ${predicciones.slice(0,5).map(item=>{  
+          const porcentaje = Math.round(item.probability * 100);  
+          return `${escaparHTML(item.className)} — ${porcentaje}%`;  
+        }).join("<br>")}  
+      `;  
+  
+      aiDetected.classList.add("show");  
+      mainSearchInput.value = consulta;  
+      mostrarResultadosCamara(resultados,consulta);  
+  
+    }catch(error){  
+      console.error(error);  
+  
+      aiSearchResults.innerHTML = `  
+        <div class="ai-no-results">  
+          <i class="fa-solid fa-triangle-exclamation"></i>  
+          ${escaparHTML(error.message || "No se pudo analizar la imagen.")}  
+        </div>  
+      `;  
+    }finally{  
+      aiCameraLoading.classList.remove("show");  
+      URL.revokeObjectURL(urlTemporal);  
+    }  
+  };  
+  
+  aiCameraPreview.onerror = ()=>{  
+    aiCameraLoading.classList.remove("show");  
+    URL.revokeObjectURL(urlTemporal);  
+  
+    aiSearchResults.innerHTML = `  
+      <div class="ai-no-results">  
+        <i class="fa-solid fa-triangle-exclamation"></i>  
+        No se pudo abrir la imagen seleccionada.  
+      </div>  
+    `;  
+  };  
+});  
+</script>  </body>  
+</html>  
