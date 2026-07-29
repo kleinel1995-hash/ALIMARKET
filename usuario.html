@@ -84,25 +84,41 @@ button,input{font:inherit}button,a{cursor:pointer}a{text-decoration:none;color:i
 <button class="menu-item" data-section="paymentsSection"><i class="fa-regular fa-credit-card"></i><span>Forma de pago</span></button>
 <button class="menu-item" data-section="couponsSection"><i class="fa-solid fa-ticket"></i><span>Mis cupones</span></button>
 <button class="menu-item" data-section="settingsSection"><i class="fa-solid fa-gear"></i><span>Configuración</span></button>
+<button class="menu-item" data-section="addressesSection"><i class="fa-solid fa-location-dot"></i><span>Direcciones de envío</span></button>
 <button class="menu-item logout" id="logoutButton"><i class="fa-solid fa-right-from-bracket"></i><span>Cerrar sesión</span></button>
 </nav></aside>
 <section class="content-card">
 <div class="content-section active" id="homeSection">
 
 <div class="dashboard-grid"><div class="stat"><i class="fa-regular fa-clipboard"></i><strong id="ordersCount">0</strong><span>Pedidos</span></div><div class="stat"><i class="fa-regular fa-heart"></i><strong id="favoritesCount">0</strong><span>Favoritos</span></div><div class="stat"><i class="fa-solid fa-ticket"></i><strong>0</strong><span>Cupones</span></div><div class="stat"><i class="fa-solid fa-coins"></i><strong>0</strong><span>Monedas</span></div></div>
-<h2>Accesos rápidos</h2><div class="quick-grid"><a class="quick-card" href="pedidos.html"><i class="fa-solid fa-box"></i><h3>Mis pedidos</h3><p>Consulta el estado y el historial de tus compras.</p></a><a class="quick-card" href="favoritos.html"><i class="fa-regular fa-heart"></i><h3>Lista de deseos</h3><p>Revisa los productos que guardaste.</p></a><a class="quick-card" href="formas_pago.html"><i class="fa-regular fa-credit-card"></i><h3>Forma de pago</h3><p>Administra tus métodos de pago guardados.</p></a></div>
 </div>
 <div class="content-section" id="profileSection"><div class="section-title"><div><h1>Mi perfil</h1><p>Información guardada durante el registro.</p></div><button class="edit-btn" id="openEditModal" type="button"><i class="fa-solid fa-pen"></i> Editar</button></div><div class="info-grid"><div class="info-box"><span>Nombre</span><strong id="profileFirstName">—</strong></div><div class="info-box"><span>Apellido</span><strong id="profileLastName">—</strong></div><div class="info-box"><span>Correo electrónico</span><strong id="profileEmail">—</strong></div><div class="info-box"><span>Fecha de registro</span><strong id="profileCreatedAt">—</strong></div></div></div>
 <div class="content-section" id="ordersSection"><div class="section-title"><div><h1>Mis pedidos</h1><p>Pedidos realizados con tu cuenta.</p></div></div><div class="empty-state"><i class="fa-solid fa-box-open"></i><h3>Todavía no tienes pedidos</h3><p>Cuando realices una compra aparecerá aquí.</p></div></div>
 <div class="content-section" id="favoritesSection"><div class="section-title"><div><h1>Favoritos</h1><p>Productos guardados en tu lista de deseos.</p></div></div><div class="empty-state"><i class="fa-regular fa-heart"></i><h3>No tienes productos favoritos</h3><p>Guarda productos para encontrarlos rápidamente.</p></div></div>
 <div class="content-section" id="paymentsSection"><div class="section-title"><div><h1>Forma de pago</h1><p>Administra tus métodos de pago.</p></div></div><div class="empty-state"><i class="fa-regular fa-credit-card"></i><h3>No hay métodos guardados</h3><p>Agrega un método de pago durante el checkout.</p></div></div>
 <div class="content-section" id="couponsSection"><div class="section-title"><div><h1>Mis cupones</h1><p>Cupones disponibles para tu cuenta.</p></div></div><div class="empty-state"><i class="fa-solid fa-ticket"></i><h3>No tienes cupones disponibles</h3><p>Las promociones aparecerán aquí.</p></div></div>
-<div class="content-section" id="settingsSection"><div class="section-title"><div><h1>Configuración</h1><p>Opciones de tu cuenta AliMarket.</p></div></div><div class="quick-grid"><div class="quick-card"><i class="fa-solid fa-lock"></i><h3>Seguridad</h3><p>Actualiza tu contraseña y opciones de acceso.</p></div><div class="quick-card"><i class="fa-regular fa-bell"></i><h3>Notificaciones</h3><p>Configura los avisos que deseas recibir.</p></div><div class="quick-card"><i class="fa-solid fa-location-dot"></i><h3>Direcciones</h3><p>Administra tus direcciones de entrega.</p></div>
+<div class="content-section" id="settingsSection"><div class="section-title"><div><h1>Configuración</h1><p>Opciones de tu cuenta AliMarket.</p></div></div><div class="quick-grid"><div class="quick-card"><i class="fa-solid fa-lock"></i><h3>Seguridad</h3><p>Actualiza tu contraseña y opciones de acceso.</p></div><div class="quick-card"><i class="fa-regular fa-bell"></i><h3>Notificaciones</h3><p>Configura los avisos que deseas recibir.</p></div>
         <button class="quick-card logout-card" id="settingsLogout" type="button">
           <i class="fa-solid fa-right-from-bracket"></i>
           <h3>Cerrar sesión</h3>
           <p>Salir de tu cuenta de AliMarket.</p>
         </button></div></div>
+
+<div class="content-section" id="addressesSection">
+  <div class="section-title">
+    <div>
+      <h1>Direcciones de envío</h1>
+      <p>Administra tus direcciones para recibir tus pedidos.</p>
+    </div>
+  </div>
+
+  <div class="empty-state">
+    <i class="fa-solid fa-location-dot"></i>
+    <h3>No tienes direcciones guardadas</h3>
+    <p>Agrega una dirección durante el proceso de compra.</p>
+  </div>
+</div>
+
 </section></main>
 <nav class="mobile-bottom">
   <a href="index.html"><i class="fa-solid fa-house"></i></a>
