@@ -5,508 +5,102 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Cesta - AliMarket</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
 <style>
-:root{
-  --red:#e60023;
-  --dark:#b70d2d;
-  --line:#e6e6e6;
-  --muted:#6b6b6b;
-  --text:#181818
-}
+:root{--red:#e60023;--dark:#b70d2d;--line:#e6e6e6;--muted:#6b6b6b;--text:#181818}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 html,body{min-height:100%}
 body{background:#f4f4f4;color:var(--text);padding-bottom:40px}
-button,input{font:inherit}
-button,a{cursor:pointer}
-a{text-decoration:none;color:inherit}
-img{display:block;max-width:100%}
-
-/* HEADER ESCRITORIO */
-.desktop-header{
-  position:sticky;
-  top:0;
-  width:100%;
-  z-index:9999;
-  background:#fff;
-  border-bottom:1px solid #eee;
-  padding:18px 2.2% 10px
-}
-.header-row{
-  display:grid;
-  grid-template-columns:auto minmax(320px,1fr) auto;
-  align-items:center;
-  gap:34px
-}
-.logo{
-  font:900 44px Georgia,serif;
-  color:#c60020;
-  letter-spacing:-2px;
-  white-space:nowrap
-}
-.search-box{
-  width:100%;
-  height:50px;
-  border:2px solid #777;
-  border-radius:28px;
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:0 18px;
-  background:#fff
-}
-.search-box input{
-  flex:1;
-  min-width:0;
-  border:0;
-  outline:0;
-  background:transparent;
-  font-size:16px
-}
+button,input{font:inherit}button,a{cursor:pointer}a{text-decoration:none;color:inherit}img{display:block;max-width:100%}
+.desktop-header{position:sticky;top:0;width:100%;z-index:9999;background:#fff;border-bottom:1px solid #eee;padding:18px 2.2% 10px}
+.header-row{display:grid;grid-template-columns:auto minmax(320px,1fr) auto;align-items:center;gap:34px}
+.logo{font:900 44px Georgia,serif;color:#c60020;letter-spacing:-2px;white-space:nowrap}
+.search-box{width:100%;height:50px;border:2px solid #777;border-radius:28px;display:flex;align-items:center;gap:12px;padding:0 18px;background:#fff}
+.search-box input{flex:1;min-width:0;border:0;outline:0;background:transparent;font-size:16px}
 .search-box i{font-size:20px;color:#111}
-.header-icons{
-  display:flex;
-  align-items:center;
-  gap:28px;
-  white-space:nowrap
-}
-.header-icons a{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  color:#111;
-  font-size:16px;
-  font-weight:700
-}
+.header-icons{display:flex;align-items:center;gap:28px;white-space:nowrap}
+.header-icons a{display:flex;align-items:center;gap:8px;color:#111;font-size:16px;font-weight:700}
 .header-icons i{font-size:27px}
-.promo{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  margin-top:16px;
-  overflow-x:auto;
-  scrollbar-width:none
-}
+.promo{display:flex;align-items:center;gap:14px;margin-top:16px;overflow-x:auto;scrollbar-width:none}
 .promo::-webkit-scrollbar{display:none}
-.promo a{
-  white-space:nowrap;
-  background:#f4f4f5;
-  padding:11px 22px;
-  border-radius:24px;
-  font-size:16px;
-  font-weight:700
-}
-.promo .category{
-  background:#ffd7dc;
-  color:#bc001d;
-  border-radius:8px;
-  padding:14px 25px;
-  display:flex;
-  align-items:center;
-  gap:10px
-}
-
-/* CARRITO */
-.cart-page{
-  width:min(1500px,94%);
-  margin:26px auto;
-  display:grid;
-  grid-template-columns:minmax(0,1fr) 390px;
-  gap:26px
-}
-.cart-main,.cart-summary{
-  background:#fff;
-  border-radius:14px
-}
-.cart-main{padding:26px}
-.cart-title{font-size:32px;margin:0 0 22px}
-.mobile-cart-title{display:none}
-.cart-toolbar{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:20px;
-  border-bottom:1px solid var(--line);
-  padding-bottom:18px
-}
-.check-label{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-size:16px;
-  cursor:pointer
-}
-.check-label input,.item-check{
-  width:20px;
-  height:20px;
-  accent-color:var(--red)
-}
-.delete-selected{
-  border:0;
-  background:transparent;
-  color:#1c4a8b;
-  font-weight:700;
-  text-decoration:underline
-}
-.cart-store{
-  margin-top:22px;
-  border:1px solid var(--line);
-  border-radius:12px;
-  overflow:hidden
-}
-.store-head{
-  padding:16px 18px;
-  background:#fafafa;
-  display:flex;
-  align-items:center;
-  gap:12px;
-  font-weight:800
-}
-.store-badge{
-  background:#f0b84a;
-  color:#5d4200;
-  padding:4px 8px;
-  border-radius:5px;
-  font-size:12px
-}
-.shipping-note{
-  padding:10px 18px;
-  color:#8a4b00;
-  background:#fff9ee;
-  font-size:14px
-}
-.cart-item{
-  display:grid;
-  grid-template-columns:auto 120px minmax(0,1fr) auto;
-  gap:18px;
-  padding:20px 18px;
-  border-top:1px solid var(--line);
-  align-items:start
-}
-.cart-item img{
-  width:120px;
-  height:120px;
-  object-fit:contain;
-  border-radius:8px;
-  background:#f7f7f7;
-  border:1px solid #eee
-}
-.item-name{font-size:17px;line-height:1.4;margin-bottom:8px}
-.item-variant{color:var(--muted);font-size:14px;margin-bottom:10px}
-.item-price{font-size:21px;font-weight:900}
-.item-actions{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-top:14px
-}
-.icon-btn{
-  border:0;
-  background:transparent;
-  font-size:18px;
-  color:#555
-}
-.qty-control{
-  display:flex;
-  align-items:center;
-  border:1px solid #ccc;
-  border-radius:7px;
-  overflow:hidden
-}
-.qty-control button{
-  width:36px;
-  height:36px;
-  border:0;
-  background:#f4f4f4;
-  font-size:18px
-}
-.qty-control input{
-  width:44px;
-  height:36px;
-  border:0;
-  text-align:center;
-  font-weight:800
-}
-
-/* RESUMEN */
-.cart-summary{
-  padding:26px;
-  position:sticky;
-  top:175px;
-  height:max-content
-}
-.cart-summary h2{font-size:28px;margin:0 0 24px}
-.summary-row{
-  display:flex;
-  justify-content:space-between;
-  gap:20px;
-  margin:16px 0;
-  font-size:18px
-}
-.summary-total{
-  font-size:25px;
-  font-weight:900;
-  padding-top:16px;
-  border-top:1px solid var(--line)
-}
-.checkout-btn{
-  width:100%;
-  border:0;
-  border-radius:28px;
-  background:linear-gradient(90deg,#e73554,#b70d2d);
-  color:#fff;
-  padding:16px;
-  font-size:19px;
-  font-weight:900;
-  margin-top:18px
-}
-.checkout-btn:disabled{opacity:.45;cursor:not-allowed}
-.security-box{
-  margin-top:22px;
-  padding-top:18px;
-  border-top:1px solid var(--line)
-}
-.security-box h3{font-size:20px;margin:0 0 8px}
-.security-box p{color:var(--muted);line-height:1.5;font-size:14px}
-
-/* VACÍO */
-.empty-cart{
-  min-height:590px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:70px 20px
-}
-.empty-cart i{
-  font-size:105px;
-  color:#2f3a4b;
-  margin-bottom:28px
-}
-.empty-cart h2{
-  margin:0 0 14px;
-  font-size:44px;
-  color:#273142;
-  font-weight:900
-}
-.empty-cart p{
-  margin:0;
-  font-size:24px;
-  color:#6f7785
-}
-.continue-shopping{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-width:330px;
-  min-height:72px;
-  margin-top:34px;
-  padding:18px 34px;
-  background:#273142;
-  color:#fff;
-  border-radius:40px;
-  font-size:25px;
-  font-weight:900
-}
-.cart-page.empty-mode{
-  display:block;
-  width:min(1500px,94%)
-}
-.cart-page.empty-mode .cart-main{width:100%;min-height:680px}
-.cart-page.empty-mode .cart-toolbar,
-.cart-page.empty-mode .cart-summary{display:none}
-
-/* TOAST */
-.toast{
-  position:fixed;
-  right:22px;
-  bottom:22px;
-  background:#111;
-  color:#fff;
-  padding:13px 18px;
-  border-radius:8px;
-  opacity:0;
-  transform:translateY(10px);
-  transition:.2s;
-  z-index:11000
-}
-.toast.show{opacity:1;transform:none}
-
-/* MENÚ INFERIOR */
-.mobile-bottom{display:none}
-
-@media(max-width:1050px){
-  .header-row{grid-template-columns:auto 1fr}
-  .header-icons{grid-column:1/-1;justify-content:flex-end}
-  .cart-page{grid-template-columns:1fr}
-  .cart-summary{position:static}
-}
+.promo a{white-space:nowrap;background:#f4f4f5;padding:11px 22px;border-radius:24px;font-size:16px;font-weight:700}
+.promo .category{background:#ffd7dc;color:#bc001d;border-radius:8px;padding:14px 25px;display:flex;align-items:center;gap:10px}
+.cart-page{width:min(1500px,94%);margin:26px auto;display:grid;grid-template-columns:minmax(0,1fr) 390px;gap:26px}
+.cart-main,.cart-summary{background:#fff;border-radius:14px}
+.cart-main{padding:26px}.cart-title{font-size:32px;margin:0 0 22px}.mobile-cart-title{display:none}
+.cart-toolbar{display:flex;align-items:center;justify-content:space-between;gap:20px;border-bottom:1px solid var(--line);padding-bottom:18px}
+.check-label{display:flex;align-items:center;gap:10px;font-size:16px;cursor:pointer}
+.check-label input,.item-check{width:20px;height:20px;accent-color:var(--red)}
+.delete-selected{border:0;background:transparent;color:#1c4a8b;font-weight:700;text-decoration:underline}
+.cart-store{margin-top:22px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.store-head{padding:16px 18px;background:#fafafa;display:flex;align-items:center;gap:12px;font-weight:800}
+.store-badge{background:#f0b84a;color:#5d4200;padding:4px 8px;border-radius:5px;font-size:12px}
+.shipping-note{padding:10px 18px;color:#8a4b00;background:#fff9ee;font-size:14px}
+.cart-item{display:grid;grid-template-columns:auto 120px minmax(0,1fr) auto;gap:18px;padding:20px 18px;border-top:1px solid var(--line);align-items:start}
+.cart-item img{width:120px;height:120px;object-fit:contain;border-radius:8px;background:#f7f7f7;border:1px solid #eee}
+.item-name{font-size:17px;line-height:1.4;margin-bottom:8px}.item-variant{color:var(--muted);font-size:14px;margin-bottom:10px}.item-price{font-size:21px;font-weight:900}
+.item-actions{display:flex;align-items:center;gap:10px;margin-top:14px}.icon-btn{border:0;background:transparent;font-size:18px;color:#555}
+.qty-control{display:flex;align-items:center;border:1px solid #ccc;border-radius:7px;overflow:hidden}
+.qty-control button{width:36px;height:36px;border:0;background:#f4f4f4;font-size:18px}.qty-control input{width:44px;height:36px;border:0;text-align:center;font-weight:800}
+.cart-summary{padding:26px;position:sticky;top:175px;height:max-content}.cart-summary h2{font-size:28px;margin:0 0 24px}
+.summary-row{display:flex;justify-content:space-between;gap:20px;margin:16px 0;font-size:18px}.summary-total{font-size:25px;font-weight:900;padding-top:16px;border-top:1px solid var(--line)}
+.checkout-btn{width:100%;border:0;border-radius:28px;background:linear-gradient(90deg,#e73554,#b70d2d);color:#fff;padding:16px;font-size:19px;font-weight:900;margin-top:18px}
+.checkout-btn:disabled{opacity:.45;cursor:not-allowed}.security-box{margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
+.security-box h3{font-size:20px;margin:0 0 8px}.security-box p{color:var(--muted);line-height:1.5;font-size:14px}
+.empty-cart{min-height:590px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:70px 20px}
+.empty-cart i{font-size:105px;color:#2f3a4b;margin-bottom:28px}.empty-cart h2{margin:0 0 14px;font-size:44px;color:#273142;font-weight:900}.empty-cart p{margin:0;font-size:24px;color:#6f7785}
+.continue-shopping{display:inline-flex;align-items:center;justify-content:center;min-width:330px;min-height:72px;margin-top:34px;padding:18px 34px;background:#273142;color:#fff;border-radius:40px;font-size:25px;font-weight:900}
+.cart-page.empty-mode{display:block;width:min(1500px,94%)}.cart-page.empty-mode .cart-main{width:100%;min-height:680px}.cart-page.empty-mode .cart-toolbar,.cart-page.empty-mode .cart-summary{display:none}
+.toast{position:fixed;right:22px;bottom:22px;background:#111;color:#fff;padding:13px 18px;border-radius:8px;opacity:0;transform:translateY(10px);transition:.2s;z-index:11000}
+.toast.show{opacity:1;transform:none}.mobile-bottom{display:none}
+@media(max-width:1050px){.header-row{grid-template-columns:auto 1fr}.header-icons{grid-column:1/-1;justify-content:flex-end}.cart-page{grid-template-columns:1fr}.cart-summary{position:static}}
 @media(max-width:768px){
-  .desktop-header{display:none}
-  body{padding-bottom:104px}
-  .cart-page{width:100%;margin:0;padding:12px}
-  .cart-main,.cart-summary{border-radius:10px;padding:16px}
-  .desktop-cart-title{display:none}
-  .mobile-cart-title{display:inline}
-  .cart-toolbar{align-items:flex-start;flex-direction:column}
-  .cart-item{
-    grid-template-columns:auto 92px minmax(0,1fr);
-    gap:10px;
-    padding:16px 8px
-  }
-  .cart-item img{width:92px;height:92px}
-  .item-side{grid-column:3}
-  .mobile-bottom{
-    position:fixed;
-    bottom:0;
-    left:0;
-    right:0;
-    height:92px;
-    background:#fff;
-    display:flex;
-    justify-content:space-around;
-    align-items:center;
-    padding:7px 4px 4px;
-    border-top:1px solid #ddd;
-    box-shadow:0 -3px 10px rgba(0,0,0,.08);
-    z-index:9999
-  }
-  .mobile-bottom a{
-    color:#222;
-    font-size:28px;
-    min-width:62px;
-    height:72px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:5px
-  }
-  .mobile-bottom a::after{
-    font-size:13px;
-    font-family:Arial,sans-serif
-  }
-  .mobile-bottom a:nth-child(1)::after{content:"Inicio"}
-  .mobile-bottom a:nth-child(2)::after{content:"Mensajes"}
-  .mobile-bottom a:nth-child(4){color:#d00000}
-  .mobile-bottom a:nth-child(4)::after{content:"Cesta"}
-  .mobile-bottom a:nth-child(5)::after{content:"Usuario"}
-  .mobile-bottom .discount{
-    width:72px;
-    min-width:72px;
-    height:72px;
-    border-radius:50%;
-    background:#e5243f;
-    color:#fff;
-    font-size:23px;
-    font-weight:900;
-    display:flex;
-    align-items:center;
-    justify-content:center
-  }
-  .mobile-bottom .discount::after{content:""!important}
-  .empty-cart{min-height:68vh;padding:45px 15px}
-  .empty-cart i{font-size:88px}
-  .empty-cart h2{font-size:37px}
-  .empty-cart p{font-size:21px}
-  .continue-shopping{
-    min-width:280px;
-    min-height:66px;
-    font-size:22px
-  }
+.desktop-header{display:none}body{padding-bottom:104px}.cart-page{width:100%;margin:0;padding:12px}.cart-main,.cart-summary{border-radius:10px;padding:16px}.desktop-cart-title{display:none}.mobile-cart-title{display:inline}
+.cart-toolbar{align-items:flex-start;flex-direction:column}.cart-item{grid-template-columns:auto 92px minmax(0,1fr);gap:10px;padding:16px 8px}.cart-item img{width:92px;height:92px}.item-side{grid-column:3}
+.mobile-bottom{position:fixed;bottom:0;left:0;right:0;height:92px;background:#fff;display:flex;justify-content:space-around;align-items:center;padding:7px 4px 4px;border-top:1px solid #ddd;box-shadow:0 -3px 10px rgba(0,0,0,.08);z-index:9999}
+.mobile-bottom a{color:#222;font-size:28px;min-width:62px;height:72px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+.mobile-bottom a::after{font-size:13px;font-family:Arial,sans-serif}.mobile-bottom a:nth-child(1)::after{content:"Inicio"}.mobile-bottom a:nth-child(2)::after{content:"Mensajes"}.mobile-bottom a:nth-child(4){color:#d00000}.mobile-bottom a:nth-child(4)::after{content:"Cesta"}.mobile-bottom a:nth-child(5)::after{content:"Usuario"}
+.mobile-bottom .discount{width:72px;min-width:72px;height:72px;border-radius:50%;background:#e5243f;color:#fff;font-size:23px;font-weight:900;display:flex;align-items:center;justify-content:center}.mobile-bottom .discount::after{content:""!important}
+.empty-cart{min-height:68vh;padding:45px 15px}.empty-cart i{font-size:88px}.empty-cart h2{font-size:37px}.empty-cart p{font-size:21px}.continue-shopping{min-width:280px;min-height:66px;font-size:22px}
 }
 </style>
 </head>
-
 <body>
-
 <header class="desktop-header">
-  <div class="header-row">
-    <a class="logo" href="index.html">AliMarket</a>
-
-    <div class="search-box">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <input placeholder="Buscar productos">
-      <i class="fa-solid fa-microphone"></i>
-    </div>
-
-    <div class="header-icons">
-      <a href="#"><i class="fa-regular fa-heart"></i> Favorito</a>
-      <a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i> Cesta</a>
-      <a href="usuario.html"><i class="fa-regular fa-user"></i> Usuario</a>
-    </div>
-  </div>
-
-  <nav class="promo">
-    <a class="category" href="#"><i class="fa-solid fa-bars"></i> Categorías</a>
-    <a href="#">Ofertas promocionales</a>
-    <a href="#">Nuevos</a>
-    <a href="#">Más vendidos</a>
-    <a href="#">Cupones</a>
-    <a href="#">Envío gratis</a>
-  </nav>
+<div class="header-row">
+<a class="logo" href="index.html">AliMarket</a>
+<div class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input placeholder="Buscar productos"><i class="fa-solid fa-microphone"></i></div>
+<div class="header-icons"><a href="#"><i class="fa-regular fa-heart"></i> Favorito</a><a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i> Cesta</a><a href="usuario.html"><i class="fa-regular fa-user"></i> Usuario</a></div>
+</div>
+<nav class="promo"><a class="category" href="#"><i class="fa-solid fa-bars"></i> Categorías</a><a href="#">Ofertas promocionales</a><a href="#">Nuevos</a><a href="#">Más vendidos</a><a href="#">Cupones</a><a href="#">Envío gratis</a></nav>
 </header>
 
 <main class="cart-page" id="cartPage">
-  <section class="cart-main">
-    <h1 class="cart-title">
-      <span class="desktop-cart-title">Cesta</span>
-      <span class="mobile-cart-title">Carrito</span>
-      (<span id="cartCount">0</span>)
-    </h1>
+<section class="cart-main">
+<h1 class="cart-title"><span class="desktop-cart-title">Cesta</span><span class="mobile-cart-title">Carrito</span> (<span id="cartCount">0</span>)</h1>
+<div class="cart-toolbar">
+<label class="check-label"><input type="checkbox" id="selectAll"> Seleccionar todos los artículos</label>
+<button class="delete-selected" id="deleteSelected" type="button">Borrar artículos seleccionados</button>
+</div>
+<div id="cartContent"></div>
+</section>
 
-    <div class="cart-toolbar">
-      <label class="check-label">
-        <input type="checkbox" id="selectAll">
-        Seleccionar todos los artículos
-      </label>
-
-      <button class="delete-selected" id="deleteSelected" type="button">
-        Borrar artículos seleccionados
-      </button>
-    </div>
-
-    <div id="cartContent"></div>
-  </section>
-
-  <aside class="cart-summary">
-    <h2>Resumen</h2>
-
-    <div class="summary-row">
-      <span>Subtotal</span>
-      <strong id="subtotal">RD$ 0.00</strong>
-    </div>
-
-    <div class="summary-row">
-      <span>Envío</span>
-      <strong id="shipping">RD$ 0.00</strong>
-    </div>
-
-    <div class="summary-row summary-total">
-      <span>Estimación total</span>
-      <strong id="total">RD$ 0.00</strong>
-    </div>
-
-    <button class="checkout-btn" id="checkoutBtn" type="button" disabled>
-      Continuar (0)
-    </button>
-
-    <div class="security-box">
-      <h3><i class="fa-solid fa-shield-halved"></i> Seguridad y privacidad</h3>
-      <p>Pagos seguros y protección de tus datos personales durante la compra.</p>
-    </div>
-  </aside>
+<aside class="cart-summary">
+<h2>Resumen</h2>
+<div class="summary-row"><span>Subtotal</span><strong id="subtotal">RD$ 0.00</strong></div>
+<div class="summary-row"><span>Envío</span><strong id="shipping">RD$ 0.00</strong></div>
+<div class="summary-row summary-total"><span>Estimación total</span><strong id="total">RD$ 0.00</strong></div>
+<button class="checkout-btn" id="checkoutBtn" type="button" disabled>Continuar (0)</button>
+<div class="security-box"><h3><i class="fa-solid fa-shield-halved"></i> Seguridad y privacidad</h3><p>Pagos seguros y protección de tus datos personales durante la compra.</p></div>
+</aside>
 </main>
 
 <nav class="mobile-bottom">
-  <a href="index.html"><i class="fa-solid fa-house"></i></a>
-  <a href="mensajes.html"><i class="fa-solid fa-comments"></i></a>
-  <a href="#" class="discount">20%</a>
-  <a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i></a>
-  <a href="usuario.html"><i class="fa-solid fa-user"></i></a>
+<a href="index.html"><i class="fa-solid fa-house"></i></a>
+<a href="mensajes.html"><i class="fa-solid fa-comments"></i></a>
+<a href="#" class="discount">20%</a>
+<a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i></a>
+<a href="usuario.html"><i class="fa-solid fa-user"></i></a>
 </nav>
-
 <div class="toast" id="toast"></div>
 
 <script>
@@ -514,366 +108,96 @@ const CART_KEY="carritoAliMarket";
 const CHECKOUT_KEY="checkoutAliMarket";
 const SESSION_KEY="alimarketSesion";
 const REDIRECT_KEY="alimarketRedirectDespuesLogin";
-
+const CONFIRMATION_PAGE="confirmacion_pedido.html";
 const $=selector=>document.querySelector(selector);
-
 let cart=[];
 let selected=new Set();
 
-function readJSON(key,fallback){
-  try{
-    const value=JSON.parse(localStorage.getItem(key)||"null");
-    return value ?? fallback;
-  }catch(error){
-    console.error("No se pudo leer:",key,error);
-    return fallback;
-  }
-}
+function readJSON(key,fallback){try{const value=JSON.parse(localStorage.getItem(key)||"null");return value??fallback}catch(error){console.error(error);return fallback}}
+function readCart(){const value=readJSON(CART_KEY,[]);return Array.isArray(value)?value:[]}
+function saveCart(){localStorage.setItem(CART_KEY,JSON.stringify(cart))}
+function money(value,currency="DOP"){const code=String(currency||"DOP").split(" ")[0];const symbol=code==="DOP"?"RD$":code==="EUR"?"€":"US$";return symbol+" "+Number(value||0).toLocaleString("es-DO",{minimumFractionDigits:2,maximumFractionDigits:2})}
+function showToast(message){const box=$("#toast");box.textContent=message;box.classList.add("show");clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>box.classList.remove("show"),1800)}
+function shippingFor(item){if(item.shipping!==undefined&&item.shipping!==null)return Math.max(0,Number(item.shipping)||0);return Math.max(0,Math.round((Number(item.weight)||0.5)*160))}
 
-function readCart(){
-  const value=readJSON(CART_KEY,[]);
-  return Array.isArray(value)?value:[];
-}
-
-function saveCart(){
-  localStorage.setItem(CART_KEY,JSON.stringify(cart));
-}
-
-function money(value,currency="DOP"){
-  const code=String(currency||"DOP").split(" ")[0];
-  const symbol=code==="DOP"?"RD$":code==="EUR"?"€":"US$";
-
-  return symbol+" "+Number(value||0).toLocaleString("es-DO",{
-    minimumFractionDigits:2,
-    maximumFractionDigits:2
-  });
-}
-
-function showToast(message){
-  const box=$("#toast");
-  box.textContent=message;
-  box.classList.add("show");
-
-  clearTimeout(showToast.timer);
-  showToast.timer=setTimeout(()=>box.classList.remove("show"),1800);
-}
-
-function shippingFor(item){
-  if(item.shipping!==undefined && item.shipping!==null){
-    return Math.max(0,Number(item.shipping)||0);
-  }
-
-  return Math.max(
-    0,
-    Math.round((Number(item.weight)||0.5)*160)
-  );
-}
-
-/* Detecta correctamente al usuario conectado */
 function hayUsuarioLogueado(){
-  const session=readJSON(SESSION_KEY,null);
-
-  if(
-    session &&
-    typeof session==="object" &&
-    (
-      session.id ||
-      session.email ||
-      session.token ||
-      session.loggedIn===true ||
-      session.isLoggedIn===true
-    )
-  ){
-    return true;
-  }
-
-  /* Compatibilidad con sesiones usadas anteriormente */
-  const alternativeKeys=[
-    "usuarioLogueado",
-    "usuarioActual",
-    "alimarketUser",
-    "currentUser",
-    "userLoggedIn",
-    "authToken",
-    "token"
-  ];
-
-  return alternativeKeys.some(key=>{
-    const raw=localStorage.getItem(key);
-
-    if(
-      raw===null ||
-      raw.trim()==="" ||
-      raw==="false" ||
-      raw==="null" ||
-      raw==="undefined"
-    ){
-      return false;
-    }
-
-    try{
-      const data=JSON.parse(raw);
-
-      if(!data) return false;
-
-      if(typeof data==="object"){
-        return Boolean(
-          data.id ||
-          data.email ||
-          data.nombre ||
-          data.name ||
-          data.usuario ||
-          data.token ||
-          data.loggedIn===true ||
-          data.isLoggedIn===true
-        );
-      }
-
-      return data===true || Boolean(data);
-    }catch{
-      return raw.trim().length>0;
-    }
-  });
+ const session=readJSON(SESSION_KEY,null);
+ if(session&&typeof session==="object"&&(session.id||session.email||session.token||session.loggedIn===true||session.isLoggedIn===true))return true;
+ const keys=["usuarioLogueado","usuarioActual","alimarketUser","currentUser","userLoggedIn","authToken","token"];
+ return keys.some(key=>{
+  const raw=localStorage.getItem(key);
+  if(raw===null||raw.trim()===""||raw==="false"||raw==="null"||raw==="undefined")return false;
+  try{
+   const data=JSON.parse(raw);
+   if(!data)return false;
+   if(typeof data==="object")return Boolean(data.id||data.email||data.nombre||data.name||data.usuario||data.token||data.loggedIn===true||data.isLoggedIn===true);
+   return data===true||Boolean(data);
+  }catch{return raw.trim().length>0}
+ });
 }
 
 function render(){
-  cart=readCart();
+ cart=readCart();
+ const cartPage=$("#cartPage"),content=$("#cartContent");
+ $("#cartCount").textContent=cart.reduce((sum,item)=>sum+(Number(item.cantidad)||1),0);
 
-  const cartPage=$("#cartPage");
-  const content=$("#cartContent");
-  const totalUnits=cart.reduce(
-    (sum,item)=>sum+(Number(item.cantidad)||1),
-    0
-  );
+ if(!cart.length){
+  cartPage.classList.add("empty-mode");
+  content.innerHTML=`<div class="empty-cart"><i class="fa-solid fa-cart-shopping"></i><h2>Tu cesta está vacía</h2><p>Agrega productos para comenzar tu compra.</p><a class="continue-shopping" href="index.html">Seguir comprando</a></div>`;
+  selected.clear();updateSummary();return;
+ }
+ cartPage.classList.remove("empty-mode");
+ content.innerHTML=`<div class="cart-store">
+ <div class="store-head"><span class="store-badge">Choice</span> Enviado por AliMarket</div>
+ <div class="shipping-note">Compra más productos de la tienda para aprovechar mejor el costo de envío.</div>
+ ${cart.map((item,index)=>{
+  const id=String(item.id??index),variant=[item.variant,item.size].filter(Boolean).join(" · ");
+  return `<article class="cart-item" data-index="${index}">
+  <input class="item-check" type="checkbox" data-id="${id}" ${selected.has(id)?"checked":""}>
+  <img src="${item.image||"https://via.placeholder.com/150?text=Producto"}" alt="${item.name||"Producto"}">
+  <div><div class="item-name">${item.name||"Producto sin nombre"}</div><div class="item-variant">${variant||"Variante estándar"}</div><div class="item-price">${money(item.price,item.currency)}</div>
+  <div class="item-actions"><button class="icon-btn favorite-btn" type="button"><i class="fa-regular fa-heart"></i></button><button class="icon-btn remove-btn" type="button"><i class="fa-regular fa-trash-can"></i></button></div></div>
+  <div class="item-side"><div class="qty-control"><button class="minus" type="button">−</button><input value="${Number(item.cantidad)||1}" readonly><button class="plus" type="button">+</button></div></div>
+  </article>`;
+ }).join("")}</div>`;
 
-  $("#cartCount").textContent=totalUnits;
-
-  if(!cart.length){
-    cartPage.classList.add("empty-mode");
-
-    content.innerHTML=`
-      <div class="empty-cart">
-        <i class="fa-solid fa-cart-shopping"></i>
-        <h2>Tu cesta está vacía</h2>
-        <p>Agrega productos para comenzar tu compra.</p>
-        <a class="continue-shopping" href="index.html">
-          Seguir comprando
-        </a>
-      </div>
-    `;
-
-    selected.clear();
-    updateSummary();
-    return;
-  }
-
-  cartPage.classList.remove("empty-mode");
-
-  content.innerHTML=`
-    <div class="cart-store">
-      <div class="store-head">
-        <span class="store-badge">Choice</span>
-        Enviado por AliMarket
-      </div>
-
-      <div class="shipping-note">
-        Compra más productos de la tienda para aprovechar mejor el costo de envío.
-      </div>
-
-      ${cart.map((item,index)=>{
-        const id=String(item.id??index);
-        const variant=[item.variant,item.size].filter(Boolean).join(" · ");
-
-        return `
-          <article class="cart-item" data-index="${index}">
-            <input
-              class="item-check"
-              type="checkbox"
-              data-id="${id}"
-              ${selected.has(id)?"checked":""}
-            >
-
-            <img
-              src="${item.image||"https://via.placeholder.com/150?text=Producto"}"
-              alt="${item.name||"Producto"}"
-            >
-
-            <div>
-              <div class="item-name">
-                ${item.name||"Producto sin nombre"}
-              </div>
-
-              <div class="item-variant">
-                ${variant||"Variante estándar"}
-              </div>
-
-              <div class="item-price">
-                ${money(item.price,item.currency)}
-              </div>
-
-              <div class="item-actions">
-                <button class="icon-btn favorite-btn" type="button" title="Favorito">
-                  <i class="fa-regular fa-heart"></i>
-                </button>
-
-                <button class="icon-btn remove-btn" type="button" title="Eliminar">
-                  <i class="fa-regular fa-trash-can"></i>
-                </button>
-              </div>
-            </div>
-
-            <div class="item-side">
-              <div class="qty-control">
-                <button class="minus" type="button">−</button>
-                <input value="${Number(item.cantidad)||1}" readonly>
-                <button class="plus" type="button">+</button>
-              </div>
-            </div>
-          </article>
-        `;
-      }).join("")}
-    </div>
-  `;
-
-  content.querySelectorAll(".item-check").forEach(input=>{
-    input.addEventListener("change",()=>{
-      if(input.checked){
-        selected.add(input.dataset.id);
-      }else{
-        selected.delete(input.dataset.id);
-      }
-
-      updateSummary();
-    });
-  });
-
-  content.querySelectorAll(".cart-item").forEach(row=>{
-    const index=Number(row.dataset.index);
-
-    row.querySelector(".minus").addEventListener("click",()=>{
-      cart[index].cantidad=Math.max(
-        1,
-        (Number(cart[index].cantidad)||1)-1
-      );
-      saveCart();
-      render();
-    });
-
-    row.querySelector(".plus").addEventListener("click",()=>{
-      cart[index].cantidad=(Number(cart[index].cantidad)||1)+1;
-      saveCart();
-      render();
-    });
-
-    row.querySelector(".remove-btn").addEventListener("click",()=>{
-      selected.delete(String(cart[index].id??index));
-      cart.splice(index,1);
-      saveCart();
-      render();
-      showToast("Artículo eliminado");
-    });
-
-    row.querySelector(".favorite-btn").addEventListener("click",()=>{
-      showToast("Agregado a la lista de deseos");
-    });
-  });
-
-  updateSummary();
+ content.querySelectorAll(".item-check").forEach(input=>input.onchange=()=>{input.checked?selected.add(input.dataset.id):selected.delete(input.dataset.id);updateSummary()});
+ content.querySelectorAll(".cart-item").forEach(row=>{
+  const index=Number(row.dataset.index);
+  row.querySelector(".minus").onclick=()=>{cart[index].cantidad=Math.max(1,(Number(cart[index].cantidad)||1)-1);saveCart();render()};
+  row.querySelector(".plus").onclick=()=>{cart[index].cantidad=(Number(cart[index].cantidad)||1)+1;saveCart();render()};
+  row.querySelector(".remove-btn").onclick=()=>{selected.delete(String(cart[index].id??index));cart.splice(index,1);saveCart();render();showToast("Artículo eliminado")};
+  row.querySelector(".favorite-btn").onclick=()=>showToast("Agregado a la lista de deseos");
+ });
+ updateSummary();
 }
 
 function updateSummary(){
-  const chosen=cart.filter((item,index)=>{
-    return selected.has(String(item.id??index));
-  });
-
-  const subtotal=chosen.reduce((sum,item)=>{
-    return sum+
-      (Number(item.price)||0)*
-      (Number(item.cantidad)||1);
-  },0);
-
-  const shipping=chosen.reduce((sum,item)=>{
-    return sum+shippingFor(item);
-  },0);
-
-  $("#subtotal").textContent=money(subtotal,"DOP");
-  $("#shipping").textContent=money(shipping,"DOP");
-  $("#total").textContent=money(subtotal+shipping,"DOP");
-  $("#checkoutBtn").textContent=`Continuar (${chosen.length})`;
-  $("#checkoutBtn").disabled=!chosen.length;
-
-  $("#selectAll").checked=
-    cart.length>0 &&
-    chosen.length===cart.length;
+ const chosen=cart.filter((item,index)=>selected.has(String(item.id??index)));
+ const subtotal=chosen.reduce((sum,item)=>sum+(Number(item.price)||0)*(Number(item.cantidad)||1),0);
+ const shipping=chosen.reduce((sum,item)=>sum+shippingFor(item),0);
+ $("#subtotal").textContent=money(subtotal,"DOP");$("#shipping").textContent=money(shipping,"DOP");$("#total").textContent=money(subtotal+shipping,"DOP");
+ $("#checkoutBtn").textContent=`Continuar (${chosen.length})`;$("#checkoutBtn").disabled=!chosen.length;$("#selectAll").checked=cart.length>0&&chosen.length===cart.length;
 }
 
-$("#selectAll").addEventListener("change",event=>{
-  selected.clear();
+$("#selectAll").onchange=event=>{selected.clear();if(event.target.checked)cart.forEach((item,index)=>selected.add(String(item.id??index)));render()};
+$("#deleteSelected").onclick=()=>{if(!selected.size){showToast("Selecciona uno o más artículos");return}cart=cart.filter((item,index)=>!selected.has(String(item.id??index)));selected.clear();saveCart();render();showToast("Artículos eliminados")};
 
-  if(event.target.checked){
-    cart.forEach((item,index)=>{
-      selected.add(String(item.id??index));
-    });
-  }
+$("#checkoutBtn").onclick=()=>{
+ const chosen=cart.filter((item,index)=>selected.has(String(item.id??index)));
+ if(!chosen.length){showToast("Selecciona uno o más artículos");return}
+ localStorage.setItem(CHECKOUT_KEY,JSON.stringify(chosen));
 
-  render();
-});
+ if(hayUsuarioLogueado()){
+  location.href=CONFIRMATION_PAGE;
+  return;
+ }
 
-$("#deleteSelected").addEventListener("click",()=>{
-  if(!selected.size){
-    showToast("Selecciona uno o más artículos");
-    return;
-  }
-
-  cart=cart.filter((item,index)=>{
-    return !selected.has(String(item.id??index));
-  });
-
-  selected.clear();
-  saveCart();
-  render();
-  showToast("Artículos eliminados");
-});
-
-/* Continuar al pago */
-$("#checkoutBtn").addEventListener("click",()=>{
-  const chosen=cart.filter((item,index)=>{
-    return selected.has(String(item.id??index));
-  });
-
-  if(!chosen.length){
-    showToast("Selecciona uno o más artículos");
-    return;
-  }
-
-  localStorage.setItem(
-    CHECKOUT_KEY,
-    JSON.stringify(chosen)
-  );
-
-  /*
-    USUARIO CONECTADO:
-    abre checkout.html directamente.
-
-    USUARIO NO CONECTADO:
-    abre login_unido.html y guarda checkout.html
-    como página de regreso.
-  */
-  if(hayUsuarioLogueado()){
-    location.href="checkout.html";
-    return;
-  }
-
-  localStorage.setItem(
-    REDIRECT_KEY,
-    "checkout.html"
-  );
-
-  location.href="login.html?redirect=checkout.html";
-});
+ localStorage.setItem(REDIRECT_KEY,CONFIRMATION_PAGE);
+ location.href="login.html?redirect="+encodeURIComponent(CONFIRMATION_PAGE);
+};
 
 render();
 </script>
-
 </body>
 </html>
