@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Mis pedidos - AliMarket</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{--red:#d90000;--green:#0ca34a;--text:#111;--muted:#777;--line:#e6e6e6;--soft-red:#ffe5e5;--soft-green:#e4f7ea}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Arial,Helvetica,sans-serif;background:#fff;color:var(--text)}
+button,input{font:inherit}button,a{cursor:pointer}a{text-decoration:none;color:inherit}img{display:block;max-width:100%}
+.page{width:min(920px,100%);margin:0 auto;padding:24px 18px 120px}
+.search-header{display:grid;grid-template-columns:48px minmax(0,1fr);align-items:center;gap:18px;margin-bottom:22px}
+.back-btn{width:48px;height:48px;border:0;background:transparent;font-size:34px;display:grid;place-items:center}
+.search-box{height:74px;border:3px solid #111;border-radius:40px;display:flex;align-items:center;gap:18px;padding:0 26px}
+.search-box i{font-size:30px}.search-box input{width:100%;border:0;outline:0;font-size:27px;background:transparent}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:0 0 22px;margin-bottom:10px;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;border:0;background:#fff;padding:10px 18px;border-radius:24px;font-size:24px}.tab.active{background:#ffdede}
+.orders-list{display:grid;gap:24px}
+.order-card{border:1px solid var(--line);border-radius:24px;overflow:hidden;background:#fff;box-shadow:0 5px 16px rgba(0,0,0,.04)}
+.order-head{padding:28px 34px;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;border-bottom:1px solid var(--line)}
+.order-title strong{display:block;font-size:28px;line-height:1.2;font-weight:900}.order-title span{display:block;margin-top:12px;color:var(--muted);font-size:20px}
+.status{flex:0 0 auto;display:inline-flex;align-items:center;gap:10px;border-radius:30px;padding:12px 20px;font-size:21px;font-weight:900}.status i{font-size:21px}
+.status-pagado{background:#eaf5ff;color:#1769aa}.status-pedido{background:#fff2d9;color:#9b5a00}.status-procesando{background:#e8f0ff;color:#315da8}.status-enviado,.status-entregado{background:var(--soft-green);color:#0d873d}.status-cancelado{background:#ffe5e5;color:#a10000}
+.products{padding:30px;display:grid;gap:28px}
+.product{display:grid;grid-template-columns:180px minmax(0,1fr);gap:28px;align-items:start}.product img{width:180px;height:180px;object-fit:cover;border-radius:24px;background:#f3f3f3}
+.product-info h3{margin:8px 0 18px;font-size:28px;line-height:1.15}.product-info p{margin:7px 0;color:var(--muted);font-size:22px}.product-price{margin-top:22px;color:var(--red);font-size:29px;font-weight:900}
+.total-row{padding:24px 34px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:20px;font-size:29px;font-weight:900}
+.progress{padding:30px 24px 8px}.progress-track{display:grid;grid-template-columns:repeat(4,1fr);position:relative;align-items:start}
+.progress-track::before{content:"";position:absolute;left:8%;right:8%;top:32px;height:8px;background:#ddd;z-index:0}.progress-track::after{content:"";position:absolute;left:8%;top:32px;height:8px;width:var(--progress,0%);background:var(--green);z-index:0}
+.step{position:relative;z-index:1;text-align:center;color:#777;font-size:18px}.step-icon{width:66px;height:66px;border-radius:50%;margin:0 auto 14px;background:#ddd;color:#777;display:grid;place-items:center;font-size:26px;border:7px solid #fff}.step.active{color:#111;font-weight:800}.step.active .step-icon{background:var(--green);color:#fff}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:26px 22px 30px}.action-btn{min-height:84px;border:0;border-radius:22px;font-size:27px;font-weight:900}.details-btn{background:#111;color:#fff}.reorder-btn{background:#ffe9e9;color:#d00000}.cancel-btn{background:#ffe9e9;color:#a00000}
+.empty{border:1px solid var(--line);border-radius:24px;padding:60px 20px;text-align:center;color:var(--muted)}.empty i{font-size:55px;color:#bbb;margin-bottom:16px}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:flex-end;justify-content:center;z-index:3000}.modal-overlay.show{display:flex}
+.modal{width:min(920px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:28px 28px 0 0;padding:28px;position:relative}.close-modal{position:absolute;right:18px;top:18px;width:42px;height:42px;border:0;border-radius:50%;background:#f1f1f1;font-size:22px}.modal h2{margin:0 50px 22px 0}.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.detail-box{border:1px solid var(--line);border-radius:14px;padding:16px}.detail-box span{display:block;color:var(--muted);font-size:13px;margin-bottom:6px}
+@media(max-width:700px){.page{padding:18px 8px 110px}.search-header{grid-template-columns:42px minmax(0,1fr);gap:10px}.back-btn{width:42px;height:42px;font-size:29px}.search-box{height:58px;border-width:2px;padding:0 18px;gap:12px}.search-box i{font-size:23px}.search-box input{font-size:20px}.tabs{padding-left:4px}.tab{font-size:18px;padding:9px 13px}.order-head{padding:22px 20px}.order-title strong{font-size:23px}.order-title span{font-size:17px}.status{font-size:17px;padding:10px 14px}.products{padding:24px 18px}.product{grid-template-columns:145px minmax(0,1fr);gap:20px}.product img{width:145px;height:145px;border-radius:20px}.product-info h3{font-size:23px;margin-top:5px}.product-info p{font-size:18px}.product-price{font-size:24px}.total-row{font-size:24px;padding:20px 24px}.step{font-size:14px}.step-icon{width:56px;height:56px;font-size:21px}.progress-track::before,.progress-track::after{top:28px;height:6px}.action-btn{min-height:70px;font-size:22px}.detail-grid{grid-template-columns:1fr}}
+@media(max-width:480px){.product{grid-template-columns:120px minmax(0,1fr);gap:16px}.product img{width:120px;height:120px}.product-info h3{font-size:20px;margin-bottom:10px}.product-info p{font-size:16px}.product-price{font-size:22px;margin-top:14px}.actions{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="search-header">
+<button class="back-btn" type="button" onclick="location.href='usuario_conectado.html'" aria-label="Volver"><i class="fa-solid fa-chevron-left"></i></button>
+<label class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input id="searchInput" type="search" placeholder="N° de pedido, artículo o..."></label>
+</header>
+<nav class="tabs" id="statusTabs">
+<button class="tab" data-status="pagado">Pagado</button>
+<button class="tab" data-status="pedido">Pedido</button>
+<button class="tab" data-status="procesando">Procesando</button>
+<button class="tab active" data-status="enviado">Enviado</button>
+<button class="tab" data-status="entregado">Entregado</button>
+</nav>
+<section class="orders-list" id="ordersList"></section>
+</main>
+
+<div class="modal-overlay" id="detailsOverlay">
+<section class="modal">
+<button class="close-modal" id="closeDetails" type="button">×</button>
+<h2>Detalles del pedido</h2>
+<div id="detailsContent"></div>
+</section>
+</div>
+
+<script>
+const ORDERS_KEY="pedidosAliMarket";
+const CART_KEY="carritoAliMarket";
+const demoOrders=[
+{id:"ALI-2026-00125",createdAt:"2026-07-29T14:30:00",status:"enviado",paymentMethod:"Tarjeta",address:"Santo Domingo, República Dominicana",subtotal:9750,shipping:0,total:9750,products:[
+{id:"demo-1",name:"Smartphone moderno",image:"https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=500&q=85",price:8500,quantity:1,variant:"Negro · 128 GB"},
+{id:"demo-2",name:"Audífonos Bluetooth",image:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=85",price:1250,quantity:1,variant:"Negro"}]},
+{id:"ALI-2026-00108",createdAt:"2026-07-22T10:15:00",status:"entregado",paymentMethod:"Efectivo",address:"Santiago, República Dominicana",subtotal:3600,shipping:250,total:3850,products:[
+{id:"demo-4",name:"Smart Watch",image:"https://images.unsplash.com/photo-1579586337278-3befd40fd17a?auto=format&fit=crop&w=500&q=85",price:3600,quantity:1,variant:"Azul"}]}
+];
+let activeStatus="enviado";
+function safeParse(value,fallback){try{const data=JSON.parse(value);return data??fallback}catch{return fallback}}
+function getOrders(){const saved=safeParse(localStorage.getItem(ORDERS_KEY),[]);return Array.isArray(saved)&&saved.length?saved:demoOrders}
+function money(value){return `RD$ ${Number(value||0).toLocaleString("es-US",{minimumFractionDigits:2,maximumFractionDigits:2})}`}
+function formatDate(value){const date=new Date(value);if(Number.isNaN(date.getTime()))return"Fecha no disponible";return date.toLocaleDateString("es-DO",{year:"numeric",month:"long",day:"numeric"})}
+function statusName(status){const names={pagado:"Pagado",pedido:"Pedido",procesando:"Procesando",enviado:"Enviado",entregado:"Entregado",cancelado:"Cancelado"};return names[status]||"Pedido"}
+function progressInfo(status){const map={pagado:{active:1,width:"0%"},pedido:{active:1,width:"0%"},procesando:{active:2,width:"33%"},enviado:{active:3,width:"66%"},entregado:{active:4,width:"84%"},cancelado:{active:1,width:"0%"}};return map[status]||map.pedido}
+function renderOrders(){
+const query=searchInput.value.trim().toLowerCase();
+const orders=getOrders().filter(order=>{const productText=(order.products||[]).map(p=>p.name||"").join(" ").toLowerCase();const matchesSearch=!query||String(order.id||"").toLowerCase().includes(query)||productText.includes(query);return matchesSearch&&order.status===activeStatus});
+if(!orders.length){ordersList.innerHTML=`<div class="empty"><i class="fa-solid fa-box-open"></i><h2>No hay pedidos en este estado</h2><p>Selecciona otra categoría o realiza una búsqueda diferente.</p></div>`;return}
+ordersList.innerHTML=orders.map(order=>{
+const progress=progressInfo(order.status);
+const products=(order.products||[]).map(product=>`<article class="product"><img src="${product.image||""}" alt="${product.name||"Producto"}"><div class="product-info"><h3>${product.name||"Producto"}</h3><p>Cantidad: ${Number(product.quantity||product.cantidad||1)}</p><p>Variante: ${product.variant||"No especificada"}</p><div class="product-price">${money(Number(product.price||0)*Number(product.quantity||product.cantidad||1))}</div></div></article>`).join("");
+return `<article class="order-card" data-id="${order.id}">
+<div class="order-head"><div class="order-title"><strong>Pedido #${order.id}</strong><span>${formatDate(order.createdAt)}</span></div><span class="status status-${order.status}"><i class="fa-solid fa-circle"></i>${statusName(order.status)}</span></div>
+<div class="products">${products}</div>
+<div class="total-row"><span>Total</span><strong>${money(order.total)}</strong></div>
+${order.status!=="cancelado"?`<div class="progress"><div class="progress-track" style="--progress:${progress.width}">${[["Pedido","fa-receipt"],["Procesando","fa-box"],["Enviado","fa-truck-fast"],["Entregado","fa-circle-check"]].map((step,index)=>`<div class="step ${index<progress.active?"active":""}"><div class="step-icon"><i class="fa-solid ${step[1]}"></i></div>${step[0]}</div>`).join("")}</div></div>`:""}
+<div class="actions"><button class="action-btn details-btn" data-action="details" type="button">Ver detalles</button>${["pedido","procesando"].includes(order.status)?`<button class="action-btn cancel-btn" data-action="cancel" type="button">Cancelar</button>`:`<button class="action-btn reorder-btn" data-action="reorder" type="button">Comprar otra vez</button>`}</div>
+</article>`}).join("");
+bindActions(orders)
+}
+function bindActions(orders){
+document.querySelectorAll(".order-card").forEach(card=>{
+const order=orders.find(item=>String(item.id)===String(card.dataset.id));if(!order)return;
+card.querySelector('[data-action="details"]')?.addEventListener("click",()=>showDetails(order));
+card.querySelector('[data-action="reorder"]')?.addEventListener("click",()=>reorder(order));
+card.querySelector('[data-action="cancel"]')?.addEventListener("click",()=>cancelOrder(order.id))
+})
+}
+function showDetails(order){
+detailsContent.innerHTML=`<div class="detail-grid">
+<div class="detail-box"><span>Número de pedido</span><strong>${order.id}</strong></div>
+<div class="detail-box"><span>Estado</span><strong>${statusName(order.status)}</strong></div>
+<div class="detail-box"><span>Fecha</span><strong>${formatDate(order.createdAt)}</strong></div>
+<div class="detail-box"><span>Método de pago</span><strong>${order.paymentMethod||"No especificado"}</strong></div>
+<div class="detail-box" style="grid-column:1/-1"><span>Dirección</span><strong>${order.address||"No especificada"}</strong></div>
+<div class="detail-box" style="grid-column:1/-1"><span>Total pagado</span><strong style="color:#d90000;font-size:22px">${money(order.total)}</strong></div>
+</div>`;
+detailsOverlay.classList.add("show");document.body.style.overflow="hidden"
+}
+function closeModal(){detailsOverlay.classList.remove("show");document.body.style.overflow=""}
+function reorder(order){const cart=(order.products||[]).map(product=>({id:product.id,name:product.name,image:product.image,price:Number(product.price||0),cantidad:Number(product.quantity||product.cantidad||1),variant:product.variant||""}));localStorage.setItem(CART_KEY,JSON.stringify(cart));location.href="carrito.html"}
+function cancelOrder(orderId){if(!confirm("¿Seguro que deseas cancelar este pedido?"))return;const orders=getOrders();const index=orders.findIndex(order=>String(order.id)===String(orderId));if(index<0)return;orders[index].status="cancelado";localStorage.setItem(ORDERS_KEY,JSON.stringify(orders));renderOrders()}
+document.querySelectorAll(".tab").forEach(tab=>tab.addEventListener("click",()=>{activeStatus=tab.dataset.status;document.querySelectorAll(".tab").forEach(item=>item.classList.remove("active"));tab.classList.add("active");renderOrders()}));
+searchInput.addEventListener("input",renderOrders);
+closeDetails.addEventListener("click",closeModal);
+detailsOverlay.addEventListener("click",e=>{if(e.target===detailsOverlay)closeModal()});
+renderOrders();
+</script>
+</body>
+</html>
