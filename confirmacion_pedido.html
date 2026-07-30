@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Confirmación de pedido - AliMarket</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{--red:#ef003d;--muted:#747474;--line:#ededed;--green:#16c63a}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Arial,sans-serif;color:#111;background:#fff}
+body{padding-bottom:105px}button{font:inherit;cursor:pointer}img{display:block;max-width:100%}
+.page{width:min(760px,100%);margin:auto;padding:26px 18px 35px}
+.top{display:grid;grid-template-columns:45px 1fr;align-items:center;gap:12px;margin-bottom:24px}
+.back{width:45px;height:45px;border:0;background:transparent;font-size:30px}.top h1{margin:0;font-size:32px}
+.address{position:relative;padding:5px 45px 22px 16px;border-bottom:2px dashed #222}
+.address strong{display:block;font-size:21px;line-height:1.5}.address p{margin:8px 0 0;font-size:20px;line-height:1.45}.address i{position:absolute;right:8px;top:50%;font-size:24px}
+.product{padding:30px 16px 28px;border-bottom:4px solid #f1f1f1}
+.product-main{display:grid;grid-template-columns:130px 1fr auto;gap:26px;align-items:start}
+.product img{width:130px;height:140px;object-fit:cover;border-radius:18px;background:#f3f3f3}
+.info h2{margin:5px 0 16px;font-size:28px}.info p{margin:8px 0;color:var(--muted);font-size:21px}
+.qty{margin-top:50px;display:flex;align-items:center;border:1px solid #ddd;border-radius:30px;overflow:hidden}
+.qty button{width:42px;height:46px;border:0;background:#fff;font-size:28px}.qty span{min-width:38px;text-align:center;font-size:22px;font-weight:800}
+.prices{margin:18px 0 24px 156px;display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+.now{color:#d90000;font-size:31px;font-weight:900}.old{color:#555;font-size:26px;text-decoration:line-through}
+.shipping{display:grid;gap:10px}.shipping strong{font-size:19px}.ship-row{display:flex;justify-content:space-between;align-items:center}.ship-row p{margin:0;font-size:18px}.free{color:var(--green)}
+.section{padding:22px 26px;border-bottom:4px solid #f1f1f1}.section h3,.summary h3{margin:0 0 18px;font-size:24px}
+.payment{display:flex;align-items:center;gap:16px;font-size:22px}.visa{border:1px solid #ddd;padding:4px 7px;color:#17369c;font-weight:900}.payment i{margin-left:auto}
+.summary{padding:22px 26px 26px}.row{display:flex;justify-content:space-between;gap:18px;align-items:center;margin:18px 0;font-size:21px}
+.details{margin:10px -12px 18px;padding:14px 12px;background:linear-gradient(90deg,#fff,#fafafa)}.details .row{font-size:18px;color:#777;margin:14px 0}.details .discount{color:#e00000}
+.total{border-top:1px solid #ddd;padding-top:18px;margin-top:24px;font-size:24px;font-weight:900}.total strong{font-size:31px}.info-i{display:inline-grid;width:20px;height:20px;place-items:center;border:2px solid #111;border-radius:50%;font-size:12px}
+.footer{position:fixed;left:0;right:0;bottom:0;height:104px;background:#fff;border-top:1px solid #eee;box-shadow:0 -5px 18px rgba(0,0,0,.08);z-index:9999}
+.footer-in{width:min(760px,100%);height:100%;margin:auto;padding:15px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.footer-total{font-size:22px;white-space:nowrap}.footer-total strong{font-size:25px}
+.pay{min-width:300px;min-height:62px;border:0;border-radius:34px;background:var(--red);color:#fff;font-size:25px;font-weight:900}
+.toast{position:fixed;left:50%;bottom:125px;transform:translate(-50%,15px);background:#111;color:#fff;padding:12px 18px;border-radius:10px;opacity:0;transition:.2s;z-index:10000}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:700px){
+.page{padding:20px 10px 25px}.top{grid-template-columns:40px 1fr}.top h1{font-size:28px}.address strong{font-size:18px}.address p{font-size:17px}
+.product{padding:24px 12px}.product-main{grid-template-columns:110px 1fr;gap:18px}.product img{width:110px;height:120px}.info h2{font-size:23px}.info p{font-size:18px}
+.qty{grid-column:2;justify-self:end;margin-top:0}.prices{margin-left:128px;gap:16px}.now{font-size:27px}.old{font-size:22px}
+.section,.summary{padding-left:18px;padding-right:18px}.footer-in{padding:13px 14px}.footer-total{font-size:18px}.footer-total strong{font-size:21px}.pay{min-width:0;flex:1;min-height:58px;font-size:22px}}
+@media(max-width:430px){.product-main{grid-template-columns:96px 1fr}.product img{width:96px;height:108px}.info h2{font-size:20px}.info p{font-size:16px}.prices{margin-left:114px}.now{font-size:24px}.old{font-size:19px}.footer-total{font-size:16px}.footer-total strong{font-size:19px}.pay{font-size:20px}}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="top"><button class="back" onclick="history.back()" aria-label="Volver"><i class="fa-solid fa-chevron-left"></i></button><h1>Confirmación de pedido</h1></header>
+
+<section class="address">
+<strong>Kleinel (D01-372943) Beltre&nbsp;&nbsp;+1 3055993939</strong>
+<p>4624 N.W. 74th Ave, Unit 4</p>
+<p>Miami, Florida, United States, 33166</p>
+<i class="fa-solid fa-chevron-right"></i>
+</section>
+
+<section id="products"></section>
+
+<section class="section">
+<h3>Método de pago</h3>
+<div class="payment"><span class="visa">VISA</span><span>423421******4253</span><i class="fa-solid fa-chevron-right"></i></div>
+</section>
+
+<section class="summary">
+<h3>Resumen</h3>
+<div class="row"><span>Subtotal</span><strong id="subtotal"></strong></div>
+<div class="details">
+<div class="row"><span>Total de artículos</span><span id="original"></span></div>
+<div class="row"><span>Descuento de artículos</span><span class="discount" id="discount"></span></div>
+</div>
+<div class="row"><span>Gastos de envío</span><strong id="shipping"></strong></div>
+<div class="row"><span>Cargos adicionales <span class="info-i">i</span></span><strong id="fees"></strong></div>
+<div class="row total"><span>Total</span><strong id="grandTotal"></strong></div>
+</section>
+</main>
+
+<footer class="footer">
+<div class="footer-in">
+<div class="footer-total">Total: <strong id="footerTotal"></strong></div>
+<button class="pay" id="payBtn">Pagar ahora</button>
+</div>
+</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+const CHECKOUT_KEY="checkoutAliMarket",ORDERS_KEY="pedidosAliMarket",SESSION_KEY="alimarketSesion";
+const demo=[
+{id:"demo-1",name:"Smartphone moderno",image:"https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=500&q=85",price:8500,oldPrice:10000,cantidad:1,variant:"Negro · 128 GB",shipping:0,delivery:"03 - 11 de AGO"},
+{id:"demo-2",name:"Audífonos Bluetooth",image:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=85",price:1250,oldPrice:10000,cantidad:1,variant:"Negro",shipping:18.84,delivery:"07 - 14 de AGO"}];
+let items=[],fees=586.13;
+function parse(v,f){try{return JSON.parse(v)??f}catch{return f}}
+function money(v){return "RD$ "+Number(v||0).toLocaleString("es-US",{minimumFractionDigits:2,maximumFractionDigits:2})}
+function qty(i){return Number(i.cantidad||i.quantity)||1}
+function ship(i){return i.shipping!==undefined?Math.max(0,Number(i.shipping)||0):18.84}
+function save(){localStorage.setItem(CHECKOUT_KEY,JSON.stringify(items))}
+function totals(){
+ const subtotal=items.reduce((s,i)=>s+(Number(i.price)||0)*qty(i),0);
+ const original=items.reduce((s,i)=>s+(Number(i.oldPrice||i.price)||0)*qty(i),0);
+ const shipping=items.reduce((s,i)=>s+ship(i),0);
+ return{subtotal,original,discount:Math.max(0,original-subtotal),shipping,total:subtotal+shipping+fees}
+}
+function render(){
+ document.getElementById("products").innerHTML=items.map((i,x)=>`<article class="product" data-i="${x}">
+ <div class="product-main">
+ <img src="${i.image||""}" alt="${i.name||"Producto"}">
+ <div class="info"><h2>${i.name||"Producto"}</h2><p>Cantidad: ${qty(i)}</p><p>Color: ${i.variant||i.color||"No especificado"}</p></div>
+ <div class="qty"><button class="minus">−</button><span>${qty(i)}</span><button class="plus">+</button></div>
+ </div>
+ <div class="prices"><span class="now">${money(i.price)}</span><span class="old">${money(i.oldPrice||10000)}</span></div>
+ <div class="shipping"><strong>Envío: ${ship(i)===0?"Envío gratis":money(ship(i))}</strong><div class="ship-row"><p class="${ship(i)===0?"free":""}">Envío: ${i.delivery||"07 - 14 de AGO"}</p><i class="fa-solid fa-chevron-right"></i></div></div>
+ </article>`).join("");
+ document.querySelectorAll(".product").forEach(card=>{
+  const x=Number(card.dataset.i);
+  card.querySelector(".minus").onclick=()=>{items[x].cantidad=Math.max(1,qty(items[x])-1);save();render()};
+  card.querySelector(".plus").onclick=()=>{items[x].cantidad=qty(items[x])+1;save();render()};
+ });
+ const t=totals();
+ subtotal.textContent=money(t.subtotal);original.textContent=money(t.original);discount.textContent="- "+money(t.discount);
+ shipping.textContent=money(t.shipping);document.getElementById("fees").textContent=money(fees);
+ grandTotal.textContent=money(t.total);footerTotal.textContent=money(t.total);
+}
+function toast(m){const e=document.getElementById("toast");e.textContent=m;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),1500)}
+payBtn.onclick=()=>{
+ const t=totals(),session=parse(localStorage.getItem(SESSION_KEY),null);
+ const id=`ALI-${new Date().getFullYear()}-${String(Math.floor(Math.random()*99999)+1).padStart(5,"0")}`;
+ const order={id,createdAt:new Date().toISOString(),status:"pagado",paymentMethod:"Visa 423421******4253",userId:session?.id||null,email:session?.email||"",address:"4624 N.W. 74th Ave, Unit 4, Miami, Florida, United States, 33166",subtotal:t.subtotal,shipping:t.shipping,additionalFees:fees,total:t.total,products:items.map(i=>({id:i.id,name:i.name,image:i.image,price:Number(i.price)||0,quantity:qty(i),variant:i.variant||i.color||"",shipping:ship(i)}))};
+ const list=parse(localStorage.getItem(ORDERS_KEY),[]);(Array.isArray(list)?list:[]).unshift(order);localStorage.setItem(ORDERS_KEY,JSON.stringify(list));localStorage.removeItem(CHECKOUT_KEY);
+ toast("Pedido pagado satisfactoriamente");setTimeout(()=>location.href="pedidos_todos.html",900);
+};
+items=(()=>{const s=parse(localStorage.getItem(CHECKOUT_KEY),[]);return Array.isArray(s)&&s.length?s:demo})();render();
+</script>
+</body>
+</html>
