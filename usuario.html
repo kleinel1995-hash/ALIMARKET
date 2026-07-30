@@ -31,7 +31,7 @@ button,input{font:inherit}button,a{cursor:pointer}a{text-decoration:none;color:i
 .status{display:inline-flex;align-items:center;gap:7px;color:var(--green);background:#e8f7ed;padding:7px 11px;border-radius:20px;font-size:13px;font-weight:900}
 .dashboard-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:26px}
 .stat{border-radius:15px;padding:20px;background:linear-gradient(145deg,#fff,#f7f7f7);border:1px solid var(--line)}
-.stat i{font-size:25px;color:#d00000;margin-bottom:14px}.stat strong{display:block;font-size:27px}.stat span{color:var(--muted);font-size:14px}
+.stat i{font-size:25px;color:#d00000;margin-bottom:14px}.stat-link{width:100%;text-align:left;cursor:pointer;color:inherit;font:inherit}.stat-link:hover{transform:translateY(-2px);box-shadow:0 7px 16px rgba(0,0,0,.08)}.stat strong{display:block;font-size:27px}.stat span{color:var(--muted);font-size:14px}
 .empty-state{padding:45px 20px;border:1px dashed #ccc;border-radius:15px;text-align:center;color:var(--muted)}
 .empty-state i{display:block;font-size:45px;color:#bbb;margin-bottom:14px}
 .quick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
@@ -106,7 +106,7 @@ button,input{font:inherit}button,a{cursor:pointer}a{text-decoration:none;color:i
 <nav class="menu">
 <button class="menu-item active" data-section="homeSection"><i class="fa-solid fa-house"></i><span>Resumen</span></button>
 <button class="menu-item" data-section="profileSection"><i class="fa-regular fa-user"></i><span>Mi perfil</span></button>
-<button class="menu-item" data-section="ordersSection"><i class="fa-regular fa-clipboard"></i><span>Mis pedidos</span></button>
+<button class="menu-item" id="openOrdersPage" type="button"><i class="fa-regular fa-clipboard"></i><span>Mis pedidos</span></button>
 <button class="menu-item" data-section="favoritesSection"><i class="fa-regular fa-heart"></i><span>Favoritos</span></button>
 <button class="menu-item" data-section="paymentsSection"><i class="fa-regular fa-credit-card"></i><span>Forma de pago</span></button>
 <button class="menu-item" data-section="couponsSection"><i class="fa-solid fa-ticket"></i><span>Mis cupones</span></button>
@@ -117,7 +117,7 @@ button,input{font:inherit}button,a{cursor:pointer}a{text-decoration:none;color:i
 <section class="content-card">
 <div class="content-section active" id="homeSection">
 
-<div class="dashboard-grid"><div class="stat"><i class="fa-regular fa-clipboard"></i><strong id="ordersCount">0</strong><span>Pedidos</span></div><div class="stat"><i class="fa-regular fa-heart"></i><strong id="favoritesCount">0</strong><span>Favoritos</span></div><div class="stat"><i class="fa-solid fa-ticket"></i><strong>0</strong><span>Cupones</span></div><div class="stat"><i class="fa-solid fa-coins"></i><strong>0</strong><span>Monedas</span></div></div>
+<div class="dashboard-grid"><button class="stat stat-link" id="dashboardOrders" type="button"><i class="fa-regular fa-clipboard"></i><strong id="ordersCount">0</strong><span>Pedidos</span></button><div class="stat"><i class="fa-regular fa-heart"></i><strong id="favoritesCount">0</strong><span>Favoritos</span></div><div class="stat"><i class="fa-solid fa-ticket"></i><strong>0</strong><span>Cupones</span></div><div class="stat"><i class="fa-solid fa-coins"></i><strong>0</strong><span>Monedas</span></div></div>
 </div>
 <div class="content-section" id="profileSection"><div class="section-title"><div><h1>Mi perfil</h1><p>Información guardada durante el registro.</p></div><button class="edit-btn" id="openEditModal" type="button"><i class="fa-solid fa-pen"></i> Editar</button></div><div class="info-grid"><div class="info-box"><span>Nombre</span><strong id="profileFirstName">—</strong></div><div class="info-box"><span>Apellido</span><strong id="profileLastName">—</strong></div><div class="info-box"><span>Correo electrónico</span><strong id="profileEmail">—</strong></div><div class="info-box"><span>Fecha de registro</span><strong id="profileCreatedAt">—</strong></div></div></div>
 <div class="content-section" id="ordersSection"><div class="section-title"><div><h1>Mis pedidos</h1><p>Pedidos realizados con tu cuenta.</p></div></div><div class="empty-state"><i class="fa-solid fa-box-open"></i><h3>Todavía no tienes pedidos</h3><p>Cuando realices una compra aparecerá aquí.</p></div></div>
@@ -175,6 +175,17 @@ function logout(){localStorage.removeItem(SESSION_KEY);location.href="login_unid
 logoutButton.addEventListener("click",logout);
 const settingsLogout=document.getElementById("settingsLogout");
 if(settingsLogout)settingsLogout.addEventListener("click",logout);
+
+const openOrdersPage=document.getElementById("openOrdersPage");
+const dashboardOrders=document.getElementById("dashboardOrders");
+
+if(openOrdersPage){
+  openOrdersPage.addEventListener("click",()=>location.href="pedidos_conectado.html");
+}
+if(dashboardOrders){
+  dashboardOrders.addEventListener("click",()=>location.href="pedidos_conectado.html");
+}
+
 renderUser();
 </script>
 </body>
