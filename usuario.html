@@ -62,14 +62,41 @@ button,input{font:inherit}button,a{cursor:pointer}a{text-decoration:none;color:i
 .sidebar{position:static;border-radius:0;box-shadow:none;padding:24px 18px 14px}
 .profile-mini{display:flex;align-items:center;text-align:left;gap:14px}
 .avatar{width:72px;height:72px;margin:0;font-size:30px;flex:0 0 auto}
-.menu{grid-template-columns:repeat(4,1fr);overflow-x:auto;padding-bottom:4px}
-.menu-item{min-width:115px;flex-direction:column;justify-content:center;text-align:center;gap:7px;font-size:13px}
+.menu{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:8px;
+  overflow:visible;
+  padding-bottom:4px
+}
+.menu-item{
+  min-width:0;
+  width:100%;
+  min-height:82px;
+  padding:10px 5px;
+  flex-direction:column;
+  justify-content:center;
+  text-align:center;
+  gap:7px;
+  font-size:12px
+}
+.menu-item i{
+  width:auto;
+  font-size:22px
+}
+.menu-item span{
+  line-height:1.15;
+  white-space:normal
+}
 .menu-item.logout{display:none}.content-card{border-radius:0;box-shadow:none;padding:22px 18px}
 .dashboard-grid{grid-template-columns:repeat(2,1fr)}.quick-grid{grid-template-columns:1fr}
 .mobile-bottom{position:fixed;left:0;right:0;bottom:0;height:82px;background:#fff;border-top:1px solid #ddd;display:flex;align-items:center;justify-content:space-around;z-index:2000}
 .mobile-bottom a,.mobile-bottom button{width:20%;border:0;background:transparent;color:#222;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;font-size:12px}
 .mobile-bottom i{font-size:24px}.mobile-bottom .active{color:#d00000;font-weight:900}}
-@media(max-width:540px){.info-grid,.form-row{grid-template-columns:1fr}.section-title{align-items:flex-start}.section-title h1{font-size:26px}.edit-btn{padding:10px 15px}}
+@media(max-width:540px){
+.menu{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.menu-item{min-height:78px;padding:8px 3px;font-size:11px}
+.menu-item i{font-size:21px}
+.info-grid,.form-row{grid-template-columns:1fr}.section-title{align-items:flex-start}.section-title h1{font-size:26px}.edit-btn{padding:10px 15px}}
 </style>
 </head>
 <body>
