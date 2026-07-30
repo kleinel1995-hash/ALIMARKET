@@ -44,10 +44,10 @@ button,input{font:inherit}button,a{cursor:pointer}a{text-decoration:none;color:i
 <label class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input id="searchInput" type="search" placeholder="N° de pedido, artículo o..."></label>
 </header>
 <nav class="tabs" id="statusTabs">
-<button class="tab" data-status="pagado">Pagado</button>
+<button class="tab active" data-status="todos">Todos</button>
 <button class="tab" data-status="pedido">Pedido</button>
 <button class="tab" data-status="procesando">Procesando</button>
-<button class="tab active" data-status="enviado">Enviado</button>
+<button class="tab" data-status="enviado">Enviado</button>
 <button class="tab" data-status="entregado">Entregado</button>
 </nav>
 <section class="orders-list" id="ordersList"></section>
@@ -71,7 +71,7 @@ const demoOrders=[
 {id:"ALI-2026-00108",createdAt:"2026-07-22T10:15:00",status:"entregado",paymentMethod:"Efectivo",address:"Santiago, República Dominicana",subtotal:3600,shipping:250,total:3850,products:[
 {id:"demo-4",name:"Smart Watch",image:"https://images.unsplash.com/photo-1579586337278-3befd40fd17a?auto=format&fit=crop&w=500&q=85",price:3600,quantity:1,variant:"Azul"}]}
 ];
-let activeStatus="enviado";
+let activeStatus="todos";
 function safeParse(value,fallback){try{const data=JSON.parse(value);return data??fallback}catch{return fallback}}
 function getOrders(){const saved=safeParse(localStorage.getItem(ORDERS_KEY),[]);return Array.isArray(saved)&&saved.length?saved:demoOrders}
 function money(value){return `RD$ ${Number(value||0).toLocaleString("es-US",{minimumFractionDigits:2,maximumFractionDigits:2})}`}
@@ -80,7 +80,7 @@ function statusName(status){const names={pagado:"Pagado",pedido:"Pedido",procesa
 function progressInfo(status){const map={pagado:{active:1,width:"0%"},pedido:{active:1,width:"0%"},procesando:{active:2,width:"33%"},enviado:{active:3,width:"66%"},entregado:{active:4,width:"84%"},cancelado:{active:1,width:"0%"}};return map[status]||map.pedido}
 function renderOrders(){
 const query=searchInput.value.trim().toLowerCase();
-const orders=getOrders().filter(order=>{const productText=(order.products||[]).map(p=>p.name||"").join(" ").toLowerCase();const matchesSearch=!query||String(order.id||"").toLowerCase().includes(query)||productText.includes(query);return matchesSearch&&order.status===activeStatus});
+const orders=getOrders().filter(order=>{const productText=(order.products||[]).map(p=>p.name||"").join(" ").toLowerCase();const matchesSearch=!query||String(order.id||"").toLowerCase().includes(query)||productText.includes(query);return matchesSearch&&(activeStatus==="todos"||order.status===activeStatus)});
 if(!orders.length){ordersList.innerHTML=`<div class="empty"><i class="fa-solid fa-box-open"></i><h2>No hay pedidos en este estado</h2><p>Selecciona otra categoría o realiza una búsqueda diferente.</p></div>`;return}
 ordersList.innerHTML=orders.map(order=>{
 const progress=progressInfo(order.status);
