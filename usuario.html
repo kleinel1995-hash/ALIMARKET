@@ -97,6 +97,22 @@ button,input{font:inherit}button,a{cursor:pointer}a{text-decoration:none;color:i
 .menu-item{min-height:78px;padding:8px 3px;font-size:11px}
 .menu-item i{font-size:21px}
 .info-grid,.form-row{grid-template-columns:1fr}.section-title{align-items:flex-start}.section-title h1{font-size:26px}.edit-btn{padding:10px 15px}}
+
+/* DIRECCIONES DE ENVÍO */
+.address-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.address-card{border:1px solid var(--line);border-radius:16px;padding:19px;background:#fff}
+.address-card.default{border:2px solid #e00000;background:#fffafa}
+.default-badge{display:inline-flex;align-items:center;gap:6px;background:#ffe5e5;color:#b10000;padding:6px 10px;border-radius:20px;font-size:12px;font-weight:900;margin-bottom:12px}
+.address-card h3{margin:0 0 8px;font-size:19px}.address-card p{margin:5px 0;color:#555;line-height:1.45}
+.address-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}.address-actions button{border:0;border-radius:20px;padding:9px 13px;font-weight:800}
+.edit-address{background:#111;color:#fff}.delete-address{background:#ffe7e7;color:#a00000}.default-address{background:#eef5ff;color:#174f8c}
+.add-address-btn{border:0;border-radius:25px;padding:12px 20px;background:#111;color:#fff;font-weight:800}
+.address-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.address-field{margin-bottom:14px}.address-field.full{grid-column:1/-1}
+.address-field label{display:block;font-weight:800;margin-bottom:7px}.address-field input,.address-field select,.address-field textarea{width:100%;border:1px solid #ddd;border-radius:10px;padding:0 14px;outline:none;background:#fff}
+.address-field input,.address-field select{height:50px}.address-field textarea{min-height:90px;padding-top:12px;resize:vertical}
+.check-default{display:flex;align-items:center;gap:10px;margin:4px 0 18px;font-weight:800}.check-default input{width:19px;height:19px;accent-color:#d00000}
+@media(max-width:850px){.address-list{grid-template-columns:1fr}}
+@media(max-width:540px){.address-form-grid{grid-template-columns:1fr}.address-field.full{grid-column:auto}}
 </style>
 </head>
 <body>
@@ -137,13 +153,9 @@ button,input{font:inherit}button,a{cursor:pointer}a{text-decoration:none;color:i
       <h1>Direcciones de envío</h1>
       <p>Administra tus direcciones para recibir tus pedidos.</p>
     </div>
+    <button class="add-address-btn" id="openAddressModal" type="button"><i class="fa-solid fa-plus"></i> Agregar</button>
   </div>
-
-  <div class="empty-state">
-    <i class="fa-solid fa-location-dot"></i>
-    <h3>No tienes direcciones guardadas</h3>
-    <p>Agrega una dirección durante el proceso de compra.</p>
-  </div>
+  <div class="address-list" id="addressList"></div>
 </div>
 
 </section></main>
@@ -155,8 +167,30 @@ button,input{font:inherit}button,a{cursor:pointer}a{text-decoration:none;color:i
   <a href="usuario.html" class="active"><i class="fa-regular fa-user"></i></a>
 </nav>
 <div class="modal-overlay" id="editOverlay"><div class="modal"><button class="close-modal" id="closeEditModal" type="button">×</button><h2>Editar perfil</h2><div class="alert" id="editAlert"></div><form id="editForm"><div class="form-row"><div class="field"><label for="editFirstName">Nombre</label><input id="editFirstName" required></div><div class="field"><label for="editLastName">Apellido</label><input id="editLastName" required></div></div><div class="field"><label for="editEmail">Correo electrónico</label><input id="editEmail" type="email" required></div><button class="save-btn" type="submit">Guardar cambios</button></form></div></div>
+
+<div class="modal-overlay" id="addressOverlay">
+  <div class="modal">
+    <button class="close-modal" id="closeAddressModal" type="button">×</button>
+    <h2 id="addressModalTitle">Agregar dirección</h2>
+    <form id="addressForm">
+      <input type="hidden" id="addressId">
+      <div class="address-form-grid">
+        <div class="address-field"><label>Nombre</label><input id="addressFirstName" required></div>
+        <div class="address-field"><label>Apellido</label><input id="addressLastName" required></div>
+        <div class="address-field"><label>Teléfono</label><input id="addressPhone" required></div>
+        <div class="address-field"><label>Provincia</label><select id="addressProvince" required><option value="">Selecciona</option><option>Santo Domingo</option><option>Distrito Nacional</option><option>Santiago</option><option>La Vega</option><option>San Cristóbal</option><option>Puerto Plata</option><option>La Romana</option><option>San Pedro de Macorís</option><option>Otra</option></select></div>
+        <div class="address-field full"><label>Dirección completa</label><input id="addressStreet" placeholder="Calle, número, sector..." required></div>
+        <div class="address-field"><label>Ciudad o municipio</label><input id="addressCity" required></div>
+        <div class="address-field"><label>Referencia</label><input id="addressReference" placeholder="Cerca de..."></div>
+        <div class="address-field full"><label>Indicaciones adicionales</label><textarea id="addressNotes"></textarea></div>
+      </div>
+      <label class="check-default"><input type="checkbox" id="addressDefault"> Usar como dirección predeterminada</label>
+      <button class="save-btn" type="submit">Guardar dirección</button>
+    </form>
+  </div>
+</div>
 <script>
-const USERS_KEY="alimarketUsuarios",SESSION_KEY="alimarketSesion",ORDERS_KEY="pedidosAliMarket",FAVORITES_KEY="favoritosAliMarket";let currentUser=null;
+const USERS_KEY="alimarketUsuarios",SESSION_KEY="alimarketSesion",ORDERS_KEY="pedidosAliMarket",FAVORITES_KEY="favoritosAliMarket",ADDRESSES_KEY="direccionesAliMarket";let currentUser=null;
 function getUsers(){try{const d=JSON.parse(localStorage.getItem(USERS_KEY)||"[]");return Array.isArray(d)?d:[]}catch{return[]}}
 function saveUsers(u){localStorage.setItem(USERS_KEY,JSON.stringify(u))}
 function getSession(){try{return JSON.parse(localStorage.getItem(SESSION_KEY)||"null")}catch{return null}}
@@ -165,7 +199,7 @@ function findCurrentUser(){const users=getUsers(),session=getSession();if(sessio
 function initials(a="",b=""){return(a.trim().charAt(0)+b.trim().charAt(0)).toUpperCase()||"AM"}
 function formatDate(v){if(!v)return"No disponible";const d=new Date(v);return Number.isNaN(d.getTime())?"No disponible":d.toLocaleDateString("es-US",{year:"numeric",month:"long",day:"numeric"})}
 function renderUser(){currentUser=findCurrentUser();if(!currentUser){sidebarName.textContent="Invitado";sidebarEmail.textContent="No has iniciado sesión";avatarInitials.textContent="AM";profileFirstName.textContent="—";profileLastName.textContent="—";profileEmail.textContent="—";profileCreatedAt.textContent="—";return}const name=`${currentUser.firstName||""} ${currentUser.lastName||""}`.trim();sidebarName.textContent=name||"Usuario AliMarket";sidebarEmail.textContent=currentUser.email||"Sin correo";avatarInitials.textContent=initials(currentUser.firstName,currentUser.lastName);profileFirstName.textContent=currentUser.firstName||"—";profileLastName.textContent=currentUser.lastName||"—";profileEmail.textContent=currentUser.email||"—";profileCreatedAt.textContent=formatDate(currentUser.createdAt);const orders=getArray(ORDERS_KEY).filter(o=>!o.userId||String(o.userId)===String(currentUser.id)||String(o.email||"").toLowerCase()===String(currentUser.email||"").toLowerCase());ordersCount.textContent=orders.length;favoritesCount.textContent=getArray(FAVORITES_KEY).length}
-document.querySelectorAll(".menu-item[data-section]").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".menu-item[data-section]").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".content-section").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.getElementById(b.dataset.section)?.classList.add("active")}));
+document.querySelectorAll(".menu-item[data-section]").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".menu-item[data-section]").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".content-section").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.getElementById(b.dataset.section)?.classList.add("active");if(b.dataset.section==="addressesSection")renderAddresses()}));
 const editOverlay=document.getElementById("editOverlay"),editAlert=document.getElementById("editAlert");
 openEditModal.addEventListener("click",()=>{if(!currentUser){location.href="registro.html";return}editFirstName.value=currentUser.firstName||"";editLastName.value=currentUser.lastName||"";editEmail.value=currentUser.email||"";editAlert.className="alert";editOverlay.classList.add("show");document.body.style.overflow="hidden"});
 function closeEdit(){editOverlay.classList.remove("show");document.body.style.overflow=""}
@@ -186,7 +220,42 @@ if(dashboardOrders){
   dashboardOrders.addEventListener("click",()=>location.href="pedidos_conectado.html");
 }
 
+
+/* DIRECCIONES DE ENVÍO */
+const addressOverlay=document.getElementById("addressOverlay");
+function escapeHtml(v=""){return String(v).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function userAddresses(){
+  const all=getArray(ADDRESSES_KEY);
+  if(!currentUser)return[];
+  return all.filter(a=>String(a.userId||"")===String(currentUser.id||"")||String(a.email||"").toLowerCase()===String(currentUser.email||"").toLowerCase());
+}
+function renderAddresses(){
+  const list=userAddresses();
+  if(!list.length){addressList.innerHTML=`<div class="empty-state" style="grid-column:1/-1"><i class="fa-solid fa-location-dot"></i><h3>No tienes direcciones guardadas</h3><p>Presiona “Agregar” para registrar una dirección.</p></div>`;return}
+  addressList.innerHTML=list.map(a=>`<article class="address-card ${a.isDefault?"default":""}" data-id="${a.id}">
+  ${a.isDefault?`<span class="default-badge"><i class="fa-solid fa-check"></i> Predeterminada</span>`:""}
+  <h3>${escapeHtml(a.firstName)} ${escapeHtml(a.lastName)}</h3><p><strong>${escapeHtml(a.phone)}</strong></p>
+  <p>${escapeHtml(a.address)}, ${escapeHtml(a.city)}, ${escapeHtml(a.province)}</p>
+  ${a.reference?`<p>Referencia: ${escapeHtml(a.reference)}</p>`:""}
+  <div class="address-actions"><button class="edit-address" data-action="edit">Editar</button>${!a.isDefault?`<button class="default-address" data-action="default">Predeterminada</button>`:""}<button class="delete-address" data-action="delete">Eliminar</button></div></article>`).join("");
+  document.querySelectorAll(".address-card").forEach(card=>{const id=card.dataset.id;card.querySelector('[data-action="edit"]')?.addEventListener("click",()=>editAddress(id));card.querySelector('[data-action="default"]')?.addEventListener("click",()=>setDefaultAddress(id));card.querySelector('[data-action="delete"]')?.addEventListener("click",()=>deleteAddress(id))});
+}
+function openAddress(address=null){
+  if(!currentUser){location.href="login_unido.html";return}
+  addressForm.reset();addressId.value="";addressModalTitle.textContent="Agregar dirección";addressFirstName.value=currentUser.firstName||"";addressLastName.value=currentUser.lastName||"";
+  if(address){addressModalTitle.textContent="Editar dirección";addressId.value=address.id;addressFirstName.value=address.firstName||"";addressLastName.value=address.lastName||"";addressPhone.value=address.phone||"";addressProvince.value=address.province||"";addressStreet.value=address.address||"";addressCity.value=address.city||"";addressReference.value=address.reference||"";addressNotes.value=address.notes||"";addressDefault.checked=!!address.isDefault}
+  addressOverlay.classList.add("show");document.body.style.overflow="hidden";
+}
+function editAddress(id){openAddress(userAddresses().find(a=>String(a.id)===String(id)))}
+function setDefaultAddress(id){const all=getArray(ADDRESSES_KEY);all.forEach(a=>{if(String(a.userId||"")===String(currentUser.id||"")||String(a.email||"").toLowerCase()===String(currentUser.email||"").toLowerCase())a.isDefault=String(a.id)===String(id)});localStorage.setItem(ADDRESSES_KEY,JSON.stringify(all));renderAddresses()}
+function deleteAddress(id){if(!confirm("¿Eliminar esta dirección?"))return;const all=getArray(ADDRESSES_KEY).filter(a=>String(a.id)!==String(id));localStorage.setItem(ADDRESSES_KEY,JSON.stringify(all));renderAddresses()}
+openAddressModal.addEventListener("click",()=>openAddress());
+closeAddressModal.addEventListener("click",()=>{addressOverlay.classList.remove("show");document.body.style.overflow=""});
+addressOverlay.addEventListener("click",e=>{if(e.target===addressOverlay){addressOverlay.classList.remove("show");document.body.style.overflow=""}});
+addressForm.addEventListener("submit",e=>{e.preventDefault();let all=getArray(ADDRESSES_KEY);const editingId=addressId.value;const data={id:editingId||String(Date.now()),userId:currentUser.id||null,email:currentUser.email||"",firstName:addressFirstName.value.trim(),lastName:addressLastName.value.trim(),phone:addressPhone.value.trim(),province:addressProvince.value,address:addressStreet.value.trim(),city:addressCity.value.trim(),reference:addressReference.value.trim(),notes:addressNotes.value.trim(),isDefault:addressDefault.checked,updatedAt:new Date().toISOString()};if(data.isDefault)all.forEach(a=>{if(String(a.userId||"")===String(currentUser.id||"")||String(a.email||"").toLowerCase()===String(currentUser.email||"").toLowerCase())a.isDefault=false});const index=all.findIndex(a=>String(a.id)===String(editingId));if(index>=0)all[index]={...all[index],...data};else{if(!userAddresses().length)data.isDefault=true;all.push(data)}localStorage.setItem(ADDRESSES_KEY,JSON.stringify(all));addressOverlay.classList.remove("show");document.body.style.overflow="";renderAddresses()});
+
 renderUser();
+renderAddresses();
 </script>
 </body>
 </html>
