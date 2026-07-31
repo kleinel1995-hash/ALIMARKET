@@ -6,9 +6,10 @@
 <title>Confirmación de pedido - AliMarket</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
-:root{--red:#ef003d;--muted:#747474;--line:#ededed;--green:#16c63a}
+:root{--red:#ef003d;--muted:#747474;--line:#ededed;--green:#16c63a;--cream:#f6f6ef}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Arial,sans-serif;color:#111;background:#fff}
-body{padding-bottom:105px}button{font:inherit;cursor:pointer}img{display:block;max-width:100%}
+body{padding-bottom:30px}button{font:inherit;cursor:pointer}img{display:block;max-width:100%}
+.desktop-brand{display:none}
 .page{width:min(760px,100%);margin:auto;padding:26px 18px 35px}
 .top{display:grid;grid-template-columns:45px 1fr;align-items:center;gap:12px;margin-bottom:24px}
 .back{width:45px;height:45px;border:0;background:transparent;font-size:30px}.top h1{margin:0;font-size:32px}
@@ -28,58 +29,40 @@ body{padding-bottom:105px}button{font:inherit;cursor:pointer}img{display:block;m
 .summary{padding:22px 26px 26px}.row{display:flex;justify-content:space-between;gap:18px;align-items:center;margin:18px 0;font-size:21px}
 .details{margin:10px -12px 18px;padding:14px 12px;background:linear-gradient(90deg,#fff,#fafafa)}.details .row{font-size:18px;color:#777;margin:14px 0}.details .discount{color:#e00000}
 .total{border-top:1px solid #ddd;padding-top:18px;margin-top:24px;font-size:24px;font-weight:900}.total strong{font-size:31px}.info-i{display:inline-grid;width:20px;height:20px;place-items:center;border:2px solid #111;border-radius:50%;font-size:12px}
-.footer{position:fixed;left:0;right:0;bottom:0;height:104px;background:#fff;border-top:1px solid #eee;box-shadow:0 -5px 18px rgba(0,0,0,.08);z-index:9999}
-.footer-in{width:min(760px,100%);height:100%;margin:auto;padding:15px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.footer-total{font-size:22px;white-space:nowrap}.footer-total strong{font-size:25px}
-.pay{min-width:300px;min-height:62px;border:0;border-radius:34px;background:var(--red);color:#fff;font-size:25px;font-weight:900}
+.pay-summary{display:block;width:min(230px,100%);min-height:48px;margin:92px auto 22px;border:0;border-radius:28px;background:var(--red);color:#fff;font-size:20px;font-weight:900}
 .toast{position:fixed;left:50%;bottom:125px;transform:translate(-50%,15px);background:#111;color:#fff;padding:12px 18px;border-radius:10px;opacity:0;transition:.2s;z-index:10000}.toast.show{opacity:1;transform:translate(-50%,0)}
-@media(max-width:700px){
-.page{padding:20px 10px 25px}.top{grid-template-columns:40px 1fr}.top h1{font-size:28px}.address strong{font-size:18px}.address p{font-size:17px}
-.product{padding:24px 12px}.product-main{grid-template-columns:110px 1fr;gap:18px}.product img{width:110px;height:120px}.info h2{font-size:23px}.info p{font-size:18px}
-.qty{grid-column:2;justify-self:end;margin-top:0}.prices{margin-left:128px;gap:16px}.now{font-size:27px}.old{font-size:22px}
-.section,.summary{padding-left:18px;padding-right:18px}.footer-in{padding:13px 14px}.footer-total{font-size:18px}.footer-total strong{font-size:21px}.pay{min-width:0;flex:1;min-height:58px;font-size:22px}}
-@media(max-width:430px){.product-main{grid-template-columns:96px 1fr}.product img{width:96px;height:108px}.info h2{font-size:20px}.info p{font-size:16px}.prices{margin-left:114px}.now{font-size:24px}.old{font-size:19px}.footer-total{font-size:16px}.footer-total strong{font-size:19px}.pay{font-size:20px}}
+
+@media(min-width:901px){
+ html,body{background:var(--cream)}body{padding-bottom:0}
+ .desktop-brand{display:flex;height:124px;background:#050505;color:#fff;align-items:center;padding:0 max(5vw,70px);font-family:Georgia,serif;font-size:48px;font-weight:700;letter-spacing:3px}
+ .page{width:min(1650px,100%);margin:0 auto;padding:18px 0 60px;display:grid;grid-template-columns:minmax(620px,1.18fr) minmax(460px,.82fr);grid-template-areas:"top summary" "address summary" "payment summary" "products summary";gap:16px 84px;align-items:start}
+ .top{grid-area:top;background:#fff;margin:0;padding:0 26px;height:84px}.top h1{font-size:38px}.back{font-size:36px}
+ .address{grid-area:address;background:#fff;border:0;padding:22px 150px 22px 36px;min-height:170px}.address strong{font-size:25px}.address p{font-size:22px;margin-top:12px}.address i{display:none}.address:after{content:"cambiar";position:absolute;right:40px;top:50%;transform:translateY(-50%);color:#1717b5;font-size:22px;font-weight:800;letter-spacing:1px}
+ .section{grid-area:payment;background:#fff;border:0;padding:28px 150px 28px 76px;position:relative;min-height:150px}.section h3{font-size:30px;margin-bottom:24px}.payment{font-size:24px}.payment i{display:none}.section:after{content:"cambiar";position:absolute;right:40px;top:54%;color:#1717b5;font-size:22px;font-weight:800;letter-spacing:1px}
+ #products{grid-area:products;background:#fff}
+ .product{border-bottom:1px solid #eee;padding:32px 48px 34px}.product-main{grid-template-columns:130px 1fr auto;gap:26px}.product img{width:130px;height:140px;border-radius:8px}.info h2{font-size:26px;max-width:390px}.info p{font-size:20px}.qty{margin-top:48px}.prices{margin-left:156px}.now{font-size:30px}.old{font-size:25px}.shipping{margin-top:8px}.ship-row i{display:none}
+ .summary{grid-area:summary;background:#fff;padding:22px 48px 38px;min-height:520px}.summary h3{font-size:24px}.summary .row{font-size:20px;margin:20px 0}.summary .details{background:#fafafa;margin:8px 0 24px;padding:12px 0}.summary .details .row{padding:0 0;font-size:17px}.summary .total{font-size:24px}.summary .total strong{font-size:31px}
+ .toast{bottom:40px}
+}
+@media(max-width:900px){
+ .page{padding:20px 10px 25px}.top{grid-template-columns:40px 1fr}.top h1{font-size:28px}.address strong{font-size:18px}.address p{font-size:17px}
+ .product{padding:24px 12px}.product-main{grid-template-columns:110px 1fr;gap:18px}.product img{width:110px;height:120px}.info h2{font-size:23px}.info p{font-size:18px}
+ .qty{grid-column:2;justify-self:end;margin-top:0}.prices{margin-left:128px;gap:16px}.now{font-size:27px}.old{font-size:22px}
+ .section,.summary{padding-left:18px;padding-right:18px}.pay-summary{width:100%;min-height:58px;margin:30px 0 4px;font-size:22px}
+}
+@media(max-width:430px){.product-main{grid-template-columns:96px 1fr}.product img{width:96px;height:108px}.info h2{font-size:20px}.info p{font-size:16px}.prices{margin-left:114px}.now{font-size:24px}.old{font-size:19px}.pay-summary{font-size:20px}}
 </style>
 </head>
 <body>
+<div class="desktop-brand">Alimarket</div>
 <main class="page">
 <header class="top"><button class="back" onclick="history.back()" aria-label="Volver"><i class="fa-solid fa-chevron-left"></i></button><h1>Confirmación de pedido</h1></header>
-
-<section class="address">
-<strong>Kleinel (D01-372943) Beltre&nbsp;&nbsp;+1 3055993939</strong>
-<p>4624 N.W. 74th Ave, Unit 4</p>
-<p>Miami, Florida, United States, 33166</p>
-<i class="fa-solid fa-chevron-right"></i>
-</section>
-
+<section class="address"><strong>Kleinel (D01-372943) Beltre&nbsp;&nbsp;+1 3055993939</strong><p>4624 N.W. 74th Ave, Unit 4</p><p>Miami, Florida, United States, 33166</p><i class="fa-solid fa-chevron-right"></i></section>
 <section id="products"></section>
-
-<section class="section">
-<h3>Método de pago</h3>
-<div class="payment"><span class="visa">VISA</span><span>423421******4253</span><i class="fa-solid fa-chevron-right"></i></div>
-</section>
-
-<section class="summary">
-<h3>Resumen</h3>
-<div class="row"><span>Subtotal</span><strong id="subtotal"></strong></div>
-<div class="details">
-<div class="row"><span>Total de artículos</span><span id="original"></span></div>
-<div class="row"><span>Descuento de artículos</span><span class="discount" id="discount"></span></div>
-</div>
-<div class="row"><span>Gastos de envío</span><strong id="shipping"></strong></div>
-<div class="row"><span>Cargos adicionales <span class="info-i">i</span></span><strong id="fees"></strong></div>
-<div class="row total"><span>Total</span><strong id="grandTotal"></strong></div>
-</section>
+<section class="section"><h3>Método de pago</h3><div class="payment"><span class="visa">VISA</span><span>423421******4253</span><i class="fa-solid fa-chevron-right"></i></div></section>
+<section class="summary"><h3>Resumen</h3><div class="row"><span>Subtotal</span><strong id="subtotal"></strong></div><div class="details"><div class="row"><span>Total de artículos</span><span id="original"></span></div><div class="row"><span>Descuento de artículos</span><span class="discount" id="discount"></span></div></div><div class="row"><span>Gastos de envío</span><strong id="shipping"></strong></div><div class="row"><span>Cargos adicionales <span class="info-i">i</span></span><strong id="fees"></strong></div><div class="row total"><span>Total</span><strong id="grandTotal"></strong></div><button class="pay-summary" id="payBtn">Pagar ahora</button></section>
 </main>
-
-<footer class="footer">
-<div class="footer-in">
-<div class="footer-total">Total: <strong id="footerTotal"></strong></div>
-<button class="pay" id="payBtn">Pagar ahora</button>
-</div>
-</footer>
 <div class="toast" id="toast"></div>
-
 <script>
 const CHECKOUT_KEY="checkoutAliMarket",ORDERS_KEY="pedidosAliMarket",SESSION_KEY="alimarketSesion";
 const demo=[
@@ -115,7 +98,7 @@ function render(){
  const t=totals();
  subtotal.textContent=money(t.subtotal);original.textContent=money(t.original);discount.textContent="- "+money(t.discount);
  shipping.textContent=money(t.shipping);document.getElementById("fees").textContent=money(fees);
- grandTotal.textContent=money(t.total);footerTotal.textContent=money(t.total);
+ grandTotal.textContent=money(t.total);
 }
 function toast(m){const e=document.getElementById("toast");e.textContent=m;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),1500)}
 payBtn.onclick=()=>{
@@ -128,4 +111,4 @@ payBtn.onclick=()=>{
 items=(()=>{const s=parse(localStorage.getItem(CHECKOUT_KEY),[]);return Array.isArray(s)&&s.length?s:demo})();render();
 </script>
 </body>
-</html> 
+</html>
