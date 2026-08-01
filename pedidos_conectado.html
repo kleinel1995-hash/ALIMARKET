@@ -33,19 +33,77 @@ button,input{font:inherit}button,a{cursor:pointer}a{text-decoration:none;color:i
 .empty{border:1px solid var(--line);border-radius:24px;padding:60px 20px;text-align:center;color:var(--muted)}.empty i{font-size:55px;color:#bbb;margin-bottom:16px}
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:flex-end;justify-content:center;z-index:3000}.modal-overlay.show{display:flex}
 .modal{width:min(920px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:28px 28px 0 0;padding:28px;position:relative}.close-modal{position:absolute;right:18px;top:18px;width:42px;height:42px;border:0;border-radius:50%;background:#f1f1f1;font-size:22px}.modal h2{margin:0 50px 22px 0}.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.detail-box{border:1px solid var(--line);border-radius:14px;padding:16px}.detail-box span{display:block;color:var(--muted);font-size:13px;margin-bottom:6px}
-@media(max-width:700px){.page{padding:18px 8px 110px}.search-header{grid-template-columns:42px minmax(0,1fr);gap:10px}.back-btn{width:42px;height:42px;font-size:29px}.search-box{height:58px;border-width:2px;padding:0 18px;gap:12px}.search-box i{font-size:23px}.search-box input{font-size:20px}.tabs{padding-left:4px}.tab{font-size:18px;padding:9px 13px}.order-head{padding:22px 20px}.order-title strong{font-size:23px}.order-title span{font-size:17px}.status{font-size:17px;padding:10px 14px}.products{padding:24px 18px}.product{grid-template-columns:145px minmax(0,1fr);gap:20px}.product img{width:145px;height:145px;border-radius:20px}.product-info h3{font-size:23px;margin-top:5px}.product-info p{font-size:18px}.product-price{font-size:24px}.total-row{font-size:24px;padding:20px 24px}.step{font-size:14px}.step-icon{width:56px;height:56px;font-size:21px}.progress-track::before,.progress-track::after{top:28px;height:6px}.action-btn{min-height:70px;font-size:22px}.detail-grid{grid-template-columns:1fr}}
+
+/* ===== MODELO PC IGUAL A LA IMAGEN ===== */
+.desktop-header{height:92px;background:#050505;color:#fff;display:flex;align-items:center;padding:0 40px}
+.desktop-header-inner{width:min(1480px,100%);margin:auto;display:flex;align-items:center;justify-content:space-between;gap:30px}
+.logo{font-family:Georgia,"Times New Roman",serif;font-size:46px;font-weight:700;color:#fff}
+.logo .logo-red{color:#ef0000}
+.header-actions{display:flex;align-items:center;gap:34px}
+.header-link{display:flex;align-items:center;gap:10px;color:#fff;font-size:18px;font-weight:700}
+.header-link i{font-size:29px}.cart-wrap{position:relative}
+.cart-badge{position:absolute;top:-12px;right:-10px;width:23px;height:23px;border-radius:50%;background:#ef0000;color:#fff;display:grid;place-items:center;font-size:13px;border:2px solid #050505}
+
+@media(min-width:701px){
+ body{background:#fff}
+ .page{width:min(1480px,100%);padding:34px 40px 80px}
+ .search-header{display:grid;grid-template-columns:48px 1fr 380px;align-items:center;gap:24px;margin-bottom:26px}
+ .search-header::after{content:"Mis pedidos";grid-column:2;grid-row:1;font-size:38px;font-weight:900}
+ .back-btn{grid-column:1;grid-row:1;width:48px;height:48px;font-size:34px}
+ .search-box{grid-column:3;grid-row:1;height:62px;border:1px solid #d8d8d8;border-radius:9px;padding:0 20px;gap:14px}
+ .search-box i{font-size:24px;color:#aaa}.search-box input{font-size:18px}
+ .tabs{gap:14px;padding:0;margin:0 0 18px;overflow-x:auto}
+ .tab{min-height:48px;border:1px solid #d7d7d7;background:#fff;padding:0 28px;border-radius:9px;font-size:18px}
+ .tab.active{background:#fff5f5;color:#e00000;border-color:#ff7b7b}
+ .tab[data-status="pedido"].active{background:#eaf8ee;color:#0b8e39;border-color:#bce4c8}
+ .orders-list{gap:20px}
+ .order-card{border-radius:13px;display:grid;grid-template-columns:minmax(0,2fr) minmax(330px,1fr)}
+ .order-head{grid-column:1;padding:22px 28px 16px;border-right:1px solid var(--line)}
+ .order-title strong{font-size:24px}.order-title span{font-size:17px;color:#222;margin-top:7px}
+ .status{border-radius:9px;padding:10px 15px;font-size:18px}
+ .status-pagado,.status-pedido,.status-enviado,.status-entregado{background:#e4f7ea;color:#0d873d}
+ .status-procesando{background:#fff1df;color:#e46f00}
+ .products{grid-column:1;padding:16px 28px 8px;border-right:1px solid var(--line)}
+ .product{grid-template-columns:160px minmax(0,1fr);gap:28px;align-items:center}
+ .product img{width:160px;height:160px;border-radius:12px}
+ .product-info h3{font-size:24px;margin:0 0 14px}.product-info p{font-size:18px;color:#333}
+ .product-price{font-size:25px;margin-top:14px}
+ .total-row{grid-column:2;grid-row:1 / span 2;border:0;padding:100px 28px 0;display:block;font-size:22px}
+ .total-row span{margin-right:12px}.total-row strong{color:var(--red)}
+ .progress{grid-column:1;padding:10px 24px 22px;border-right:1px solid var(--line)}
+ .progress-track::before{top:17px;height:3px}.progress-track::after{top:17px;height:3px}
+ .step{font-size:15px}.step-icon{width:34px;height:34px;margin-bottom:8px;font-size:15px;border:2px solid #ccc;background:#fff}
+ .step.active .step-icon{border-color:var(--green)}
+ .actions{grid-column:2;grid-row:3;display:grid;grid-template-columns:1fr;gap:12px;padding:0 28px 24px;align-self:end}
+ .action-btn{min-height:46px;border-radius:7px;font-size:17px}
+}
+
+@media(max-width:700px){.desktop-header{display:none}.page{padding:18px 8px 110px}.search-header{grid-template-columns:42px minmax(0,1fr);gap:10px}.back-btn{width:42px;height:42px;font-size:29px}.search-box{height:58px;border-width:2px;padding:0 18px;gap:12px}.search-box i{font-size:23px}.search-box input{font-size:20px}.tabs{padding-left:4px}.tab{font-size:18px;padding:9px 13px}.order-head{padding:22px 20px}.order-title strong{font-size:23px}.order-title span{font-size:17px}.status{font-size:17px;padding:10px 14px}.products{padding:24px 18px}.product{grid-template-columns:145px minmax(0,1fr);gap:20px}.product img{width:145px;height:145px;border-radius:20px}.product-info h3{font-size:23px;margin-top:5px}.product-info p{font-size:18px}.product-price{font-size:24px}.total-row{font-size:24px;padding:20px 24px}.step{font-size:14px}.step-icon{width:56px;height:56px;font-size:21px}.progress-track::before,.progress-track::after{top:28px;height:6px}.action-btn{min-height:70px;font-size:22px}.detail-grid{grid-template-columns:1fr}}
 @media(max-width:480px){.product{grid-template-columns:120px minmax(0,1fr);gap:16px}.product img{width:120px;height:120px}.product-info h3{font-size:20px;margin-bottom:10px}.product-info p{font-size:16px}.product-price{font-size:22px;margin-top:14px}.actions{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
+
+<header class="desktop-header">
+  <div class="desktop-header-inner">
+    <a class="logo" href="index.html">Ali<span class="logo-red">M</span>arket</a>
+    <nav class="header-actions">
+      <a class="header-link" href="favoritos.html"><i class="fa-regular fa-heart"></i><span>Favoritos</span></a>
+      <a class="header-link cart-wrap" href="carrito.html"><i class="fa-solid fa-cart-shopping"></i><span class="cart-badge">3</span><span>Carrito</span></a>
+      <a class="header-link" href="usuario_conectado.html"><i class="fa-solid fa-circle-user"></i><span>Usuario</span><i class="fa-solid fa-chevron-down" style="font-size:14px"></i></a>
+    </nav>
+  </div>
+</header>
+
 <main class="page">
 <header class="search-header">
 <button class="back-btn" type="button" onclick="location.href='usuario_conectado.html'" aria-label="Volver"><i class="fa-solid fa-chevron-left"></i></button>
-<label class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input id="searchInput" type="search" placeholder="N° de pedido, artículo o..."></label>
+<label class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input id="searchInput" type="search" placeholder="Buscar en mis pedidos"></label>
 </header>
 <nav class="tabs" id="statusTabs">
 <button class="tab active" data-status="todos">Todos</button>
-<button class="tab" data-status="pedido">Pedido</button>
+<button class="tab" data-status="pagado">Pendiente de pago</button>
+<button class="tab" data-status="pedido">Pedido realizado</button>
 <button class="tab" data-status="procesando">Procesando</button>
 <button class="tab" data-status="enviado">Enviado</button>
 <button class="tab" data-status="entregado">Entregado</button>
@@ -76,7 +134,7 @@ function safeParse(value,fallback){try{const data=JSON.parse(value);return data?
 function getOrders(){const saved=safeParse(localStorage.getItem(ORDERS_KEY),[]);return Array.isArray(saved)&&saved.length?saved:demoOrders}
 function money(value){return `RD$ ${Number(value||0).toLocaleString("es-US",{minimumFractionDigits:2,maximumFractionDigits:2})}`}
 function formatDate(value){const date=new Date(value);if(Number.isNaN(date.getTime()))return"Fecha no disponible";return date.toLocaleDateString("es-DO",{year:"numeric",month:"long",day:"numeric"})}
-function statusName(status){const names={pagado:"Pagado",pedido:"Pedido",procesando:"Procesando",enviado:"Enviado",entregado:"Entregado",cancelado:"Cancelado"};return names[status]||"Pedido"}
+function statusName(status){const names={pagado:"Pendiente de pago",pedido:"Pedido realizado",procesando:"Procesando",enviado:"Enviado",entregado:"Entregado",cancelado:"Cancelado"};return names[status]||"Pedido"}
 function progressInfo(status){const map={pagado:{active:1,width:"0%"},pedido:{active:1,width:"0%"},procesando:{active:2,width:"33%"},enviado:{active:3,width:"66%"},entregado:{active:4,width:"84%"},cancelado:{active:1,width:"0%"}};return map[status]||map.pedido}
 function renderOrders(){
 const query=searchInput.value.trim().toLowerCase();
@@ -89,8 +147,8 @@ return `<article class="order-card" data-id="${order.id}">
 <div class="order-head"><div class="order-title"><strong>Pedido #${order.id}</strong><span>${formatDate(order.createdAt)}</span></div><span class="status status-${order.status}"><i class="fa-solid fa-circle"></i>${statusName(order.status)}</span></div>
 <div class="products">${products}</div>
 <div class="total-row"><span>Total</span><strong>${money(order.total)}</strong></div>
-${order.status!=="cancelado"?`<div class="progress"><div class="progress-track" style="--progress:${progress.width}">${[["Pedido","fa-receipt"],["Procesando","fa-box"],["Enviado","fa-truck-fast"],["Entregado","fa-circle-check"]].map((step,index)=>`<div class="step ${index<progress.active?"active":""}"><div class="step-icon"><i class="fa-solid ${step[1]}"></i></div>${step[0]}</div>`).join("")}</div></div>`:""}
-<div class="actions"><button class="action-btn details-btn" data-action="details" type="button">Ver detalles</button>${["pedido","procesando"].includes(order.status)?`<button class="action-btn cancel-btn" data-action="cancel" type="button">Cancelar</button>`:`<button class="action-btn reorder-btn" data-action="reorder" type="button">Comprar otra vez</button>`}</div>
+${order.status!=="cancelado"?`<div class="progress"><div class="progress-track" style="--progress:${progress.width}">${[["Pedido realizado","fa-receipt"],["Procesando","fa-box"],["Enviado","fa-truck-fast"],["Entregado","fa-circle-check"]].map((step,index)=>`<div class="step ${index<progress.active?"active":""}"><div class="step-icon"><i class="fa-solid ${step[1]}"></i></div>${step[0]}</div>`).join("")}</div></div>`:""}
+<div class="actions"><button class="action-btn details-btn" data-action="details" type="button">Confirmar recibo</button>${["pedido","procesando"].includes(order.status)?`<button class="action-btn cancel-btn" data-action="cancel" type="button">Cancelar</button>`:`<button class="action-btn reorder-btn" data-action="reorder" type="button">Comprar de nuevo</button>`}</div>
 </article>`}).join("");
 bindActions(orders)
 }
