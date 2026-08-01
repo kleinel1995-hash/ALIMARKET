@@ -29,7 +29,7 @@ button,input{font:inherit}button,a{cursor:pointer}a{text-decoration:none;color:i
 .progress{padding:30px 24px 8px}.progress-track{display:grid;grid-template-columns:repeat(4,1fr);position:relative;align-items:start}
 .progress-track::before{content:"";position:absolute;left:8%;right:8%;top:32px;height:8px;background:#ddd;z-index:0}.progress-track::after{content:"";position:absolute;left:8%;top:32px;height:8px;width:var(--progress,0%);background:var(--green);z-index:0}
 .step{position:relative;z-index:1;text-align:center;color:#777;font-size:18px}.step-icon{width:66px;height:66px;border-radius:50%;margin:0 auto 14px;background:#ddd;color:#777;display:grid;place-items:center;font-size:26px;border:7px solid #fff}.step.active{color:#111;font-weight:800}.step.active .step-icon{background:var(--green);color:#fff}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:26px 22px 30px}.action-btn{min-height:84px;border:0;border-radius:22px;font-size:27px;font-weight:900}.details-btn{background:#111;color:#fff}.reorder-btn{background:#ffe9e9;color:#d00000}.cancel-btn{background:#ffe9e9;color:#a00000}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:26px 22px 30px}.action-btn{min-height:84px;border:0;border-radius:22px;font-size:27px;font-weight:900}.details-btn{background:#111;color:#fff}.pay-btn{background:#e60023;color:#fff}.confirm-btn{background:#111;color:#fff}.reorder-btn{background:#ffe9e9;color:#d00000}.cancel-btn{background:#ffe9e9;color:#a00000}
 .empty{border:1px solid var(--line);border-radius:24px;padding:60px 20px;text-align:center;color:var(--muted)}.empty i{font-size:55px;color:#bbb;margin-bottom:16px}
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:flex-end;justify-content:center;z-index:3000}.modal-overlay.show{display:flex}
 .modal{width:min(920px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:28px 28px 0 0;padding:28px;position:relative}.close-modal{position:absolute;right:18px;top:18px;width:42px;height:42px;border:0;border-radius:50%;background:#f1f1f1;font-size:22px}.modal h2{margin:0 50px 22px 0}.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.detail-box{border:1px solid var(--line);border-radius:14px;padding:16px}.detail-box span{display:block;color:var(--muted);font-size:13px;margin-bottom:6px}
@@ -148,7 +148,21 @@ return `<article class="order-card" data-id="${order.id}">
 <div class="products">${products}</div>
 <div class="total-row"><span>Total</span><strong>${money(order.total)}</strong></div>
 ${order.status!=="cancelado"?`<div class="progress"><div class="progress-track" style="--progress:${progress.width}">${[["Pedido realizado","fa-receipt"],["Procesando","fa-box"],["Enviado","fa-truck-fast"],["Entregado","fa-circle-check"]].map((step,index)=>`<div class="step ${index<progress.active?"active":""}"><div class="step-icon"><i class="fa-solid ${step[1]}"></i></div>${step[0]}</div>`).join("")}</div></div>`:""}
-<div class="actions"><button class="action-btn details-btn" data-action="details" type="button">Confirmar recibo</button>${["pedido","procesando"].includes(order.status)?`<button class="action-btn cancel-btn" data-action="cancel" type="button">Cancelar</button>`:`<button class="action-btn reorder-btn" data-action="reorder" type="button">Comprar de nuevo</button>`}</div>
+<div class="actions">
+${order.status==="pagado"
+?`<button class="action-btn pay-btn" data-action="pay" type="button">Realizar pago</button>
+  <button class="action-btn details-btn" data-action="details" type="button">Ver detalles</button>`
+:order.status==="enviado"
+?`<button class="action-btn confirm-btn" data-action="confirm" type="button">Confirmar recibo</button>
+  <button class="action-btn details-btn" data-action="details" type="button">Ver detalles</button>`
+:order.status==="entregado"
+?`<button class="action-btn details-btn" data-action="details" type="button">Ver detalles</button>
+  <button class="action-btn reorder-btn" data-action="reorder" type="button">Comprar de nuevo</button>`
+:order.status==="cancelado"
+?`<button class="action-btn details-btn" data-action="details" type="button">Ver detalles</button>`
+:`<button class="action-btn details-btn" data-action="details" type="button">Ver detalles</button>
+  <button class="action-btn cancel-btn" data-action="cancel" type="button">Cancelar pedido</button>`}
+</div>
 </article>`}).join("");
 bindActions(orders)
 }
@@ -156,6 +170,8 @@ function bindActions(orders){
 document.querySelectorAll(".order-card").forEach(card=>{
 const order=orders.find(item=>String(item.id)===String(card.dataset.id));if(!order)return;
 card.querySelector('[data-action="details"]')?.addEventListener("click",()=>showDetails(order));
+card.querySelector('[data-action="pay"]')?.addEventListener("click",()=>realizarPago(order));
+card.querySelector('[data-action="confirm"]')?.addEventListener("click",()=>confirmReceipt(order.id));
 card.querySelector('[data-action="reorder"]')?.addEventListener("click",()=>reorder(order));
 card.querySelector('[data-action="cancel"]')?.addEventListener("click",()=>cancelOrder(order.id))
 })
@@ -172,6 +188,30 @@ detailsContent.innerHTML=`<div class="detail-grid">
 detailsOverlay.classList.add("show");document.body.style.overflow="hidden"
 }
 function closeModal(){detailsOverlay.classList.remove("show");document.body.style.overflow=""}
+function realizarPago(order){
+ localStorage.setItem("checkoutAliMarket",JSON.stringify((order.products||[]).map(product=>({
+  id:product.id,
+  name:product.name,
+  image:product.image,
+  price:Number(product.price||0),
+  oldPrice:Number(product.oldPrice||product.price||0),
+  cantidad:Number(product.quantity||product.cantidad||1),
+  variant:product.variant||"",
+  shipping:Number(product.shipping||0)
+ }))));
+ location.href="checkout.html";
+}
+
+function confirmReceipt(orderId){
+ if(!confirm("¿Confirmas que recibiste este pedido?"))return;
+ const orders=getOrders();
+ const index=orders.findIndex(order=>String(order.id)===String(orderId));
+ if(index<0)return;
+ orders[index].status="entregado";
+ localStorage.setItem(ORDERS_KEY,JSON.stringify(orders));
+ renderOrders();
+}
+
 function reorder(order){const cart=(order.products||[]).map(product=>({id:product.id,name:product.name,image:product.image,price:Number(product.price||0),cantidad:Number(product.quantity||product.cantidad||1),variant:product.variant||""}));localStorage.setItem(CART_KEY,JSON.stringify(cart));location.href="carrito.html"}
 function cancelOrder(orderId){if(!confirm("¿Seguro que deseas cancelar este pedido?"))return;const orders=getOrders();const index=orders.findIndex(order=>String(order.id)===String(orderId));if(index<0)return;orders[index].status="cancelado";localStorage.setItem(ORDERS_KEY,JSON.stringify(orders));renderOrders()}
 document.querySelectorAll(".tab").forEach(tab=>tab.addEventListener("click",()=>{activeStatus=tab.dataset.status;document.querySelectorAll(".tab").forEach(item=>item.classList.remove("active"));tab.classList.add("active");renderOrders()}));
